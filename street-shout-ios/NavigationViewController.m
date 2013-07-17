@@ -10,6 +10,8 @@
 
 @interface NavigationViewController ()
 
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
 @end
 
 @implementation NavigationViewController
@@ -18,6 +20,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    CLLocationCoordinate2D initialLocation;
+//    MKUserLocation *userLocation = self.mapView.userLocation;
+    initialLocation.latitude = 37.753615;
+    initialLocation.longitude = -122.417578;
+    
+    NSLog(@"Location: %f - %f", initialLocation.latitude, initialLocation.longitude);   
+    
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(initialLocation, 1000, 1000);
+    
+    [_mapView setRegion:viewRegion animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
