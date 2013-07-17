@@ -7,6 +7,7 @@
 //
 
 #import "NavigationViewController.h"
+#import "MapRequestHandler.h"
 
 @interface NavigationViewController ()
 
@@ -19,16 +20,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    [MapRequestHandler pullShoutsInZone];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     CLLocationCoordinate2D initialLocation;
 //    MKUserLocation *userLocation = self.mapView.userLocation;
     initialLocation.latitude = 37.753615;
-    initialLocation.longitude = -122.417578;
-    
-    NSLog(@"Location: %f - %f", initialLocation.latitude, initialLocation.longitude);   
+    initialLocation.longitude = -122.417578; 
     
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(initialLocation, 1000, 1000);
     
