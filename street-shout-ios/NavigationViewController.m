@@ -8,6 +8,7 @@
 
 #import "NavigationViewController.h"
 #import "MapRequestHandler.h"
+#import "LocationUtilities.h"
 
 @interface NavigationViewController ()
 
@@ -20,8 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [MapRequestHandler pullShoutsInZone];
+    self.mapView.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -35,10 +35,10 @@
     [_mapView setRegion:viewRegion animated:YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    NSLog(@"MAP MOVED!!!");
+    
+    [MapRequestHandler pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  MapRequestHandler.h
+//  LocationUtilities.h
 //  street-shout-ios
 //
 //  Created by Bastien Beurier on 7/17/13.
@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
-@interface MapRequestHandler : NSObject
+@interface LocationUtilities : NSObject
 
-+ (void)pullShoutsInZone:(NSArray *)cornersCoordinates;
++ (NSArray *)getMapBounds:(MKMapView *)mapView;
 
 @end

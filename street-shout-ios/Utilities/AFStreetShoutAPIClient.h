@@ -12,6 +12,6 @@
 
 + (AFStreetShoutAPIClient *)sharedClient;
 
-+ (void)pullShoutsInZone;
++ (void)pullShoutsInZone:(NSArray *)cornersCoordinates;
 
 @end

@@ -13,7 +13,8 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.h
 
 @implementation AFStreetShoutAPIClient
 
-+ (AFStreetShoutAPIClient *)sharedClient {
++ (AFStreetShoutAPIClient *)sharedClient
+{
     static AFStreetShoutAPIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -23,7 +24,8 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.h
     return _sharedClient;
 }
 
-- (id)initWithBaseURL:(NSURL *)url {
+- (id)initWithBaseURL:(NSURL *)url
+{
     self = [super initWithBaseURL:url];
     
     if (!self) {
@@ -38,9 +40,15 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.h
     return self;
 }
 
-+ (void)pullShoutsInZone {
++ (void)pullShoutsInZone:(NSArray *)cornersCoordinates
+{
+    NSDictionary *parameters = @{@"neLat": cornersCoordinates[0],
+                                 @"neLng": cornersCoordinates[1],
+                                 @"swLat": cornersCoordinates[2],
+                                 @"swLng": cornersCoordinates[3]};
+    
     //TODO: change endpoint
-    [[AFStreetShoutAPIClient sharedClient] getPath:@"global_feed_shouts" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[AFStreetShoutAPIClient sharedClient] getPath:@"bound_box_shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"Json response: %@", (NSString *) JSON);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"ERROR!!!");

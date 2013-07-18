@@ -11,8 +11,8 @@
 
 @implementation MapRequestHandler
 
-+ (void)pullShoutsInZone {
-    [AFStreetShoutAPIClient pullShoutsInZone];
++ (void)pullShoutsInZone:(NSArray *)cornersCoordinates {
+    [AFStreetShoutAPIClient pullShoutsInZone:cornersCoordinates];
 }
 
 @end

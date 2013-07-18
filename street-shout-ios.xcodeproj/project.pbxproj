@@ -23,6 +23,8 @@
 		0B42A71A1797146B00312BFD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B42A7191797146B00312BFD /* MobileCoreServices.framework */; };
 		0B42A71D17971AF300312BFD /* Shout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71C17971AF300312BFD /* Shout.m */; };
 		0B42A72017971B1D00312BFD /* MapRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71F17971B1D00312BFD /* MapRequestHandler.m */; };
+		0B42A72317975E5C00312BFD /* LocationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A72217975E5C00312BFD /* LocationUtilities.m */; };
+		0B42A7251797613B00312BFD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B42A7241797613B00312BFD /* CoreLocation.framework */; };
 		0B65F7241795C66500F37227 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7231795C66500F37227 /* UIKit.framework */; };
 		0B65F7261795C66500F37227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7251795C66500F37227 /* Foundation.framework */; };
 		0B65F7281795C66500F37227 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7271795C66500F37227 /* CoreGraphics.framework */; };
@@ -68,6 +70,9 @@
 		0B42A71C17971AF300312BFD /* Shout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shout.m; path = Models/Shout.m; sourceTree = "<group>"; };
 		0B42A71E17971B1D00312BFD /* MapRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapRequestHandler.h; path = Models/MapRequestHandler.h; sourceTree = "<group>"; };
 		0B42A71F17971B1D00312BFD /* MapRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapRequestHandler.m; path = Models/MapRequestHandler.m; sourceTree = "<group>"; };
+		0B42A72117975E5C00312BFD /* LocationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationUtilities.h; path = Utilities/LocationUtilities.h; sourceTree = "<group>"; };
+		0B42A72217975E5C00312BFD /* LocationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationUtilities.m; path = Utilities/LocationUtilities.m; sourceTree = "<group>"; };
+		0B42A7241797613B00312BFD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0B65F7201795C66500F37227 /* street-shout-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "street-shout-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B65F7231795C66500F37227 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0B65F7251795C66500F37227 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -93,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B42A7251797613B00312BFD /* CoreLocation.framework in Frameworks */,
 				0B42A71A1797146B00312BFD /* MobileCoreServices.framework in Frameworks */,
 				0B42A7181797143400312BFD /* SystemConfiguration.framework in Frameworks */,
 				0B42A70D17970C0E00312BFD /* Security.framework in Frameworks */,
@@ -168,6 +174,8 @@
 				0B65F7331795C66500F37227 /* NavigationAppDelegate.m */,
 				0B42A7121797133500312BFD /* AFStreetShoutAPIClient.h */,
 				0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */,
+				0B42A72117975E5C00312BFD /* LocationUtilities.h */,
+				0B42A72217975E5C00312BFD /* LocationUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -175,6 +183,7 @@
 		0B65F7171795C66500F37227 = {
 			isa = PBXGroup;
 			children = (
+				0B42A7241797613B00312BFD /* CoreLocation.framework */,
 				0B42A7191797146B00312BFD /* MobileCoreServices.framework */,
 				0B42A7171797143400312BFD /* SystemConfiguration.framework */,
 				0B42A70C17970C0E00312BFD /* Security.framework */,
@@ -315,6 +324,7 @@
 				0B42A7141797133500312BFD /* AFStreetShoutAPIClient.m in Sources */,
 				0B42A71D17971AF300312BFD /* Shout.m in Sources */,
 				0B42A72017971B1D00312BFD /* MapRequestHandler.m in Sources */,
+				0B42A72317975E5C00312BFD /* LocationUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

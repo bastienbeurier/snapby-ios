@@ -2,4 +2,19 @@
 <Bucket
    type = "1"
    version = "1.0">
+   <FileBreakpoints>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "street-shout-ios/Utilities/LocationUtilities.h"
+         timestampString = "395796262.515033"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "14"
+         endingLineNumber = "14"
+         landmarkName = "+getMapBounds:"
+         landmarkType = "4">
+      </FileBreakpoint>
+   </FileBreakpoints>
 </Bucket>
