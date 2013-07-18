@@ -8,6 +8,7 @@
 
 #import "AFStreetShoutAPIClient.h"
 #import "AFJSONRequestOperation.h"
+#import "Shout.h"
 
 static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 
@@ -40,7 +41,7 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.h
     return self;
 }
 
-+ (void)pullShoutsInZone:(NSArray *)cornersCoordinates
++ (void)pullShoutsInZone:(NSArray *)cornersCoordinates AndExecute:(void(^)(NSArray *shouts))block
 {
     NSDictionary *parameters = @{@"neLat": cornersCoordinates[0],
                                  @"neLng": cornersCoordinates[1],
@@ -49,6 +50,31 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.h
     
     //TODO: change endpoint
     [[AFStreetShoutAPIClient sharedClient] getPath:@"bound_box_shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSArray *rawShouts = [JSON valueForKeyPath:@"result"];
+        
+        block([Shout rawShoutsToInstances:rawShouts]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"ERROR!!!");
+        //TODO: implement
+    }];
+}
+
++ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)userName Description:(NSString *)description Image:(NSString *) imageUrl
+{
+    //TODO: add device_id
+    NSMutableDictionary *parameters;
+    
+    [parameters setObject:userName forKey:@"user_name"];
+    [parameters setObject:description forKey:@"description"];
+    [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
+    [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
+    
+    if (imageUrl) {
+        [parameters setObject:imageUrl forKey:@"image"];
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] getPath:@"shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"Json response: %@", (NSString *) JSON);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"ERROR!!!");

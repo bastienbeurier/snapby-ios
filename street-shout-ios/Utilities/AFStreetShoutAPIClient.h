@@ -12,6 +12,12 @@
 
 + (AFStreetShoutAPIClient *)sharedClient;
 
-+ (void)pullShoutsInZone:(NSArray *)cornersCoordinates;
++ (void)pullShoutsInZone:(NSArray *)cornersCoordinates AndExecute:(void(^)(NSArray *shouts))block;
+
++ (void)createShoutWithLat:(double)lat
+                       Lng:(double)lng
+                  Username:(NSString *)userName
+               Description:(NSString *)description
+                     Image:(NSString *) imageUrl;
 
 @end

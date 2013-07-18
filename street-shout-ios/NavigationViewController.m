@@ -9,6 +9,7 @@
 #import "NavigationViewController.h"
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
+#import "Shout.h"
 
 @interface NavigationViewController ()
 
@@ -36,9 +37,24 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    NSLog(@"MAP MOVED!!!");
     
-    [MapRequestHandler pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
+    //TODO: create var with block
+    
+    [MapRequestHandler pullShoutsInZone:[LocationUtilities getMapBounds:mapView]    AndExecute:^(NSArray *shouts) {
+        for (Shout *shout in shouts) {
+            CLLocationCoordinate2D annotationCoordinate;
+            
+//            NSLog(@"Lat: %f", shout.lat);
+            annotationCoordinate.latitude = shout.lat;
+            annotationCoordinate.longitude = shout.lng;
+            
+            MKPointAnnotation *annotationPoint = [[MKPointAnnotation alloc] init];
+            annotationPoint.coordinate = annotationCoordinate;
+            annotationPoint.title = shout.displayName;
+            annotationPoint.subtitle = shout.description;
+            [mapView addAnnotation:annotationPoint];
+        }
+    }];
 }
 
 @end

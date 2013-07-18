@@ -161,6 +161,7 @@
 			children = (
 				0B42A71B17971AF300312BFD /* Shout.h */,
 				0B42A71C17971AF300312BFD /* Shout.m */,
+				0BC0AD0B17988EA50008F0ED /* New Group */,
 				0B42A71E17971B1D00312BFD /* MapRequestHandler.h */,
 				0B42A71F17971B1D00312BFD /* MapRequestHandler.m */,
 			);
@@ -239,6 +240,13 @@
 				0B65F7391795C66500F37227 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0BC0AD0B17988EA50008F0ED /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

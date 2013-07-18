@@ -10,6 +10,6 @@
 
 @interface MapRequestHandler : NSObject
 
-+ (void)pullShoutsInZone:(NSArray *)cornersCoordinates;
++ (void)pullShoutsInZone:(NSArray *)cornersCoordinates AndExecute:(void(^)(NSArray *shouts))block;
 
 @end
