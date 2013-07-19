@@ -46,29 +46,41 @@
 
 - (void)displayShouts:(NSArray *)shouts
 {
+    NSMutableDictionary *newDisplayedShouts = [[NSMutableDictionary alloc] init];
+    
+    for (Shout *shout in shouts) {
+                
+        NSString *shoutKey = [NSString stringWithFormat:@"%d", shout.identifier];
+        
+        NSArray *shoutMarkerAndInstance;
+        
+        if ([self.displayedShouts objectForKey:shoutKey]) {
+            shoutMarkerAndInstance = @[shout, [self.displayedShouts objectForKey:shoutKey][1]];
+            [self.displayedShouts removeObjectForKey:shoutKey];
+        } else {
+            CLLocationCoordinate2D annotationCoordinate;
+            
+            annotationCoordinate.latitude = shout.lat;
+            annotationCoordinate.longitude = shout.lng;
+            
+            MKPointAnnotation *annotationPoint = [[MKPointAnnotation alloc] init];
+            annotationPoint.coordinate = annotationCoordinate;
+            annotationPoint.title = shout.displayName;
+            annotationPoint.subtitle = shout.description;
+            
+            [self.mapView addAnnotation:annotationPoint];
+
+            shoutMarkerAndInstance = @[shout, annotationPoint];
+        }
+
+        [newDisplayedShouts setObject:shoutMarkerAndInstance forKey:shoutKey];
+    }
+    
     for (NSString *key in self.displayedShouts) {
         [self.mapView removeAnnotation:[self.displayedShouts objectForKey:key][1]];
     }
     
-    [self.displayedShouts removeAllObjects];
-    
-    for (Shout *shout in shouts) {
-        CLLocationCoordinate2D annotationCoordinate;
-        
-        annotationCoordinate.latitude = shout.lat;
-        annotationCoordinate.longitude = shout.lng;
-        
-        MKPointAnnotation *annotationPoint = [[MKPointAnnotation alloc] init];
-        annotationPoint.coordinate = annotationCoordinate;
-        annotationPoint.title = shout.displayName;
-        annotationPoint.subtitle = shout.description;
-        
-        NSArray *shoutMarkerAndInstance = @[shout, annotationPoint];
-        [self.displayedShouts setObject:shoutMarkerAndInstance
-                                 forKey:[NSString stringWithFormat:@"%d", shout.identifier]];
-        
-        [self.mapView addAnnotation:annotationPoint];
-    }
+    self.displayedShouts = newDisplayedShouts;
 }
 
 - (NSMutableDictionary *) displayedShouts
