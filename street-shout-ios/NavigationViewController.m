@@ -10,11 +10,13 @@
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
 #import "Shout.h"
+#import "FeedTVC.h"
 
 @interface NavigationViewController ()
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) NSMutableDictionary *displayedShouts;
+@property (weak, nonatomic) IBOutlet UIView *feedContainer;
+@property (nonatomic, retain) FeedTVC *currentViewController;
 
 @end
 
@@ -24,6 +26,12 @@
 {
     [super viewDidLoad];
     self.mapView.delegate = self;
+
+//    self.currentViewController = [[FeedTVC alloc] init];
+//    [self addChildViewController:self.currentViewController];
+//    self.currentViewController.view.frame = self.feedContainer.bounds;
+//    [self.feedContainer addSubview:self.currentViewController.view];
+//    [self.currentViewController didMoveToParentViewController:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -55,9 +63,11 @@
         NSArray *shoutMarkerAndInstance;
         
         if ([self.displayedShouts objectForKey:shoutKey]) {
+            //Use existing marker
             shoutMarkerAndInstance = @[shout, [self.displayedShouts objectForKey:shoutKey][1]];
             [self.displayedShouts removeObjectForKey:shoutKey];
         } else {
+            //Create new marker
             CLLocationCoordinate2D annotationCoordinate;
             
             annotationCoordinate.latitude = shout.lat;

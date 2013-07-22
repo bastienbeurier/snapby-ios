@@ -9,19 +9,28 @@
 #import "Shout.h"
 #import "AFStreetShoutAPIClient.h"
 
+#define SHOUT_ID @"id"
+#define SHOUT_LAT @"lat"
+#define SHOUT_LNG @"lng"
+#define SHOUT_DESCRIPTION @"description"
+#define SHOUT_CREATED_AT @"created_at"
+#define SHOUT_SOURCE @"source"
+#define SHOUT_DISPLAY_NAME @"display_name"
+#define SHOUT_IMAGE @"image"
+
 @implementation Shout
 
 + (Shout *)rawShoutToInstance:(NSDictionary *)rawShout
 {
     Shout *shout = [[Shout alloc] init];
-    shout.identifier = [[rawShout objectForKey:@"id"] integerValue];
-    shout.lat = [[rawShout objectForKey:@"lat"] doubleValue];
-    shout.lng = [[rawShout objectForKey:@"lng"] doubleValue];
-    shout.description = [rawShout objectForKey:@"description"];
-    shout.created = [rawShout objectForKey:@"created_at"];
-    shout.source = [rawShout objectForKey:@"source"];
-    shout.displayName = [rawShout objectForKey:@"display_name"];
-    shout.image = [rawShout objectForKey:@"image"];
+    shout.identifier = [[rawShout objectForKey:SHOUT_ID] integerValue];
+    shout.lat = [[rawShout objectForKey:SHOUT_LAT] doubleValue];
+    shout.lng = [[rawShout objectForKey:SHOUT_LNG] doubleValue];
+    shout.description = [rawShout objectForKey:SHOUT_DESCRIPTION];
+    shout.created = [rawShout objectForKey:SHOUT_CREATED_AT];
+    shout.source = [rawShout objectForKey:SHOUT_SOURCE];
+    shout.displayName = [rawShout objectForKey:SHOUT_DISPLAY_NAME];
+    shout.image = [rawShout objectForKey:SHOUT_IMAGE];
     
     if (shout.image && shout.image != (id)[NSNull null] && shout.image.length != 0 && ![shout.image isEqualToString:@"null"]) {
         shout.image = [@"http://" stringByAppendingString:shout.image];

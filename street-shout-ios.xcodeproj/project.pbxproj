@@ -25,6 +25,7 @@
 		0B42A72017971B1D00312BFD /* MapRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71F17971B1D00312BFD /* MapRequestHandler.m */; };
 		0B42A72317975E5C00312BFD /* LocationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A72217975E5C00312BFD /* LocationUtilities.m */; };
 		0B42A7251797613B00312BFD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B42A7241797613B00312BFD /* CoreLocation.framework */; };
+		0B43BB97179B57FB0044FDA0 /* feedTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B43BB96179B57FB0044FDA0 /* feedTVC.xib */; };
 		0B65F7241795C66500F37227 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7231795C66500F37227 /* UIKit.framework */; };
 		0B65F7261795C66500F37227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7251795C66500F37227 /* Foundation.framework */; };
 		0B65F7281795C66500F37227 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7271795C66500F37227 /* CoreGraphics.framework */; };
@@ -38,6 +39,7 @@
 		0B65F7401795C66500F37227 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F73E1795C66500F37227 /* MainStoryboard_iPad.storyboard */; };
 		0B65F7431795C66500F37227 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* NavigationViewController.m */; };
 		0B65F74A1795CA7900F37227 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7491795CA7900F37227 /* MapKit.framework */; };
+		0B89CB991799DEB500C9BD18 /* FeedTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B89CB981799DEB500C9BD18 /* FeedTVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,7 @@
 		0B42A72117975E5C00312BFD /* LocationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationUtilities.h; path = Utilities/LocationUtilities.h; sourceTree = "<group>"; };
 		0B42A72217975E5C00312BFD /* LocationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationUtilities.m; path = Utilities/LocationUtilities.m; sourceTree = "<group>"; };
 		0B42A7241797613B00312BFD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		0B43BB96179B57FB0044FDA0 /* feedTVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = feedTVC.xib; sourceTree = "<group>"; };
 		0B65F7201795C66500F37227 /* street-shout-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "street-shout-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B65F7231795C66500F37227 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0B65F7251795C66500F37227 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -91,6 +94,8 @@
 		0B65F7411795C66500F37227 /* NavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		0B65F7421795C66500F37227 /* NavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		0B65F7491795CA7900F37227 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0B89CB971799DEB500C9BD18 /* FeedTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedTVC.h; path = Controllers/FeedTVC.h; sourceTree = "<group>"; };
+		0B89CB981799DEB500C9BD18 /* FeedTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedTVC.m; path = Controllers/FeedTVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +157,8 @@
 			children = (
 				0B65F7411795C66500F37227 /* NavigationViewController.h */,
 				0B65F7421795C66500F37227 /* NavigationViewController.m */,
+				0B89CB971799DEB500C9BD18 /* FeedTVC.h */,
+				0B89CB981799DEB500C9BD18 /* FeedTVC.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -161,7 +168,6 @@
 			children = (
 				0B42A71B17971AF300312BFD /* Shout.h */,
 				0B42A71C17971AF300312BFD /* Shout.m */,
-				0BC0AD0B17988EA50008F0ED /* New Group */,
 				0B42A71E17971B1D00312BFD /* MapRequestHandler.h */,
 				0B42A71F17971B1D00312BFD /* MapRequestHandler.m */,
 			);
@@ -224,6 +230,7 @@
 				0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */,
 				0B65F73E1795C66500F37227 /* MainStoryboard_iPad.storyboard */,
 				0B65F72A1795C66500F37227 /* Supporting Files */,
+				0B43BB96179B57FB0044FDA0 /* feedTVC.xib */,
 			);
 			path = "street-shout-ios";
 			sourceTree = "<group>";
@@ -240,13 +247,6 @@
 				0B65F7391795C66500F37227 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		0BC0AD0B17988EA50008F0ED /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,6 +307,7 @@
 				0B65F73A1795C66500F37227 /* Default-568h@2x.png in Resources */,
 				0B65F73D1795C66500F37227 /* MainStoryboard_iPhone.storyboard in Resources */,
 				0B65F7401795C66500F37227 /* MainStoryboard_iPad.storyboard in Resources */,
+				0B43BB97179B57FB0044FDA0 /* feedTVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +334,7 @@
 				0B42A71D17971AF300312BFD /* Shout.m in Sources */,
 				0B42A72017971B1D00312BFD /* MapRequestHandler.m in Sources */,
 				0B42A72317975E5C00312BFD /* LocationUtilities.m in Sources */,
+				0B89CB991799DEB500C9BD18 /* FeedTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

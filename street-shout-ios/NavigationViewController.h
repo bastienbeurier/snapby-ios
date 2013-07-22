@@ -11,4 +11,6 @@
 
 @interface NavigationViewController : UIViewController <MKMapViewDelegate>
 
+@property (strong, nonatomic) NSMutableDictionary *displayedShouts;
+
 @end
