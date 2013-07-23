@@ -1,0 +1,14 @@
+/* 
+  Strings.strings
+  street-shout-ios
+
+  Created by Bastien Beurier on 7/23/13.
+  Copyright (c) 2013 Street Shout. All rights reserved.
+*/
+
+"just_now" = "just now";
+"shout_expired" = " (expired)";
+"hours_ago" = "hours ago";
+"hour_ago" = "hour ago";
+"minutes_ago" = "mins ago";
+"minute_ago" = "min ago";

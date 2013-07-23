@@ -9,6 +9,7 @@
 #import "FeedTVC.h"
 #import "Shout.h"
 #import "MapRequestHandler.h"
+#import "TimeUtilities.h"
 
 @interface FeedTVC ()
 
@@ -53,7 +54,9 @@
 
 - (NSString *)subtitleForRow:(NSUInteger)row
 {
-        return ((Shout *)self.shouts[row]).displayName;
+    NSString *timeStamp = [TimeUtilities shoutAgeToString:[TimeUtilities getShoutAge:((Shout *)self.shouts[row]).created]];
+    NSString *userName = [NSString stringWithFormat:@", by %@", ((Shout *)self.shouts[row]).displayName];
+    return [timeStamp stringByAppendingString:userName];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -65,6 +68,23 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        if (indexPath) {
+            if ([segue.identifier isEqualToString:@"Show Shout"]) {
+                if ([segue.destinationViewController respondsToSelector:@selector(setShout:)]) {
+                    Shout *shout = self.shouts[indexPath.row];
+                    [segue.destinationViewController performSelector:@selector(setShout:) withObject:shout];
+                }
+            }
+        }
+    }
+    
+    
 }
 
 @end

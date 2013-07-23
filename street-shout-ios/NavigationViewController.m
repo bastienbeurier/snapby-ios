@@ -14,8 +14,6 @@
 
 @interface NavigationViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView *feedContainer;
-
 @property (nonatomic, weak) FeedTVC *feedTVC;
 
 @property (nonatomic, weak) MapViewController *mapViewController;
@@ -26,7 +24,10 @@
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
 {
+    self.feedTVC.shouts = @[];
+    [self.feedTVC.activityIndicator startAnimating];
     [MapRequestHandler pullShoutsInZone:mapBounds AndExecute:^(NSArray *shouts) {
+        [self.feedTVC.activityIndicator stopAnimating];
         self.mapViewController.shouts = shouts;
         self.feedTVC.shouts = shouts;
     }];
@@ -41,7 +42,7 @@
     }
     
     if ([segueName isEqualToString: @"feedTVC"]) {
-        self.feedTVC = (FeedTVC *) [segue destinationViewController];
+        self.feedTVC = (FeedTVC *) [(UINavigationController *)[segue destinationViewController] viewControllers][0];
     }
 }
 

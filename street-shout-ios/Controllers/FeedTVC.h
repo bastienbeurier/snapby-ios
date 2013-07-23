@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSArray *shouts;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 @end

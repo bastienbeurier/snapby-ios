@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B3B0A2B179F1EFE0026EE12 /* ShoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2A179F1EFE0026EE12 /* ShoutViewController.m */; };
+		0B3B0A2E179F302B0026EE12 /* TimeUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2D179F302B0026EE12 /* TimeUtilities.m */; };
+		0B3B0A30179F35520026EE12 /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2F179F35520026EE12 /* Strings.strings */; };
+		0B3B0A33179F36AC0026EE12 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A32179F36AC0026EE12 /* Constants.m */; };
 		0B42A70117970ABB00312BFD /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6EF17970ABB00312BFD /* AFHTTPClient.m */; };
 		0B42A70217970ABB00312BFD /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F117970ABB00312BFD /* AFHTTPRequestOperation.m */; };
 		0B42A70317970ABB00312BFD /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F317970ABB00312BFD /* AFImageRequestOperation.m */; };
@@ -43,6 +47,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B3B0A29179F1EFE0026EE12 /* ShoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShoutViewController.h; path = Controllers/ShoutViewController.h; sourceTree = "<group>"; };
+		0B3B0A2A179F1EFE0026EE12 /* ShoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShoutViewController.m; path = Controllers/ShoutViewController.m; sourceTree = "<group>"; };
+		0B3B0A2C179F302B0026EE12 /* TimeUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeUtilities.h; path = Utilities/TimeUtilities.h; sourceTree = "<group>"; };
+		0B3B0A2D179F302B0026EE12 /* TimeUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeUtilities.m; path = Utilities/TimeUtilities.m; sourceTree = "<group>"; };
+		0B3B0A2F179F35520026EE12 /* Strings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Strings.strings; sourceTree = "<group>"; };
+		0B3B0A31179F36AC0026EE12 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
+		0B3B0A32179F36AC0026EE12 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Utilities/Constants.m; sourceTree = "<group>"; };
 		0B42A6EE17970ABB00312BFD /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		0B42A6EF17970ABB00312BFD /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		0B42A6F017970ABB00312BFD /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -162,6 +173,8 @@
 				0B89CB981799DEB500C9BD18 /* FeedTVC.m */,
 				0B435695179DA1D9009CC8E9 /* MapViewController.h */,
 				0B435696179DA1D9009CC8E9 /* MapViewController.m */,
+				0B3B0A29179F1EFE0026EE12 /* ShoutViewController.h */,
+				0B3B0A2A179F1EFE0026EE12 /* ShoutViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -186,6 +199,10 @@
 				0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */,
 				0B42A72117975E5C00312BFD /* LocationUtilities.h */,
 				0B42A72217975E5C00312BFD /* LocationUtilities.m */,
+				0B3B0A2C179F302B0026EE12 /* TimeUtilities.h */,
+				0B3B0A2D179F302B0026EE12 /* TimeUtilities.m */,
+				0B3B0A31179F36AC0026EE12 /* Constants.h */,
+				0B3B0A32179F36AC0026EE12 /* Constants.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -247,6 +264,7 @@
 				0B65F7351795C66500F37227 /* Default.png */,
 				0B65F7371795C66500F37227 /* Default@2x.png */,
 				0B65F7391795C66500F37227 /* Default-568h@2x.png */,
+				0B3B0A2F179F35520026EE12 /* Strings.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -309,6 +327,7 @@
 				0B65F73A1795C66500F37227 /* Default-568h@2x.png in Resources */,
 				0B65F73D1795C66500F37227 /* MainStoryboard_iPhone.storyboard in Resources */,
 				0B65F7401795C66500F37227 /* MainStoryboard_iPad.storyboard in Resources */,
+				0B3B0A30179F35520026EE12 /* Strings.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +356,9 @@
 				0B42A72317975E5C00312BFD /* LocationUtilities.m in Sources */,
 				0B89CB991799DEB500C9BD18 /* FeedTVC.m in Sources */,
 				0B435697179DA1D9009CC8E9 /* MapViewController.m in Sources */,
+				0B3B0A2B179F1EFE0026EE12 /* ShoutViewController.m in Sources */,
+				0B3B0A2E179F302B0026EE12 /* TimeUtilities.m in Sources */,
+				0B3B0A33179F36AC0026EE12 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
