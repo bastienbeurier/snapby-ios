@@ -19,11 +19,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSArray *bounds = @[[NSNumber numberWithDouble:38.122077], [NSNumber numberWithDouble:-121.084901],[NSNumber numberWithDouble:36.158485],[NSNumber numberWithDouble:-123.757166]];
-    [MapRequestHandler pullShoutsInZone:bounds AndExecute:^(NSArray *shouts) {
-        self.shouts = shouts;
-    }];
 }
 
 - (void)setShouts:(NSArray *)shouts

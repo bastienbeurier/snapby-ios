@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "MapViewController.h"
 
-@interface NavigationViewController : UIViewController <MKMapViewDelegate>
+@interface NavigationViewController : UIViewController <MapViewControllerDelegate>
 
-@property (strong, nonatomic) NSMutableDictionary *displayedShouts;
+
 
 @end

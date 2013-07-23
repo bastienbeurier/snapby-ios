@@ -14,89 +14,35 @@
 
 @interface NavigationViewController ()
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIView *feedContainer;
-@property (nonatomic, retain) FeedTVC *currentViewController;
+
+@property (nonatomic, weak) FeedTVC *feedTVC;
+
+@property (nonatomic, weak) MapViewController *mapViewController;
 
 @end
 
 @implementation NavigationViewController
 
-- (void)viewDidLoad
+- (void)pullShoutsInZone:(NSArray *)mapBounds
 {
-    [super viewDidLoad];
-    self.mapView.delegate = self;
-
-//    self.currentViewController = [[FeedTVC alloc] init];
-//    [self addChildViewController:self.currentViewController];
-//    self.currentViewController.view.frame = self.feedContainer.bounds;
-//    [self.feedContainer addSubview:self.currentViewController.view];
-//    [self.currentViewController didMoveToParentViewController:self];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    CLLocationCoordinate2D initialLocation;
-//    MKUserLocation *userLocation = self.mapView.userLocation;
-    initialLocation.latitude = 37.753615;
-    initialLocation.longitude = -122.417578; 
-    
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(initialLocation, 1000, 1000);
-    
-    [_mapView setRegion:viewRegion animated:YES];
-}
-
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    [MapRequestHandler pullShoutsInZone:[LocationUtilities getMapBounds:mapView]
-                             AndExecute:^(NSArray *shouts) {
-        [self displayShouts:shouts];
+    [MapRequestHandler pullShoutsInZone:mapBounds AndExecute:^(NSArray *shouts) {
+        self.mapViewController.shouts = shouts;
+        self.feedTVC.shouts = shouts;
     }];
 }
 
-- (void)displayShouts:(NSArray *)shouts
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSMutableDictionary *newDisplayedShouts = [[NSMutableDictionary alloc] init];
-    
-    for (Shout *shout in shouts) {
-                
-        NSString *shoutKey = [NSString stringWithFormat:@"%d", shout.identifier];
-        
-        NSArray *shoutMarkerAndInstance;
-        
-        if ([self.displayedShouts objectForKey:shoutKey]) {
-            //Use existing marker
-            shoutMarkerAndInstance = @[shout, [self.displayedShouts objectForKey:shoutKey][1]];
-            [self.displayedShouts removeObjectForKey:shoutKey];
-        } else {
-            //Create new marker
-            CLLocationCoordinate2D annotationCoordinate;
-            
-            annotationCoordinate.latitude = shout.lat;
-            annotationCoordinate.longitude = shout.lng;
-            
-            MKPointAnnotation *annotationPoint = [[MKPointAnnotation alloc] init];
-            annotationPoint.coordinate = annotationCoordinate;
-            annotationPoint.title = shout.displayName;
-            annotationPoint.subtitle = shout.description;
-            
-            [self.mapView addAnnotation:annotationPoint];
-
-            shoutMarkerAndInstance = @[shout, annotationPoint];
-        }
-
-        [newDisplayedShouts setObject:shoutMarkerAndInstance forKey:shoutKey];
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"mapViewController"]) {
+        self.mapViewController = (MapViewController *) [segue destinationViewController];
+        self.mapViewController.mapVCdelegate = self;
     }
     
-    for (NSString *key in self.displayedShouts) {
-        [self.mapView removeAnnotation:[self.displayedShouts objectForKey:key][1]];
+    if ([segueName isEqualToString: @"feedTVC"]) {
+        self.feedTVC = (FeedTVC *) [segue destinationViewController];
     }
-    
-    self.displayedShouts = newDisplayedShouts;
-}
-
-- (NSMutableDictionary *) displayedShouts
-{
-    if (!_displayedShouts) _displayedShouts = [[NSMutableDictionary alloc] init];
-    return _displayedShouts;
 }
 
 @end
