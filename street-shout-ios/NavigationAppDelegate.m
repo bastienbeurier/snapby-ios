@@ -13,6 +13,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    // !!!: Use setDeviceIdentifier (removing deprecated warning with clang pragmas)
+#ifdef TESTING
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+#pragma clang diagnostic pop
+#endif
+    
+    [TestFlight takeOff:@"fe7f54e8-b4ae-439a-8b0c-ce95ee46d433"];
+    
     return YES;
 }
 							
