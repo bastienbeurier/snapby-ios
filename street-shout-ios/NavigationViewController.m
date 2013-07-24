@@ -11,26 +11,50 @@
 #import "LocationUtilities.h"
 #import "Shout.h"
 #import "FeedTVC.h"
+#import "ShoutViewController.h"
 
 @interface NavigationViewController ()
 
+@property (nonatomic, weak) UINavigationController *navigationController;
 @property (nonatomic, weak) FeedTVC *feedTVC;
-
 @property (nonatomic, weak) MapViewController *mapViewController;
 
 @end
 
-@implementation NavigationViewController
+@implementation NavigationViewController 
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
 {
     self.feedTVC.shouts = @[];
     [self.feedTVC.activityIndicator startAnimating];
+    
     [MapRequestHandler pullShoutsInZone:mapBounds AndExecute:^(NSArray *shouts) {
-        [self.feedTVC.activityIndicator stopAnimating];
         self.mapViewController.shouts = shouts;
+        [self.feedTVC.activityIndicator stopAnimating];
         self.feedTVC.shouts = shouts;
     }];
+}
+
+- (void)shoutSelectedOnMap:(Shout *)shout
+{
+    if ([[self.navigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
+        ((ShoutViewController *)[self.navigationController topViewController]).shout = shout;
+    } else {
+        [self.feedTVC performSegueWithIdentifier:@"Show Shout" sender:shout];
+    }
+}
+
+- (void)shoutDeselectedOnMap
+{
+    if ([[self.navigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void)shoutSelectedInFeed:(Shout *)shout
+{
+    self.mapViewController.preventShoutDeselection = YES;
+    [self.mapViewController animateMapToLatitude:shout.lat Longitude:shout.lng WithDistance:1000];
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -41,8 +65,10 @@
         self.mapViewController.mapVCdelegate = self;
     }
     
-    if ([segueName isEqualToString: @"feedTVC"]) {
-        self.feedTVC = (FeedTVC *) [(UINavigationController *)[segue destinationViewController] viewControllers][0];
+    if ([segueName isEqualToString: @"navigationController"]) {
+        self.navigationController = (UINavigationController *)[segue destinationViewController];
+        self.feedTVC = (FeedTVC *) [self.navigationController topViewController];
+        self.feedTVC.feedTVCdelegate = self;
     }
 }
 

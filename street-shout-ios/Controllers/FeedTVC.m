@@ -7,7 +7,6 @@
 //
 
 #import "FeedTVC.h"
-#import "Shout.h"
 #import "MapRequestHandler.h"
 #import "TimeUtilities.h"
 
@@ -61,13 +60,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    Shout *shout = self.shouts[indexPath.row];
+    [self.feedTVCdelegate shoutSelectedInFeed:shout];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -82,9 +76,13 @@
                 }
             }
         }
+    } else if ([sender isKindOfClass:[Shout class]]) {
+        if ([segue.identifier isEqualToString:@"Show Shout"]) {
+            if ([segue.destinationViewController respondsToSelector:@selector(setShout:)]) {
+                [segue.destinationViewController performSelector:@selector(setShout:) withObject:sender];
+            }
+        }
     }
-    
-    
 }
 
 @end

@@ -11,6 +11,7 @@
 		0B3B0A2E179F302B0026EE12 /* TimeUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2D179F302B0026EE12 /* TimeUtilities.m */; };
 		0B3B0A30179F35520026EE12 /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2F179F35520026EE12 /* Strings.strings */; };
 		0B3B0A33179F36AC0026EE12 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A32179F36AC0026EE12 /* Constants.m */; };
+		0B3B0A39179F5A210026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A38179F5A210026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */; };
 		0B42A70117970ABB00312BFD /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6EF17970ABB00312BFD /* AFHTTPClient.m */; };
 		0B42A70217970ABB00312BFD /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F117970ABB00312BFD /* AFHTTPRequestOperation.m */; };
 		0B42A70317970ABB00312BFD /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F317970ABB00312BFD /* AFImageRequestOperation.m */; };
@@ -54,6 +55,8 @@
 		0B3B0A2F179F35520026EE12 /* Strings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Strings.strings; sourceTree = "<group>"; };
 		0B3B0A31179F36AC0026EE12 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
 		0B3B0A32179F36AC0026EE12 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Utilities/Constants.m; sourceTree = "<group>"; };
+		0B3B0A37179F5A200026EE12 /* MKPointAnnotation+ShoutPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKPointAnnotation+ShoutPointAnnotation.h"; path = "Utilities/MKPointAnnotation+ShoutPointAnnotation.h"; sourceTree = "<group>"; };
+		0B3B0A38179F5A210026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKPointAnnotation+ShoutPointAnnotation.m"; path = "Utilities/MKPointAnnotation+ShoutPointAnnotation.m"; sourceTree = "<group>"; };
 		0B42A6EE17970ABB00312BFD /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		0B42A6EF17970ABB00312BFD /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		0B42A6F017970ABB00312BFD /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 				0B3B0A2D179F302B0026EE12 /* TimeUtilities.m */,
 				0B3B0A31179F36AC0026EE12 /* Constants.h */,
 				0B3B0A32179F36AC0026EE12 /* Constants.m */,
+				0B3B0A37179F5A200026EE12 /* MKPointAnnotation+ShoutPointAnnotation.h */,
+				0B3B0A38179F5A210026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -359,6 +364,7 @@
 				0B3B0A2B179F1EFE0026EE12 /* ShoutViewController.m in Sources */,
 				0B3B0A2E179F302B0026EE12 /* TimeUtilities.m in Sources */,
 				0B3B0A33179F36AC0026EE12 /* Constants.m in Sources */,
+				0B3B0A39179F5A210026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "MapViewController.h"
+#import "FeedTVC.h"
 
-@interface NavigationViewController : UIViewController <MapViewControllerDelegate>
+@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate>
 
 
 

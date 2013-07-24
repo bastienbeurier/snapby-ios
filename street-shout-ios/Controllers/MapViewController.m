@@ -7,10 +7,10 @@
 //
 
 #import "MapViewController.h"
+#import "MKPointAnnotation+ShoutPointAnnotation.h"
 #import <MapKit/MapKit.h>
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
-#import "Shout.h"
 #import "NavigationViewController.h"
 
 @interface MapViewController () <MKMapViewDelegate>
@@ -26,6 +26,7 @@
 {
     [super viewDidLoad];
     self.mapView.delegate = self;
+    self.preventShoutDeselection = NO;
 }
 
 - (void)setShouts:(NSArray *)shouts
@@ -35,18 +36,40 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    CLLocationCoordinate2D initialLocation;
     //    MKUserLocation *userLocation = self.mapView.userLocation;
-    initialLocation.latitude = 37.753615;
-    initialLocation.longitude = -122.417578;
-    
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(initialLocation, 1000, 1000);
-    
-    [_mapView setRegion:viewRegion animated:YES];
+    [self animateMapToLatitude:37.753615 Longitude:-122.417578 WithDistance:1000];
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    if (!self.preventShoutDeselection) {
+        [self.mapVCdelegate shoutDeselectedOnMap];
+    } else {
+        self.preventShoutDeselection = NO;
+    }
+    
     [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    Shout *shout = ((MKPointAnnotation *)view.annotation).shout;
+    
+    [self.mapVCdelegate shoutSelectedOnMap:shout];
+    
+    self.preventShoutDeselection = YES;
+    [self animateMapToLatitude:shout.lat Longitude:shout.lng WithDistance:1000];
+}
+
+- (void)animateMapToLatitude:(double)lat Longitude:(double)lng WithDistance:(NSUInteger) distance
+{
+    CLLocationCoordinate2D location;
+    location.latitude = lat;
+    location.longitude = lng;
+    
+    MKCoordinateRegion shoutRegion = MKCoordinateRegionMakeWithDistance(location, distance, distance);
+    
+    [self.mapView setRegion:shoutRegion animated:YES];
+    
 }
 
 - (void)displayShouts:(NSArray *)shouts
@@ -57,34 +80,30 @@
         
         NSString *shoutKey = [NSString stringWithFormat:@"%d", shout.identifier];
         
-        NSArray *shoutMarkerAndInstance;
+        MKPointAnnotation *shoutAnnotation;
         
         if ([self.displayedShouts objectForKey:shoutKey]) {
-            //Use existing marker
-            shoutMarkerAndInstance = @[shout, [self.displayedShouts objectForKey:shoutKey][1]];
+            //Use existing annotation
+            shoutAnnotation = [self.displayedShouts objectForKey:shoutKey];
             [self.displayedShouts removeObjectForKey:shoutKey];
         } else {
-            //Create new marker
+            //Create new annotation
             CLLocationCoordinate2D annotationCoordinate;
-            
             annotationCoordinate.latitude = shout.lat;
             annotationCoordinate.longitude = shout.lng;
             
-            MKPointAnnotation *annotationPoint = [[MKPointAnnotation alloc] init];
-            annotationPoint.coordinate = annotationCoordinate;
-            annotationPoint.title = shout.displayName;
-            annotationPoint.subtitle = shout.description;
+            shoutAnnotation = [[MKPointAnnotation alloc] init];
+            shoutAnnotation.coordinate = annotationCoordinate;
             
-            [self.mapView addAnnotation:annotationPoint];
-            
-            shoutMarkerAndInstance = @[shout, annotationPoint];
+            [self.mapView addAnnotation:shoutAnnotation];
         }
         
-        [newDisplayedShouts setObject:shoutMarkerAndInstance forKey:shoutKey];
+        shoutAnnotation.shout = shout;
+        [newDisplayedShouts setObject:shoutAnnotation forKey:shoutKey];
     }
     
     for (NSString *key in self.displayedShouts) {
-        [self.mapView removeAnnotation:[self.displayedShouts objectForKey:key][1]];
+        [self.mapView removeAnnotation:[self.displayedShouts objectForKey:key]];
     }
     
     self.displayedShouts = newDisplayedShouts;
