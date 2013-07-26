@@ -70,6 +70,15 @@
         self.feedTVC = (FeedTVC *) [self.navigationController topViewController];
         self.feedTVC.feedTVCdelegate = self;
     }
+    
+    if ([segueName isEqualToString: @"Create Shout Modal"]) {
+        ((CreateShoutViewController *)[segue destinationViewController]).createShoutVCDelegate = self;
+    }
+}
+
+- (void)dismissCreateShoutModal
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

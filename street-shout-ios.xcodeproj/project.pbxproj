@@ -16,6 +16,7 @@
 		0B3B0A4017A082350026EE12 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3C17A082350026EE12 /* README.md */; };
 		0B3B0A4117A082350026EE12 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3D17A082350026EE12 /* release_notes.md */; };
 		0B3B0A4317A0828A0026EE12 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3B0A4217A0828A0026EE12 /* libz.dylib */; };
+		0B3B0A4617A0AA830026EE12 /* CreateShoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */; };
 		0B42A70117970ABB00312BFD /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6EF17970ABB00312BFD /* AFHTTPClient.m */; };
 		0B42A70217970ABB00312BFD /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F117970ABB00312BFD /* AFHTTPRequestOperation.m */; };
 		0B42A70317970ABB00312BFD /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F317970ABB00312BFD /* AFImageRequestOperation.m */; };
@@ -66,6 +67,8 @@
 		0B3B0A3D17A082350026EE12 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
 		0B3B0A3E17A082350026EE12 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		0B3B0A4217A0828A0026EE12 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		0B3B0A4417A0AA830026EE12 /* CreateShoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateShoutViewController.h; path = Controllers/CreateShoutViewController.h; sourceTree = "<group>"; };
+		0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateShoutViewController.m; path = Controllers/CreateShoutViewController.m; sourceTree = "<group>"; };
 		0B42A6EE17970ABB00312BFD /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		0B42A6EF17970ABB00312BFD /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		0B42A6F017970ABB00312BFD /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -200,6 +203,8 @@
 				0B435696179DA1D9009CC8E9 /* MapViewController.m */,
 				0B3B0A29179F1EFE0026EE12 /* ShoutViewController.h */,
 				0B3B0A2A179F1EFE0026EE12 /* ShoutViewController.m */,
+				0B3B0A4417A0AA830026EE12 /* CreateShoutViewController.h */,
+				0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -391,6 +396,7 @@
 				0B3B0A2E179F302B0026EE12 /* TimeUtilities.m in Sources */,
 				0B3B0A33179F36AC0026EE12 /* Constants.m in Sources */,
 				0B3B0A39179F5A210026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */,
+				0B3B0A4617A0AA830026EE12 /* CreateShoutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

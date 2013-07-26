@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
 #import "MapViewController.h"
 #import "FeedTVC.h"
+#import "CreateShoutViewController.h"
 
-@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate>
-
-
+@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate>
 
 @end
