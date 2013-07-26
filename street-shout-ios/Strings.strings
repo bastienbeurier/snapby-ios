@@ -12,3 +12,14 @@
 "hour_ago" = "hour ago";
 "minutes_ago" = "mins ago";
 "minute_ago" = "min ago";
+"characters" = "characters";
+"incorrect_username" = "Incorrect username";
+"username_blank" = "Your username can't be blank";
+"username_too_long" = "Your username is too long";
+"incorrect_shout_description" = "Incorrect shout";
+"shout_description_blank" = "Your shout can't be blank";
+"shout_description_too_long" = "Your shout is too long";
+"no_location_for_shout_title" = "Can't retrieve your location";
+"no_location_for_shout_message" = "Please check your connection and geolocation settings.";
+
+ 

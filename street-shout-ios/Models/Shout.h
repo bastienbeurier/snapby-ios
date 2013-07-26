@@ -12,11 +12,6 @@
 
 + (NSArray *)rawShoutsToInstances:(NSArray *)rawShouts;
 + (Shout *)rawShoutToInstance:(id)rawShout;
-+ (void)createShoutWithLat:(double)lat
-                       Lng:(double)lng
-                  Username:(NSString *)userName
-               Description:(NSString *)description
-                     Image:(NSString *) imageUrl;
 
 @property (nonatomic) NSUInteger identifier;
 @property (nonatomic) double lat;

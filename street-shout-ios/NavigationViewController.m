@@ -72,6 +72,9 @@
     }
     
     if ([segueName isEqualToString: @"Create Shout Modal"]) {
+        MKUserLocation *myLocation = (MKUserLocation *)sender;
+        
+        ((CreateShoutViewController *)[segue destinationViewController]).myLocation = myLocation;
         ((CreateShoutViewController *)[segue destinationViewController]).createShoutVCDelegate = self;
     }
 }
@@ -79,6 +82,23 @@
 - (void)dismissCreateShoutModal
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)createShoutButtonClicked:(id)sender {
+    MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
+    
+//    if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
+    //TODO: REMOVE!!
+    if (myLocation) {
+        [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
+    } else {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
+                                                          message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+    }
 }
 
 @end

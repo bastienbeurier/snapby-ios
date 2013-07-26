@@ -8,38 +8,30 @@
 
 #import "CreateShoutViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import <MapKit/MapKit.h>
 #import "Constants.h"
+#import "AFStreetShoutAPIClient.h"
 
 @interface CreateShoutViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) MKUserLocation *myLocation;
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
 
 @end
 
 @implementation CreateShoutViewController
 
-- (MKUserLocation *)myLocation
-{
-    return self.mapView.userLocation;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
-    //TODO: Probably grab user location before segue
-    MKUserLocation *userLocation = self.mapView.userLocation;
     CLLocationCoordinate2D location;
-    if (userLocation.coordinate.latitude && userLocation.coordinate.longitude) {
-        location.latitude = userLocation.coordinate.latitude;
-        location.longitude = userLocation.coordinate.longitude;
-        MKCoordinateRegion shoutRegion = MKCoordinateRegionMakeWithDistance(location, kCreateShoutDistance, kCreateShoutDistance);
+
+//        location.latitude = self.myLocation.coordinate.latitude;
+//        location.longitude = self.myLocation.coordinate.longitude;
+        //TODO: REMOVE!!
+    location.latitude = 37.753615;
+    location.longitude = -122.417578;
+    MKCoordinateRegion shoutRegion = MKCoordinateRegionMakeWithDistance(location, kCreateShoutDistance, kCreateShoutDistance);
         
-        [self.mapView setRegion:shoutRegion animated:NO];
-    } else {
-        //TODO: handle that case
-    }
+    [self.mapView setRegion:shoutRegion animated:NO];
 }
 
 - (void)viewDidLoad
@@ -63,12 +55,63 @@
         NSInteger charCount = [textView.text length] + [text length] - range.length;
         NSInteger remainingCharCount = kShoutMaxLength - charCount;
         NSString *countStr = [NSString stringWithFormat:@"%d", remainingCharCount];
-        self.charCount.text = [countStr stringByAppendingFormat:@" characters"];
+        self.charCount.text = [countStr stringByAppendingFormat:@" %@", NSLocalizedStringFromTable (@"characters", @"Strings", @"comment")];
         return YES;
     }
 }
 
 - (IBAction)createShoutClicked:(id)sender {
+    BOOL error = NO;
+    
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
+                                                      message:@""
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+
+    if (self.usernameView.text.length == 0) {
+        message.title = NSLocalizedStringFromTable (@"incorrect_username", @"Strings", @"comment");
+        message.message = NSLocalizedStringFromTable (@"username_blank", @"Strings", @"comment");
+        error = YES;
+    }
+    
+    if (self.usernameView.text.length > kMaxUsernameLength) {
+        message.title = NSLocalizedStringFromTable (@"incorrect_username", @"Strings", @"comment");
+        NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxUsernameLength];
+        message.message = [(NSLocalizedStringFromTable (@"username_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
+        error = YES;
+    }
+
+    if (self.descriptionView.text.length == 0) {
+        message.title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
+        message.message = NSLocalizedStringFromTable (@"shout_description_blank", @"Strings", @"comment");
+        error = YES;
+    }
+    
+    if (self.descriptionView.text.length > kMaxShoutDescriptionLength) {
+        message.title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
+        NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxShoutDescriptionLength];
+        message.message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
+        error = YES;
+    }
+    
+    if (error) {
+        [message show];
+        return;
+    } else {
+        //TODO: save username
+        [self createShout];
+    }
+}
+
+- (void)createShout
+{
+    [AFStreetShoutAPIClient createShoutWithLat:self.myLocation.coordinate.latitude
+                                           Lng:self.myLocation.coordinate.longitude
+                                      Username:self.usernameView.text
+                                   Description:self.descriptionView.text
+                                         Image:nil
+                             AndExecuteSuccess:nil Failure:nil];
 }
 
 - (IBAction)cancelShoutClicked:(id)sender {

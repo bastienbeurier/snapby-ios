@@ -8,14 +8,11 @@
 
 #import "MapViewController.h"
 #import "MKPointAnnotation+ShoutPointAnnotation.h"
-#import <MapKit/MapKit.h>
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
 #import "NavigationViewController.h"
 
 @interface MapViewController () <MKMapViewDelegate>
-
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
 

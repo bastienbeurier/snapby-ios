@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 @protocol CreateShoutViewControllerDelegate;
 
 @interface CreateShoutViewController : UIViewController <UITextViewDelegate>
 
 @property (weak, nonatomic) id <CreateShoutViewControllerDelegate> createShoutVCDelegate;
+@property (strong, nonatomic) MKUserLocation *myLocation;
 
 @end
 

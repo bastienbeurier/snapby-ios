@@ -8,7 +8,6 @@
 
 #import "AFStreetShoutAPIClient.h"
 #import "AFJSONRequestOperation.h"
-#import "Shout.h"
 
 static NSString * const kAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
 
@@ -60,10 +59,10 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://dev-street-sho
     }];
 }
 
-+ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)userName Description:(NSString *)description Image:(NSString *) imageUrl
-{
++ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)userName Description:(NSString *)description Image:(NSString *)imageUrl AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)())failureBlock
+{    
     //TODO: add device_id
-    NSMutableDictionary *parameters;
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
     [parameters setObject:userName forKey:@"user_name"];
     [parameters setObject:description forKey:@"description"];
@@ -74,10 +73,9 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://dev-street-sho
         [parameters setObject:imageUrl forKey:@"image"];
     }
     
-    [[AFStreetShoutAPIClient sharedClient] getPath:@"shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[AFStreetShoutAPIClient sharedClient] postPath:@"shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"Json response: %@", (NSString *) JSON);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"ERROR!!!");
         //TODO: implement
     }];
 }

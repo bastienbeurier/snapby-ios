@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Shout.h"
+#import <MapKit/MapKit.h>
 
 @protocol MapViewControllerDelegate;
 
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) NSArray *shouts;
 @property (strong, nonatomic) NSMutableDictionary *displayedShouts;
 @property (nonatomic) BOOL preventShoutDeselection;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 - (void)displayShouts:(NSArray *)shouts;
 

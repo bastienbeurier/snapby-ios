@@ -52,9 +52,4 @@
     return shouts;
 }
 
-+ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)userName Description:(NSString *)description Image:(NSString *) imageUrl
-{
-    [AFStreetShoutAPIClient createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)userName Description:(NSString *)description Image:(NSString *) imageUrl];
-}
-
 @end
