@@ -38,6 +38,7 @@
 {
     [super viewDidLoad];
 
+    self.usernameView.delegate = self;
     self.descriptionView.delegate = self;
 
     //discriptionView formatting
@@ -58,6 +59,12 @@
         self.charCount.text = [countStr stringByAppendingFormat:@" %@", NSLocalizedStringFromTable (@"characters", @"Strings", @"comment")];
         return YES;
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.descriptionView becomeFirstResponder];
+    return YES;
 }
 
 - (IBAction)createShoutClicked:(id)sender {

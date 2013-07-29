@@ -38,13 +38,17 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+
+    [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
+}
+
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
+{
     if (!self.preventShoutDeselection) {
         [self.mapVCdelegate shoutDeselectedOnMap];
-    } else {
-        self.preventShoutDeselection = NO;
     }
     
-    [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
+    self.preventShoutDeselection = NO;
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view

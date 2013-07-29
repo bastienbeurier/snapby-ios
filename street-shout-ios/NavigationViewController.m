@@ -25,8 +25,8 @@
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
 {
-    self.feedTVC.shouts = @[];
     [self.feedTVC.activityIndicator startAnimating];
+    self.feedTVC.shouts = @[@"Loading"];
     
     [MapRequestHandler pullShoutsInZone:mapBounds AndExecute:^(NSArray *shouts) {
         self.mapViewController.shouts = shouts;
