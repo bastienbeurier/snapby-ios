@@ -9,6 +9,8 @@
 #import "AFHTTPClient.h"
 #import "Shout.h"
 
+#define API_VERSION @"1.0"
+
 @interface AFStreetShoutAPIClient : AFHTTPClient
 
 + (AFStreetShoutAPIClient *)sharedClient;
@@ -25,3 +27,6 @@
                    Failure:(void(^)())failureBlock;
 
 @end
+
+static NSString *const MyFirstConstant = API_VERSION;
+
