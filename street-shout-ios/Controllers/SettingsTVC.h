@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SettingPickerViewController.h"
 
-@interface SettingsTVC : UITableViewController
+@interface SettingsTVC : UITableViewController <SettingPickerViewControllerDelegate>
 
 @end

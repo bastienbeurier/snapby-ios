@@ -49,6 +49,8 @@
 		0B65F7401795C66500F37227 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F73E1795C66500F37227 /* MainStoryboard_iPad.storyboard */; };
 		0B65F7431795C66500F37227 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* NavigationViewController.m */; };
 		0B65F74A1795CA7900F37227 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7491795CA7900F37227 /* MapKit.framework */; };
+		0B7BA61117AAFD7000F8F67D /* SettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7BA61017AAFD6F00F8F67D /* SettingsTVC.m */; };
+		0B7BA61417AB254400F8F67D /* SettingPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */; };
 		0B89CB991799DEB500C9BD18 /* FeedTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B89CB981799DEB500C9BD18 /* FeedTVC.m */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +123,10 @@
 		0B65F7411795C66500F37227 /* NavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		0B65F7421795C66500F37227 /* NavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		0B65F7491795CA7900F37227 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0B7BA60F17AAFD6F00F8F67D /* SettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsTVC.h; path = Controllers/SettingsTVC.h; sourceTree = "<group>"; };
+		0B7BA61017AAFD6F00F8F67D /* SettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsTVC.m; path = Controllers/SettingsTVC.m; sourceTree = "<group>"; };
+		0B7BA61217AB254400F8F67D /* SettingPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingPickerViewController.h; path = Controllers/SettingPickerViewController.h; sourceTree = "<group>"; };
+		0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingPickerViewController.m; path = Controllers/SettingPickerViewController.m; sourceTree = "<group>"; };
 		0B89CB971799DEB500C9BD18 /* FeedTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedTVC.h; path = Controllers/FeedTVC.h; sourceTree = "<group>"; };
 		0B89CB981799DEB500C9BD18 /* FeedTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedTVC.m; path = Controllers/FeedTVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -214,6 +220,10 @@
 				0B3B0A2A179F1EFE0026EE12 /* ShoutViewController.m */,
 				0B3B0A4417A0AA830026EE12 /* CreateShoutViewController.h */,
 				0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */,
+				0B7BA60F17AAFD6F00F8F67D /* SettingsTVC.h */,
+				0B7BA61017AAFD6F00F8F67D /* SettingsTVC.m */,
+				0B7BA61217AB254400F8F67D /* SettingPickerViewController.h */,
+				0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -405,6 +415,8 @@
 				0B3B0A33179F36AC0026EE12 /* Constants.m in Sources */,
 				0B3B0A4617A0AA830026EE12 /* CreateShoutViewController.m in Sources */,
 				0B3B0A4D17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */,
+				0B7BA61117AAFD7000F8F67D /* SettingsTVC.m in Sources */,
+				0B7BA61417AB254400F8F67D /* SettingPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

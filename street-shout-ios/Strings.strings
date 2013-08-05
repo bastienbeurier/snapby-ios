@@ -21,5 +21,14 @@
 "shout_description_too_long" = "Your shout is too long";
 "no_location_for_shout_title" = "Can't retrieve your location";
 "no_location_for_shout_message" = "Please check your connection and geolocation settings.";
+"none" = "none";
+"100m" = "100m";
+"1km" = "1km";
+"10km" = "10km";
+"100yd" = "100yd";
+"1mi" = "1mi";
+"10mi" = "10mi";
+"meters" = "meters";
+"miles" = "miles";
 
  

@@ -8,114 +8,142 @@
 
 #import "SettingsTVC.h"
 
+#define NOTIFICATION_RADIUS_PREFERENCE_TYPE @"Notification Radius"
+#define DISTANCE_UNIT_PREFERENCE_TYPE @"Distance Unit"
+
 @interface SettingsTVC ()
+
+@property (weak, nonatomic) IBOutlet UILabel *notificationRadiusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceUnitLabel;
+@property (strong, nonatomic) NSArray *distanceUnitPreferences;
+@property (strong, nonatomic) NSArray *notificationRadiusPreferences;
 
 @end
 
 @implementation SettingsTVC
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (NSArray *)distanceUnitPreferences
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    return @[NSLocalizedStringFromTable (@"meters", @"Strings", @"comment"),
+             NSLocalizedStringFromTable (@"miles", @"Strings", @"comment")];
+}
+
+- (NSArray *)notificationRadiusPreferences
+{
+    NSNumber *distanceUnitPreference = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREFERENCE_TYPE];
+    if (!distanceUnitPreference || [distanceUnitPreference integerValue] == 0) {
+        return @[NSLocalizedStringFromTable (@"none", @"Strings", @"comment"),
+                 NSLocalizedStringFromTable (@"100m", @"Strings", @"comment"),
+                 NSLocalizedStringFromTable (@"1km", @"Strings", @"comment"),
+                 NSLocalizedStringFromTable (@"10km", @"Strings", @"comment")];
+    } else {
+        return @[NSLocalizedStringFromTable (@"none", @"Strings", @"comment"),
+                 NSLocalizedStringFromTable (@"100yd", @"Strings", @"comment"),
+                 NSLocalizedStringFromTable (@"1mi", @"Strings", @"comment"),
+                 NSLocalizedStringFromTable (@"10mi", @"Strings", @"comment")];
     }
-    return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self updateDistanceUnitLabel];
+    [self updateNotificationRadiusLabel];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)updateDistanceUnitLabel
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSNumber *distanceUnitPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREFERENCE_TYPE];
     
-    // Configure the cell...
+    if (distanceUnitPreferenceIndex) {
+        self.distanceUnitLabel.text = self.distanceUnitPreferences[[distanceUnitPreferenceIndex integerValue]];
+    } else {
+        self.distanceUnitLabel.text = self.distanceUnitPreferences[0];
+    }
+}
+
+- (void)updateNotificationRadiusLabel
+{
+    NSNumber *notificationRadiusPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREFERENCE_TYPE];
     
-    return cell;
+    if (notificationRadiusPreferenceIndex) {
+        self.notificationRadiusLabel.text = self.notificationRadiusPreferences[[notificationRadiusPreferenceIndex integerValue]];
+    } else {
+        self.notificationRadiusLabel.text = [self.notificationRadiusPreferences lastObject];
+    }
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)viewWillAppear:(BOOL)animated
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillAppear:animated];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)viewWillDisappear:(BOOL)animated
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillDisappear:animated];
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    switch (indexPath.row) {
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            [self feedBackClicked];
+            break;
+        case 3:
+            break;
+    }
+}
+
+- (void)feedBackClicked
+{
+    [TestFlight openFeedbackView];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        if (indexPath) {
+            if ([segue.identifier isEqualToString:@"Notification Radius"]) {
+                NSArray *pickerData = self.notificationRadiusPreferences;
+                NSString *preferenceType = NOTIFICATION_RADIUS_PREFERENCE_TYPE;
+                
+                [segue.destinationViewController performSelector:@selector(setPickerData:) withObject:pickerData];
+                [segue.destinationViewController performSelector:@selector(setPreferenceType:) withObject:preferenceType];
+            } else if ([segue.identifier isEqualToString:@"Distance Unit"]) {
+                NSArray *pickerData = self.distanceUnitPreferences;
+                NSString *preferenceType = DISTANCE_UNIT_PREFERENCE_TYPE;
+                
+                [segue.destinationViewController performSelector:@selector(setPickerData:) withObject:pickerData];
+                [segue.destinationViewController performSelector:@selector(setPreferenceType:) withObject:preferenceType];
+            }
+            
+            ((SettingPickerViewController *)[segue destinationViewController]).settingPickerVCDelegate = self;
+        }
+    } 
+}
+
+- (void)dismissSettingPickerModal:(SettingPickerViewController *)settingPickerViewController
+{
+    if ([settingPickerViewController.preferenceType isEqualToString:NOTIFICATION_RADIUS_PREFERENCE_TYPE]) {
+        //TODO: send device info
+        
+        [self updateNotificationRadiusLabel];
+    } else if ([settingPickerViewController.preferenceType isEqualToString:DISTANCE_UNIT_PREFERENCE_TYPE]) {
+        [self updateDistanceUnitLabel];
+        [self updateNotificationRadiusLabel];
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -10,29 +10,46 @@
 
 @interface SettingPickerViewController ()
 
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+
 @end
 
 @implementation SettingPickerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    //Initialize picker to "1km" notification range
+    if ([self.preferenceType isEqualToString:@"Notification Radius"]) {
+        [self.pickerView selectRow:2 inComponent:0 animated:NO];
+    };
+}
+
+- (IBAction)validateButtonClicked:(id)sender {
+    NSNumber *selectedRow = [NSNumber numberWithInt:[self.pickerView selectedRowInComponent:0]];
+    [[NSUserDefaults standardUserDefaults] setObject:selectedRow forKey:self.preferenceType];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self.settingPickerVCDelegate dismissSettingPickerModal:self];
+}
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.pickerData.count;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [self.pickerData objectAtIndex:row];
 }
 
 @end

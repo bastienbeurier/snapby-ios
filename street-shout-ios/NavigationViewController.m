@@ -15,7 +15,7 @@
 
 @interface NavigationViewController ()
 
-@property (nonatomic, weak) UINavigationController *navigationController;
+@property (nonatomic, weak) UINavigationController *feedNavigationController;
 @property (nonatomic, weak) FeedTVC *feedTVC;
 @property (nonatomic, weak) MapViewController *mapViewController;
 
@@ -37,8 +37,8 @@
 
 - (void)shoutSelectedOnMap:(Shout *)shout
 {
-    if ([[self.navigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
-        ((ShoutViewController *)[self.navigationController topViewController]).shout = shout;
+    if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
+        ((ShoutViewController *)[self.feedNavigationController topViewController]).shout = shout;
     } else {
         [self.feedTVC performSegueWithIdentifier:@"Show Shout" sender:shout];
     }
@@ -46,8 +46,8 @@
 
 - (void)shoutDeselectedOnMap
 {
-    if ([[self.navigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
-        [self.navigationController popViewControllerAnimated:YES];
+    if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
+        [self.feedNavigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -65,9 +65,9 @@
         self.mapViewController.mapVCdelegate = self;
     }
     
-    if ([segueName isEqualToString: @"navigationController"]) {
-        self.navigationController = (UINavigationController *)[segue destinationViewController];
-        self.feedTVC = (FeedTVC *) [self.navigationController topViewController];
+    if ([segueName isEqualToString: @"feedNavigationController"]) {
+        self.feedNavigationController = (UINavigationController *)[segue destinationViewController];
+        self.feedTVC = (FeedTVC *) [self.feedNavigationController topViewController];
         self.feedTVC.feedTVCdelegate = self;
     }
     

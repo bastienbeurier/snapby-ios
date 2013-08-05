@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingPickerViewController : UIViewController
+@protocol SettingPickerViewControllerDelegate;
+
+@interface SettingPickerViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+
+@property (strong, nonatomic) NSArray *pickerData;
+@property (strong, nonatomic) NSString *preferenceType;
+@property (weak, nonatomic) id <SettingPickerViewControllerDelegate> settingPickerVCDelegate;
+
+@end
+
+@protocol SettingPickerViewControllerDelegate
+
+- (void)dismissSettingPickerModal:(SettingPickerViewController *)settingPickerViewController;
 
 @end
