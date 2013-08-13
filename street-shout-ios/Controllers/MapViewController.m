@@ -14,6 +14,8 @@
 
 @interface MapViewController () <MKMapViewDelegate>
 
+@property (nonatomic) BOOL hasZoomedAtStartUp;
+
 @end
 
 @implementation MapViewController
@@ -24,6 +26,8 @@
     [super viewDidLoad];
     self.mapView.delegate = self;
     self.preventShoutDeselection = NO;
+    
+    self.hasZoomedAtStartUp = NO;
 }
 
 - (void)setShouts:(NSArray *)shouts
@@ -32,23 +36,22 @@
     [self displayShouts:shouts];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    //    MKUserLocation *userLocation = self.mapView.userLocation;
-    [self animateMapToLatitude:37.753615 Longitude:-122.417578 WithDistance:1000];
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if ( self.hasZoomedAtStartUp == NO ) {
+        [self animateMapToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000];
+        self.hasZoomedAtStartUp = YES;
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-
-    [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
-}
-
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
-{
     if (!self.preventShoutDeselection) {
         [self.mapVCdelegate shoutDeselectedOnMap];
     }
     
     self.preventShoutDeselection = NO;
+    
+    [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
