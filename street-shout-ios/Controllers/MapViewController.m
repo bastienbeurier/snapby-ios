@@ -119,4 +119,28 @@
     return _displayedShouts;
 }
 
+- (void)myLocationButtonClicked
+{
+    MKUserLocation *userLocation = self.mapView.userLocation;
+    
+    if (userLocation && userLocation.coordinate.longitude != 0 && userLocation.coordinate.latitude != 0) {
+        [self animateMapToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000];
+        self.hasZoomedAtStartUp = YES;
+    } else {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
+                                                          message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+    }
+
+}
+
+- (void)dezoomButtonClicked
+{
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(180, 360));
+    [self.mapView setRegion:region animated:YES];
+}
+
 @end

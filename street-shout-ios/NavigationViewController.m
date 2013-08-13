@@ -87,9 +87,7 @@
 - (IBAction)createShoutButtonClicked:(id)sender {
     MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
     
-//    if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
-    //TODO: REMOVE!!
-    if (myLocation) {
+    if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
         [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
     } else {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
@@ -99,6 +97,13 @@
                                                 otherButtonTitles:nil];
         [message show];
     }
+}
+- (IBAction)myLocationButtonClicked:(id)sender {
+    [self.mapViewController myLocationButtonClicked];
+}
+
+- (IBAction)dezoomButtonClicked:(id)sender {
+        [self.mapViewController dezoomButtonClicked];
 }
 
 @end

@@ -24,6 +24,10 @@
 
 - (void)animateMapToLatitude:(double)lat Longitude:(double)lng WithDistance:(NSUInteger) distance;
 
+- (void)myLocationButtonClicked;
+
+- (void)dezoomButtonClicked;
+
 @end
 
 @protocol MapViewControllerDelegate

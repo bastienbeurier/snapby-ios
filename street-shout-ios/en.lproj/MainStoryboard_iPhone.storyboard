@@ -141,7 +141,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ewS-UU-APX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-56" y="772"/>
+            <point key="canvasLocation" x="-41" y="743"/>
         </scene>
         <!--Setting Picker View Controller-->
         <scene sceneID="prZ-EF-72I">
@@ -212,44 +212,41 @@
                                     <segue destination="6Gi-oY-V8b" kind="embed" identifier="feedNavigationController" id="h5f-bl-Ke8"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="my4-tH-I99">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Shout!">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="createShoutButtonClicked:" destination="2" eventType="touchUpInside" id="bqj-oP-3km"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6au-wz-Gx0">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Settings">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="EsS-z3-PWu" kind="push" id="gRq-IO-8HX"/>
-                                </connections>
-                            </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oP0-Tx-Onb">
+                                <items>
+                                    <barButtonItem title="Shout!" id="Vsf-rZ-2ec">
+                                        <connections>
+                                            <action selector="createShoutButtonClicked:" destination="2" id="lQL-rX-Zoi"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Zoom" id="wau-bm-spk">
+                                        <connections>
+                                            <action selector="myLocationButtonClicked:" destination="2" id="iQO-hs-3VJ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Dezoom" id="wcb-qm-HZI">
+                                        <connections>
+                                            <action selector="dezoomButtonClicked:" destination="2" id="mPE-Kg-p2e"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Settings" id="AYB-4o-LWE">
+                                        <connections>
+                                            <segue destination="EsS-z3-PWu" kind="push" id="aDe-LZ-Q7P"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="my4-tH-I99" firstAttribute="centerX" secondItem="R9z-ng-Ift" secondAttribute="centerX" type="default" id="4Y5-st-5tQ"/>
-                            <constraint firstItem="my4-tH-I99" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="8he-Ro-ZB9"/>
-                            <constraint firstItem="R9z-ng-Ift" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="J2k-t8-MSU"/>
                             <constraint firstAttribute="bottom" secondItem="R9z-ng-Ift" secondAttribute="bottom" constant="180" id="LaK-iW-ofn"/>
-                            <constraint firstAttribute="trailing" secondItem="6au-wz-Gx0" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="M5M-5R-67o"/>
+                            <constraint firstItem="oP0-Tx-Onb" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="Lel-vi-8gD"/>
                             <constraint firstItem="3I9-pl-Jsb" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="WQk-3y-Qq2"/>
-                            <constraint firstItem="6au-wz-Gx0" firstAttribute="top" secondItem="3" secondAttribute="top" constant="229" id="czM-Bn-aZE"/>
+                            <constraint firstItem="3I9-pl-Jsb" firstAttribute="top" secondItem="3" secondAttribute="top" constant="280" id="WWx-JK-GmH"/>
+                            <constraint firstItem="oP0-Tx-Onb" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="aRg-l6-w6x"/>
+                            <constraint firstItem="R9z-ng-Ift" firstAttribute="top" secondItem="oP0-Tx-Onb" secondAttribute="bottom" type="default" id="cgs-jc-f53"/>
+                            <constraint firstItem="oP0-Tx-Onb" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="iWY-Fk-R8v"/>
                             <constraint firstItem="3I9-pl-Jsb" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="k0C-jt-Xso"/>
-                            <constraint firstItem="3I9-pl-Jsb" firstAttribute="top" secondItem="6au-wz-Gx0" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="oX1-VF-Djw"/>
                             <constraint firstItem="R9z-ng-Ift" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="qw7-KR-pQw"/>
                             <constraint firstItem="R9z-ng-Ift" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="sJc-4h-NY7"/>
                             <constraint firstItem="3I9-pl-Jsb" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="yRY-0Q-2Cb"/>
@@ -523,7 +520,7 @@
             <objects>
                 <viewController storyboardIdentifier="mapViewController" id="d4j-A5-G8j" customClass="MapViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="01B-3P-WJq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="368"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="324"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bgn-bn-PdH"/>
@@ -613,6 +610,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationViewController.h"/>
             <relationships>
                 <relationship kind="action" name="createShoutButtonClicked:"/>
+                <relationship kind="action" name="dezoomButtonClicked:"/>
+                <relationship kind="action" name="myLocationButtonClicked:"/>
             </relationships>
         </class>
         <class className="SettingPickerViewController" superclassName="UIViewController">

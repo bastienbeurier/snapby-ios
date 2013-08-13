@@ -90,6 +90,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+        [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+    
     switch (indexPath.row) {
         case 0:
             break;
@@ -99,6 +101,7 @@
             [self feedBackClicked];
             break;
         case 3:
+            [self rateMeClicked];
             break;
     }
 }
@@ -106,6 +109,12 @@
 - (void)feedBackClicked
 {
     [TestFlight openFeedbackView];
+}
+
+- (void)rateMeClicked
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Not yet implemented" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [message show];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
