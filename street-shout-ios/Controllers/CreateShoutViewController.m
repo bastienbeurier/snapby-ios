@@ -11,6 +11,11 @@
 #import "Constants.h"
 #import "AFStreetShoutAPIClient.h"
 #import "LocationUtilities.h"
+#import "AsyncImageUploader.h"
+
+#define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
+#define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
+#define ACTION_SHEET_CANCEL NSLocalizedStringFromTable (@"cancel", @"Strings", @"comment")
 
 @interface CreateShoutViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameView;
@@ -18,6 +23,9 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
 @property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
+@property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
+@property (strong, nonatomic) UIImage *capturedImage;
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
 
 @end
 
@@ -116,7 +124,6 @@
 
 - (void)createShout
 {
-    
     typedef void (^SuccessBlock)(Shout *);
     SuccessBlock successBlock = ^(Shout *shout) {
         [self.createShoutVCDelegate dismissCreateShoutModal];
@@ -135,13 +142,25 @@
         [alert show];
     };
     
-    [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
-                                           Lng:self.shoutLocation.coordinate.longitude
-                                      Username:self.usernameView.text
-                                   Description:self.descriptionView.text
-                                         Image:nil
-                             AndExecuteSuccess:successBlock
-                                       Failure:failureBlock];
+    typedef void (^CreateShoutBlock)();
+    CreateShoutBlock createShoutBlock = ^{
+        [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
+                                               Lng:self.shoutLocation.coordinate.longitude
+                                          Username:self.usernameView.text
+                                       Description:self.descriptionView.text
+                                             Image:nil
+                                 AndExecuteSuccess:successBlock
+                                           Failure:failureBlock];
+    };
+    
+    if (self.capturedImage) {
+        AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage];
+        imageUploader.completionBlock = createShoutBlock;
+        NSOperationQueue *operationQueue = [NSOperationQueue new];
+        [operationQueue addOperation:imageUploader];
+    } else {
+        createShoutBlock();
+    }
 }
 
 - (IBAction)cancelShoutClicked:(id)sender {
@@ -163,6 +182,89 @@
 
 - (void)dismissRefineShoutLocationModal {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)addPhotoButtonClicked:(UIButton *)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:ACTION_SHEET_OPTION_1, ACTION_SHEET_OPTION_2, nil];
+    
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([buttonTitle isEqualToString:ACTION_SHEET_OPTION_1]) {
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+    } else if ([buttonTitle isEqualToString:ACTION_SHEET_OPTION_2]) {
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    } else if ([buttonTitle isEqualToString:ACTION_SHEET_CANCEL]) {
+        
+    }
+}
+
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
+{
+    if (self.shoutImageView.isAnimating)
+    {
+        [self.shoutImageView stopAnimating];
+    }
+    
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = sourceType;
+    imagePickerController.delegate = self;
+    
+    if (sourceType == UIImagePickerControllerSourceTypeCamera)
+    {
+        imagePickerController.showsCameraControls = YES;
+    }
+    
+    self.imagePickerController = imagePickerController;
+    [self presentViewController:self.imagePickerController animated:YES completion:nil];
+}
+
+- (void)finishAndUpdate
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+    if (self.capturedImage) {
+        [self.shoutImageView setImage:self.capturedImage];
+    }
+    
+    self.imagePickerController = nil;
+}
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    image = [self resizeImage:image withSize:kShoutImageSize];
+    
+    self.capturedImage = image;
+    
+    [self finishAndUpdate];
+}
+
+- (UIImage *)resizeImage:(UIImage *)image withSize:(NSUInteger)size
+{
+    CGSize imageSize;
+    imageSize.height = size;
+    imageSize.width = size;
+    
+    UIGraphicsBeginImageContext(imageSize);
+    [image drawInRect:CGRectMake(0,0, imageSize.width, imageSize.height)];
+    image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

@@ -13,7 +13,7 @@
 
 @protocol CreateShoutViewControllerDelegate;
 
-@interface CreateShoutViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, RefineShoutLocationViewControllerDelegate>
+@interface CreateShoutViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, RefineShoutLocationViewControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) id <CreateShoutViewControllerDelegate> createShoutVCDelegate;
 @property (strong, nonatomic) CLLocation *myLocation;

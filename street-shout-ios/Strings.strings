@@ -32,5 +32,9 @@
 "10mi" = "10mi";
 "meters" = "meters";
 "miles" = "miles";
+"add_image_action_sheet_title" = "Add image";
+"camera" = "Camera";
+"photo_library" = "Photo library";
+"cancel" = "Cancel";
 
  
