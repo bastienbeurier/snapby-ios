@@ -120,6 +120,7 @@
     typedef void (^SuccessBlock)(Shout *);
     SuccessBlock successBlock = ^(Shout *shout) {
         [self.createShoutVCDelegate dismissCreateShoutModal];
+        [self.createShoutVCDelegate onShoutCreated:shout];
     };
     
     typedef void (^FailureBlock)();

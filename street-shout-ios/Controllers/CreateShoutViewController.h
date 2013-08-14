@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "RefineShoutLocationViewController.h"
+#import "Shout.h"
 
 @protocol CreateShoutViewControllerDelegate;
 
@@ -23,5 +24,7 @@
 @protocol CreateShoutViewControllerDelegate
 
 - (void)dismissCreateShoutModal;
+
+- (void)onShoutCreated:(Shout *)shout;
 
 @end

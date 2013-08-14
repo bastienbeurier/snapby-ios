@@ -35,6 +35,17 @@
     }];
 }
 
+- (void)onShoutCreated:(Shout *)shout
+{
+    NSMutableArray *newShouts = [[NSMutableArray alloc] initWithArray:self.mapViewController.shouts];
+    [newShouts insertObject:shout atIndex:0];
+    
+    self.mapViewController.shouts = newShouts;
+    self.feedTVC.shouts = newShouts;
+    
+    [self.mapViewController shoutSelectedOnMap:shout];
+}
+
 - (void)shoutSelectedOnMap:(Shout *)shout
 {
     if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {

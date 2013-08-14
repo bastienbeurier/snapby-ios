@@ -64,11 +64,16 @@
     if ([annotation respondsToSelector:@selector(shout)]) {
         Shout *shout = annotation.shout;
         
-        [self.mapVCdelegate shoutSelectedOnMap:shout];
-        
-        self.preventShoutDeselection = YES;
-        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:1000 Animated:YES];
+        [self shoutSelectedOnMap:shout];
     }
+}
+
+- (void)shoutSelectedOnMap:(Shout *)shout
+{
+    [self.mapVCdelegate shoutSelectedOnMap:shout];
+    
+    self.preventShoutDeselection = YES;
+    [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:1000 Animated:YES];
 }
 
 - (void)displayShouts:(NSArray *)shouts

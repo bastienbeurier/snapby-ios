@@ -26,6 +26,8 @@
 
 - (void)dezoomButtonClicked;
 
+- (void)shoutSelectedOnMap:(Shout *)shout;
+
 @end
 
 @protocol MapViewControllerDelegate
