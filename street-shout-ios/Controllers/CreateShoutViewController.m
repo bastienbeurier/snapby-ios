@@ -10,28 +10,31 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
 #import "AFStreetShoutAPIClient.h"
+#import "LocationUtilities.h"
 
 @interface CreateShoutViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
+@property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
 
 @end
 
 @implementation CreateShoutViewController
 
 - (void)viewWillAppear:(BOOL)animated {
-    CLLocationCoordinate2D location;
+    [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:NO];
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
+    shoutAnnotation.coordinate = self.shoutLocation.coordinate;
+    [self.mapView addAnnotation:shoutAnnotation];
+}
 
-//        location.latitude = self.myLocation.coordinate.latitude;
-//        location.longitude = self.myLocation.coordinate.longitude;
-        //TODO: REMOVE!!
-    location.latitude = 37.753615;
-    location.longitude = -122.417578;
-    MKCoordinateRegion shoutRegion = MKCoordinateRegionMakeWithDistance(location, kCreateShoutDistance, kCreateShoutDistance);
-        
-    [self.mapView setRegion:shoutRegion animated:NO];
+- (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
+{
+    self.shoutLocation = shoutLocation;
 }
 
 - (void)viewDidLoad
@@ -113,16 +116,52 @@
 
 - (void)createShout
 {
-    [AFStreetShoutAPIClient createShoutWithLat:self.myLocation.coordinate.latitude
-                                           Lng:self.myLocation.coordinate.longitude
+    
+    typedef void (^SuccessBlock)(Shout *);
+    SuccessBlock successBlock = ^(Shout *shout) {
+        [self.createShoutVCDelegate dismissCreateShoutModal];
+    };
+    
+    typedef void (^FailureBlock)();
+    FailureBlock failureBlock = ^{
+        NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
+        NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    };
+    
+    [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
+                                           Lng:self.shoutLocation.coordinate.longitude
                                       Username:self.usernameView.text
                                    Description:self.descriptionView.text
                                          Image:nil
-                             AndExecuteSuccess:nil Failure:nil];
+                             AndExecuteSuccess:successBlock
+                                       Failure:failureBlock];
 }
 
 - (IBAction)cancelShoutClicked:(id)sender {
     [self.createShoutVCDelegate dismissCreateShoutModal];
+}
+
+- (IBAction)settingsMapClicked:(id)sender {
+    [self performSegueWithIdentifier:@"Refine Shout Location" sender:nil];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"Refine Shout Location"]) {
+        ((RefineShoutLocationViewController *) [segue destinationViewController]).myLocation = self.myLocation;
+        ((RefineShoutLocationViewController *) [segue destinationViewController]).refineShoutLocationVCDelegate = self;
+    }
+}
+
+- (void)dismissRefineShoutLocationModal {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

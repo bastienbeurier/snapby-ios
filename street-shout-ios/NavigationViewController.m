@@ -54,7 +54,7 @@
 - (void)shoutSelectedInFeed:(Shout *)shout
 {
     self.mapViewController.preventShoutDeselection = YES;
-    [self.mapViewController animateMapToLatitude:shout.lat Longitude:shout.lng WithDistance:1000];
+    [LocationUtilities animateMap:self.mapViewController.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:1000 Animated:YES];
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -74,7 +74,8 @@
     if ([segueName isEqualToString: @"Create Shout Modal"]) {
         MKUserLocation *myLocation = (MKUserLocation *)sender;
         
-        ((CreateShoutViewController *)[segue destinationViewController]).myLocation = myLocation;
+        ((CreateShoutViewController *)[segue destinationViewController]).myLocation = myLocation.location;
+        ((CreateShoutViewController *)[segue destinationViewController]).shoutLocation = myLocation.location;
         ((CreateShoutViewController *)[segue destinationViewController]).createShoutVCDelegate = self;
     }
 }

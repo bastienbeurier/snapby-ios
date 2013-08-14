@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "RefineShoutLocationViewController.h"
 
 @protocol CreateShoutViewControllerDelegate;
 
-@interface CreateShoutViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate>
+@interface CreateShoutViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, RefineShoutLocationViewControllerDelegate>
 
 @property (weak, nonatomic) id <CreateShoutViewControllerDelegate> createShoutVCDelegate;
-@property (strong, nonatomic) MKUserLocation *myLocation;
+@property (strong, nonatomic) CLLocation *myLocation;
+@property (strong, nonatomic) CLLocation *shoutLocation;
 
 @end
 

@@ -39,9 +39,12 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     if ( self.hasZoomedAtStartUp == NO ) {
-        [self animateMapToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000];
+        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000 Animated:YES];
         self.hasZoomedAtStartUp = YES;
     }
+    
+    MKAnnotationView* annotationView = [mapView viewForAnnotation:userLocation];
+    annotationView.canShowCallout = NO;
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
@@ -56,24 +59,16 @@
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    Shout *shout = ((MKPointAnnotation *)view.annotation).shout;
+    MKPointAnnotation *annotation = (MKPointAnnotation *)view.annotation;
     
-    [self.mapVCdelegate shoutSelectedOnMap:shout];
-    
-    self.preventShoutDeselection = YES;
-    [self animateMapToLatitude:shout.lat Longitude:shout.lng WithDistance:1000];
-}
-
-- (void)animateMapToLatitude:(double)lat Longitude:(double)lng WithDistance:(NSUInteger) distance
-{
-    CLLocationCoordinate2D location;
-    location.latitude = lat;
-    location.longitude = lng;
-    
-    MKCoordinateRegion shoutRegion = MKCoordinateRegionMakeWithDistance(location, distance, distance);
-    
-    [self.mapView setRegion:shoutRegion animated:YES];
-    
+    if ([annotation respondsToSelector:@selector(shout)]) {
+        Shout *shout = annotation.shout;
+        
+        [self.mapVCdelegate shoutSelectedOnMap:shout];
+        
+        self.preventShoutDeselection = YES;
+        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:1000 Animated:YES];
+    }
 }
 
 - (void)displayShouts:(NSArray *)shouts
@@ -124,7 +119,7 @@
     MKUserLocation *userLocation = self.mapView.userLocation;
     
     if (userLocation && userLocation.coordinate.longitude != 0 && userLocation.coordinate.latitude != 0) {
-        [self animateMapToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000];
+        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000 Animated:YES];
         self.hasZoomedAtStartUp = YES;
     } else {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
@@ -134,7 +129,6 @@
                                                 otherButtonTitles:nil];
         [message show];
     }
-
 }
 
 - (void)dezoomButtonClicked

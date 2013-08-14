@@ -7,6 +7,7 @@
 //
 
 #import "LocationUtilities.h"
+#import <MapKit/MapKit.h>
 
 @implementation LocationUtilities
 
@@ -27,6 +28,17 @@
              [NSNumber numberWithDouble:neCoord.longitude],
              [NSNumber numberWithDouble:swCoord.latitude],
              [NSNumber numberWithDouble:swCoord.longitude]];
+}
+
++ (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng WithDistance:(NSUInteger)distance Animated:(BOOL)animated
+{
+    CLLocationCoordinate2D location;
+    location.latitude = lat;
+    location.longitude = lng;
+    
+    MKCoordinateRegion shoutRegion = MKCoordinateRegionMakeWithDistance(location, distance, distance);
+    
+    [mapView setRegion:shoutRegion animated:animated];
 }
 
 @end

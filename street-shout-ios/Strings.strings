@@ -21,6 +21,8 @@
 "shout_description_too_long" = "Your shout is too long";
 "no_location_for_shout_title" = "Can't retrieve your location";
 "no_location_for_shout_message" = "Please check your connection and geolocation settings.";
+"create_shout_failed_title" = "Connection problem";
+"create_shout_failed_message" = "Your shout failed, please try again.";
 "none" = "none";
 "100m" = "100m";
 "1km" = "1km";

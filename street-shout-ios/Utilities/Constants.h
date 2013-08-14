@@ -18,3 +18,4 @@ static const NSUInteger kShoutMaxLength = 140;
 static const NSUInteger kCreateShoutDistance = 1000;
 static const NSUInteger kMaxUsernameLength = 20;
 static const NSUInteger kMaxShoutDescriptionLength = 140;
+static const NSUInteger kShoutRadius = 300;

@@ -74,9 +74,10 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://dev-street-sho
     }
     
     [[AFStreetShoutAPIClient sharedClient] postPath:@"shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"Json response: %@", (NSString *) JSON);
+        NSString *rawShout = [JSON valueForKeyPath:@"result"];
+        successBlock([Shout rawShoutToInstance:rawShout]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //TODO: implement
+        failureBlock();
     }];
 }
 

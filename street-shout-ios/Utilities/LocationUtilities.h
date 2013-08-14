@@ -13,4 +13,6 @@
 
 + (NSArray *)getMapBounds:(MKMapView *)mapView;
 
++ (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng WithDistance:(NSUInteger)distance Animated:(BOOL)animated;
+
 @end
