@@ -9,7 +9,7 @@
             <objects>
                 <tableViewController id="EsS-z3-PWu" customClass="SettingsTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yXC-Ot-EIa">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -148,7 +148,7 @@
             <objects>
                 <viewController id="gUy-0m-C7a" customClass="SettingPickerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Igs-D7-8mc">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FfE-Go-5qt">
@@ -197,7 +197,7 @@
             <objects>
                 <viewController id="2" customClass="NavigationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R9z-ng-Ift">
@@ -266,12 +266,12 @@
             <objects>
                 <viewController id="vn8-un-4WF" customClass="CreateShoutViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hPd-hm-le7">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ysa-NC-Kml">
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="next"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="omK-0A-hy7">
                                 <constraints>
@@ -428,7 +428,7 @@
             <objects>
                 <viewController id="Kte-b7-QO8" customClass="RefineShoutLocationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L3o-Yh-hn2">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Drag pin to refine your location:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9Z-O2-k90">
@@ -495,7 +495,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="feedTVC" id="pmS-cr-UQP" customClass="FeedTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5Jo-W8-Rd9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="268"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="69W-lX-8uO">
@@ -564,7 +564,7 @@
             <objects>
                 <viewController storyboardIdentifier="shoutController" id="qtI-Lc-vOJ" customClass="ShoutViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LzH-fg-hOp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="268"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Shout username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPB-zM-m3y">
@@ -581,21 +581,30 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-Is-qMB">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="M0j-AI-dll"/>
+                                    <constraint firstAttribute="height" constant="50" id="crO-74-0c2"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hPB-zM-m3y" firstAttribute="top" secondItem="LzH-fg-hOp" secondAttribute="top" constant="20" symbolic="YES" type="default" id="7Id-dz-hpj"/>
                             <constraint firstAttribute="trailing" secondItem="cRS-g9-DDb" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="CUt-jQ-KHc"/>
                             <constraint firstItem="cRS-g9-DDb" firstAttribute="leading" secondItem="LzH-fg-hOp" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="JfT-P4-fNh"/>
-                            <constraint firstItem="cRS-g9-DDb" firstAttribute="top" secondItem="hPB-zM-m3y" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="PGa-hm-io9"/>
+                            <constraint firstItem="cRS-g9-DDb" firstAttribute="centerY" secondItem="LzH-fg-hOp" secondAttribute="centerY" type="default" id="P2P-vE-HiS"/>
+                            <constraint firstAttribute="trailing" secondItem="MhG-Is-qMB" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="R9J-bi-47I"/>
                             <constraint firstAttribute="bottom" secondItem="WBq-P1-FaH" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="RWn-g2-VcU"/>
+                            <constraint firstItem="MhG-Is-qMB" firstAttribute="top" secondItem="LzH-fg-hOp" secondAttribute="top" constant="20" symbolic="YES" type="default" id="VxM-XJ-fQ2"/>
                             <constraint firstItem="hPB-zM-m3y" firstAttribute="leading" secondItem="LzH-fg-hOp" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="vJ5-0Q-azs"/>
+                            <constraint firstItem="hPB-zM-m3y" firstAttribute="top" secondItem="LzH-fg-hOp" secondAttribute="top" constant="34" id="xda-S1-iny"/>
                             <constraint firstAttribute="trailing" secondItem="WBq-P1-FaH" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="xjV-qR-bEX"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZqW-Qr-gXe"/>
                     <connections>
                         <outlet property="shoutContent" destination="cRS-g9-DDb" id="jdS-aN-x4M"/>
+                        <outlet property="shoutImageView" destination="MhG-Is-qMB" id="dnr-I2-CTU"/>
                         <outlet property="shoutStamp" destination="WBq-P1-FaH" id="CdJ-Jf-bBq"/>
                         <outlet property="shoutUsername" destination="hPB-zM-m3y" id="UHO-CZ-lSL"/>
                     </connections>
@@ -609,7 +618,7 @@
             <objects>
                 <viewController storyboardIdentifier="mapViewController" id="d4j-A5-G8j" customClass="MapViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="01B-3P-WJq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="324"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="236"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bgn-bn-PdH"/>
@@ -671,7 +680,7 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="aN7-uv-cu6"/>

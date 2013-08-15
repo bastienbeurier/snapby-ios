@@ -19,12 +19,13 @@
 @interface AsyncImageUploader:NSOperation<AmazonServiceRequestDelegate>
 {
     UIImage *shoutImage;
+    NSString *shoutImageName;
 
     BOOL isExecuting;
     BOOL isFinished;
 }
 
--(id)initWithImage:(UIImage *)image;
+-(id)initWithImage:(UIImage *)image AndName:(NSString *)imageName;
 
 -(void)finish;
 

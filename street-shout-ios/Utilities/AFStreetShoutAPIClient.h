@@ -23,6 +23,7 @@
                   Username:(NSString *)userName
                Description:(NSString *)description
                      Image:(NSString *) imageUrl
+                  DeviceId:(NSString *)deviceId
          AndExecuteSuccess:(void(^)(Shout *))successBlock
                    Failure:(void(^)())failureBlock;
 

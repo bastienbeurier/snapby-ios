@@ -79,9 +79,16 @@
 
 - (NSString *)subtitleForRow:(NSUInteger)row
 {
-    NSString *timeStamp = [TimeUtilities shoutAgeToString:[TimeUtilities getShoutAge:((Shout *)self.shouts[row]).created]];
+    Shout *shout = (Shout *)self.shouts[row];
+    
+    NSString *timeStamp = [TimeUtilities shoutAgeToString:[TimeUtilities getShoutAge:shout.created]];
     NSString *userName = [NSString stringWithFormat:@", by %@", ((Shout *)self.shouts[row]).displayName];
-    return [timeStamp stringByAppendingString:userName];
+    NSString *stamp = [timeStamp stringByAppendingString:userName];
+    
+    if (shout.image) {
+        stamp = [stamp stringByAppendingString:@" (photo)"];
+    }
+    return stamp;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

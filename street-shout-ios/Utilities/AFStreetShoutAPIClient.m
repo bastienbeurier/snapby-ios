@@ -8,6 +8,7 @@
 
 #import "AFStreetShoutAPIClient.h"
 #import "AFJSONRequestOperation.h"
+#import "GeneralUtilities.h"
 
 static NSString * const kAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
 
@@ -59,7 +60,7 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://dev-street-sho
     }];
 }
 
-+ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)userName Description:(NSString *)description Image:(NSString *)imageUrl AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)())failureBlock
++ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)userName Description:(NSString *)description Image:(NSString *)imageUrl DeviceId:(NSString *)deviceId AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)())failureBlock
 {    
     //TODO: add device_id
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
@@ -68,6 +69,7 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://dev-street-sho
     [parameters setObject:description forKey:@"description"];
     [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
     [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
+    [parameters setObject:deviceId forKey:@"device_id"];
     
     if (imageUrl) {
         [parameters setObject:imageUrl forKey:@"image"];

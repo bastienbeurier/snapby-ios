@@ -15,16 +15,18 @@
 
 #import "AsyncImageUploader.h"
 #import "AmazonClientManager.h"
+#import "Constants.h"
 
 @implementation AsyncImageUploader
 
 #pragma mark - Class Lifecycle
 
--(id)initWithImage:(UIImage *)image {
+-(id)initWithImage:(UIImage *)image AndName:(NSString *)imageName {
     self = [super init];
     
     if (self) {
         shoutImage = image;
+        shoutImageName = imageName;
         isExecuting = NO;
         isFinished  = NO;
     }
@@ -54,13 +56,14 @@
     isExecuting = YES;
     [self didChangeValueForKey:@"isExecuting"];
     
-    NSString *bucketName = [NSString stringWithFormat:@"street-shout1", [ACCESS_KEY_ID lowercaseString]];
-    NSString *keyName    = @"Shout image";
+    NSString *bucketName = S3_BUCKET;
+    NSString *keyName = [shoutImageName stringByAppendingFormat:@"--%d", kShoutImageSize];
 
     NSData *imageData = UIImageJPEGRepresentation (shoutImage, 0.8);
     
     // Puts the file as an object in the bucket.
     S3PutObjectRequest *putObjectRequest = [[S3PutObjectRequest alloc] initWithKey:keyName inBucket:bucketName];
+    putObjectRequest.contentType = @"image/jpeg";
     putObjectRequest.data = imageData;
     putObjectRequest.delegate = self;
     

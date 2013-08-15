@@ -12,6 +12,7 @@
 #import "AFStreetShoutAPIClient.h"
 #import "LocationUtilities.h"
 #import "AsyncImageUploader.h"
+#import "GeneralUtilities.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
 #define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
@@ -24,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
 @property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
+@property (strong, nonatomic) NSString *shoutImageName;
+@property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 
@@ -143,22 +146,38 @@
     };
     
     typedef void (^CreateShoutBlock)();
-    CreateShoutBlock createShoutBlock = ^{
-        [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
-                                               Lng:self.shoutLocation.coordinate.longitude
-                                          Username:self.usernameView.text
-                                       Description:self.descriptionView.text
-                                             Image:nil
-                                 AndExecuteSuccess:successBlock
-                                           Failure:failureBlock];
-    };
+    CreateShoutBlock createShoutBlock;
     
-    if (self.capturedImage) {
-        AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage];
+    NSString *deviceId = [GeneralUtilities getDeviceID];
+    
+    if (self.capturedImage && self.shoutImageUrl) {
+        createShoutBlock = ^{
+            [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
+                                                   Lng:self.shoutLocation.coordinate.longitude
+                                              Username:self.usernameView.text
+                                           Description:self.descriptionView.text
+                                                 Image:self.shoutImageUrl
+                                              DeviceId:deviceId
+                                     AndExecuteSuccess:successBlock
+                                               Failure:failureBlock];
+        };
+        
+        AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
         imageUploader.completionBlock = createShoutBlock;
         NSOperationQueue *operationQueue = [NSOperationQueue new];
         [operationQueue addOperation:imageUploader];
     } else {
+        createShoutBlock = ^{
+            [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
+                                                   Lng:self.shoutLocation.coordinate.longitude
+                                              Username:self.usernameView.text
+                                           Description:self.descriptionView.text
+                                                 Image:nil
+                                              DeviceId:deviceId
+                                     AndExecuteSuccess:successBlock
+                                               Failure:failureBlock];
+        };
+        
         createShoutBlock();
     }
 }
@@ -243,6 +262,8 @@
     image = [self resizeImage:image withSize:kShoutImageSize];
     
     self.capturedImage = image;
+    self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
+    self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
     
     [self finishAndUpdate];
 }

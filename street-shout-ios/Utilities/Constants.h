@@ -12,6 +12,8 @@
 #define USE_SSL NO
 #define ACCESS_KEY_ID @"USED-ONLY-FOR-TESTING"  // Leave this value as is.
 #define SECRET_KEY @"USED-ONLY-FOR-TESTING"  // Leave this value as is.
+#define S3_URL @"street-shout1.s3.amazonaws.com/"
+#define S3_BUCKET @"street-shout1"
 
 @interface Constants : NSObject
 
