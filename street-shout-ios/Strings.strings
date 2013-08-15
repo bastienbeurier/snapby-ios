@@ -12,7 +12,7 @@
 "hour_ago" = "hour ago";
 "minutes_ago" = "mins ago";
 "minute_ago" = "min ago";
-"characters" = "characters";
+"characters" = "char";
 "incorrect_username" = "Incorrect username";
 "username_blank" = "Your username can't be blank";
 "username_too_long" = "Your username is too long";

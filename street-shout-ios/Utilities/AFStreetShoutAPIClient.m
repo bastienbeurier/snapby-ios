@@ -10,7 +10,7 @@
 #import "AFJSONRequestOperation.h"
 #import "GeneralUtilities.h"
 
-static NSString * const kAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
+static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 
 @implementation AFStreetShoutAPIClient
 
