@@ -18,7 +18,7 @@
 + (NSUInteger)currentDateInMilliseconds
 {
     NSTimeInterval seconds = [[NSDate date] timeIntervalSince1970];
-    return (int) (seconds * 1000);
+    return (int) seconds;
 }
 
 @end

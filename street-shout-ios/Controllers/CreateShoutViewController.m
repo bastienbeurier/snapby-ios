@@ -13,6 +13,7 @@
 #import "LocationUtilities.h"
 #import "AsyncImageUploader.h"
 #import "GeneralUtilities.h"
+#import "MBProgressHUD.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
 #define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
@@ -129,57 +130,70 @@
 {
     typedef void (^SuccessBlock)(Shout *);
     SuccessBlock successBlock = ^(Shout *shout) {
-        [self.createShoutVCDelegate dismissCreateShoutModal];
-        [self.createShoutVCDelegate onShoutCreated:shout];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self.createShoutVCDelegate dismissCreateShoutModal];
+            [self.createShoutVCDelegate onShoutCreated:shout];
+        });
+        
+        
     };
     
     typedef void (^FailureBlock)();
     FailureBlock failureBlock = ^{
-        NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
-        NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
+            NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        });
     };
-    
-    typedef void (^CreateShoutBlock)();
-    CreateShoutBlock createShoutBlock;
     
     NSString *deviceId = [GeneralUtilities getDeviceID];
     
-    if (self.capturedImage && self.shoutImageUrl) {
-        createShoutBlock = ^{
-            [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
-                                                   Lng:self.shoutLocation.coordinate.longitude
-                                              Username:self.usernameView.text
-                                           Description:self.descriptionView.text
-                                                 Image:self.shoutImageUrl
-                                              DeviceId:deviceId
-                                     AndExecuteSuccess:successBlock
-                                               Failure:failureBlock];
-        };
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        typedef void (^CreateShoutBlock)();
+        CreateShoutBlock createShoutBlock;
         
-        AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
-        imageUploader.completionBlock = createShoutBlock;
-        NSOperationQueue *operationQueue = [NSOperationQueue new];
-        [operationQueue addOperation:imageUploader];
-    } else {
-        createShoutBlock = ^{
-            [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
-                                                   Lng:self.shoutLocation.coordinate.longitude
-                                              Username:self.usernameView.text
-                                           Description:self.descriptionView.text
-                                                 Image:nil
-                                              DeviceId:deviceId
-                                     AndExecuteSuccess:successBlock
-                                               Failure:failureBlock];
-        };
-        
-        createShoutBlock();
-    }
+        if (self.capturedImage && self.shoutImageUrl) {
+            createShoutBlock = ^{
+                [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
+                                                       Lng:self.shoutLocation.coordinate.longitude
+                                                  Username:self.usernameView.text
+                                               Description:self.descriptionView.text
+                                                     Image:self.shoutImageUrl
+                                                  DeviceId:deviceId
+                                         AndExecuteSuccess:successBlock
+                                                   Failure:failureBlock];
+            };
+            
+            AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
+            imageUploader.completionBlock = createShoutBlock;
+            NSOperationQueue *operationQueue = [NSOperationQueue new];
+            [operationQueue addOperation:imageUploader];
+        } else {
+            createShoutBlock = ^{
+                [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
+                                                       Lng:self.shoutLocation.coordinate.longitude
+                                                  Username:self.usernameView.text
+                                               Description:self.descriptionView.text
+                                                     Image:nil
+                                                  DeviceId:deviceId
+                                         AndExecuteSuccess:successBlock
+                                                   Failure:failureBlock];
+            };
+            
+            createShoutBlock();
+        }
+    });
 }
 
 - (IBAction)cancelShoutClicked:(id)sender {
