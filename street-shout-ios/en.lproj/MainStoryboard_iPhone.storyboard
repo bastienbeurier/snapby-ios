@@ -219,12 +219,12 @@
                                             <action selector="createShoutButtonClicked:" destination="2" id="lQL-rX-Zoi"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Zoom" id="wau-bm-spk">
+                                    <barButtonItem title="Zoom In" id="wau-bm-spk">
                                         <connections>
                                             <action selector="myLocationButtonClicked:" destination="2" id="iQO-hs-3VJ"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Dezoom" id="wcb-qm-HZI">
+                                    <barButtonItem title="Zoom Out" id="wcb-qm-HZI">
                                         <connections>
                                             <action selector="dezoomButtonClicked:" destination="2" id="mPE-Kg-p2e"/>
                                         </connections>
@@ -255,11 +255,12 @@
                     <navigationItem key="navigationItem" id="94I-Zg-wmd"/>
                     <connections>
                         <segue destination="vn8-un-4WF" kind="modal" identifier="Create Shout Modal" id="rBF-pL-H2a"/>
+                        <segue destination="ddt-rk-y7O" kind="push" identifier="Display Shout Image" id="d2q-2K-YkO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-41" y="69"/>
+            <point key="canvasLocation" x="-71" y="85"/>
         </scene>
         <!--Create Shout View Controller-->
         <scene sceneID="ZHD-Ls-YaW">
@@ -581,23 +582,28 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-Is-qMB">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-Is-qMB">
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="M0j-AI-dll"/>
-                                    <constraint firstAttribute="height" constant="50" id="crO-74-0c2"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="R8D-Ri-EkC" appends="YES" id="ZWD-oI-Q2i"/>
+                                    <outletCollection property="gestureRecognizers" destination="R8D-Ri-EkC" appends="YES" id="8R0-lf-fbx"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="hPB-zM-m3y" firstAttribute="top" secondItem="LzH-fg-hOp" secondAttribute="top" constant="20" symbolic="YES" type="default" id="5yp-Ur-7t5"/>
                             <constraint firstAttribute="trailing" secondItem="cRS-g9-DDb" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="CUt-jQ-KHc"/>
                             <constraint firstItem="cRS-g9-DDb" firstAttribute="leading" secondItem="LzH-fg-hOp" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="JfT-P4-fNh"/>
-                            <constraint firstItem="cRS-g9-DDb" firstAttribute="centerY" secondItem="LzH-fg-hOp" secondAttribute="centerY" type="default" id="P2P-vE-HiS"/>
+                            <constraint firstItem="cRS-g9-DDb" firstAttribute="top" secondItem="LzH-fg-hOp" secondAttribute="top" constant="78" id="NE4-B7-NsJ"/>
                             <constraint firstAttribute="trailing" secondItem="MhG-Is-qMB" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="R9J-bi-47I"/>
                             <constraint firstAttribute="bottom" secondItem="WBq-P1-FaH" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="RWn-g2-VcU"/>
                             <constraint firstItem="MhG-Is-qMB" firstAttribute="top" secondItem="LzH-fg-hOp" secondAttribute="top" constant="20" symbolic="YES" type="default" id="VxM-XJ-fQ2"/>
                             <constraint firstItem="hPB-zM-m3y" firstAttribute="leading" secondItem="LzH-fg-hOp" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="vJ5-0Q-azs"/>
-                            <constraint firstItem="hPB-zM-m3y" firstAttribute="top" secondItem="LzH-fg-hOp" secondAttribute="top" constant="34" id="xda-S1-iny"/>
+                            <constraint firstItem="cRS-g9-DDb" firstAttribute="top" secondItem="MhG-Is-qMB" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="vZa-6y-eIi"/>
                             <constraint firstAttribute="trailing" secondItem="WBq-P1-FaH" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="xjV-qR-bEX"/>
                         </constraints>
                     </view>
@@ -610,8 +616,40 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S7c-O1-lwU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="R8D-Ri-EkC">
+                    <connections>
+                        <action selector="shoutImageClicked:" destination="qtI-Lc-vOJ" id="HNb-Zr-e6X"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1407" y="6"/>
+        </scene>
+        <!--Display Shout Image View Controller-->
+        <scene sceneID="fYj-If-8tL">
+            <objects>
+                <viewController id="ddt-rk-y7O" customClass="DisplayShoutImageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Waa-1Y-i3e">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7c7-tZ-i2e"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7c7-tZ-i2e" firstAttribute="bottom" secondItem="Waa-1Y-i3e" secondAttribute="bottom" type="default" id="1eb-Kf-H6N"/>
+                            <constraint firstItem="7c7-tZ-i2e" firstAttribute="trailing" secondItem="Waa-1Y-i3e" secondAttribute="trailing" type="default" id="4XJ-wK-wAg"/>
+                            <constraint firstItem="7c7-tZ-i2e" firstAttribute="leading" secondItem="Waa-1Y-i3e" secondAttribute="leading" type="default" id="cKd-Qh-H8m"/>
+                            <constraint firstItem="7c7-tZ-i2e" firstAttribute="top" secondItem="Waa-1Y-i3e" secondAttribute="top" type="default" id="h5Z-IL-3Br"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ytC-Yg-Xm5"/>
+                    <connections>
+                        <outlet property="shoutImageView" destination="7c7-tZ-i2e" id="Nhc-DM-ZLx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nyf-WS-0vF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1336" y="450"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="P85-2B-qT4">
@@ -677,6 +715,77 @@
             <point key="canvasLocation" x="-567" y="69"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CreateShoutViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateShoutViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addPhotoButtonClicked:" candidateClass="UIButton"/>
+                <relationship kind="action" name="cancelShoutClicked:"/>
+                <relationship kind="action" name="createShoutClicked:"/>
+                <relationship kind="action" name="settingsMapClicked:"/>
+                <relationship kind="outlet" name="charCount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="usernameView" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="DisplayShoutImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DisplayShoutImageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="FeedTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedTVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="MapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NavigationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationViewController.h"/>
+        </class>
+        <class className="RefineShoutLocationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RefineShoutLocationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneButtonClicked:"/>
+                <relationship kind="action" name="refreshMapClicked:"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="SettingPickerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingPickerViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
+            </relationships>
+        </class>
+        <class className="SettingsTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsTVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="distanceUnitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationRadiusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ShoutViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShoutViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="shoutImageClicked:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="shoutContent" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="shoutStamp" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shoutUsername" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

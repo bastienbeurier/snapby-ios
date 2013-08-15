@@ -9,8 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "Shout.h"
 
+@protocol ShoutVCDelegate;
+
 @interface ShoutViewController : UIViewController
 
 @property (strong, nonatomic) Shout *shout;
+
+@property (weak, nonatomic) id <ShoutVCDelegate> shoutVCDelegate;
+
+@end
+
+@protocol ShoutVCDelegate
+
+- (void)displayShoutImage:(UIImage *)image;
 
 @end

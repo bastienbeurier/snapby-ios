@@ -9,6 +9,8 @@
 #import "FeedTVC.h"
 #import "MapRequestHandler.h"
 #import "TimeUtilities.h"
+#import "ShoutViewController.h"
+#import "NavigationViewController.h"
 
 #define SHOUT_TAG @"Shout"
 #define NO_SHOUT_TAG @"No Shout"
@@ -106,6 +108,7 @@
                 if ([segue.destinationViewController respondsToSelector:@selector(setShout:)]) {
                     Shout *shout = self.shouts[indexPath.row];
                     [segue.destinationViewController performSelector:@selector(setShout:) withObject:shout];
+                    ((ShoutViewController *)segue.destinationViewController).shoutVCDelegate = (NavigationViewController *)self.feedTVCdelegate;
                 }
             }
         }

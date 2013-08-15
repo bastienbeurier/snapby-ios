@@ -11,7 +11,7 @@
 #import "LocationUtilities.h"
 #import "Shout.h"
 #import "FeedTVC.h"
-#import "ShoutViewController.h"
+#import "DisplayShoutImageViewController.h"
 
 @interface NavigationViewController ()
 
@@ -89,6 +89,17 @@
         ((CreateShoutViewController *)[segue destinationViewController]).shoutLocation = myLocation.location;
         ((CreateShoutViewController *)[segue destinationViewController]).createShoutVCDelegate = self;
     }
+    
+    if ([segueName isEqualToString: @"Display Shout Image"]) {
+        UIImage *shoutImage = (UIImage *)sender;
+        
+        ((DisplayShoutImageViewController *)[segue destinationViewController]).shoutImage = shoutImage;
+    }
+}
+
+- (void)displayShoutImage:(UIImage *)image
+{
+    [self performSegueWithIdentifier:@"Display Shout Image" sender:image];
 }
 
 - (void)dismissCreateShoutModal
@@ -96,7 +107,8 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)createShoutButtonClicked:(id)sender {
+- (IBAction)createShoutButtonClicked:(id)sender
+{
     MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
     
     if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {

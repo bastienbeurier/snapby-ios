@@ -42,14 +42,22 @@
             UIImage *image = [UIImage imageWithData:data];
             self.shoutImageView.image = image;
             [self.shoutImageView setHidden:NO];
+            self.shoutImageView.userInteractionEnabled = YES;
         } else {
             [self.shoutImageView setHidden:YES];
+            self.shoutImageView.userInteractionEnabled = NO;
         }
         
         self.shoutUsername.text = self.shout.displayName;
         self.shoutContent.text = self.shout.description;
         self.shoutStamp.text = [TimeUtilities shoutAgeToString:[TimeUtilities getShoutAge:self.shout.created]];
     }
+}
+
+- (IBAction)shoutImageClicked:(UITapGestureRecognizer *)sender {
+    NSLog(@"Is this called");
+    
+    [self.shoutVCDelegate displayShoutImage:self.shoutImageView.image];
 }
 
 @end

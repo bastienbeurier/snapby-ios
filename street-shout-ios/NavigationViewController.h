@@ -10,7 +10,8 @@
 #import "MapViewController.h"
 #import "FeedTVC.h"
 #import "CreateShoutViewController.h"
+#import "ShoutViewController.h"
 
-@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate>
+@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate>
 
 @end

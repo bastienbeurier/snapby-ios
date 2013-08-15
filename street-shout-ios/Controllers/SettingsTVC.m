@@ -47,9 +47,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 
     [self updateDistanceUnitLabel];
     [self updateNotificationRadiusLabel];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [super viewWillDisappear:animated];
 }
 
 - (void)updateDistanceUnitLabel
@@ -72,18 +80,6 @@
     } else {
         self.notificationRadiusLabel.text = [self.notificationRadiusPreferences lastObject];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
-    [super viewWillDisappear:animated];
 }
 
 #pragma mark - Table view delegate
