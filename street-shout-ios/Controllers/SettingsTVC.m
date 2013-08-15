@@ -48,15 +48,20 @@
 {
     [super viewDidLoad];
     
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
 
     [self updateDistanceUnitLabel];
     [self updateNotificationRadiusLabel];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [super viewWillDisappear:animated];
 }
 

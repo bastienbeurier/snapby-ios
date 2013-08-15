@@ -21,7 +21,7 @@
 
 @end
 
-@implementation NavigationViewController 
+@implementation NavigationViewController
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
 {

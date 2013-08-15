@@ -9,6 +9,7 @@
 #import "ShoutViewController.h"
 #import "TimeUtilities.h"
 #import "Constants.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface ShoutViewController ()
 
@@ -38,9 +39,7 @@
     if (self.shout) {
         if (self.shout.image) {
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            UIImage *image = [UIImage imageWithData:data];
-            self.shoutImageView.image = image;
+            [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             [self.shoutImageView setHidden:NO];
             self.shoutImageView.userInteractionEnabled = YES;
         } else {
