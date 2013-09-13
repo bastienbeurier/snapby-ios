@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0B65F71F1795C66500F37227"
-               BuildableName = "street-shout-ios.app"
+               BuildableName = "Shout.app"
                BlueprintName = "street-shout-ios"
                ReferencedContainer = "container:street-shout-ios.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0B65F71F1795C66500F37227"
-            BuildableName = "street-shout-ios.app"
+            BuildableName = "Shout.app"
             BlueprintName = "street-shout-ios"
             ReferencedContainer = "container:street-shout-ios.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0B65F71F1795C66500F37227"
-            BuildableName = "street-shout-ios.app"
+            BuildableName = "Shout.app"
             BlueprintName = "street-shout-ios"
             ReferencedContainer = "container:street-shout-ios.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0B65F71F1795C66500F37227"
-            BuildableName = "street-shout-ios.app"
+            BuildableName = "Shout.app"
             BlueprintName = "street-shout-ios"
             ReferencedContainer = "container:street-shout-ios.xcodeproj">
          </BuildableReference>

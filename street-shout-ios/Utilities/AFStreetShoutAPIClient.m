@@ -9,8 +9,7 @@
 #import "AFStreetShoutAPIClient.h"
 #import "AFJSONRequestOperation.h"
 #import "GeneralUtilities.h"
-
-static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
+#import "Constants.h"
 
 @implementation AFStreetShoutAPIClient
 
@@ -19,7 +18,12 @@ static NSString * const kAFStreetShoutAPIBaseURLString = @"http://street-shout.h
     static AFStreetShoutAPIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[AFStreetShoutAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kAFStreetShoutAPIBaseURLString]];
+        if (PRODUCTION) {
+            _sharedClient = [[AFStreetShoutAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kProdAFStreetShoutAPIBaseURLString]];
+        } else {
+            _sharedClient = [[AFStreetShoutAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kDevAFStreetShoutAPIBaseURLString]];
+        }
+        
     });
     
     return _sharedClient;

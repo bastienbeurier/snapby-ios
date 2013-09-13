@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#define PRODUCTION NO
 #define TOKEN_VENDING_MACHINE_URL @"http://shouttvm.elasticbeanstalk.com"
 #define USE_SSL NO
 #define ACCESS_KEY_ID @"USED-ONLY-FOR-TESTING"  // Leave this value as is.
@@ -27,3 +28,11 @@ static const NSUInteger kMaxUsernameLength = 20;
 static const NSUInteger kMaxShoutDescriptionLength = 140;
 static const NSUInteger kShoutRadius = 300;
 static const NSUInteger kShoutImageSize = 400;
+
+//Development
+static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
+static NSString * const kDevTestFlightAppToken = @"219c5385-e018-41ab-9daa-8d92e8727896";
+
+//Production
+static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347";
+static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
