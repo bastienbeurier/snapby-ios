@@ -7,6 +7,7 @@
 //
 
 #import "GeneralUtilities.h"
+#import "Constants.h"
 
 @implementation GeneralUtilities
 
@@ -19,6 +20,11 @@
 {
     NSTimeInterval seconds = [[NSDate date] timeIntervalSince1970];
     return (int) seconds;
+}
+
++ (NSString *)getUADeviceToken
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:UA_DEVICE_TOKEN_PREF];
 }
 
 @end

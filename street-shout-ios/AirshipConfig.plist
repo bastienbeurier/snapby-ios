@@ -11,6 +11,6 @@
 	<key>developmentAppKey</key>
 	<string>4dVNPZ-KR0yehG6rnwnLjw</string>
 	<key>inProduction</key>
-	<false/>
+	<true/>
 </dict>
 </plist>

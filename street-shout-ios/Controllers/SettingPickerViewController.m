@@ -7,6 +7,7 @@
 //
 
 #import "SettingPickerViewController.h"
+#import "Constants.h"
 
 @interface SettingPickerViewController ()
 
@@ -23,9 +24,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    //Initialize picker to "1km" notification range
+    //Initialize picker to "10km" notification range
     if ([self.preferenceType isEqualToString:@"Notification Radius"]) {
-        [self.pickerView selectRow:2 inComponent:0 animated:NO];
+        [self.pickerView selectRow:kDefaultNotificationRadiusIndex inComponent:0 animated:NO];
     };
 }
 

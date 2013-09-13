@@ -14,4 +14,6 @@
 
 + (NSUInteger)currentDateInMilliseconds;
 
++ (NSString *)getUADeviceToken;
+
 @end

@@ -12,6 +12,7 @@
 #import "Shout.h"
 #import "FeedTVC.h"
 #import "DisplayShoutImageViewController.h"
+#import "AFStreetShoutAPIClient.h"
 
 @interface NavigationViewController ()
 
@@ -22,6 +23,10 @@
 @end
 
 @implementation NavigationViewController
+
+- (void)viewDidAppear:(BOOL)animated {
+    [AFStreetShoutAPIClient sendDeviceInfo];
+}
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
 {

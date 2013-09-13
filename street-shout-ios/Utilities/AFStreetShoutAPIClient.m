@@ -10,6 +10,7 @@
 #import "AFJSONRequestOperation.h"
 #import "GeneralUtilities.h"
 #import "Constants.h"
+#import "UIDevice-Hardware.h"
 
 @implementation AFStreetShoutAPIClient
 
@@ -66,7 +67,6 @@
 
 + (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)userName Description:(NSString *)description Image:(NSString *)imageUrl DeviceId:(NSString *)deviceId AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)())failureBlock
 {    
-    //TODO: add device_id
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
     [parameters setObject:userName forKey:@"user_name"];
@@ -85,6 +85,44 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock();
     }];
+}
+
++ (void)sendDeviceInfo
+{
+    NSString *deviceId = [GeneralUtilities getDeviceID];
+    NSString *uaDeviceToken = [GeneralUtilities getUADeviceToken];
+    NSNumber *notificationRadius = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREF];
+    
+    if (!notificationRadius) {
+        notificationRadius = [NSNumber numberWithInt:kDefaultNotificationRadiusIndex];
+    }
+    
+    NSString *deviceModel = [[UIDevice currentDevice] platformString];
+    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
+    NSString *osType = @"iOS";
+    NSString *appVersion = kAppVersion;
+    NSString *apiVersion = kApiVersion;
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
+    
+    [parameters setObject:deviceId forKey:@"device_id"];
+    [parameters setObject:notificationRadius forKey:@"notification_radius"];
+    [parameters setObject:deviceModel forKey:@"device_model"];
+    [parameters setObject:osVersion forKey:@"os_version"];
+    [parameters setObject:osType forKey:@"os_type"];
+    [parameters setObject:appVersion forKey:@"app_version"];
+    [parameters setObject:apiVersion forKey:@"api_version"];
+    //TODO: REPLACE BY REAL VALUES!!!
+    [parameters setObject:[NSNumber numberWithInt:1] forKey:@"lat"];
+    [parameters setObject:[NSNumber numberWithInt:1] forKey:@"lng"];
+    
+    if (uaDeviceToken) {
+        [parameters setObject:uaDeviceToken forKey:@"push_token"];
+    }
+    
+    NSLog(@"Should send info");
+    
+    [[AFStreetShoutAPIClient sharedClient] postPath:@"update_device_info" parameters:parameters success:nil failure:nil];
 }
 
 @end

@@ -8,13 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-#define PRODUCTION NO
+#define PRODUCTION YES
 #define TOKEN_VENDING_MACHINE_URL @"http://shouttvm.elasticbeanstalk.com"
 #define USE_SSL NO
 #define ACCESS_KEY_ID @"USED-ONLY-FOR-TESTING"  // Leave this value as is.
 #define SECRET_KEY @"USED-ONLY-FOR-TESTING"  // Leave this value as is.
 #define S3_URL @"street-shout1.s3.amazonaws.com/"
 #define S3_BUCKET @"street-shout1"
+
+#define UA_DEVICE_TOKEN_PREF @"UA Device Token"
+#define NOTIFICATION_RADIUS_PREF @"Notification Radius"
+#define DISTANCE_UNIT_PREF @"Distance Unit"
 
 @interface Constants : NSObject
 
@@ -29,6 +33,8 @@ static const NSUInteger kMaxShoutDescriptionLength = 140;
 static const NSUInteger kShoutRadius = 300;
 static const NSUInteger kShoutImageSize = 400;
 
+static const NSUInteger kDefaultNotificationRadiusIndex = 3;
+
 //Development
 static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
 static NSString * const kDevTestFlightAppToken = @"219c5385-e018-41ab-9daa-8d92e8727896";
@@ -36,3 +42,8 @@ static NSString * const kDevTestFlightAppToken = @"219c5385-e018-41ab-9daa-8d92e
 //Production
 static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347";
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
+
+//Don't forget to update App version !!
+static NSString * const kAppVersion = @"1.0";
+
+static NSString * const kApiVersion = @"1.0";

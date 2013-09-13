@@ -27,6 +27,8 @@
          AndExecuteSuccess:(void(^)(Shout *))successBlock
                    Failure:(void(^)())failureBlock;
 
++ (void)sendDeviceInfo;
+
 @end
 
 static NSString *const MyFirstConstant = API_VERSION;

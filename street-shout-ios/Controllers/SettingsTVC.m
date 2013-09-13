@@ -7,9 +7,8 @@
 //
 
 #import "SettingsTVC.h"
-
-#define NOTIFICATION_RADIUS_PREFERENCE_TYPE @"Notification Radius"
-#define DISTANCE_UNIT_PREFERENCE_TYPE @"Distance Unit"
+#import "TestFlight.h"
+#import "Constants.h"
 
 @interface SettingsTVC ()
 
@@ -30,7 +29,7 @@
 
 - (NSArray *)notificationRadiusPreferences
 {
-    NSNumber *distanceUnitPreference = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREFERENCE_TYPE];
+    NSNumber *distanceUnitPreference = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREF];
     if (!distanceUnitPreference || [distanceUnitPreference integerValue] == 0) {
         return @[NSLocalizedStringFromTable (@"none", @"Strings", @"comment"),
                  NSLocalizedStringFromTable (@"100m", @"Strings", @"comment"),
@@ -67,7 +66,7 @@
 
 - (void)updateDistanceUnitLabel
 {
-    NSNumber *distanceUnitPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREFERENCE_TYPE];
+    NSNumber *distanceUnitPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREF];
     
     if (distanceUnitPreferenceIndex) {
         self.distanceUnitLabel.text = self.distanceUnitPreferences[[distanceUnitPreferenceIndex integerValue]];
@@ -78,7 +77,7 @@
 
 - (void)updateNotificationRadiusLabel
 {
-    NSNumber *notificationRadiusPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREFERENCE_TYPE];
+    NSNumber *notificationRadiusPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREF];
     
     if (notificationRadiusPreferenceIndex) {
         self.notificationRadiusLabel.text = self.notificationRadiusPreferences[[notificationRadiusPreferenceIndex integerValue]];
@@ -125,13 +124,13 @@
         if (indexPath) {
             if ([segue.identifier isEqualToString:@"Notification Radius"]) {
                 NSArray *pickerData = self.notificationRadiusPreferences;
-                NSString *preferenceType = NOTIFICATION_RADIUS_PREFERENCE_TYPE;
+                NSString *preferenceType = NOTIFICATION_RADIUS_PREF;
                 
                 [segue.destinationViewController performSelector:@selector(setPickerData:) withObject:pickerData];
                 [segue.destinationViewController performSelector:@selector(setPreferenceType:) withObject:preferenceType];
             } else if ([segue.identifier isEqualToString:@"Distance Unit"]) {
                 NSArray *pickerData = self.distanceUnitPreferences;
-                NSString *preferenceType = DISTANCE_UNIT_PREFERENCE_TYPE;
+                NSString *preferenceType = DISTANCE_UNIT_PREF;
                 
                 [segue.destinationViewController performSelector:@selector(setPickerData:) withObject:pickerData];
                 [segue.destinationViewController performSelector:@selector(setPreferenceType:) withObject:preferenceType];
@@ -144,11 +143,11 @@
 
 - (void)dismissSettingPickerModal:(SettingPickerViewController *)settingPickerViewController
 {
-    if ([settingPickerViewController.preferenceType isEqualToString:NOTIFICATION_RADIUS_PREFERENCE_TYPE]) {
+    if ([settingPickerViewController.preferenceType isEqualToString:NOTIFICATION_RADIUS_PREF]) {
         //TODO: send device info
         
         [self updateNotificationRadiusLabel];
-    } else if ([settingPickerViewController.preferenceType isEqualToString:DISTANCE_UNIT_PREFERENCE_TYPE]) {
+    } else if ([settingPickerViewController.preferenceType isEqualToString:DISTANCE_UNIT_PREF]) {
         [self updateDistanceUnitLabel];
         [self updateNotificationRadiusLabel];
     }

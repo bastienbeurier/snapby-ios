@@ -11,6 +11,8 @@
 #import "UAirship.h"
 #import "UAConfig.h"
 #import "UAPush.h"
+#import "TestFlight.h"
+#import "Constants.h"
 
 @implementation NavigationAppDelegate
 
@@ -26,24 +28,37 @@
 #pragma clang diagnostic pop
 #endif
     
-    if (PRODUCTION) {
-        [TestFlight takeOff:kProdTestFlightAppToken];
-    } else {
-        [TestFlight takeOff:kDevTestFlightAppToken];
-    }
-    
     // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
     // or set runtime properties here.
     UAConfig *config = [UAConfig defaultConfig];
     
-    // You can also programatically override the plist values:
-    // config.developmentAppKey = @"YourKey";
-    // etc.
+    if (PRODUCTION) {
+        [TestFlight takeOff:kProdTestFlightAppToken];
+        config.inProduction = YES;
+    } else {
+        [TestFlight takeOff:kDevTestFlightAppToken];
+        config.inProduction = NO;
+    }
     
-    // Call takeOff (which creates the UAirship singleton)
+    // Call takeOff (which creates the UAirship singleton)	
     [UAirship takeOff:config];
     
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString* deviceTokenString = [[[[deviceToken description]
+                                stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                               stringByReplacingOccurrencesOfString: @">" withString: @""]
+                              stringByReplacingOccurrencesOfString: @" " withString: @""];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:deviceTokenString forKey:UA_DEVICE_TOKEN_PREF];
+    
+        NSLog(@"APNS device token: %@", deviceTokenString);
+    
+    // Updates the device token and registers the token with UA. This won't occur until
+    // push is enabled if the outlined process is followed. This call is required.
+    [[UAPush shared] registerDeviceToken:deviceToken];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
