@@ -19,6 +19,7 @@
 #define UA_DEVICE_TOKEN_PREF @"UA Device Token"
 #define NOTIFICATION_RADIUS_PREF @"Notification Radius"
 #define DISTANCE_UNIT_PREF @"Distance Unit"
+#define USER_NAME_PREF @"Username preference"
 
 @interface Constants : NSObject
 

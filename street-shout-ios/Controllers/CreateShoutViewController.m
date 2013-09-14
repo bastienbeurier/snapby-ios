@@ -36,12 +36,26 @@
 @implementation CreateShoutViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:USER_NAME_PREF];
+    
+    if (userName) {
+        self.usernameView.text = userName;
+    }
+    
     [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:NO];
     
     [self.mapView removeAnnotations:self.mapView.annotations];
     MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
     shoutAnnotation.coordinate = self.shoutLocation.coordinate;
     [self.mapView addAnnotation:shoutAnnotation];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSString *userName = self.usernameView.text;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:USER_NAME_PREF];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
