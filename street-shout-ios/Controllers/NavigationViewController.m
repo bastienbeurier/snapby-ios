@@ -25,7 +25,11 @@
 @implementation NavigationViewController
 
 - (void)viewDidAppear:(BOOL)animated {
-    [AFStreetShoutAPIClient sendDeviceInfo];
+    [self sendDeviceInfo];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self sendDeviceInfo];
 }
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
@@ -100,6 +104,10 @@
         
         ((DisplayShoutImageViewController *)[segue destinationViewController]).shoutImage = shoutImage;
     }
+    
+    if ([segueName isEqualToString: @"Settings Push Segue"]) {
+        ((SettingsTVC *) [segue destinationViewController]).settingsTVCDelegate = self;
+    }
 }
 
 - (void)displayShoutImage:(UIImage *)image
@@ -127,12 +135,26 @@
         [message show];
     }
 }
+
 - (IBAction)myLocationButtonClicked:(id)sender {
     [self.mapViewController myLocationButtonClicked];
 }
 
 - (IBAction)dezoomButtonClicked:(id)sender {
         [self.mapViewController dezoomButtonClicked];
+}
+
+- (void)sendDeviceInfo
+{
+    MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
+    
+    if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
+            [AFStreetShoutAPIClient sendDeviceInfoWithLat:myLocation.location.coordinate.latitude
+                                                      Lng:myLocation.location.coordinate.longitude];
+        NSLog(@"Info sent: %f - %f", myLocation.coordinate.latitude, myLocation.coordinate.longitude);
+    } else {
+        NSLog(@"Could not send device info");
+    }
 }
 
 @end

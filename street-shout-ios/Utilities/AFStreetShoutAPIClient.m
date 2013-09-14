@@ -87,8 +87,10 @@
     }];
 }
 
-+ (void)sendDeviceInfo
++ (void)sendDeviceInfoWithLat:(double)lat Lng:(double)lng
 {
+    NSLog(@"Send device info: %f, %f", lat, lng);
+    
     NSString *deviceId = [GeneralUtilities getDeviceID];
     NSString *uaDeviceToken = [GeneralUtilities getUADeviceToken];
     NSNumber *notificationRadius = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREF];
@@ -99,7 +101,7 @@
     
     NSString *deviceModel = [[UIDevice currentDevice] platformString];
     NSString *osVersion = [[UIDevice currentDevice] systemVersion];
-    NSString *osType = @"iOS";
+    NSString *osType = @"ios";
     NSString *appVersion = kAppVersion;
     NSString *apiVersion = kApiVersion;
     
@@ -112,15 +114,12 @@
     [parameters setObject:osType forKey:@"os_type"];
     [parameters setObject:appVersion forKey:@"app_version"];
     [parameters setObject:apiVersion forKey:@"api_version"];
-    //TODO: REPLACE BY REAL VALUES!!!
-    [parameters setObject:[NSNumber numberWithInt:1] forKey:@"lat"];
-    [parameters setObject:[NSNumber numberWithInt:1] forKey:@"lng"];
+    [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
+    [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
     
     if (uaDeviceToken) {
         [parameters setObject:uaDeviceToken forKey:@"push_token"];
     }
-    
-    NSLog(@"Should send info");
     
     [[AFStreetShoutAPIClient sharedClient] postPath:@"update_device_info" parameters:parameters success:nil failure:nil];
 }

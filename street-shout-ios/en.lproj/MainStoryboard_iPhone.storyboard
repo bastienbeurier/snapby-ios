@@ -225,7 +225,7 @@
                                     </barButtonItem>
                                     <barButtonItem title="Settings" id="AYB-4o-LWE">
                                         <connections>
-                                            <segue destination="EsS-z3-PWu" kind="push" id="aDe-LZ-Q7P"/>
+                                            <segue destination="EsS-z3-PWu" kind="push" identifier="Settings Push Segue" id="aDe-LZ-Q7P"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>

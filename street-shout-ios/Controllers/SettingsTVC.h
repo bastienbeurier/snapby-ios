@@ -9,6 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "SettingPickerViewController.h"
 
+@protocol SettingsTVCDelegate;
+
 @interface SettingsTVC : UITableViewController <SettingPickerViewControllerDelegate>
+
+@property (weak, nonatomic) id <SettingsTVCDelegate> settingsTVCDelegate;
+
+- (void)sendDeviceInfo;
+
+@end
+
+@protocol SettingsTVCDelegate
+
+- (void)sendDeviceInfo;
 
 @end

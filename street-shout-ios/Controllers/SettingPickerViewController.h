@@ -22,4 +22,6 @@
 
 - (void)dismissSettingPickerModal:(SettingPickerViewController *)settingPickerViewController;
 
+- (void)sendDeviceInfo;
+
 @end

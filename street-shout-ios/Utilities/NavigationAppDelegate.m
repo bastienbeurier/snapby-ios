@@ -54,8 +54,6 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:deviceTokenString forKey:UA_DEVICE_TOKEN_PREF];
     
-        NSLog(@"APNS device token: %@", deviceTokenString);
-    
     // Updates the device token and registers the token with UA. This won't occur until
     // push is enabled if the outlined process is followed. This call is required.
     [[UAPush shared] registerDeviceToken:deviceToken];

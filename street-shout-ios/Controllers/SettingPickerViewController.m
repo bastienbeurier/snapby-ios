@@ -17,17 +17,22 @@
 
 @implementation SettingPickerViewController
 
-- (void)viewDidLoad
+- (void)viewDidLayoutSubviews
 {
-    [super viewDidLoad];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    //Initialize picker to "10km" notification range
-    if ([self.preferenceType isEqualToString:@"Notification Radius"]) {
-        [self.pickerView selectRow:kDefaultNotificationRadiusIndex inComponent:0 animated:NO];
-    };
+    //Can initialize Picker View in viewWillAppear because it won't select the last row if needed (bug)
+    if ([self.preferenceType isEqualToString:NOTIFICATION_RADIUS_PREF]) {
+        NSNumber *index = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREF];
+        if (index) {
+            [self.pickerView selectRow:[index integerValue] inComponent:0 animated:NO];
+        } else {
+            [self.pickerView selectRow:kDefaultNotificationRadiusIndex inComponent:0 animated:NO];
+        }
+    } else if ([self.preferenceType isEqualToString:DISTANCE_UNIT_PREF]) {
+        NSNumber *index = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREF];
+        if (index) {
+            [self.pickerView selectRow:[index integerValue] inComponent:0 animated:NO];
+        }
+    }
 }
 
 - (IBAction)validateButtonClicked:(id)sender {
@@ -36,6 +41,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.settingPickerVCDelegate dismissSettingPickerModal:self];
+    [self.settingPickerVCDelegate sendDeviceInfo];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView

@@ -155,4 +155,9 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)sendDeviceInfo
+{
+    [self.settingsTVCDelegate sendDeviceInfo];
+}
+
 @end

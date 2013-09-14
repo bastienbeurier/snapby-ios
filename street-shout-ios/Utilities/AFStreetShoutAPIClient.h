@@ -27,7 +27,7 @@
          AndExecuteSuccess:(void(^)(Shout *))successBlock
                    Failure:(void(^)())failureBlock;
 
-+ (void)sendDeviceInfo;
++ (void)sendDeviceInfoWithLat:(double)lat Lng:(double)lng;
 
 @end
 

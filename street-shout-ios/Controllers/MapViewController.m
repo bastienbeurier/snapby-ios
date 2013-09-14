@@ -15,6 +15,7 @@
 @interface MapViewController () <MKMapViewDelegate>
 
 @property (nonatomic) BOOL hasZoomedAtStartUp;
+@property (nonatomic) BOOL hasSentDeviceInfo;
 
 @end
 
@@ -28,6 +29,7 @@
     self.preventShoutDeselection = NO;
     
     self.hasZoomedAtStartUp = NO;
+    self.hasSentDeviceInfo = NO;
 }
 
 - (void)setShouts:(NSArray *)shouts
@@ -38,7 +40,7 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    if ( self.hasZoomedAtStartUp == NO ) {
+    if (self.hasZoomedAtStartUp == NO) {
         [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000 Animated:YES];
         self.hasZoomedAtStartUp = YES;
     }
