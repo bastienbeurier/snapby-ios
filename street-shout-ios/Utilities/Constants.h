@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define PRODUCTION YES
+#define PRODUCTION NO
 #define TOKEN_VENDING_MACHINE_URL @"http://shouttvm.elasticbeanstalk.com"
 #define USE_SSL NO
 #define ACCESS_KEY_ID @"USED-ONLY-FOR-TESTING"  // Leave this value as is.

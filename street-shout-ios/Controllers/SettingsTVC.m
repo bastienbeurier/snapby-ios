@@ -46,7 +46,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
 
     [self updateDistanceUnitLabel];
     [self updateNotificationRadiusLabel];
@@ -61,6 +60,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.settingsTVCDelegate shoutDeselectedOnMap];
+    
     [super viewWillDisappear:animated];
 }
 

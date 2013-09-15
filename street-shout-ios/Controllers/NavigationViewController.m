@@ -77,7 +77,7 @@
     [LocationUtilities animateMap:self.mapViewController.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:1000 Animated:YES];
 }
 
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"mapViewController"]) {

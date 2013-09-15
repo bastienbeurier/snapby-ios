@@ -23,4 +23,6 @@
 
 - (void)sendDeviceInfo;
 
+- (void)shoutDeselectedOnMap;
+
 @end
