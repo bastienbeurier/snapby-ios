@@ -97,6 +97,9 @@
 }
 
 - (IBAction)createShoutClicked:(id)sender {
+    [self.usernameView resignFirstResponder];
+    [self.descriptionView resignFirstResponder];
+    
     BOOL error = NO;
     
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
