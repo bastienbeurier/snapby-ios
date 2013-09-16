@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0B07B9DD17E6FF8300DA26EE"
-            BuildableName = "Shatte.app"
-            BlueprintName = "Shatte"
+            BlueprintIdentifier = "0B65F71F1795C66500F37227"
+            BuildableName = "Shout.app"
+            BlueprintName = "Shout"
             ReferencedContainer = "container:street-shout-ios.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,9 +51,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0B07B9DD17E6FF8300DA26EE"
-            BuildableName = "Shatte.app"
-            BlueprintName = "Shatte"
+            BlueprintIdentifier = "0B65F71F1795C66500F37227"
+            BuildableName = "Shout.app"
+            BlueprintName = "Shout"
             ReferencedContainer = "container:street-shout-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

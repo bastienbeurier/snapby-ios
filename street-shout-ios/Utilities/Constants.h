@@ -42,7 +42,7 @@ static const NSUInteger kMapInitialSpan = 180;
 
 //Development
 static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
-static NSString * const kDevTestFlightAppToken = @"219c5385-e018-41ab-9daa-8d92e8727896";
+static NSString * const kDevTestFlightAppToken = @"71154ced-9c90-4a19-9715-c74a2f8e57ee";
 
 //Production
 static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347";

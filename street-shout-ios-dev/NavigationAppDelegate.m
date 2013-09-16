@@ -1,22 +1,62 @@
 //
 //  NavigationAppDelegate.m
-//  street-shout-ios-dev
+//  street-shout-ios
 //
-//  Created by Bastien Beurier on 9/16/13.
+//  Created by Bastien Beurier on 7/16/13.
 //  Copyright (c) 2013 Street Shout. All rights reserved.
 //
 
 #import "NavigationAppDelegate.h"
+#import "Constants.h"
+#import "UAirship.h"
+#import "UAConfig.h"
+#import "UAPush.h"
+#import "TestFlight.h"
+#import "Constants.h"
 
 @implementation NavigationAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    
+    // !!!: Use setDeviceIdentifier (removing deprecated warning with clang pragmas)
+#ifdef TESTING
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+#pragma clang diagnostic pop
+#endif
+    
+    // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
+    // or set runtime properties here.
+    UAConfig *config = [UAConfig defaultConfig];
+    
+    if (PRODUCTION) {
+        [TestFlight takeOff:kProdTestFlightAppToken];
+        config.inProduction = YES;
+    } else {
+        [TestFlight takeOff:kDevTestFlightAppToken];
+        config.inProduction = NO;
+    }
+    
+    // Call takeOff (which creates the UAirship singleton)
+    [UAirship takeOff:config];
+    
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString* deviceTokenString = [[[[deviceToken description]
+                                     stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                                    stringByReplacingOccurrencesOfString: @">" withString: @""]
+                                   stringByReplacingOccurrencesOfString: @" " withString: @""];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:deviceTokenString forKey:UA_DEVICE_TOKEN_PREF];
+    
+    // Updates the device token and registers the token with UA. This won't occur until
+    // push is enabled if the outlined process is followed. This call is required.
+    [[UAPush shared] registerDeviceToken:deviceToken];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -27,7 +67,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 

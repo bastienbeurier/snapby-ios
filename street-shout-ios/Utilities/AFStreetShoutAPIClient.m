@@ -88,9 +88,7 @@
 }
 
 + (void)sendDeviceInfoWithLat:(double)lat Lng:(double)lng
-{
-    NSLog(@"Send device info: %f, %f", lat, lng);
-    
+{    
     NSString *deviceId = [GeneralUtilities getDeviceID];
     NSString *uaDeviceToken = [GeneralUtilities getUADeviceToken];
     NSNumber *notificationRadius = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREF];

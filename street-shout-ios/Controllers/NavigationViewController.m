@@ -151,7 +151,6 @@
     if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
             [AFStreetShoutAPIClient sendDeviceInfoWithLat:myLocation.location.coordinate.latitude
                                                       Lng:myLocation.location.coordinate.longitude];
-        NSLog(@"Info sent: %f - %f", myLocation.coordinate.latitude, myLocation.coordinate.longitude);
     } else {
         NSLog(@"Could not send device info");
     }
