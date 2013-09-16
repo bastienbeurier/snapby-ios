@@ -48,7 +48,4 @@ static NSString * const kDevTestFlightAppToken = @"219c5385-e018-41ab-9daa-8d92e
 static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347";
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 
-//Don't forget to update App version !!
-static NSString * const kAppVersion = @"1.0";
-
 static NSString * const kApiVersion = @"1.0";

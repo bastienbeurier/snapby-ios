@@ -102,7 +102,7 @@
     NSString *deviceModel = [[UIDevice currentDevice] platformString];
     NSString *osVersion = [[UIDevice currentDevice] systemVersion];
     NSString *osType = @"ios";
-    NSString *appVersion = kAppVersion;
+    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *apiVersion = kApiVersion;
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
