@@ -26,7 +26,6 @@
 {
     [super viewDidLoad];
     [self updateUI];
-    self.shoutImageView.userInteractionEnabled = YES;
 }
 
 - (void)setShout:(Shout *)shout
@@ -52,9 +51,7 @@
     }
 }
 
-- (IBAction)shoutImageClicked:(UITapGestureRecognizer *)sender {
-    NSLog(@"Is this called");
-    
+- (IBAction)shoutImageClicked:(UITapGestureRecognizer *)sender {    
     [self.shoutVCDelegate displayShoutImage:self.shoutImageView.image];
 }
 

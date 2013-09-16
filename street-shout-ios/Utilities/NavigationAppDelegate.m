@@ -13,6 +13,9 @@
 #import "UAPush.h"
 #import "TestFlight.h"
 #import "Constants.h"
+#import "NavigationViewController.h"
+#import "Shout.h"
+#import "AFStreetShoutAPIClient.h"
 
 @implementation NavigationAppDelegate
 
@@ -42,6 +45,21 @@
     
     // Call takeOff (which creates the UAirship singleton)	
     [UAirship takeOff:config];
+    
+    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    if(remoteNotif && [remoteNotif objectForKey:@"extra"])
+    {
+        NSDictionary *extra = [remoteNotif objectForKey:@"extra"];
+        NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
+        
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
+        
+        [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecute:^(Shout *shout) {
+            [navigationViewController onShoutCreatedOrNotificationPressed:shout];
+        }];
+    }
     
     return YES;
 }
@@ -88,6 +106,22 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
+{
+    if([notification objectForKey:@"extra"])
+    {
+        NSDictionary *extra = [notification objectForKey:@"extra"];
+        NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
+        
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
+        
+        [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecute:^(Shout *shout) {
+            [navigationViewController onShoutCreatedOrNotificationPressed:shout];
+        }];
+    }
 }
 
 @end

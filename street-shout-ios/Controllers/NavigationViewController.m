@@ -44,10 +44,16 @@
     }];
 }
 
-- (void)onShoutCreated:(Shout *)shout
+- (void)onShoutCreatedOrNotificationPressed:(Shout *)shout
 {
-    NSMutableArray *newShouts = [[NSMutableArray alloc] initWithArray:self.mapViewController.shouts];
-    [newShouts insertObject:shout atIndex:0];
+    NSMutableArray *newShouts;
+    
+    if (self.mapViewController.shouts) {
+        newShouts = [[NSMutableArray alloc] initWithArray:self.mapViewController.shouts];
+        [newShouts insertObject:shout atIndex:0];
+    } else {
+        newShouts = [NSMutableArray arrayWithObjects:shout, nil];
+    }
     
     self.mapViewController.shouts = newShouts;
     self.feedTVC.shouts = newShouts;
@@ -112,6 +118,8 @@
 
 - (void)displayShoutImage:(UIImage *)image
 {
+    NSLog(@"displayShoutImage called");
+    
     [self performSegueWithIdentifier:@"Display Shout Image" sender:image];
 }
 

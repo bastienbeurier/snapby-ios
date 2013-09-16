@@ -25,6 +25,6 @@
 
 - (void)dismissCreateShoutModal;
 
-- (void)onShoutCreated:(Shout *)shout;
+- (void)onShoutCreatedOrNotificationPressed:(Shout *)shout;
 
 @end

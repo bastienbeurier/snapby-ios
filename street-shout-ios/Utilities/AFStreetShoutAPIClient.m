@@ -53,7 +53,6 @@
                                  @"swLat": cornersCoordinates[2],
                                  @"swLng": cornersCoordinates[3]};
     
-    //TODO: change endpoint
     [[AFStreetShoutAPIClient sharedClient] getPath:@"bound_box_shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         
         NSArray *rawShouts = [JSON valueForKeyPath:@"result"];
@@ -62,6 +61,19 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"ERROR!!!");
         //TODO: implement
+    }];
+}
+
++ (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock
+{
+    [[AFStreetShoutAPIClient sharedClient] getPath:[NSString stringWithFormat:@"shouts/%d", shoutId] parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"Get Shout Response: %@", JSON);
+        
+        Shout *rawShout = [JSON valueForKeyPath:@"result"];
+        
+        successBlock([Shout rawShoutToInstance:rawShout]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"ERROR!!!");
     }];
 }
 

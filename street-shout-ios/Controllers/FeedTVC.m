@@ -116,6 +116,7 @@
         if ([segue.identifier isEqualToString:@"Show Shout"]) {
             if ([segue.destinationViewController respondsToSelector:@selector(setShout:)]) {
                 [segue.destinationViewController performSelector:@selector(setShout:) withObject:sender];
+                ((ShoutViewController *)segue.destinationViewController).shoutVCDelegate = (NavigationViewController *)self.feedTVCdelegate;
             }
         }
     }

@@ -29,6 +29,8 @@
 
 + (void)sendDeviceInfoWithLat:(double)lat Lng:(double)lng;
 
++ (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock;
+
 @end
 
 static NSString *const MyFirstConstant = API_VERSION;
