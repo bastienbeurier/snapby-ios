@@ -11,10 +11,10 @@
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
 #import "NavigationViewController.h"
+#import "Constants.h"
 
 @interface MapViewController () <MKMapViewDelegate>
 
-@property (nonatomic) BOOL hasZoomedAtStartUp;
 @property (nonatomic) BOOL hasSentDeviceInfo;
 
 @end
@@ -28,8 +28,9 @@
     self.mapView.delegate = self;
     self.preventShoutDeselection = NO;
     
-    self.hasZoomedAtStartUp = NO;
     self.hasSentDeviceInfo = NO;
+    
+    [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude WithSpan:kMapInitialSpan Animated:NO];
 }
 
 - (void)setShouts:(NSArray *)shouts
@@ -40,11 +41,6 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    if (self.hasZoomedAtStartUp == NO) {
-        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000 Animated:YES];
-        self.hasZoomedAtStartUp = YES;
-    }
-    
     MKAnnotationView* annotationView = [mapView viewForAnnotation:userLocation];
     annotationView.canShowCallout = NO;
 }
@@ -127,7 +123,6 @@
     
     if (userLocation && userLocation.coordinate.longitude != 0 && userLocation.coordinate.latitude != 0) {
         [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000 Animated:YES];
-        self.hasZoomedAtStartUp = YES;
     } else {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
                                                           message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")

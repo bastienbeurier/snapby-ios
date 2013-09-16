@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define PRODUCTION NO
+#define PRODUCTION YES
 #define TOKEN_VENDING_MACHINE_URL @"http://shouttvm.elasticbeanstalk.com"
 #define USE_SSL NO
 #define ACCESS_KEY_ID @"USED-ONLY-FOR-TESTING"  // Leave this value as is.
@@ -35,6 +35,11 @@ static const NSUInteger kShoutRadius = 300;
 static const NSUInteger kShoutImageSize = 400;
 
 static const NSUInteger kDefaultNotificationRadiusIndex = 3;
+
+//Initialize map on Paris, with max zoom out
+static const double kMapInitialLatitude = 48.856541;
+static const double kMapInitialLongitude = 2.352401;
+static const NSUInteger kMapInitialSpan = 180;
 
 //Development
 static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
