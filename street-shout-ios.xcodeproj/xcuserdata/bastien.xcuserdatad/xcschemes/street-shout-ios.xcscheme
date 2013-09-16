@@ -7,6 +7,20 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0B65F71F1795C66500F37227"
+               BuildableName = "Shout.app"
+               BlueprintName = "Shout"
+               ReferencedContainer = "container:street-shout-ios.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
@@ -14,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0B65F71F1795C66500F37227"
-               BuildableName = "Shout.app"
-               BlueprintName = "Shout"
+               BlueprintIdentifier = "0B07B9DD17E6FF8300DA26EE"
+               BuildableName = "Shatte.app"
+               BlueprintName = "Shatte"
                ReferencedContainer = "container:street-shout-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +46,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0B65F71F1795C66500F37227"
-            BuildableName = "Shout.app"
-            BlueprintName = "Shout"
+            BlueprintIdentifier = "0B07B9DD17E6FF8300DA26EE"
+            BuildableName = "Shatte.app"
+            BlueprintName = "Shatte"
             ReferencedContainer = "container:street-shout-ios.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,9 +65,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0B65F71F1795C66500F37227"
-            BuildableName = "Shout.app"
-            BlueprintName = "Shout"
+            BlueprintIdentifier = "0B07B9DD17E6FF8300DA26EE"
+            BuildableName = "Shatte.app"
+            BlueprintName = "Shatte"
             ReferencedContainer = "container:street-shout-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,9 +83,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0B65F71F1795C66500F37227"
-            BuildableName = "Shout.app"
-            BlueprintName = "Shout"
+            BlueprintIdentifier = "0B07B9DD17E6FF8300DA26EE"
+            BuildableName = "Shatte.app"
+            BlueprintName = "Shatte"
             ReferencedContainer = "container:street-shout-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -81,7 +95,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
-      customArchiveName = "Shout"
+      customArchiveName = "Shatte"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

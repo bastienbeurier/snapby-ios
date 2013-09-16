@@ -15,7 +15,8 @@
 #define S3_URL @"street-shout1.s3.amazonaws.com/"
 #define S3_BUCKET @"street-shout1"
 
-#define UA_DEVICE_TOKEN_PREF @"UA Device Token"
+#define UA_DEVICE_TOKEN_PROD_PREF @"UA Device Token Production"
+#define UA_DEVICE_TOKEN_DEV_PREF @"UA Device Token Development"
 #define NOTIFICATION_RADIUS_PREF @"Notification Radius"
 #define DISTANCE_UNIT_PREF @"Distance Unit"
 #define USER_NAME_PREF @"Username preference"

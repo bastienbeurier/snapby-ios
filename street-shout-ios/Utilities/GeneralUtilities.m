@@ -24,7 +24,11 @@
 
 + (NSString *)getUADeviceToken
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:UA_DEVICE_TOKEN_PREF];
+    if (PRODUCTION) {
+        return [[NSUserDefaults standardUserDefaults] objectForKey:UA_DEVICE_TOKEN_PROD_PREF];
+    } else {
+        return [[NSUserDefaults standardUserDefaults] objectForKey:UA_DEVICE_TOKEN_DEV_PREF];
+    }
 }
 
 @end
