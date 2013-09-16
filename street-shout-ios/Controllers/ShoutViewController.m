@@ -26,6 +26,7 @@
 {
     [super viewDidLoad];
     [self updateUI];
+    self.shoutImageView.userInteractionEnabled = YES;
 }
 
 - (void)setShout:(Shout *)shout
@@ -41,10 +42,8 @@
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             [self.shoutImageView setHidden:NO];
-            self.shoutImageView.userInteractionEnabled = YES;
         } else {
             [self.shoutImageView setHidden:YES];
-            self.shoutImageView.userInteractionEnabled = NO;
         }
         
         self.shoutUsername.text = self.shout.displayName;
