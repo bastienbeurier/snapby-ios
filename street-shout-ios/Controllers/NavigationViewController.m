@@ -13,6 +13,7 @@
 #import "FeedTVC.h"
 #import "DisplayShoutImageViewController.h"
 #import "AFStreetShoutAPIClient.h"
+#import "Constants.h"
 
 @interface NavigationViewController ()
 
@@ -44,24 +45,35 @@
     }];
 }
 
-- (void)onShoutCreatedOrNotificationPressed:(Shout *)shout
+- (void)onShoutCreated:(Shout *)shout
 {
-    NSMutableArray *newShouts;
+    [self handleShoutRedirection:shout];
     
-    if (self.mapViewController.shouts) {
-        newShouts = [[NSMutableArray alloc] initWithArray:self.mapViewController.shouts];
-        [newShouts insertObject:shout atIndex:0];
-    } else {
-        newShouts = [NSMutableArray arrayWithObjects:shout, nil];
-    }
-    
-    self.mapViewController.shouts = newShouts;
-    self.feedTVC.shouts = newShouts;
-    
-    [self.mapViewController shoutSelectedOnMap:shout];
+    [self.mapViewController animateMapWhenShout:shout selectedFrom:@"Create"];
 }
 
-- (void)shoutSelectedOnMap:(Shout *)shout
+- (void)onShoutNotificationPressed:(Shout *)shout
+{
+    [self handleShoutRedirection:shout];
+    
+    [self.mapViewController animateMapWhenShout:shout selectedFrom:@"Notification"];
+}
+
+- (void)handleShoutRedirection:(Shout *)shout
+{
+    NSMutableArray *newShouts = [NSMutableArray arrayWithObjects:shout, nil];
+    [self manuallyUpdateShoutsToShow:newShouts];
+    
+    [self showShoutViewControllerIfNeeded:shout];
+}
+
+- (void)manuallyUpdateShoutsToShow:(NSArray *)newShouts
+{
+    self.mapViewController.shouts = newShouts;
+    self.feedTVC.shouts = newShouts;
+}
+
+- (void)showShoutViewControllerIfNeeded:(Shout *)shout
 {
     if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
         ((ShoutViewController *)[self.feedNavigationController topViewController]).shout = shout;
@@ -79,8 +91,7 @@
 
 - (void)shoutSelectedInFeed:(Shout *)shout
 {
-    self.mapViewController.preventShoutDeselection = YES;
-    [LocationUtilities animateMap:self.mapViewController.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:1000 Animated:YES];
+    [self.mapViewController animateMapWhenShout:shout selectedFrom:@"Feed"];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

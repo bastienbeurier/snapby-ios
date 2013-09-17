@@ -28,13 +28,15 @@
 
 - (void)shoutSelectedOnMap:(Shout *)shout;
 
+- (void)animateMapWhenShout:(Shout *)shout selectedFrom:(NSString *)source;
+
 @end
 
 @protocol MapViewControllerDelegate
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds;
 
-- (void)shoutSelectedOnMap:(Shout *)shout;
+- (void)showShoutViewControllerIfNeeded:(Shout *)shout;
 
 - (void)shoutDeselectedOnMap;
 

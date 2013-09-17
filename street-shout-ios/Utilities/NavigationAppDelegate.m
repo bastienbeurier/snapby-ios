@@ -57,7 +57,7 @@
         NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
         
         [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecute:^(Shout *shout) {
-            [navigationViewController onShoutCreatedOrNotificationPressed:shout];
+            [navigationViewController onShoutNotificationPressed:shout];
         }];
     }
     
@@ -119,7 +119,7 @@
         NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
         
         [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecute:^(Shout *shout) {
-            [navigationViewController onShoutCreatedOrNotificationPressed:shout];
+            [navigationViewController onShoutNotificationPressed:shout];
         }];
     }
 }

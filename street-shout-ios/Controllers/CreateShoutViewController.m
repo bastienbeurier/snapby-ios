@@ -150,7 +150,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [self.createShoutVCDelegate dismissCreateShoutModal];
-            [self.createShoutVCDelegate onShoutCreatedOrNotificationPressed:shout];
+            [self.createShoutVCDelegate onShoutCreated:shout];
         });
         
         

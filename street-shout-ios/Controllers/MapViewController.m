@@ -68,10 +68,32 @@
 
 - (void)shoutSelectedOnMap:(Shout *)shout
 {
-    [self.mapVCdelegate shoutSelectedOnMap:shout];
+    [self.mapVCdelegate showShoutViewControllerIfNeeded:shout];
+    
+    [self animateMapWhenShout:shout selectedFrom:@"Map"];
+}
+
+- (void)animateMapWhenShout:(Shout *)shout selectedFrom:(NSString *)source
+{
+    NSUInteger zoomDistance = 0;
+    
+    if ([source isEqualToString:@"Map"] || [source isEqualToString:@"Feed"]) {
+        zoomDistance = kDistanceWhenShoutClickedFromMapOrFeed;
+    } else if ([source isEqualToString:@"Create"]) {
+        zoomDistance = kDistanceWhenRedirectedFromCreateShout;
+    } else if ([source isEqualToString:@"Notification"]) {
+        zoomDistance = kDistanceWhenShoutClickedFromNotif;
+    }
     
     self.preventShoutDeselection = YES;
-    [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:1000 Animated:YES];
+    [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:zoomDistance Animated:YES];
+}
+
+//refactor
+- (void)animateMapWhenShoutSelectedFromNotificationClicked:(Shout *)shout
+{
+    self.preventShoutDeselection = YES;
+    [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:kDistanceWhenShoutClickedFromNotif Animated:YES];
 }
 
 - (void)displayShouts:(NSArray *)shouts
@@ -122,7 +144,7 @@
     MKUserLocation *userLocation = self.mapView.userLocation;
     
     if (userLocation && userLocation.coordinate.longitude != 0 && userLocation.coordinate.latitude != 0) {
-        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:1000 Animated:YES];
+        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:kDistanceWhenMyLocationButtonClicked Animated:YES];
     } else {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
                                                           message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")
