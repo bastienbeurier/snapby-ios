@@ -8,18 +8,22 @@
 
 #import "CreateShoutViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "Constants.h"
 #import "AFStreetShoutAPIClient.h"
 #import "LocationUtilities.h"
 #import "AsyncImageUploader.h"
 #import "GeneralUtilities.h"
 #import "MBProgressHUD.h"
+#import "ImageUtilities.h"
+#import "ImageEditorViewController.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
 #define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
 #define ACTION_SHEET_CANCEL NSLocalizedStringFromTable (@"cancel", @"Strings", @"comment")
 
 @interface CreateShoutViewController ()
+
 @property (weak, nonatomic) IBOutlet UITextField *usernameView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -30,6 +34,8 @@
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (strong, nonatomic) ImageEditorViewController *imageEditorController;
+@property(nonatomic,retain) ALAssetsLibrary *library;
 
 @end
 
@@ -255,8 +261,7 @@
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
-    if (self.shoutImageView.isAnimating)
-    {
+    if (self.shoutImageView.isAnimating) {
         [self.shoutImageView stopAnimating];
     }
     
@@ -265,9 +270,38 @@
     imagePickerController.sourceType = sourceType;
     imagePickerController.delegate = self;
     
-    if (sourceType == UIImagePickerControllerSourceTypeCamera)
-    {
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         imagePickerController.showsCameraControls = YES;
+        
+        [ImageUtilities addSquareBoundsToImagePicker:imagePickerController];
+    }
+    
+    if (sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        self.library = [[ALAssetsLibrary alloc] init];
+        //TODO: Change xib filename
+        self.imageEditorController = [[ImageEditorViewController alloc] initWithNibName:@"DemoImageEditor" bundle:nil];
+        self.imageEditorController.checkBounds = YES;
+        
+        self.imageEditorController.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+            if(!canceled) {
+                
+                //TODO: Check warning!!
+                [self.library writeImageToSavedPhotosAlbum:[editedImage CGImage]
+                                               orientation:editedImage.imageOrientation
+                                           completionBlock:^(NSURL *assetURL, NSError *error){
+                                               if (error) {
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving"
+                                                                                                   message:[error localizedDescription]
+                                                                                                  delegate:nil
+                                                                                         cancelButtonTitle:@"Ok"
+                                                                                         otherButtonTitles: nil];
+                                                   [alert show];
+                                               }
+                                           }];
+            }
+            [imagePickerController popToRootViewControllerAnimated:YES];
+            [imagePickerController setNavigationBarHidden:NO animated:YES];
+        };
     }
     
     self.imagePickerController = imagePickerController;
@@ -288,31 +322,35 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     
-    image = [self resizeImage:image withSize:kShoutImageSize];
-    
-    self.capturedImage = image;
-    self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
-    self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
-    
-    [self finishAndUpdate];
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        image = [ImageUtilities cropImageToSquare:image];
+        image = [ImageUtilities resizeImage:image withSize:kShoutImageSize];
+        
+        self.capturedImage = image;
+        self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
+        self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
+        
+        [self finishAndUpdate];
+    } else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        [self.library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+            UIImage *preview = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
+            
+            self.imageEditorController.sourceImage = image;
+            self.imageEditorController.previewImage = preview;
+            [self.imageEditorController reset:NO];
+            
+            
+            [picker pushViewController:self.imageEditorController animated:YES];
+            [picker setNavigationBarHidden:YES animated:NO];
+            
+        } failureBlock:^(NSError *error) {
+            NSLog(@"Failed to get asset from library");
+        }];
+    }
 }
-
-- (UIImage *)resizeImage:(UIImage *)image withSize:(NSUInteger)size
-{
-    CGSize imageSize;
-    imageSize.height = size;
-    imageSize.width = size;
-    
-    UIGraphicsBeginImageContext(imageSize);
-    [image drawInRect:CGRectMake(0,0, imageSize.width, imageSize.height)];
-    image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
-}
-
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {

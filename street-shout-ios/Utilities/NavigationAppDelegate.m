@@ -116,11 +116,14 @@
         NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
         
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-        NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
         
-        [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecute:^(Shout *shout) {
-            [navigationViewController onShoutNotificationPressed:shout];
-        }];
+        if ([[navController topViewController] isKindOfClass:[NavigationViewController class]]) {
+            NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
+            
+            [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecute:^(Shout *shout) {
+                [navigationViewController onShoutNotificationPressed:shout];
+            }];
+        }
     }
 }
 

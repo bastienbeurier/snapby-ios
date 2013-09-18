@@ -89,13 +89,6 @@
     [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:zoomDistance Animated:YES];
 }
 
-//refactor
-- (void)animateMapWhenShoutSelectedFromNotificationClicked:(Shout *)shout
-{
-    self.preventShoutDeselection = YES;
-    [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:kDistanceWhenShoutClickedFromNotif Animated:YES];
-}
-
 - (void)displayShouts:(NSArray *)shouts
 {
     NSMutableDictionary *newDisplayedShouts = [[NSMutableDictionary alloc] init];
