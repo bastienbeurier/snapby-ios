@@ -486,7 +486,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDn-BB-Aeb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1056" y="-1409"/>
+            <point key="canvasLocation" x="1004" y="-774"/>
         </scene>
         <!--FeedTVC-->
         <scene sceneID="Pcm-I4-R7x">
@@ -722,6 +722,71 @@
             <point key="canvasLocation" x="-609" y="85"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CreateShoutViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateShoutViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="charCount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="usernameView" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="DisplayShoutImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DisplayShoutImageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="FeedTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedTVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="MapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NavigationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationViewController.h"/>
+        </class>
+        <class className="RefineShoutLocationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RefineShoutLocationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="SettingPickerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingPickerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="validateButtonClicked:"/>
+                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
+            </relationships>
+        </class>
+        <class className="SettingsTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsTVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="distanceUnitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationRadiusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ShoutViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShoutViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="shoutContent" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="shoutStamp" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shoutUsername" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
