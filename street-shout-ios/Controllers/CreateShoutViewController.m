@@ -36,7 +36,6 @@
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (strong, nonatomic) ImageEditorViewController *imageEditorController;
 @property(nonatomic,retain) ALAssetsLibrary *library;
-
 @end
 
 @implementation CreateShoutViewController
@@ -54,6 +53,7 @@
     MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
     shoutAnnotation.coordinate = self.shoutLocation.coordinate;
     [self.mapView addAnnotation:shoutAnnotation];
+    self.library = [[ALAssetsLibrary alloc] init];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -277,35 +277,42 @@
     }
     
     if (sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        self.library = [[ALAssetsLibrary alloc] init];
         //TODO: Change xib filename
-        self.imageEditorController = [[ImageEditorViewController alloc] initWithNibName:@"DemoImageEditor" bundle:nil];
+        self.imageEditorController = [[ImageEditorViewController alloc] initWithNibName:@"ImageEditor" bundle:nil];
         self.imageEditorController.checkBounds = YES;
+        
+        __weak typeof(self) weakSelf = self;
         
         self.imageEditorController.doneCallback = ^(UIImage *editedImage, BOOL canceled){
             if(!canceled) {
-                
-                //TODO: Check warning!!
-                [self.library writeImageToSavedPhotosAlbum:[editedImage CGImage]
-                                               orientation:editedImage.imageOrientation
-                                           completionBlock:^(NSURL *assetURL, NSError *error){
-                                               if (error) {
-                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving"
-                                                                                                   message:[error localizedDescription]
-                                                                                                  delegate:nil
-                                                                                         cancelButtonTitle:@"Ok"
-                                                                                         otherButtonTitles: nil];
-                                                   [alert show];
-                                               }
-                                           }];
+                [weakSelf saveImageToFileSystem:editedImage];
+                [weakSelf resizeAndSaveSelectedImageAndUpdate:editedImage];
             }
-            [imagePickerController popToRootViewControllerAnimated:YES];
-            [imagePickerController setNavigationBarHidden:NO animated:YES];
+
+            [weakSelf dismissViewControllerAnimated:YES completion:NULL];
         };
     }
     
     self.imagePickerController = imagePickerController;
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
+}
+
+- (void)saveImageToFileSystem:(UIImage *)image
+{
+    __weak typeof(self) weakSelf = self;
+    
+    [weakSelf.library writeImageToSavedPhotosAlbum:[image CGImage]
+                                       orientation:ALAssetOrientationUp
+                                   completionBlock:^(NSURL *assetURL, NSError *error){
+                                       if (error) {
+                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving"
+                                                                                           message:[error localizedDescription]
+                                                                                          delegate:nil
+                                                                                 cancelButtonTitle:@"Ok"
+                                                                                 otherButtonTitles: nil];
+                                           [alert show];
+                                       }
+                                   }];
 }
 
 - (void)finishAndUpdate
@@ -327,13 +334,9 @@
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         image = [ImageUtilities cropImageToSquare:image];
-        image = [ImageUtilities resizeImage:image withSize:kShoutImageSize];
+        [self saveImageToFileSystem:image];
         
-        self.capturedImage = image;
-        self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
-        self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
-        
-        [self finishAndUpdate];
+        [self resizeAndSaveSelectedImageAndUpdate:image];
     } else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
         [self.library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
             UIImage *preview = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
@@ -350,6 +353,17 @@
             NSLog(@"Failed to get asset from library");
         }];
     }
+}
+
+- (void)resizeAndSaveSelectedImageAndUpdate:(UIImage *)image
+{
+    image = [ImageUtilities resizeImage:image withSize:kShoutImageSize];
+    
+    self.capturedImage = image;
+    self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
+    self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
+    
+    [self finishAndUpdate];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
