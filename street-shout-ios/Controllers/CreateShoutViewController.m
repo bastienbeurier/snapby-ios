@@ -17,6 +17,7 @@
 #import "MBProgressHUD.h"
 #import "ImageUtilities.h"
 #import "ImageEditorViewController.h"
+#import "NavigationAppDelegate.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
 #define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
@@ -189,6 +190,7 @@
         
         if (self.capturedImage && self.shoutImageUrl) {
             createShoutBlock = ^{
+                [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
                 [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                        Lng:self.shoutLocation.coordinate.longitude
                                                   Username:self.usernameView.text
@@ -202,6 +204,7 @@
             AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
             imageUploader.completionBlock = createShoutBlock;
             NSOperationQueue *operationQueue = [NSOperationQueue new];
+            [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
             [operationQueue addOperation:imageUploader];
         } else {
             createShoutBlock = ^{

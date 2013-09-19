@@ -11,6 +11,7 @@
 #import "GeneralUtilities.h"
 #import "Constants.h"
 #import "UIDevice-Hardware.h"
+#import "NavigationAppDelegate.h"
 
 @implementation AFStreetShoutAPIClient
 
@@ -53,12 +54,15 @@
                                  @"swLat": cornersCoordinates[2],
                                  @"swLng": cornersCoordinates[3]};
     
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] getPath:@"bound_box_shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
         NSArray *rawShouts = [JSON valueForKeyPath:@"result"];
         
         block([Shout rawShoutsToInstances:rawShouts]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         NSLog(@"ERROR!!!");
         //TODO: implement
     }];
@@ -66,12 +70,15 @@
 
 + (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock
 {
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] getPath:[NSString stringWithFormat:@"shouts/%d", shoutId] parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
         Shout *rawShout = [JSON valueForKeyPath:@"result"];
         
         successBlock([Shout rawShoutToInstance:rawShout]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         NSLog(@"ERROR!!!");
     }];
 }
@@ -90,10 +97,13 @@
         [parameters setObject:imageUrl forKey:@"image"];
     }
     
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:@"shouts.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         NSString *rawShout = [JSON valueForKeyPath:@"result"];
         successBlock([Shout rawShoutToInstance:rawShout]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         failureBlock();
     }];
 }
@@ -130,7 +140,12 @@
         [parameters setObject:uaDeviceToken forKey:@"push_token"];
     }
     
-    [[AFStreetShoutAPIClient sharedClient] postPath:@"update_device_info" parameters:parameters success:nil failure:nil];
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] postPath:@"update_device_info" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    }];
 }
 
 @end
