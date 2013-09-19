@@ -48,17 +48,8 @@
     
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     
-    if(remoteNotif && [remoteNotif objectForKey:@"extra"])
-    {
-        NSDictionary *extra = [remoteNotif objectForKey:@"extra"];
-        NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
-        
-        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-        NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
-        
-        [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecute:^(Shout *shout) {
-            [navigationViewController onShoutNotificationPressed:shout];
-        }];
+    if(remoteNotif) {
+        [self application:application handlePushNotification:remoteNotif];
     }
     
     return YES;
@@ -110,8 +101,12 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
-    if([notification objectForKey:@"extra"])
-    {
+    [self application:application handlePushNotification:notification];
+}
+
+- (void)application:(UIApplication *)application handlePushNotification:(NSDictionary *)notification
+{
+    if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
         NSDictionary *extra = [notification objectForKey:@"extra"];
         NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
         

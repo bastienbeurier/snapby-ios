@@ -67,7 +67,6 @@
 + (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock
 {
     [[AFStreetShoutAPIClient sharedClient] getPath:[NSString stringWithFormat:@"shouts/%d", shoutId] parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"Get Shout Response: %@", JSON);
         
         Shout *rawShout = [JSON valueForKeyPath:@"result"];
         
