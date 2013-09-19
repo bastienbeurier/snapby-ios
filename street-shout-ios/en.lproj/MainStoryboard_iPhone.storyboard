@@ -364,25 +364,44 @@
                                     <action selector="addPhotoButtonClicked:" destination="vn8-un-4WF" eventType="touchUpInside" id="Htj-TB-SjH"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4w-al-2Mc">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="U2N-Md-oc4"/>
-                                    <constraint firstAttribute="width" constant="50" id="w4u-Ta-djR"/>
-                                </constraints>
+                            <imageView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4w-al-2Mc">
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="G0H-0G-QtF" appends="YES" id="5fn-SQ-BPY"/>
+                                </connections>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7FI-Me-l61">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="YVq-xs-jQh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="X">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearPhoto:" destination="vn8-un-4WF" eventType="touchUpInside" id="vvr-TB-BX2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Kl0-r2-Rhh" firstAttribute="top" secondItem="ysa-NC-Kml" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="1Vp-1l-Tr8"/>
-                            <constraint firstItem="S4w-al-2Mc" firstAttribute="trailing" secondItem="omK-0A-hy7" secondAttribute="trailing" type="default" id="22t-ot-hfJ"/>
                             <constraint firstItem="6gF-na-Ube" firstAttribute="top" secondItem="dIW-r1-Gqy" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="3WH-wa-gtQ"/>
+                            <constraint firstItem="7FI-Me-l61" firstAttribute="trailing" secondItem="omK-0A-hy7" secondAttribute="trailing" type="default" id="4SY-iR-1Ft"/>
                             <constraint firstAttribute="trailing" secondItem="6gF-na-Ube" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="7SI-Zm-bmc"/>
                             <constraint firstItem="fgG-mg-4eO" firstAttribute="leading" secondItem="pfU-mK-WdG" secondAttribute="leading" type="default" id="7Wk-Tp-qqo"/>
-                            <constraint firstItem="S4w-al-2Mc" firstAttribute="trailing" secondItem="Ho6-QJ-E2Y" secondAttribute="trailing" type="default" id="8tG-se-HJ7"/>
+                            <constraint firstItem="7FI-Me-l61" firstAttribute="trailing" secondItem="Ho6-QJ-E2Y" secondAttribute="trailing" type="default" id="A2V-VN-VlY"/>
+                            <constraint firstItem="S4w-al-2Mc" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="EkR-9o-DmJ"/>
                             <constraint firstItem="ysa-NC-Kml" firstAttribute="top" secondItem="Occ-ze-Sdu" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="FAd-Rw-zip"/>
+                            <constraint firstItem="7FI-Me-l61" firstAttribute="top" secondItem="qMX-Ip-TrI" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="HcF-h7-QTe"/>
                             <constraint firstItem="ysa-NC-Kml" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Htz-Cr-TiY"/>
                             <constraint firstItem="qMX-Ip-TrI" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="IkV-LB-euH"/>
                             <constraint firstItem="Kl0-r2-Rhh" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Jc2-Vm-md7"/>
+                            <constraint firstItem="S4w-al-2Mc" firstAttribute="top" secondItem="qMX-Ip-TrI" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="N0Q-yU-hvg"/>
                             <constraint firstItem="pfU-mK-WdG" firstAttribute="baseline" secondItem="qMX-Ip-TrI" secondAttribute="baseline" type="default" id="QQ3-Yv-kpp"/>
                             <constraint firstAttribute="trailing" secondItem="fgG-mg-4eO" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Wyr-u6-pvg"/>
                             <constraint firstItem="Occ-ze-Sdu" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="ZPX-bG-F3Y"/>
@@ -394,16 +413,19 @@
                             <constraint firstItem="pfU-mK-WdG" firstAttribute="leading" secondItem="WvF-jk-Rrq" secondAttribute="leading" type="default" id="gKz-f4-ss2"/>
                             <constraint firstItem="6gF-na-Ube" firstAttribute="top" secondItem="Kl0-r2-Rhh" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="hFD-am-fTp"/>
                             <constraint firstItem="omK-0A-hy7" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="hP6-YG-god"/>
+                            <constraint firstItem="7FI-Me-l61" firstAttribute="trailing" secondItem="S4w-al-2Mc" secondAttribute="trailing" type="default" id="kM8-m9-1GV"/>
                             <constraint firstItem="Ho6-QJ-E2Y" firstAttribute="top" secondItem="qMX-Ip-TrI" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="oc1-fY-F6Q"/>
                             <constraint firstItem="6gF-na-Ube" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="qAh-8w-ggR"/>
                             <constraint firstAttribute="trailing" secondItem="dIW-r1-Gqy" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="qIR-iO-ceC"/>
                             <constraint firstAttribute="trailing" secondItem="WvF-jk-Rrq" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="qZP-RP-caw"/>
                             <constraint firstAttribute="trailing" secondItem="ysa-NC-Kml" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="s33-On-WgX"/>
+                            <constraint firstItem="omK-0A-hy7" firstAttribute="baseline" secondItem="fgG-mg-4eO" secondAttribute="baseline" type="default" id="vgV-2X-QdB"/>
                             <constraint firstAttribute="bottom" secondItem="Ho6-QJ-E2Y" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="vl6-EU-aMS"/>
                             <constraint firstItem="Occ-ze-Sdu" firstAttribute="top" secondItem="omK-0A-hy7" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="ys1-Ia-0GK"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addPhotoButton" destination="Ho6-QJ-E2Y" id="DWC-Rz-cZk"/>
                         <outlet property="charCount" destination="dIW-r1-Gqy" id="h2P-hl-2Dn"/>
                         <outlet property="descriptionView" destination="6gF-na-Ube" id="p4P-0z-Sk0"/>
                         <outlet property="mapView" destination="WvF-jk-Rrq" id="HRP-vk-Ijb"/>
@@ -416,6 +438,11 @@
                 <tapGestureRecognizer id="CdO-Ep-L8C">
                     <connections>
                         <action selector="settingsMapClicked:" destination="vn8-un-4WF" id="d5M-pH-RYx"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="G0H-0G-QtF">
+                    <connections>
+                        <action selector="addedPhotoClicked:" destination="vn8-un-4WF" id="fD0-af-ZCW"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -726,6 +753,13 @@
         <class className="CreateShoutViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateShoutViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addPhotoButtonClicked:" candidateClass="UIButton"/>
+                <relationship kind="action" name="addedPhotoClicked:"/>
+                <relationship kind="action" name="cancelShoutClicked:"/>
+                <relationship kind="action" name="clearPhoto:"/>
+                <relationship kind="action" name="createShoutClicked:"/>
+                <relationship kind="action" name="settingsMapClicked:"/>
+                <relationship kind="outlet" name="addPhotoButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="charCount" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="descriptionView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
@@ -756,10 +790,17 @@
         </class>
         <class className="NavigationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="createShoutButtonClicked:"/>
+                <relationship kind="action" name="dezoomButtonClicked:"/>
+                <relationship kind="action" name="myLocationButtonClicked:"/>
+            </relationships>
         </class>
         <class className="RefineShoutLocationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RefineShoutLocationViewController.h"/>
             <relationships>
+                <relationship kind="action" name="doneButtonClicked:"/>
+                <relationship kind="action" name="refreshMapClicked:"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
             </relationships>
         </class>

@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
 @property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
+@property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
 @property (strong, nonatomic) NSString *shoutImageName;
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
@@ -240,7 +241,23 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)addedPhotoClicked:(id)sender {
+    [self letUserChoosePhoto];
+}
+
 - (IBAction)addPhotoButtonClicked:(UIButton *)sender {
+    [self letUserChoosePhoto];
+}
+
+- (IBAction)clearPhoto:(id)sender {
+    self.shoutImageView.image = nil;
+    self.capturedImage = nil;
+    [self.shoutImageView setHidden:YES];
+    [self.addPhotoButton setHidden:NO];
+}
+
+- (void)letUserChoosePhoto
+{
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:ACTION_SHEET_OPTION_1, ACTION_SHEET_OPTION_2, nil];
     
     [actionSheet showInView:self.view];
@@ -321,6 +338,8 @@
     
     if (self.capturedImage) {
         [self.shoutImageView setImage:self.capturedImage];
+        [self.shoutImageView setHidden:NO];
+        [self.addPhotoButton setHidden:YES];
     }
     
     self.imagePickerController = nil;
@@ -371,4 +390,8 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)viewDidUnload {
+    [self setAddPhotoButton:nil];
+    [super viewDidUnload];
+}
 @end

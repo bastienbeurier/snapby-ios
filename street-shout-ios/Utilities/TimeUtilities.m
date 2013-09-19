@@ -40,7 +40,7 @@
             if (minutes > 1) {
                 return [NSString stringWithFormat:@"%d %@", minutes, NSLocalizedStringFromTable (@"minutes_ago", @"Strings", @"comment")];;
             } else if (minutes == 1) {
-                return [NSString stringWithFormat:@"%d %@", minutes, NSLocalizedStringFromTable (@"minutes_ago", @"Strings", @"comment")];;
+                return [NSString stringWithFormat:@"%d %@", minutes, NSLocalizedStringFromTable (@"minute_ago", @"Strings", @"comment")];;
             } else {
                 return NSLocalizedStringFromTable (@"just_now", @"Strings", @"comment");
             }
