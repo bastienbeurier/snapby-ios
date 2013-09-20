@@ -88,14 +88,14 @@
 {
     if (distance < 100) {
         return NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment");
-    } else if (distance < 1) {
+    } else if (distance < 1000) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 100.0) * 100];
         return [str stringByAppendingFormat:@"%@ %@", NSLocalizedStringFromTable (@"meters", @"Strings", @"comment"), NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
-    } else if (distance < 10) {
-        NSString *str = [NSString stringWithFormat:@"%d", distance];
+    } else if (distance < 10000) {
+        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 1000.0)];
         return [str stringByAppendingFormat:@"km %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
-    } else if (distance < 100 ) {
-        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 10.0) * 10];
+    } else if (distance < 100000 ) {
+        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 10000.0) * 10];
         return [str stringByAppendingFormat:@"km %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
     } else {
         return NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment");
@@ -108,6 +108,8 @@
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:lat2 longitude:lng2];
     
     NSUInteger distance = (NSUInteger) [loc1 distanceFromLocation:loc2];
+    
+    NSLog(@"DISTANCE FORM SHOUT: %d", distance);
     
     NSNumber *distanceUnitPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREF];
     
