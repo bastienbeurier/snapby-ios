@@ -9,6 +9,7 @@
 #import "SettingsTVC.h"
 #import "TestFlight.h"
 #import "Constants.h"
+#import "GeneralUtilities.h"
 
 @interface SettingsTVC ()
 
@@ -109,13 +110,31 @@
 
 - (void)feedBackClicked
 {
-    [TestFlight openFeedbackView];
+    if ([GeneralUtilities connected]) {
+        [TestFlight openFeedbackView];
+    } else {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
+                                                          message:nil
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+    }
 }
 
 - (void)rateMeClicked
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Not yet implemented" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [message show];
+    if ([GeneralUtilities connected]) {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Not yet implemented" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [message show];
+    } else {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
+                                                          message:nil
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

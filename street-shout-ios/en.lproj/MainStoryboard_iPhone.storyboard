@@ -225,7 +225,7 @@
                                     </barButtonItem>
                                     <barButtonItem title="Settings" id="AYB-4o-LWE">
                                         <connections>
-                                            <segue destination="EsS-z3-PWu" kind="push" identifier="Settings Push Segue" id="aDe-LZ-Q7P"/>
+                                            <action selector="settingsButtonClicked:" destination="2" id="D58-Jh-f0j"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -256,6 +256,7 @@
                     <connections>
                         <segue destination="vn8-un-4WF" kind="modal" identifier="Create Shout Modal" id="rBF-pL-H2a"/>
                         <segue destination="ddt-rk-y7O" kind="push" identifier="Display Shout Image" id="d2q-2K-YkO"/>
+                        <segue destination="EsS-z3-PWu" kind="push" identifier="Settings Push Segue" id="2ij-qQ-Pm3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -749,85 +750,6 @@
             <point key="canvasLocation" x="-609" y="85"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CreateShoutViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateShoutViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addPhotoButtonClicked:" candidateClass="UIButton"/>
-                <relationship kind="action" name="addedPhotoClicked:"/>
-                <relationship kind="action" name="cancelShoutClicked:"/>
-                <relationship kind="action" name="clearPhoto:"/>
-                <relationship kind="action" name="createShoutClicked:"/>
-                <relationship kind="action" name="settingsMapClicked:"/>
-                <relationship kind="outlet" name="addPhotoButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="charCount" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="usernameView" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="DisplayShoutImageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DisplayShoutImageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="FeedTVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedTVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
-        </class>
-        <class className="MapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="NavigationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="createShoutButtonClicked:"/>
-                <relationship kind="action" name="dezoomButtonClicked:"/>
-                <relationship kind="action" name="myLocationButtonClicked:"/>
-            </relationships>
-        </class>
-        <class className="RefineShoutLocationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RefineShoutLocationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneButtonClicked:"/>
-                <relationship kind="action" name="refreshMapClicked:"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="SettingPickerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingPickerViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="validateButtonClicked:"/>
-                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
-            </relationships>
-        </class>
-        <class className="SettingsTVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsTVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="distanceUnitLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="notificationRadiusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="ShoutViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShoutViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="shoutContent" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="shoutStamp" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="shoutUsername" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

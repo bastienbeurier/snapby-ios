@@ -14,6 +14,8 @@
 #import "DisplayShoutImageViewController.h"
 #import "AFStreetShoutAPIClient.h"
 #import "Constants.h"
+#import "Reachability.h"
+#import "GeneralUtilities.h"
 
 @interface NavigationViewController ()
 
@@ -141,13 +143,22 @@
 
 - (IBAction)createShoutButtonClicked:(id)sender
 {
-    MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
-    
-    if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
-        [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
+    if ([GeneralUtilities connected]) {
+        MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
+        
+        if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
+            [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
+        } else {
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
+                                                              message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
+            [message show];
+        }
     } else {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
-                                                          message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
+                                                          message:nil
                                                          delegate:nil
                                                 cancelButtonTitle:@"OK"
                                                 otherButtonTitles:nil];
@@ -161,6 +172,19 @@
 
 - (IBAction)dezoomButtonClicked:(id)sender {
         [self.mapViewController dezoomButtonClicked];
+}
+
+- (IBAction)settingsButtonClicked:(id)sender {
+    if ([GeneralUtilities connected]) {
+        [self performSegueWithIdentifier:@"Settings Push Segue" sender:nil];
+    } else {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
+                                                          message:nil
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+    }
 }
 
 - (void)sendDeviceInfo

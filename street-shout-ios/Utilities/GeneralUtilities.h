@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Reachability.h"
 
 @interface GeneralUtilities : NSObject
 
@@ -15,5 +16,7 @@
 + (NSUInteger)currentDateInMilliseconds;
 
 + (NSString *)getUADeviceToken;
+
++ (BOOL)connected;
 
 @end

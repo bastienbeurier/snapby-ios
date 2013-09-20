@@ -146,8 +146,16 @@
         [message show];
         return;
     } else {
-        //TODO: save username
-        [self createShout];
+        if ([GeneralUtilities connected]) {
+            [self createShout];
+        } else {
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
+                                                              message:nil
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
+            [message show];
+        }
     }
 }
 
