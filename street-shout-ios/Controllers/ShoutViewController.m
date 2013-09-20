@@ -10,6 +10,7 @@
 #import "TimeUtilities.h"
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
+#import "LocationUtilities.h"
 
 @interface ShoutViewController ()
 
@@ -48,6 +49,12 @@
         self.shoutUsername.text = self.shout.displayName;
         self.shoutContent.text = self.shout.description;
         self.shoutStamp.text = [TimeUtilities shoutAgeToString:[TimeUtilities getShoutAge:self.shout.created]];
+        
+        MKUserLocation *myLocation = [self.shoutVCDelegate getMyLocation];
+        
+        if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
+            self.shoutStamp.text = [self.shoutStamp.text stringByAppendingFormat:@", %@", [LocationUtilities formattedDistanceLat1:myLocation.coordinate.latitude lng1:myLocation.coordinate.longitude lat2:self.shout.lat lng2:self.shout.lng]];
+        }
     }
 }
 

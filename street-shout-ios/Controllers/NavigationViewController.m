@@ -144,7 +144,7 @@
 - (IBAction)createShoutButtonClicked:(id)sender
 {
     if ([GeneralUtilities connected]) {
-        MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
+        MKUserLocation *myLocation = [self getMyLocation];
         
         if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
             [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
@@ -164,6 +164,11 @@
                                                 otherButtonTitles:nil];
         [message show];
     }
+}
+
+- (MKUserLocation *)getMyLocation
+{
+    return self.mapViewController.mapView.userLocation;
 }
 
 - (IBAction)myLocationButtonClicked:(id)sender {

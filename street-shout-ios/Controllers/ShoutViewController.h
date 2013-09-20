@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Shout.h"
+#import <MapKit/MapKit.h>
 
 @protocol ShoutVCDelegate;
 
@@ -22,5 +23,7 @@
 @protocol ShoutVCDelegate
 
 - (void)displayShoutImage:(UIImage *)image;
+
+- (MKUserLocation *)getMyLocation;
 
 @end

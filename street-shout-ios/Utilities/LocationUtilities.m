@@ -8,6 +8,10 @@
 
 #import "LocationUtilities.h"
 #import <MapKit/MapKit.h>
+#import "Constants.h"
+
+#define METERS_TO_YRD 1.09361
+#define YRD_TO_MILES 0.000621371
 
 @implementation LocationUtilities
 
@@ -59,6 +63,59 @@
     [mapView setRegion:region animated:animated];
 }
 
++ (NSString *)formattedDistanceInMiles:(NSUInteger)distance
+{
+    NSUInteger distanceYd = round(distance * METERS_TO_YRD);
+    NSUInteger distanceMiles = round(distance * YRD_TO_MILES);
+    
+    if (distanceYd < 100) {
+        return NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment");
+    } else if (distanceMiles < 1) {
+        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distanceYd / 100.0) * 100];
+        return [str stringByAppendingFormat:@"yd %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+    } else if (distanceMiles < 10) {
+        NSString *str = [NSString stringWithFormat:@"%d", distanceMiles];
+        return [str stringByAppendingFormat:@"mi %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+    } else if (distanceMiles < 100 ) {
+        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distanceMiles / 10.0) * 10];
+        return [str stringByAppendingFormat:@"mi %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+    } else {
+        return NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment");
+    }
+}
 
++ (NSString *)formattedDistanceInMeters:(NSUInteger)distance
+{
+    if (distance < 100) {
+        return NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment");
+    } else if (distance < 1) {
+        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 100.0) * 100];
+        return [str stringByAppendingFormat:@"%@ %@", NSLocalizedStringFromTable (@"meters", @"Strings", @"comment"), NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+    } else if (distance < 10) {
+        NSString *str = [NSString stringWithFormat:@"%d", distance];
+        return [str stringByAppendingFormat:@"km %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+    } else if (distance < 100 ) {
+        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 10.0) * 10];
+        return [str stringByAppendingFormat:@"km %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+    } else {
+        return NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment");
+    }
+}
+
++ (NSString *)formattedDistanceLat1:(double)lat1 lng1:(double)lng1 lat2:(double)lat2 lng2:(double)lng2
+{
+    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:lat1 longitude:lng1];
+    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:lat2 longitude:lng2];
+    
+    NSUInteger distance = (NSUInteger) [loc1 distanceFromLocation:loc2];
+    
+    NSNumber *distanceUnitPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREF];
+    
+    if (!distanceUnitPreferenceIndex || [distanceUnitPreferenceIndex integerValue] == 0) {
+        return [self formattedDistanceInMeters:distance];
+    } else {
+        return [self formattedDistanceInMiles:distance];
+    }
+}
 
 @end
