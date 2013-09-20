@@ -137,6 +137,7 @@
                     <connections>
                         <outlet property="distanceUnitLabel" destination="J1C-C6-3OZ" id="DMM-s1-jWO"/>
                         <outlet property="notificationRadiusLabel" destination="hoG-CO-HNG" id="Oyc-Iy-NjZ"/>
+                        <outlet property="rateMeUILabel" destination="o5H-3y-3VI" id="upY-2m-EEi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ewS-UU-APX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -428,6 +429,7 @@
                     <connections>
                         <outlet property="addPhotoButton" destination="Ho6-QJ-E2Y" id="DWC-Rz-cZk"/>
                         <outlet property="charCount" destination="dIW-r1-Gqy" id="h2P-hl-2Dn"/>
+                        <outlet property="createShoutButton" destination="fgG-mg-4eO" id="Ykq-eB-TwD"/>
                         <outlet property="descriptionView" destination="6gF-na-Ube" id="p4P-0z-Sk0"/>
                         <outlet property="mapView" destination="WvF-jk-Rrq" id="HRP-vk-Ijb"/>
                         <outlet property="shoutImageView" destination="S4w-al-2Mc" id="fIl-PL-sZK"/>

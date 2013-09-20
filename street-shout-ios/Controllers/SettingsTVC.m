@@ -11,12 +11,15 @@
 #import "Constants.h"
 #import "GeneralUtilities.h"
 
+#define APP_ID 123 //id from iTunesConnect
+
 @interface SettingsTVC ()
 
 @property (weak, nonatomic) IBOutlet UILabel *notificationRadiusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceUnitLabel;
 @property (strong, nonatomic) NSArray *distanceUnitPreferences;
 @property (strong, nonatomic) NSArray *notificationRadiusPreferences;
+@property (weak, nonatomic) IBOutlet UILabel *rateMeUILabel;
 
 @end
 
@@ -50,6 +53,8 @@
 
     [self updateDistanceUnitLabel];
     [self updateNotificationRadiusLabel];
+    
+    self.rateMeUILabel.text = [self.rateMeUILabel.text stringByAppendingFormat:@" (v.%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -125,8 +130,10 @@
 - (void)rateMeClicked
 {
     if ([GeneralUtilities connected]) {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Not yet implemented" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [message show];
+//        NSString *reviewURL = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%d",APP_ID];
+//        
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.com/apps/shout"]];
     } else {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
                                                           message:nil
@@ -180,4 +187,8 @@
     [self.settingsTVCDelegate sendDeviceInfo];
 }
 
+- (void)viewDidUnload {
+    [self setRateMeUILabel:nil];
+    [super viewDidUnload];
+}
 @end

@@ -36,6 +36,7 @@
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 @property (strong, nonatomic) ImageEditorViewController *imageEditorController;
 @property(nonatomic,retain) ALAssetsLibrary *library;
 @end
@@ -47,6 +48,10 @@
     
     if (userName) {
         self.usernameView.text = userName;
+    }
+    
+    if (!PRODUCTION) {
+        [self.createShoutButton setTitle:@"Shatte" forState:UIControlStateNormal];
     }
     
     [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:NO];
@@ -403,6 +408,7 @@
 
 - (void)viewDidUnload {
     [self setAddPhotoButton:nil];
+    [self setCreateShoutButton:nil];
     [super viewDidUnload];
 }
 @end
