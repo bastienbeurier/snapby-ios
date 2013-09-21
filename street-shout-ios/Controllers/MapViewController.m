@@ -13,6 +13,18 @@
 #import "NavigationViewController.h"
 #import "Constants.h"
 
+#define ZOOM_0 180
+#define ZOOM_1 10
+#define ZOOM_2 3
+#define ZOOM_3 1
+#define ZOOM_4 0.3
+#define ZOOM_5 0.1
+#define ZOOM_6 0.03
+#define ZOOM_7 0.01
+#define ZOOM_8 0.003
+#define ZOOM_9 0.001
+#define ZOOM_10 0.0005
+
 @interface MapViewController () <MKMapViewDelegate>
 
 @property (nonatomic) BOOL hasSentDeviceInfo;
@@ -30,7 +42,7 @@
     
     self.hasSentDeviceInfo = NO;
     
-    [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude WithSpan:kMapInitialSpan Animated:NO];
+    [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude WithSpan:ZOOM_0 Animated:NO];
 }
 
 - (void)setShouts:(NSArray *)shouts
@@ -75,18 +87,18 @@
 
 - (void)animateMapWhenShout:(Shout *)shout selectedFrom:(NSString *)source
 {
+    self.preventShoutDeselection = YES;
     NSUInteger zoomDistance = 0;
     
     if ([source isEqualToString:@"Map"] || [source isEqualToString:@"Feed"]) {
-        zoomDistance = kDistanceWhenShoutClickedFromMapOrFeed;
+        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng Animated:YES];
     } else if ([source isEqualToString:@"Create"]) {
         zoomDistance = kDistanceWhenRedirectedFromCreateShout;
+        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:zoomDistance Animated:YES];
     } else if ([source isEqualToString:@"Notification"]) {
         zoomDistance = kDistanceWhenShoutClickedFromNotif;
+        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:zoomDistance Animated:YES];
     }
-    
-    self.preventShoutDeselection = YES;
-    [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:zoomDistance Animated:YES];
 }
 
 - (void)displayShouts:(NSArray *)shouts
@@ -152,6 +164,68 @@
 {
     MKCoordinateRegion region = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(180, 360));
     [self.mapView setRegion:region animated:YES];
+}
+
+- (IBAction)zoomInClicked:(id)sender {
+    double oldSpan = self.mapView.region.span.latitudeDelta;
+    double newSpan = ZOOM_10;
+    
+    if (oldSpan >= ZOOM_0) {
+        newSpan = ZOOM_1;
+    } else if (oldSpan >= ZOOM_1) {
+        newSpan = ZOOM_2;
+    } else if (oldSpan >= ZOOM_2) {
+        newSpan = ZOOM_3;
+    } else if (oldSpan >= ZOOM_3) {
+        newSpan = ZOOM_4;
+    } else if (oldSpan >= ZOOM_4) {
+        newSpan = ZOOM_5;
+    } else if (oldSpan >= ZOOM_5) {
+        newSpan = ZOOM_6;
+    } else if (oldSpan >= ZOOM_6) {
+        newSpan = ZOOM_7;
+    } else if (oldSpan >= ZOOM_7) {
+        newSpan = ZOOM_8;
+    } else if (oldSpan >= ZOOM_8) {
+        newSpan = ZOOM_9;
+    } else if (oldSpan > ZOOM_10) {
+        newSpan = ZOOM_10;
+    } else {
+        return;
+    }
+    
+    [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
+}
+
+- (IBAction)zoomOutClicked:(id)sender {
+    double oldSpan = self.mapView.region.span.latitudeDelta;
+    double newSpan = ZOOM_0;
+    
+    if (oldSpan <= ZOOM_10) {
+        newSpan = ZOOM_9;
+    } else if (oldSpan <= ZOOM_9) {
+        newSpan = ZOOM_8;
+    } else if (oldSpan <= ZOOM_8) {
+        newSpan = ZOOM_7;
+    } else if (oldSpan <= ZOOM_7) {
+        newSpan = ZOOM_6;
+    } else if (oldSpan <= ZOOM_6) {
+        newSpan = ZOOM_5;
+    } else if (oldSpan <= ZOOM_5) {
+        newSpan = ZOOM_4;
+    } else if (oldSpan <= ZOOM_4) {
+        newSpan = ZOOM_3;
+    } else if (oldSpan <= ZOOM_3) {
+        newSpan = ZOOM_2;
+    } else if (oldSpan <= ZOOM_2) {
+        newSpan = ZOOM_1;
+    } else if (oldSpan < ZOOM_0) {
+        newSpan = ZOOM_0;
+    } else {
+        return;
+    }
+    
+    [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
 }
 
 @end

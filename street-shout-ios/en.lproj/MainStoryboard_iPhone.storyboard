@@ -697,12 +697,50 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bgn-bn-PdH"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5NJ-F4-BIS">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="Csi-LZ-IOS"/>
+                                    <constraint firstAttribute="width" constant="43" id="g1h-FO-yJ9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="zoomInClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="NhY-4I-ZTB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="joC-nD-eBo">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="2H8-YD-M9R"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <state key="normal" title="-">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="zoomOutClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="5fs-OM-n2K"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Bgn-bn-PdH" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" type="default" id="7Ag-77-LGf"/>
                             <constraint firstItem="Bgn-bn-PdH" firstAttribute="bottom" secondItem="01B-3P-WJq" secondAttribute="bottom" type="default" id="8eq-hm-ecV"/>
+                            <constraint firstItem="joC-nD-eBo" firstAttribute="top" secondItem="5NJ-F4-BIS" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="LMq-7i-pEo"/>
+                            <constraint firstAttribute="trailing" secondItem="joC-nD-eBo" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="UH6-4L-drM"/>
+                            <constraint firstItem="5NJ-F4-BIS" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" constant="20" symbolic="YES" type="default" id="YkW-dO-jFZ"/>
                             <constraint firstItem="Bgn-bn-PdH" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" type="default" id="cB3-zT-5n2"/>
+                            <constraint firstItem="5NJ-F4-BIS" firstAttribute="leading" secondItem="joC-nD-eBo" secondAttribute="leading" type="default" id="e1j-7n-xsb"/>
+                            <constraint firstAttribute="trailing" secondItem="5NJ-F4-BIS" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="hoJ-UN-czE"/>
                             <constraint firstItem="Bgn-bn-PdH" firstAttribute="trailing" secondItem="01B-3P-WJq" secondAttribute="trailing" type="default" id="p8g-eD-qWj"/>
                         </constraints>
                     </view>
@@ -752,6 +790,91 @@
             <point key="canvasLocation" x="-609" y="85"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CreateShoutViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreateShoutViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addPhotoButtonClicked:" candidateClass="UIButton"/>
+                <relationship kind="action" name="addedPhotoClicked:"/>
+                <relationship kind="action" name="cancelShoutClicked:"/>
+                <relationship kind="action" name="clearPhoto:"/>
+                <relationship kind="action" name="createShoutClicked:"/>
+                <relationship kind="action" name="settingsMapClicked:"/>
+                <relationship kind="outlet" name="addPhotoButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="charCount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="createShoutButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="descriptionView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="usernameView" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="DisplayShoutImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DisplayShoutImageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="FeedTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedTVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="MapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="zoomInClicked:"/>
+                <relationship kind="action" name="zoomOutClicked:"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NavigationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="createShoutButtonClicked:"/>
+                <relationship kind="action" name="dezoomButtonClicked:"/>
+                <relationship kind="action" name="myLocationButtonClicked:"/>
+                <relationship kind="action" name="settingsButtonClicked:"/>
+            </relationships>
+        </class>
+        <class className="RefineShoutLocationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RefineShoutLocationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneButtonClicked:"/>
+                <relationship kind="action" name="refreshMapClicked:"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="SettingPickerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingPickerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="validateButtonClicked:"/>
+                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
+            </relationships>
+        </class>
+        <class className="SettingsTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsTVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="distanceUnitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationRadiusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rateMeUILabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ShoutViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShoutViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="shoutImageClicked:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="shoutContent" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shoutImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="shoutStamp" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="shoutUsername" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -45,7 +45,16 @@
     [mapView setRegion:shoutRegion animated:animated];
 }
 
-+ (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng WithSpan:(NSUInteger)spanValue Animated:(BOOL)animated
++ (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng Animated:(BOOL)animated
+{
+    CLLocationCoordinate2D location;
+    location.latitude = lat;
+    location.longitude = lng;
+    
+    [mapView setCenterCoordinate:location animated:animated];
+}
+
++ (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng WithSpan:(double)spanValue Animated:(BOOL)animated
 {
     CLLocationCoordinate2D location;
     location.latitude = lat;

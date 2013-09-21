@@ -15,7 +15,9 @@
 
 + (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng WithDistance:(NSUInteger)distance Animated:(BOOL)animated;
 
-+ (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng WithSpan:(NSUInteger)spanValue Animated:(BOOL)animated;
++ (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng WithSpan:(double)spanValue Animated:(BOOL)animated;
+
++ (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng Animated:(BOOL)animated;
 
 + (NSString *)formattedDistanceInMiles:(NSUInteger)distance;
 
