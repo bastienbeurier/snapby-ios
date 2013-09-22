@@ -28,6 +28,8 @@
 @interface MapViewController () <MKMapViewDelegate>
 
 @property (nonatomic) BOOL hasSentDeviceInfo;
+@property (weak, nonatomic) IBOutlet UIButton *zoomInButton;
+@property (weak, nonatomic) IBOutlet UIButton *zoomOutButton;
 
 @end
 
@@ -63,6 +65,8 @@
     }
     
     self.preventShoutDeselection = NO;
+    self.zoomInButton.enabled = YES;
+    self.zoomOutButton.enabled = YES;
     
     [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
 }
@@ -194,6 +198,9 @@
         return;
     }
     
+    self.preventShoutDeselection = YES;
+    self.zoomInButton.enabled = NO;
+    
     [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
 }
 
@@ -225,7 +232,15 @@
         return;
     }
     
+    self.preventShoutDeselection = YES;
+    self.zoomOutButton.enabled = NO;
+    
     [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
 }
 
+- (void)viewDidUnload {
+    [self setZoomInButton:nil];
+    [self setZoomOutButton:nil];
+    [super viewDidUnload];
+}
 @end

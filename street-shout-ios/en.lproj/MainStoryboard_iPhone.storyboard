@@ -747,6 +747,8 @@
                     <toolbarItems/>
                     <connections>
                         <outlet property="mapView" destination="Bgn-bn-PdH" id="6u7-q3-Xmi"/>
+                        <outlet property="zoomInButton" destination="5NJ-F4-BIS" id="a4B-xZ-ypl"/>
+                        <outlet property="zoomOutButton" destination="joC-nD-eBo" id="gvZ-Sg-jOs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDN-fj-Qjo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -827,6 +829,8 @@
                 <relationship kind="action" name="zoomInClicked:"/>
                 <relationship kind="action" name="zoomOutClicked:"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="zoomInButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="zoomOutButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
