@@ -305,26 +305,20 @@
     
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         imagePickerController.showsCameraControls = YES;
-        
-        [ImageUtilities addSquareBoundsToImagePicker:imagePickerController];
     }
     
-    if (sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        //TODO: Change xib filename
-        self.imageEditorController = [[ImageEditorViewController alloc] initWithNibName:@"ImageEditor" bundle:nil];
-        self.imageEditorController.checkBounds = YES;
+    self.imageEditorController = [[ImageEditorViewController alloc] initWithNibName:@"ImageEditor" bundle:nil];
+    self.imageEditorController.checkBounds = YES;
         
-        __weak typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
         
-        self.imageEditorController.doneCallback = ^(UIImage *editedImage, BOOL canceled){
-            if(!canceled) {
-                [weakSelf saveImageToFileSystem:editedImage];
-                [weakSelf resizeAndSaveSelectedImageAndUpdate:editedImage];
-            }
+    self.imageEditorController.doneCallback = ^(UIImage *editedImage, BOOL canceled){
+        if(!canceled) {
+            [weakSelf resizeAndSaveSelectedImageAndUpdate:editedImage];
+        }
 
-            [weakSelf dismissViewControllerAnimated:YES completion:NULL];
-        };
-    }
+        [weakSelf dismissViewControllerAnimated:YES completion:NULL];
+    };
     
     self.imagePickerController = imagePickerController;
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
@@ -368,26 +362,23 @@
     NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-        image = [ImageUtilities cropImageToSquare:image];
         [self saveImageToFileSystem:image];
-        
-        [self resizeAndSaveSelectedImageAndUpdate:image];
-    } else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        [self.library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-            UIImage *preview = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
-            
-            self.imageEditorController.sourceImage = image;
-            self.imageEditorController.previewImage = preview;
-            [self.imageEditorController reset:NO];
-            
-            
-            [picker pushViewController:self.imageEditorController animated:YES];
-            [picker setNavigationBarHidden:YES animated:NO];
-            
-        } failureBlock:^(NSError *error) {
-            NSLog(@"Failed to get asset from library");
-        }];
     }
+    
+    [self.library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+        UIImage *preview = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
+            
+        self.imageEditorController.sourceImage = image;
+        self.imageEditorController.previewImage = preview;
+        [self.imageEditorController reset:NO];
+            
+            
+        [picker pushViewController:self.imageEditorController animated:YES];
+        [picker setNavigationBarHidden:YES animated:NO];
+            
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Failed to get asset from library");
+    }];
 }
 
 - (void)resizeAndSaveSelectedImageAndUpdate:(UIImage *)image

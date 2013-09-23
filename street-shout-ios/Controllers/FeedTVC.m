@@ -27,6 +27,26 @@
     [super viewDidLoad];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    //Hack due to autolayout bug
+    CGRect superViewBounds = [self.view.superview bounds];
+    CGRect viewBounds = [self.view bounds];
+    CGRect containerViewBounds = [self.view.superview.superview bounds];
+    
+    if (superViewBounds.size.height != containerViewBounds.size.height) {
+        [self.view.superview setBounds:CGRectMake(superViewBounds.origin.x,
+                                                  superViewBounds.origin.y,
+                                                  superViewBounds.size.width,
+                                                  containerViewBounds.size.height + 20)];
+        
+        [self.view setBounds:CGRectMake(viewBounds.origin.x,
+                                        viewBounds.origin.y,
+                                        viewBounds.size.width,
+                                        containerViewBounds.size.height + 20)];
+    }
+}
+
 - (void)setShouts:(NSArray *)shouts
 {
     if ([shouts count] == 0) {
