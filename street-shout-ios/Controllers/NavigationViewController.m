@@ -131,8 +131,6 @@
 
 - (void)displayShoutImage:(UIImage *)image
 {
-    NSLog(@"displayShoutImage called");
-    
     [self performSegueWithIdentifier:@"Display Shout Image" sender:image];
 }
 
