@@ -268,7 +268,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="94I-Zg-wmd"/>
                     <connections>
-                        <outlet property="containerView" destination="q8p-tE-cHT" id="j9K-L8-qFM"/>
                         <segue destination="vn8-un-4WF" kind="modal" identifier="Create Shout Modal" id="rBF-pL-H2a"/>
                         <segue destination="ddt-rk-y7O" kind="push" identifier="Display Shout Image" id="d2q-2K-YkO"/>
                         <segue destination="EsS-z3-PWu" kind="push" identifier="Settings Push Segue" id="2ij-qQ-Pm3"/>
