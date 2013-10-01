@@ -141,27 +141,31 @@
 
 - (IBAction)createShoutButtonClicked:(id)sender
 {
+    NSString *errorMessageTitle;
+    NSString *errorMessageBody;
+    
     if ([GeneralUtilities connected]) {
         MKUserLocation *myLocation = [self getMyLocation];
         
-        if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
+        if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0 &&
+            myLocation.coordinate.longitude != -180 && myLocation.coordinate.latitude != -180) {
+            NSLog(@"MyLocation longitude: %f - latitude: %f: ", myLocation.coordinate.longitude, myLocation.coordinate.latitude);
             [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
+            return;
         } else {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
-                                                              message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")
-                                                             delegate:nil
-                                                    cancelButtonTitle:@"OK"
-                                                    otherButtonTitles:nil];
-            [message show];
+            errorMessageTitle = NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment");
+            errorMessageBody = NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment");
         }
     } else {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
-                                                          message:nil
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-        [message show];
+        errorMessageTitle = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
     }
+    
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:errorMessageTitle
+                                                      message:errorMessageBody
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    [message show];
 }
 
 - (MKUserLocation *)getMyLocation
