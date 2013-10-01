@@ -65,4 +65,19 @@
     return image;
 }
 
++ (ALAssetOrientation)convertImageOrientationToAssetOrientation:(UIImageOrientation)orientation
+{
+    if (orientation == UIImageOrientationUp) {
+        return ALAssetOrientationUp;
+    } else if (orientation == UIImageOrientationDown) {
+        return ALAssetOrientationDown;
+    } else if (orientation == UIImageOrientationLeft) {
+        return ALAssetOrientationLeft;
+    } else if (orientation == UIImageOrientationRight) {
+        return ALAssetOrientationRight;
+    } else {
+        return 0;
+    }
+}
+
 @end

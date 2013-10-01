@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface ImageUtilities : NSObject
 
@@ -15,5 +16,7 @@
 + (UIImage *)cropImageToSquare:(UIImage *)image;
 
 + (UIImage *)resizeImage:(UIImage *)image withSize:(NSUInteger)size;
+
++ (ALAssetOrientation)convertImageOrientationToAssetOrientation:(UIImageOrientation)orientation;
 
 @end

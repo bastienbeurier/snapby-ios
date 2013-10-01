@@ -329,7 +329,7 @@
     __weak typeof(self) weakSelf = self;
     
     [weakSelf.library writeImageToSavedPhotosAlbum:[image CGImage]
-                                       orientation:ALAssetOrientationUp
+                                       orientation:[ImageUtilities convertImageOrientationToAssetOrientation:image.imageOrientation]
                                    completionBlock:^(NSURL *assetURL, NSError *error){
                                        if (error) {
                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving"
