@@ -129,4 +129,23 @@
     }
 }
 
+//Returns the max distance on the map in meters
++ (NSUInteger)getMaxDistanceOnMap:(MKMapView *)mapView
+{
+    MKMapPoint mpTopLeft = mapView.visibleMapRect.origin;
+    
+    MKMapPoint mpTopRight = MKMapPointMake(
+                                           mapView.visibleMapRect.origin.x + mapView.visibleMapRect.size.width,
+                                           mapView.visibleMapRect.origin.y);
+    
+    MKMapPoint mpBottomRight = MKMapPointMake(
+                                              mapView.visibleMapRect.origin.x + mapView.visibleMapRect.size.width,
+                                              mapView.visibleMapRect.origin.y + mapView.visibleMapRect.size.height);
+    
+    CLLocationDistance hDist = (CLLocationDistance) MKMetersBetweenMapPoints(mpTopLeft, mpTopRight);
+    CLLocationDistance vDist = (CLLocationDistance) MKMetersBetweenMapPoints(mpTopRight, mpBottomRight);
+
+    return (NSUInteger) MIN(hDist, vDist);
+}
+
 @end

@@ -93,15 +93,21 @@
 {
     self.preventShoutDeselection = YES;
     NSUInteger zoomDistance = 0;
+    NSUInteger currentZoomDistance = [LocationUtilities getMaxDistanceOnMap:self.mapView];
     
     if ([source isEqualToString:@"Map"] || [source isEqualToString:@"Feed"]) {
-        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng Animated:YES];
+        zoomDistance = kDistanceWhenShoutClickedFromMapOrFeed;
     } else if ([source isEqualToString:@"Create"]) {
         zoomDistance = kDistanceWhenRedirectedFromCreateShout;
-        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:zoomDistance Animated:YES];
     } else if ([source isEqualToString:@"Notification"]) {
         zoomDistance = kDistanceWhenShoutClickedFromNotif;
+    }
+
+    //TODO: check the times 2 for the zoomDistance
+    if (zoomDistance != 0 && 2 * zoomDistance < currentZoomDistance) {
         [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:zoomDistance Animated:YES];
+    } else {
+        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng Animated:YES];
     }
 }
 
@@ -153,7 +159,15 @@
     MKUserLocation *userLocation = self.mapView.userLocation;
     
     if (userLocation && userLocation.coordinate.longitude != 0 && userLocation.coordinate.latitude != 0) {
-        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:kDistanceWhenMyLocationButtonClicked Animated:YES];
+        
+        NSUInteger currentZoomDistance = [LocationUtilities getMaxDistanceOnMap:self.mapView];
+        
+        //Do not zoom if map is already zoomed
+        if (2 * kDistanceWhenMyLocationButtonClicked < currentZoomDistance) {
+            [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:kDistanceWhenMyLocationButtonClicked Animated:YES];
+        } else {
+            [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude Animated:YES];
+        }
     } else {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
                                                           message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")

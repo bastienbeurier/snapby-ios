@@ -25,4 +25,6 @@
 
 + (NSString *)formattedDistanceLat1:(double)lat1 lng1:(double)lng1 lat2:(double)lat2 lng2:(double)lng2;
 
++ (NSUInteger)getMaxDistanceOnMap:(MKMapView *)mapView;
+
 @end
