@@ -24,7 +24,6 @@
 @property (nonatomic, weak) UINavigationController *feedNavigationController;
 @property (nonatomic, weak) FeedTVC *feedTVC;
 @property (nonatomic, weak) MapViewController *mapViewController;
-@property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 
 @end
 
@@ -70,26 +69,12 @@
     }];
 }
 
-- (void)onShoutCreated:(Shout *)shout
-{
-    [self handleShoutRedirection:shout];
-    
-    [self.mapViewController animateMapWhenShout:shout selectedFrom:@"Create"];
-}
-
-- (void)onShoutNotificationPressed:(Shout *)shout
-{
-    [self handleShoutRedirection:shout];
-    
-    [self.mapViewController animateMapWhenShout:shout selectedFrom:@"Notification"];
-}
-
 - (void)handleShoutRedirection:(Shout *)shout
 {
     NSMutableArray *newShouts = [NSMutableArray arrayWithObjects:shout, nil];
     [self manuallyUpdateShoutsToShow:newShouts];
     
-    [self showShoutViewControllerIfNeeded:shout];
+    [self.mapViewController startShoutSelectionModeInMapViewController:shout];
 }
 
 - (void)manuallyUpdateShoutsToShow:(NSArray *)newShouts
@@ -107,16 +92,35 @@
     }
 }
 
-- (void)shoutDeselectedOnMap
+- (void)dismissShoutViewControllerIfNeeded
 {
     if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
         [self.feedNavigationController popViewControllerAnimated:YES];
     }
 }
 
-- (void)shoutSelectedInFeed:(Shout *)shout
+- (void)shoutSelectionComingFromFeed:(Shout *)shout
 {
-    [self.mapViewController animateMapWhenShout:shout selectedFrom:@"Feed"];
+    [self.mapViewController startShoutSelectionModeInMapViewController:shout];
+}
+
+- (void)deselectShoutIfAnySelected
+{
+    [self.mapViewController endShoutSelectionModeInMapViewController];
+}
+
+- (void)onShoutCreated:(Shout *)shout
+{
+    [self handleShoutRedirection:shout];
+    
+    [self.mapViewController animateMapWhenShoutSelected:shout];
+}
+
+- (void)onShoutNotificationPressed:(Shout *)shout
+{
+    [self handleShoutRedirection:shout];
+    
+    [self.mapViewController animateMapWhenShoutSelected:shout];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -172,7 +176,6 @@
         
         if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0 &&
             myLocation.coordinate.longitude != -180 && myLocation.coordinate.latitude != -180) {
-            NSLog(@"MyLocation longitude: %f - latitude: %f: ", myLocation.coordinate.longitude, myLocation.coordinate.latitude);
             [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
             return;
         } else {

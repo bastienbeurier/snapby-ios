@@ -61,7 +61,7 @@
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     if (!self.preventShoutDeselection) {
-        [self.mapVCdelegate shoutDeselectedOnMap];
+        [self endShoutSelectionModeInMapViewController];
     }
     
     self.preventShoutDeselection = NO;
@@ -71,41 +71,85 @@
     [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    } else {
+        MKAnnotationView *annView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"ShoutPin"];
+        
+        annView.image = [UIImage imageNamed:@"shout-marker-deselected.png"];
+        annView.centerOffset = CGPointMake(10,-10);
+        
+        return annView;
+    }
+}
+
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
+    if ([view.annotation isKindOfClass:[MKUserLocation class]]) {
+        [self.mapVCdelegate dismissShoutViewControllerIfNeeded];
+        
+        return;
+    }
+    
     MKPointAnnotation *annotation = (MKPointAnnotation *)view.annotation;
     
     if ([annotation respondsToSelector:@selector(shout)]) {
         Shout *shout = annotation.shout;
+        view.image = [UIImage imageNamed:@"shout-marker-selected"];
         
-        [self shoutSelectedOnMap:shout];
+        [self updateUIWhenShoutSelected:shout];
     }
 }
 
-- (void)shoutSelectedOnMap:(Shout *)shout
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    if ([view.annotation isKindOfClass:[MKUserLocation class]]) {
+        return;
+    }
+    
+    view.image = [UIImage imageNamed:@"shout-marker-deselected.png"];
+    view.centerOffset = CGPointMake(10,-10);
+}
+
+- (void)updateUIWhenShoutSelected:(Shout *)shout
 {
     [self.mapVCdelegate showShoutViewControllerIfNeeded:shout];
     
-    [self animateMapWhenShout:shout selectedFrom:@"Map"];
+    [self animateMapWhenShoutSelected:shout];
 }
 
-- (void)animateMapWhenShout:(Shout *)shout selectedFrom:(NSString *)source
+- (void)startShoutSelectionModeInMapViewController:(Shout *)shout
+{
+    NSString *shoutKey = [NSString stringWithFormat:@"%d", shout.identifier];
+    
+    MKPointAnnotation *shoutAnnotation = [self.displayedShouts objectForKey:shoutKey];
+    
+    if (shoutAnnotation) {
+        [self.mapView selectAnnotation:shoutAnnotation animated:NO];
+    }
+}
+
+- (void)endShoutSelectionModeInMapViewController
+{
+    [self.mapVCdelegate dismissShoutViewControllerIfNeeded];
+    
+    NSArray *selectedAnnotations = self.mapView.selectedAnnotations;
+    for (id annotationView in selectedAnnotations) {
+        [self.mapView deselectAnnotation:annotationView animated:NO];
+    }
+}
+
+- (void)animateMapWhenShoutSelected:(Shout *)shout
 {
     self.preventShoutDeselection = YES;
-    NSUInteger zoomDistance = 0;
+    NSUInteger newZoomDistance = kDistanceWhenShoutClickedFromMapOrFeed;
     NSUInteger currentZoomDistance = [LocationUtilities getMaxDistanceOnMap:self.mapView];
-    
-    if ([source isEqualToString:@"Map"] || [source isEqualToString:@"Feed"]) {
-        zoomDistance = kDistanceWhenShoutClickedFromMapOrFeed;
-    } else if ([source isEqualToString:@"Create"]) {
-        zoomDistance = kDistanceWhenRedirectedFromCreateShout;
-    } else if ([source isEqualToString:@"Notification"]) {
-        zoomDistance = kDistanceWhenShoutClickedFromNotif;
-    }
 
     //TODO: check the times 2 for the zoomDistance
-    if (zoomDistance != 0 && 2 * zoomDistance < currentZoomDistance) {
-        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:zoomDistance Animated:YES];
+    if (newZoomDistance != 0 && 2 * newZoomDistance < currentZoomDistance) {
+        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:newZoomDistance Animated:YES];
     } else {
         [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng Animated:YES];
     }
@@ -184,23 +228,7 @@
     [self.mapView setRegion:region animated:YES];
 }
 
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
-    if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        return nil;
-    } else {
-        MKAnnotationView *annView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"ShoutPin"];
-    
-        annView.image = [UIImage imageNamed:@"shout-marker-v2.png"];
-        annView.centerOffset = CGPointMake(10,-10);
-        
-        return annView;
-    }
-}
-
-- (void)mapView:(MKMapView *)mapView
-didAddAnnotationViews:(NSArray *)annotationViews
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
 {
     for (MKAnnotationView *annView in annotationViews)
     {

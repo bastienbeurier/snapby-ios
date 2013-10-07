@@ -118,8 +118,6 @@
     
     NSUInteger distance = (NSUInteger) [loc1 distanceFromLocation:loc2];
     
-    NSLog(@"DISTANCE FORM SHOUT: %d", distance);
-    
     NSNumber *distanceUnitPreferenceIndex = [[NSUserDefaults standardUserDefaults] objectForKey:DISTANCE_UNIT_PREF];
     
     if (!distanceUnitPreferenceIndex || [distanceUnitPreferenceIndex integerValue] == 0) {

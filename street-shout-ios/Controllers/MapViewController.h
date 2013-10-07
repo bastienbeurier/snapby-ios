@@ -26,9 +26,11 @@
 
 - (void)dezoomButtonClicked;
 
-- (void)shoutSelectedOnMap:(Shout *)shout;
+- (void)animateMapWhenShoutSelected:(Shout *)shout;
 
-- (void)animateMapWhenShout:(Shout *)shout selectedFrom:(NSString *)source;
+- (void)startShoutSelectionModeInMapViewController:(Shout *)shout;
+
+- (void)endShoutSelectionModeInMapViewController;
 
 @end
 
@@ -38,6 +40,6 @@
 
 - (void)showShoutViewControllerIfNeeded:(Shout *)shout;
 
-- (void)shoutDeselectedOnMap;
+- (void)dismissShoutViewControllerIfNeeded;
 
 @end

@@ -21,6 +21,6 @@
 
 @protocol FeedTVCDelegate
 
-- (void)shoutSelectedInFeed:(Shout *)shout;
+- (void)shoutSelectionComingFromFeed:(Shout *)shout;
 
 @end

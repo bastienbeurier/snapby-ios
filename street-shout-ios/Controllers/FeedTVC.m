@@ -116,7 +116,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Shout *shout = self.shouts[indexPath.row];
-    [self.feedTVCdelegate shoutSelectedInFeed:shout];
+    [self.feedTVCdelegate shoutSelectionComingFromFeed:shout];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

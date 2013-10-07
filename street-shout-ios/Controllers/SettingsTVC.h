@@ -23,6 +23,6 @@
 
 - (void)sendDeviceInfo;
 
-- (void)shoutDeselectedOnMap;
+- (void)deselectShoutIfAnySelected;
 
 @end
