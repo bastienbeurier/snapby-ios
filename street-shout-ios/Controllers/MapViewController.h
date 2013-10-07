@@ -30,7 +30,7 @@
 
 - (void)startShoutSelectionModeInMapViewController:(Shout *)shout;
 
-- (void)endShoutSelectionModeInMapViewController;
+- (void)refreshShoutsFromMapViewController;
 
 @end
 

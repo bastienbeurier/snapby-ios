@@ -23,4 +23,6 @@
 
 - (void)shoutSelectionComingFromFeed:(Shout *)shout;
 
+- (void)refreshShouts;
+
 @end

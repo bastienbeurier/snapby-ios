@@ -104,9 +104,9 @@
     [self.mapViewController startShoutSelectionModeInMapViewController:shout];
 }
 
-- (void)deselectShoutIfAnySelected
+- (void)refreshShouts
 {
-    [self.mapViewController endShoutSelectionModeInMapViewController];
+    [self.mapViewController refreshShoutsFromMapViewController];
 }
 
 - (void)onShoutCreated:(Shout *)shout

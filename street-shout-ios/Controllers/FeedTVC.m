@@ -25,6 +25,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshShouts) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)refreshShouts
+{
+    [self.refreshControl endRefreshing];
+    [self.feedTVCdelegate refreshShouts];
 }
 
 - (void)viewDidAppear:(BOOL)animated

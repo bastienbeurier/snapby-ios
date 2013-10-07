@@ -23,6 +23,6 @@
 
 - (void)sendDeviceInfo;
 
-- (void)deselectShoutIfAnySelected;
+- (void)refreshShouts;
 
 @end

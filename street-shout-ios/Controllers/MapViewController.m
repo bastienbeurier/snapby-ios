@@ -72,6 +72,11 @@
     [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
 }
 
+- (void)refreshShoutsFromMapViewController
+{
+    [self mapView:self.mapView regionDidChangeAnimated:NO];
+}
+
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     if ([view.annotation isKindOfClass:[MKUserLocation class]]) {

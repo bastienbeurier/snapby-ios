@@ -66,7 +66,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.settingsTVCDelegate deselectShoutIfAnySelected];
+    [self.settingsTVCDelegate refreshShouts];
     
     [super viewWillDisappear:animated];
 }
