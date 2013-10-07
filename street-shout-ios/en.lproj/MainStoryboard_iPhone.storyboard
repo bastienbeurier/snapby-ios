@@ -694,6 +694,7 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bgn-bn-PdH">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="388"/>
+                                <gestureRecognizers/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

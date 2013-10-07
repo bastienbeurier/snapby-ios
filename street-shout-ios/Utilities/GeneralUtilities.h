@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Reachability.h"
+#import "Shout.h"
 
 @interface GeneralUtilities : NSObject
 
@@ -18,5 +19,7 @@
 + (NSString *)getUADeviceToken;
 
 + (BOOL)connected;
+
++ (NSString *)getAnnotationPinImageForShout:(Shout *)shout selected:(BOOL)selected;
 
 @end

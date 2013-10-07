@@ -12,6 +12,7 @@
 #import "LocationUtilities.h"
 #import "NavigationViewController.h"
 #import "Constants.h"
+#import "GeneralUtilities.h"
 
 #define ZOOM_0 180
 #define ZOOM_1 10
@@ -71,20 +72,6 @@
     [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
-    if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        return nil;
-    } else {
-        MKAnnotationView *annView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"ShoutPin"];
-        
-        annView.image = [UIImage imageNamed:@"shout-marker-deselected.png"];
-        annView.centerOffset = CGPointMake(10,-10);
-        
-        return annView;
-    }
-}
-
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     if ([view.annotation isKindOfClass:[MKUserLocation class]]) {
@@ -97,7 +84,8 @@
     
     if ([annotation respondsToSelector:@selector(shout)]) {
         Shout *shout = annotation.shout;
-        view.image = [UIImage imageNamed:@"shout-marker-selected"];
+        [self setAnnotationView:view pinImageForShout:shout selected:YES];
+        view.centerOffset = CGPointMake(13,-13);
         
         [self updateUIWhenShoutSelected:shout];
     }
@@ -109,7 +97,7 @@
         return;
     }
     
-    view.image = [UIImage imageNamed:@"shout-marker-deselected.png"];
+    [self setAnnotationView:view pinImageForShout:((MKPointAnnotation *)view.annotation).shout selected:NO];
     view.centerOffset = CGPointMake(10,-10);
 }
 
@@ -181,6 +169,14 @@
             [self.mapView addAnnotation:shoutAnnotation];
         }
         
+        NSUInteger selectedShoutId = ((MKPointAnnotation *)[self.mapView.selectedAnnotations firstObject]).shout.identifier;
+        
+        //Otherwise, the selected shout icon image gets replaced by the deselected icon when new shouts load
+        if (shout.identifier != selectedShoutId) {
+            MKAnnotationView *annotationView = [self.mapView viewForAnnotation:shoutAnnotation];
+            [self setAnnotationView:annotationView pinImageForShout:shout selected:NO];
+        }
+        
         shoutAnnotation.shout = shout;
         [newDisplayedShouts setObject:shoutAnnotation forKey:shoutKey];
     }
@@ -192,7 +188,15 @@
     self.displayedShouts = newDisplayedShouts;
 }
 
-- (NSMutableDictionary *) displayedShouts
+- (void)setAnnotationView:(MKAnnotationView *)annotationView pinImageForShout:(Shout *)shout selected:(BOOL)selected
+{
+    NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:(Shout *)shout selected:(BOOL)selected];
+    
+    annotationView.image = [UIImage imageNamed:annotationPinImage];
+    annotationView.centerOffset = CGPointMake(10,-10);
+}
+
+- (NSMutableDictionary *)displayedShouts
 {
     if (!_displayedShouts) _displayedShouts = [[NSMutableDictionary alloc] init];
     return _displayedShouts;

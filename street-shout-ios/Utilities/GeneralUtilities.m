@@ -8,6 +8,9 @@
 
 #import "GeneralUtilities.h"
 #import "Constants.h"
+#import "TimeUtilities.h"
+
+#define COLORS_NBR 12
 
 @implementation GeneralUtilities
 
@@ -36,6 +39,27 @@
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     return !(networkStatus == NotReachable);
+}
+
++ (NSString *)getAnnotationPinImageForShout:(Shout *)shout selected:(BOOL)selected
+{
+    NSTimeInterval shoutAge = [TimeUtilities getShoutAge:shout.created];
+    
+    for (int i = 1; i <= COLORS_NBR; i++) {
+        if (shoutAge < (kShoutDuration / COLORS_NBR) * i) {
+            if (selected) {
+                return [NSString stringWithFormat:@"shout-marker-%d-selected", COLORS_NBR - i + 1];
+            } else {
+                return [NSString stringWithFormat:@"shout-marker-%d-deselected", COLORS_NBR - i + 1];
+            }
+        }
+    }
+    
+    if (selected) {
+        return @"shout-marker-1-selected";
+    } else {
+        return @"shout-marker-1-deselected";
+    }
 }
 
 @end
