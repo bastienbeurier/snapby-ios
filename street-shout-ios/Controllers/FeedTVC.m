@@ -85,13 +85,22 @@
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     } else {
-        static NSString *CellIdentifier = SHOUT_TAG;
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ShoutTableViewCell"];
         
-        // Configure the cell...
-        cell.textLabel.text = [self titleForRow:indexPath.row];
-        cell.detailTextLabel.text = [self subtitleForRow:indexPath.row];
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        if (cell == nil) {
+            // Load the top-level objects from the custom cell XIB.
+            NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"ShoutTableViewCell" owner:self options:nil];
+            // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).
+            cell = [topLevelObjects objectAtIndex:0];
+        }
+        
+//        static NSString *CellIdentifier = SHOUT_TAG;
+//        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+//        
+//        // Configure the cell...
+//        cell.textLabel.text = [self titleForRow:indexPath.row];
+//        cell.detailTextLabel.text = [self subtitleForRow:indexPath.row];
+//        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }
     
     
@@ -149,6 +158,11 @@
             }
         }
     }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    return 60;
 }
 
 @end

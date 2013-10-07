@@ -16,6 +16,7 @@
 #import "Constants.h"
 #import "Reachability.h"
 #import "GeneralUtilities.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define SHOUT_BUTTON_SIZE 72.0
 
@@ -24,6 +25,8 @@
 @property (nonatomic, weak) UINavigationController *feedNavigationController;
 @property (nonatomic, weak) FeedTVC *feedTVC;
 @property (nonatomic, weak) MapViewController *mapViewController;
+@property (weak, nonatomic) IBOutlet UIView *mapContainerView;
+@property (strong, nonatomic) UIButton *shoutButton;
 
 @end
 
@@ -31,25 +34,41 @@
 
 - (void)viewDidLoad
 {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button addTarget:self action:@selector(createShoutButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    self.shoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.shoutButton addTarget:self action:@selector(createShoutButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     CGRect viewBounds = [self.view bounds];
-    button.frame = CGRectMake(viewBounds.size.width/2 - SHOUT_BUTTON_SIZE/2, viewBounds.size.height - SHOUT_BUTTON_SIZE - 5, SHOUT_BUTTON_SIZE, SHOUT_BUTTON_SIZE);
-    
-    button.clipsToBounds = YES;
-    
-    button.layer.cornerRadius = SHOUT_BUTTON_SIZE/2;
+    self.shoutButton.frame = CGRectMake(viewBounds.size.width/2 - SHOUT_BUTTON_SIZE/2, viewBounds.size.height - SHOUT_BUTTON_SIZE - 5, SHOUT_BUTTON_SIZE, SHOUT_BUTTON_SIZE);
+    self.shoutButton.layer.cornerRadius = SHOUT_BUTTON_SIZE/2;
     
     UIImage *shoutButtonImage = [UIImage imageNamed:@"shout-button-v5.png"];
     
-    [button setImage:shoutButtonImage forState:UIControlStateNormal];
+    [self.shoutButton setImage:shoutButtonImage forState:UIControlStateNormal];
     
-    [self.view addSubview:button];
+    [self.view addSubview:self.shoutButton];
     
     [super viewDidLoad];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
+    //Map shadow over feed
+    [self.mapContainerView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.mapContainerView.layer setShadowOpacity:0.3];
+    [self.mapContainerView.layer setShadowRadius:3.0];
+    [self.mapContainerView.layer setShadowOffset:CGSizeMake(-2.0, -2.0)];
+    
+    //Shout button drop shadow
+    [self.shoutButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.shoutButton.layer setShadowOpacity:0.3];
+    [self.shoutButton.layer setShadowRadius:1.5];
+    self.shoutButton.clipsToBounds = NO;
+    [self.shoutButton.layer setShadowOffset:CGSizeMake(3, 3)];
+    
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     [self sendDeviceInfo];
 }
 
