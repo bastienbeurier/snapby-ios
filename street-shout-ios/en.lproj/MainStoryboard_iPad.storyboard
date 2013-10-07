@@ -725,52 +725,18 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VHd-sW-apQ">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="800"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WRe-cJ-zEB">
-                                <rect key="frame" x="705" y="20" width="43" height="43"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="43" id="KmD-kE-LvT"/>
-                                    <constraint firstAttribute="height" constant="43" id="hiY-Ol-oXK"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <state key="normal" title="+">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="zoomInClicked:" destination="cxF-qJ-Kq7" eventType="touchUpInside" id="3Nc-BR-zHZ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFI-H6-0nQ">
-                                <rect key="frame" x="705" y="71" width="43" height="43"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="APB-xf-usF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <state key="normal" title="-">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="zoomOutClicked:" destination="cxF-qJ-Kq7" eventType="touchUpInside" id="E1g-GP-F67"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="VHd-sW-apQ" firstAttribute="top" secondItem="mHb-o1-ua9" secondAttribute="top" id="6ih-gB-vrn"/>
-                            <constraint firstItem="WRe-cJ-zEB" firstAttribute="top" secondItem="mHb-o1-ua9" secondAttribute="top" constant="20" symbolic="YES" id="90a-4y-cuk"/>
-                            <constraint firstAttribute="trailing" secondItem="fFI-H6-0nQ" secondAttribute="trailing" constant="20" symbolic="YES" id="Bvg-HB-v96"/>
                             <constraint firstItem="VHd-sW-apQ" firstAttribute="trailing" secondItem="mHb-o1-ua9" secondAttribute="trailing" id="XQw-GF-YyX"/>
-                            <constraint firstItem="WRe-cJ-zEB" firstAttribute="leading" secondItem="fFI-H6-0nQ" secondAttribute="leading" id="gN0-WS-ikq"/>
-                            <constraint firstAttribute="trailing" secondItem="WRe-cJ-zEB" secondAttribute="trailing" constant="20" symbolic="YES" id="mh3-EV-Iug"/>
                             <constraint firstItem="VHd-sW-apQ" firstAttribute="bottom" secondItem="mHb-o1-ua9" secondAttribute="bottom" id="rmc-Fu-rmk"/>
                             <constraint firstItem="VHd-sW-apQ" firstAttribute="leading" secondItem="mHb-o1-ua9" secondAttribute="leading" id="uIf-Li-KUb"/>
-                            <constraint firstItem="fFI-H6-0nQ" firstAttribute="top" secondItem="WRe-cJ-zEB" secondAttribute="bottom" constant="8" symbolic="YES" id="uyF-ej-bwg"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <connections>
                         <outlet property="mapView" destination="VHd-sW-apQ" id="S6X-kA-mOr"/>
-                        <outlet property="zoomInButton" destination="WRe-cJ-zEB" id="xBI-F0-Blz"/>
-                        <outlet property="zoomOutButton" destination="fFI-H6-0nQ" id="SRh-HO-aE2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xkD-gb-ciT" userLabel="First Responder" sceneMemberID="firstResponder"/>

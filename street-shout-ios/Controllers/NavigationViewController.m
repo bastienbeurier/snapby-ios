@@ -17,15 +17,38 @@
 #import "Reachability.h"
 #import "GeneralUtilities.h"
 
+#define SHOUT_BUTTON_SIZE 72.0
+
 @interface NavigationViewController ()
 
 @property (nonatomic, weak) UINavigationController *feedNavigationController;
 @property (nonatomic, weak) FeedTVC *feedTVC;
 @property (nonatomic, weak) MapViewController *mapViewController;
+@property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 
 @end
 
 @implementation NavigationViewController
+
+- (void)viewDidLoad
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(createShoutButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    CGRect viewBounds = [self.view bounds];
+    button.frame = CGRectMake(viewBounds.size.width/2 - SHOUT_BUTTON_SIZE/2, viewBounds.size.height - SHOUT_BUTTON_SIZE - 5, SHOUT_BUTTON_SIZE, SHOUT_BUTTON_SIZE);
+    
+    button.clipsToBounds = YES;
+    
+    button.layer.cornerRadius = SHOUT_BUTTON_SIZE/2;
+    
+    UIImage *shoutButtonImage = [UIImage imageNamed:@"shout-button-v5.png"];
+    
+    [button setImage:shoutButtonImage forState:UIControlStateNormal];
+    
+    [self.view addSubview:button];
+    
+    [super viewDidLoad];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [self sendDeviceInfo];
@@ -139,7 +162,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)createShoutButtonClicked:(id)sender
+- (void)createShoutButtonClicked
 {
     NSString *errorMessageTitle;
     NSString *errorMessageBody;

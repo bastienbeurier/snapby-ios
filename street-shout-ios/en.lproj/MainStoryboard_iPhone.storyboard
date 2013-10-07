@@ -209,40 +209,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R9z-ng-Ift">
-                                <rect key="frame" x="0.0" y="44" width="320" height="344"/>
+                            <containerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R9z-ng-Ift">
+                                <rect key="frame" x="0.0" y="180" width="320" height="388"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="d4j-A5-G8j" kind="embed" identifier="mapViewController" id="arO-Xs-A7p"/>
                                 </connections>
                             </containerView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oP0-Tx-Onb">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <items>
-                                    <barButtonItem title="Shout!" id="Vsf-rZ-2ec">
-                                        <connections>
-                                            <action selector="createShoutButtonClicked:" destination="2" id="lQL-rX-Zoi"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Zoom In" id="wau-bm-spk">
-                                        <connections>
-                                            <action selector="myLocationButtonClicked:" destination="2" id="iQO-hs-3VJ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Zoom Out" id="wcb-qm-HZI">
-                                        <connections>
-                                            <action selector="dezoomButtonClicked:" destination="2" id="mPE-Kg-p2e"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Settings" id="AYB-4o-LWE">
-                                        <connections>
-                                            <action selector="settingsButtonClicked:" destination="2" id="D58-Jh-f0j"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q8p-tE-cHT">
-                                <rect key="frame" x="0.0" y="388" width="320" height="180"/>
+                            <containerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q8p-tE-cHT">
+                                <rect key="frame" x="0.0" y="20" width="320" height="160"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="yS0-Dy-eEG"/>
@@ -254,16 +229,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="g04-xb-cCJ" firstAttribute="top" secondItem="R9z-ng-Ift" secondAttribute="bottom" constant="180" id="1gF-dl-Kz3"/>
-                            <constraint firstItem="q8p-tE-cHT" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" id="Eme-S2-TVg"/>
-                            <constraint firstItem="oP0-Tx-Onb" firstAttribute="top" secondItem="3" secondAttribute="top" id="Lel-vi-8gD"/>
+                            <constraint firstItem="q8p-tE-cHT" firstAttribute="top" secondItem="9At-1p-99c" secondAttribute="bottom" id="Rsz-Sh-rFb"/>
                             <constraint firstItem="q8p-tE-cHT" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="Uf9-B7-ngW"/>
-                            <constraint firstItem="oP0-Tx-Onb" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="aRg-l6-w6x"/>
-                            <constraint firstItem="R9z-ng-Ift" firstAttribute="top" secondItem="oP0-Tx-Onb" secondAttribute="bottom" id="cgs-jc-f53"/>
-                            <constraint firstItem="oP0-Tx-Onb" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="iWY-Fk-R8v"/>
-                            <constraint firstItem="R9z-ng-Ift" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="qw7-KR-pQw"/>
+                            <constraint firstAttribute="trailing" secondItem="R9z-ng-Ift" secondAttribute="trailing" id="VqC-Zq-MDE"/>
+                            <constraint firstItem="R9z-ng-Ift" firstAttribute="top" secondItem="q8p-tE-cHT" secondAttribute="bottom" id="Wjm-WP-VN2"/>
+                            <constraint firstAttribute="bottom" secondItem="R9z-ng-Ift" secondAttribute="bottom" id="d0s-sq-vWo"/>
+                            <constraint firstItem="R9z-ng-Ift" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="fJ6-tc-YPg"/>
                             <constraint firstItem="q8p-tE-cHT" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="rrZ-Rz-ZTu"/>
-                            <constraint firstItem="R9z-ng-Ift" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="sJc-4h-NY7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="94I-Zg-wmd"/>
@@ -531,7 +503,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="feedTVC" id="pmS-cr-UQP" customClass="FeedTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5Jo-W8-Rd9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="69W-lX-8uO">
@@ -604,7 +576,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Azd-BI-MqV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LzH-fg-hOp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Shout username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPB-zM-m3y">
@@ -619,7 +591,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Shout stamp" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBq-P1-FaH">
-                                <rect key="frame" x="223" y="144" width="77" height="16"/>
+                                <rect key="frame" x="223" y="124" width="77" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -719,58 +691,24 @@
                         <viewControllerLayoutGuide type="bottom" id="19H-bp-LSd"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="01B-3P-WJq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="344"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="388"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bgn-bn-PdH">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="344"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="388"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5NJ-F4-BIS">
-                                <rect key="frame" x="257" y="20" width="43" height="43"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="Csi-LZ-IOS"/>
-                                    <constraint firstAttribute="width" constant="43" id="g1h-FO-yJ9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <state key="normal" title="+">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="zoomInClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="NhY-4I-ZTB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="joC-nD-eBo">
-                                <rect key="frame" x="257" y="71" width="43" height="43"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="2H8-YD-M9R"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <state key="normal" title="-">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="zoomOutClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="5fs-OM-n2K"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Bgn-bn-PdH" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" id="7Ag-77-LGf"/>
                             <constraint firstItem="Bgn-bn-PdH" firstAttribute="bottom" secondItem="01B-3P-WJq" secondAttribute="bottom" id="8eq-hm-ecV"/>
-                            <constraint firstItem="joC-nD-eBo" firstAttribute="top" secondItem="5NJ-F4-BIS" secondAttribute="bottom" constant="8" symbolic="YES" id="LMq-7i-pEo"/>
-                            <constraint firstAttribute="trailing" secondItem="joC-nD-eBo" secondAttribute="trailing" constant="20" symbolic="YES" id="UH6-4L-drM"/>
-                            <constraint firstItem="5NJ-F4-BIS" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" constant="20" symbolic="YES" id="YkW-dO-jFZ"/>
                             <constraint firstItem="Bgn-bn-PdH" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="cB3-zT-5n2"/>
-                            <constraint firstItem="5NJ-F4-BIS" firstAttribute="leading" secondItem="joC-nD-eBo" secondAttribute="leading" id="e1j-7n-xsb"/>
-                            <constraint firstAttribute="trailing" secondItem="5NJ-F4-BIS" secondAttribute="trailing" constant="20" symbolic="YES" id="hoJ-UN-czE"/>
                             <constraint firstItem="Bgn-bn-PdH" firstAttribute="trailing" secondItem="01B-3P-WJq" secondAttribute="trailing" id="p8g-eD-qWj"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <connections>
                         <outlet property="mapView" destination="Bgn-bn-PdH" id="6u7-q3-Xmi"/>
-                        <outlet property="zoomInButton" destination="5NJ-F4-BIS" id="a4B-xZ-ypl"/>
-                        <outlet property="zoomOutButton" destination="joC-nD-eBo" id="gvZ-Sg-jOs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDN-fj-Qjo" userLabel="First Responder" sceneMemberID="firstResponder"/>

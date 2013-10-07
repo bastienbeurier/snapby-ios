@@ -184,72 +184,31 @@
     [self.mapView setRegion:region animated:YES];
 }
 
-- (IBAction)zoomInClicked:(id)sender {
-    double oldSpan = self.mapView.region.span.latitudeDelta;
-    double newSpan = ZOOM_10;
-    
-    if (oldSpan >= ZOOM_0) {
-        newSpan = ZOOM_1;
-    } else if (oldSpan >= ZOOM_1) {
-        newSpan = ZOOM_2;
-    } else if (oldSpan >= ZOOM_2) {
-        newSpan = ZOOM_3;
-    } else if (oldSpan >= ZOOM_3) {
-        newSpan = ZOOM_4;
-    } else if (oldSpan >= ZOOM_4) {
-        newSpan = ZOOM_5;
-    } else if (oldSpan >= ZOOM_5) {
-        newSpan = ZOOM_6;
-    } else if (oldSpan >= ZOOM_6) {
-        newSpan = ZOOM_7;
-    } else if (oldSpan >= ZOOM_7) {
-        newSpan = ZOOM_8;
-    } else if (oldSpan >= ZOOM_8) {
-        newSpan = ZOOM_9;
-    } else if (oldSpan > ZOOM_10) {
-        newSpan = ZOOM_10;
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
     } else {
-        return;
+        MKAnnotationView *annView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"ShoutPin"];
+    
+        annView.image = [UIImage imageNamed:@"shout-marker-v2.png"];
+        annView.centerOffset = CGPointMake(10,-10);
+        
+        return annView;
     }
-    
-    self.preventShoutDeselection = YES;
-    self.zoomInButton.enabled = NO;
-    
-    [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
 }
 
-- (IBAction)zoomOutClicked:(id)sender {
-    double oldSpan = self.mapView.region.span.latitudeDelta;
-    double newSpan = ZOOM_0;
-    
-    if (oldSpan <= ZOOM_10) {
-        newSpan = ZOOM_9;
-    } else if (oldSpan <= ZOOM_9) {
-        newSpan = ZOOM_8;
-    } else if (oldSpan <= ZOOM_8) {
-        newSpan = ZOOM_7;
-    } else if (oldSpan <= ZOOM_7) {
-        newSpan = ZOOM_6;
-    } else if (oldSpan <= ZOOM_6) {
-        newSpan = ZOOM_5;
-    } else if (oldSpan <= ZOOM_5) {
-        newSpan = ZOOM_4;
-    } else if (oldSpan <= ZOOM_4) {
-        newSpan = ZOOM_3;
-    } else if (oldSpan <= ZOOM_3) {
-        newSpan = ZOOM_2;
-    } else if (oldSpan <= ZOOM_2) {
-        newSpan = ZOOM_1;
-    } else if (oldSpan < ZOOM_0) {
-        newSpan = ZOOM_0;
-    } else {
-        return;
+- (void)mapView:(MKMapView *)mapView
+didAddAnnotationViews:(NSArray *)annotationViews
+{
+    for (MKAnnotationView *annView in annotationViews)
+    {
+        CGRect endFrame = annView.frame;
+        annView.frame = CGRectOffset(endFrame, 0, -500);
+        [UIView animateWithDuration:0.5
+                         animations:^{ annView.frame = endFrame; }];
     }
-    
-    self.preventShoutDeselection = YES;
-    self.zoomOutButton.enabled = NO;
-    
-    [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
 }
 
 - (void)viewDidUnload {
