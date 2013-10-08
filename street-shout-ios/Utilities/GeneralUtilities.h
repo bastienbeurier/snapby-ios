@@ -22,4 +22,6 @@
 
 + (NSString *)getAnnotationPinImageForShout:(Shout *)shout selected:(BOOL)selected;
 
++ (UIColor *)getShoutAgeColor:(Shout *)shout;
+
 @end

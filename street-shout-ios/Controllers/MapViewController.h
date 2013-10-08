@@ -22,10 +22,6 @@
 
 - (void)displayShouts:(NSArray *)shouts;
 
-- (void)myLocationButtonClicked;
-
-- (void)dezoomButtonClicked;
-
 - (void)animateMapWhenShoutSelected:(Shout *)shout;
 
 - (void)startShoutSelectionModeInMapViewController:(Shout *)shout;

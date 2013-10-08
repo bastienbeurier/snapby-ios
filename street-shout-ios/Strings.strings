@@ -7,6 +7,12 @@
 */
 
 "just_now" = "just now";
+"now" = "now";
+"hour" = "hour";
+"hours" = "hours";
+"minute" = "min";
+"minutes" = "mins";
+"expired" = "exp";
 "shout_expired" = " (expired)";
 "hours_ago" = "hours ago";
 "hour_ago" = "hour ago";

@@ -11,10 +11,15 @@
 #import "TimeUtilities.h"
 #import "ShoutViewController.h"
 #import "NavigationViewController.h"
+#import "ShoutTableViewCell.h"
+#import "Constants.h"
+#import "UIImageView+AFNetworking.h"
+#import "GeneralUtilities.h"
 
 #define SHOUT_TAG @"Shout"
 #define NO_SHOUT_TAG @"No Shout"
 #define LOADING_TAG @"Loading"
+#define SHOUT_IMAGE_SIZE 50
 
 @interface FeedTVC ()
 
@@ -25,6 +30,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.tableView setSeparatorColor:[UIColor clearColor]];
     
     [self.refreshControl addTarget:self
                             action:@selector(refreshShouts) forControlEvents:UIControlEventValueChanged];
@@ -78,14 +85,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell;
-    
     if ([self noShoutsInArray:self.shouts]) {
         static NSString *CellIdentifier = NO_SHOUT_TAG;
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        return cell;
     } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"ShoutTableViewCell"];
+        ShoutTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ShoutTableViewCell"];
         
         if (cell == nil) {
             // Load the top-level objects from the custom cell XIB.
@@ -94,17 +100,38 @@
             cell = [topLevelObjects objectAtIndex:0];
         }
         
-//        static NSString *CellIdentifier = SHOUT_TAG;
-//        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-//        
-//        // Configure the cell...
-//        cell.textLabel.text = [self titleForRow:indexPath.row];
-//        cell.detailTextLabel.text = [self subtitleForRow:indexPath.row];
-//        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        Shout *shout = (Shout *)self.shouts[indexPath.row];
+        
+        cell.shoutContentLabel.text = shout.description;
+        cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.displayName];
+        
+        if (shout.image) {
+            NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
+            [cell.shoutImageView setImageWithURL:url placeholderImage:nil];
+            
+            cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+            cell.shoutImageView.clipsToBounds = YES;
+            
+            [cell.shoutImageView setHidden:NO];
+        } else {
+            [cell.shoutImageView setHidden:YES];
+        }
+        
+        NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToStrings:[TimeUtilities getShoutAge:shout.created]];
+        
+        cell.shoutAgeLabel.text = [shoutAgeStrings firstObject];
+        
+        if (shoutAgeStrings.count > 1) {
+            cell.shoutAgeUnitLabel.text = [shoutAgeStrings objectAtIndex:1];
+        } else {
+            cell.shoutAgeUnitLabel.text = @"";
+        }
+        
+        
+        cell.shoutAgeColorView.backgroundColor = [GeneralUtilities getShoutAgeColor:shout];
+        
+        return cell;
     }
-    
-    
-    return cell;
 }
 
 - (BOOL)noShoutsInArray:(NSArray *)shouts

@@ -40,7 +40,7 @@
     self.shoutButton.frame = CGRectMake(viewBounds.size.width/2 - SHOUT_BUTTON_SIZE/2, viewBounds.size.height - SHOUT_BUTTON_SIZE - 5, SHOUT_BUTTON_SIZE, SHOUT_BUTTON_SIZE);
     self.shoutButton.layer.cornerRadius = SHOUT_BUTTON_SIZE/2;
     
-    UIImage *shoutButtonImage = [UIImage imageNamed:@"shout-button-v5.png"];
+    UIImage *shoutButtonImage = [UIImage imageNamed:@"shout-button-v9.png"];
     
     [self.shoutButton setImage:shoutButtonImage forState:UIControlStateNormal];
     
@@ -55,14 +55,14 @@
     [self.mapContainerView.layer setShadowColor:[UIColor blackColor].CGColor];
     [self.mapContainerView.layer setShadowOpacity:0.3];
     [self.mapContainerView.layer setShadowRadius:3.0];
-    [self.mapContainerView.layer setShadowOffset:CGSizeMake(-2.0, -2.0)];
+    [self.mapContainerView.layer setShadowOffset:CGSizeMake(2, -2.0)];
     
     //Shout button drop shadow
     [self.shoutButton.layer setShadowColor:[UIColor blackColor].CGColor];
     [self.shoutButton.layer setShadowOpacity:0.3];
     [self.shoutButton.layer setShadowRadius:1.5];
     self.shoutButton.clipsToBounds = NO;
-    [self.shoutButton.layer setShadowOffset:CGSizeMake(3, 3)];
+    [self.shoutButton.layer setShadowOffset:CGSizeMake(2, -2)];
     
     [super viewWillAppear:animated];
 }
@@ -216,14 +216,6 @@
 - (MKUserLocation *)getMyLocation
 {
     return self.mapViewController.mapView.userLocation;
-}
-
-- (IBAction)myLocationButtonClicked:(id)sender {
-    [self.mapViewController myLocationButtonClicked];
-}
-
-- (IBAction)dezoomButtonClicked:(id)sender {
-        [self.mapViewController dezoomButtonClicked];
 }
 
 - (IBAction)settingsButtonClicked:(id)sender {

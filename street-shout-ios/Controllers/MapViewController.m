@@ -29,8 +29,9 @@
 @interface MapViewController () <MKMapViewDelegate>
 
 @property (nonatomic) BOOL hasSentDeviceInfo;
-@property (weak, nonatomic) IBOutlet UIButton *zoomInButton;
-@property (weak, nonatomic) IBOutlet UIButton *zoomOutButton;
+@property (weak, nonatomic) IBOutlet UIButton *myLocationButton;
+@property (weak, nonatomic) IBOutlet UIButton *dezoomMaxButton;
+
 
 @end
 
@@ -46,6 +47,25 @@
     self.hasSentDeviceInfo = NO;
     
     [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude WithSpan:ZOOM_0 Animated:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    //Drop shadows for map buttons
+    [self.myLocationButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.myLocationButton.layer setShadowOpacity:0.3];
+    [self.myLocationButton.layer setShadowRadius:1.5];
+    self.myLocationButton.clipsToBounds = NO;
+    [self.myLocationButton.layer setShadowOffset:CGSizeMake(2, -2)];
+    
+    [self.dezoomMaxButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.dezoomMaxButton.layer setShadowOpacity:0.3];
+    [self.dezoomMaxButton.layer setShadowRadius:1.5];
+    self.dezoomMaxButton.clipsToBounds = NO;
+    [self.dezoomMaxButton.layer setShadowOffset:CGSizeMake(2, -2)];
+    
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)setShouts:(NSArray *)shouts
@@ -66,8 +86,6 @@
     }
     
     self.preventShoutDeselection = NO;
-    self.zoomInButton.enabled = YES;
-    self.zoomOutButton.enabled = YES;
     
     [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
 }
@@ -207,8 +225,7 @@
     return _displayedShouts;
 }
 
-- (void)myLocationButtonClicked
-{
+- (IBAction)myLocationButtonClicked:(id)sender {
     MKUserLocation *userLocation = self.mapView.userLocation;
     
     if (userLocation && userLocation.coordinate.longitude != 0 && userLocation.coordinate.latitude != 0) {
@@ -229,10 +246,10 @@
                                                 otherButtonTitles:nil];
         [message show];
     }
+
 }
 
-- (void)dezoomButtonClicked
-{
+- (IBAction)dezoomButtonClicked:(id)sender {
     MKCoordinateRegion region = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(180, 360));
     [self.mapView setRegion:region animated:YES];
 }
@@ -248,9 +265,4 @@
     }
 }
 
-- (void)viewDidUnload {
-    [self setZoomInButton:nil];
-    [self setZoomOutButton:nil];
-    [super viewDidUnload];
-}
 @end

@@ -533,7 +533,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" restorationIdentifier="No Shout" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="No Shout" textLabel="FnH-NT-06l" rowHeight="60" style="IBUITableViewCellStyleDefault" id="l2G-Tw-TSt">
                                 <rect key="frame" x="0.0" y="82" width="320" height="60"/>
@@ -701,6 +700,26 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="388"/>
                                 <gestureRecognizers/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uDD-7A-8lx">
+                                <rect key="frame" x="262" y="20" width="38" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="my-location-button.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="myLocationButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="IYo-S8-892"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3DY-Ho-QTP">
+                                <rect key="frame" x="262" y="74" width="38" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="dezoom-max-button.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dezoomButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="4BA-fV-C7V"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -712,7 +731,9 @@
                     </view>
                     <toolbarItems/>
                     <connections>
+                        <outlet property="dezoomMaxButton" destination="3DY-Ho-QTP" id="3gf-xD-J4W"/>
                         <outlet property="mapView" destination="Bgn-bn-PdH" id="6u7-q3-Xmi"/>
+                        <outlet property="myLocationButton" destination="uDD-7A-8lx" id="FjB-yw-GZv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDN-fj-Qjo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -756,6 +777,10 @@
             <point key="canvasLocation" x="-609" y="85"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="dezoom-max-button.png" width="300" height="301"/>
+        <image name="my-location-button.png" width="300" height="300"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
