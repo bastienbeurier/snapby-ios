@@ -38,4 +38,6 @@
 
 - (void)dismissShoutViewControllerIfNeeded;
 
+- (void)settingsButtonClicked;
+
 @end

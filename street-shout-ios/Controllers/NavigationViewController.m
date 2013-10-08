@@ -218,7 +218,8 @@
     return self.mapViewController.mapView.userLocation;
 }
 
-- (IBAction)settingsButtonClicked:(id)sender {
+- (void)settingsButtonClicked
+{
     if ([GeneralUtilities connected]) {
         [self performSegueWithIdentifier:@"Settings Push Segue" sender:nil];
     } else {

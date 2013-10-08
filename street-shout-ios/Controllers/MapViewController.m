@@ -31,6 +31,7 @@
 @property (nonatomic) BOOL hasSentDeviceInfo;
 @property (weak, nonatomic) IBOutlet UIButton *myLocationButton;
 @property (weak, nonatomic) IBOutlet UIButton *dezoomMaxButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 
 
 @end
@@ -63,6 +64,12 @@
     [self.dezoomMaxButton.layer setShadowRadius:1.5];
     self.dezoomMaxButton.clipsToBounds = NO;
     [self.dezoomMaxButton.layer setShadowOffset:CGSizeMake(2, -2)];
+    
+    [self.settingsButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.settingsButton.layer setShadowOpacity:0.3];
+    [self.settingsButton.layer setShadowRadius:1.5];
+    self.settingsButton.clipsToBounds = NO;
+    [self.settingsButton.layer setShadowOffset:CGSizeMake(2, -2)];
     
     
     [super viewWillAppear:animated];
@@ -263,6 +270,10 @@
         [UIView animateWithDuration:0.5
                          animations:^{ annView.frame = endFrame; }];
     }
+}
+
+- (IBAction)settingsButtonClicked:(id)sender {
+    [self.mapVCdelegate settingsButtonClicked];
 }
 
 @end
