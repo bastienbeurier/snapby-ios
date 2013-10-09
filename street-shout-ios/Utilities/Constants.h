@@ -40,11 +40,16 @@ static const NSUInteger kDistanceWhenShoutClickedFromMapOrFeed = 6000;
 static const NSUInteger kDistanceWhenShoutClickedFromNotif = 6000;
 static const NSUInteger kDistanceWhenRedirectedFromCreateShout = 250;
 static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;
+static const NSUInteger kDistanceWhenShoutZoomed = 200;
 
 //Initialize map on Paris, with max zoom out
 static const double kMapInitialLatitude = 48.856541;
 static const double kMapInitialLongitude = 2.352401;
 static const NSUInteger kMapInitialSpan = 180;
+
+//Design
+static const double kDropShadowX = -2.0;
+static const double kDropShadowY = -2.0;
 
 //Development
 static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";

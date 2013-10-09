@@ -72,46 +72,46 @@
     [mapView setRegion:region animated:animated];
 }
 
-+ (NSString *)formattedDistanceInMiles:(NSUInteger)distance
++ (NSArray *)formattedDistanceInMiles:(NSUInteger)distance
 {
     NSUInteger distanceYd = round(distance * METERS_TO_YRD);
     NSUInteger distanceMiles = round(distance * YRD_TO_MILES);
     
     if (distanceYd < 100) {
-        return NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment");
+        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment"), nil];
     } else if (distanceMiles < 1) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distanceYd / 100.0) * 100];
-        return [str stringByAppendingFormat:@"yd %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"yrd", @"Strings", @"comment"), nil];
     } else if (distanceMiles < 10) {
         NSString *str = [NSString stringWithFormat:@"%d", distanceMiles];
-        return [str stringByAppendingFormat:@"mi %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+        return [[NSArray alloc] initWithObjects:str, @"mi", nil];
     } else if (distanceMiles < 100 ) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distanceMiles / 10.0) * 10];
-        return [str stringByAppendingFormat:@"mi %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+        return [[NSArray alloc] initWithObjects:str, @"mi", nil];
     } else {
-        return NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment");
+        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment"), nil];
     }
 }
 
-+ (NSString *)formattedDistanceInMeters:(NSUInteger)distance
++ (NSArray *)formattedDistanceInMeters:(NSUInteger)distance
 {
     if (distance < 100) {
-        return NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment");
+        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment"), nil];
     } else if (distance < 1000) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 100.0) * 100];
-        return [str stringByAppendingFormat:@"%@ %@", NSLocalizedStringFromTable (@"meters", @"Strings", @"comment"), NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"meters", @"Strings", @"comment"), nil];
     } else if (distance < 10000) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 1000.0)];
-        return [str stringByAppendingFormat:@"km %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+        return [[NSArray alloc] initWithObjects:str, @"km", nil];
     } else if (distance < 100000 ) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 10000.0) * 10];
-        return [str stringByAppendingFormat:@"km %@", NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+        return [[NSArray alloc] initWithObjects:str, @"km", nil];
     } else {
-        return NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment");
+        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment"), nil];
     }
 }
 
-+ (NSString *)formattedDistanceLat1:(double)lat1 lng1:(double)lng1 lat2:(double)lat2 lng2:(double)lng2
++ (NSArray *)formattedDistanceLat1:(double)lat1 lng1:(double)lng1 lat2:(double)lat2 lng2:(double)lng2
 {
     CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:lat1 longitude:lng1];
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:lat2 longitude:lng2];

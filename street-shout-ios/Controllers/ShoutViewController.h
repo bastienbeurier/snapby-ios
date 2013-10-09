@@ -26,4 +26,8 @@
 
 - (MKUserLocation *)getMyLocation;
 
+- (void)endShoutSelectionModeInMapViewController;
+
+- (void)animateMapWhenZoomOnShout:(Shout *)shout;
+
 @end

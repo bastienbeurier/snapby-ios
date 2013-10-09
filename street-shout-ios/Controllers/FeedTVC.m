@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     
-    [self.tableView setSeparatorColor:[UIColor clearColor]];
+    [self.tableView setSeparatorColor:[UIColor whiteColor]];
     
     [self.refreshControl addTarget:self
                             action:@selector(refreshShouts) forControlEvents:UIControlEventValueChanged];
@@ -112,9 +112,19 @@
             cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
             cell.shoutImageView.clipsToBounds = YES;
             
+            cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+            cell.imageViewDropShadow.clipsToBounds = NO;
+            
+            [cell.imageViewDropShadow.layer setShadowColor:[UIColor blackColor].CGColor];
+            [cell.imageViewDropShadow.layer setShadowOpacity:0.3];
+            [cell.imageViewDropShadow.layer setShadowRadius:1.5];
+            [cell.imageViewDropShadow.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+            
             [cell.shoutImageView setHidden:NO];
+            [cell.imageViewDropShadow setHidden:NO];
         } else {
             [cell.shoutImageView setHidden:YES];
+            [cell.imageViewDropShadow setHidden:YES];
         }
         
         NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToStrings:[TimeUtilities getShoutAge:shout.created]];
@@ -127,8 +137,14 @@
             cell.shoutAgeUnitLabel.text = @"";
         }
         
-        
         cell.shoutAgeColorView.backgroundColor = [GeneralUtilities getShoutAgeColor:shout];
+        
+        cell.shadowingBackgroundView.clipsToBounds = NO;
+        
+        [cell.shadowingBackgroundView.layer setShadowColor:[UIColor blackColor].CGColor];
+        [cell.shadowingBackgroundView.layer setShadowOpacity:0.3];
+        [cell.shadowingBackgroundView.layer setShadowRadius:1.5];
+        [cell.shadowingBackgroundView.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
         
         return cell;
     }
@@ -137,25 +153,6 @@
 - (BOOL)noShoutsInArray:(NSArray *)shouts
 {
     return [shouts count] == 1 && [shouts[0] isKindOfClass:[NSString class]] && [shouts[0] isEqualToString:NO_SHOUT_TAG];
-}
-
-- (NSString *)titleForRow:(NSUInteger)row
-{
-    return ((Shout *)self.shouts[row]).description;
-} 
-
-- (NSString *)subtitleForRow:(NSUInteger)row
-{
-    Shout *shout = (Shout *)self.shouts[row];
-    
-    NSString *timeStamp = [TimeUtilities shoutAgeToString:[TimeUtilities getShoutAge:shout.created]];
-    NSString *userName = [NSString stringWithFormat:@", by %@", ((Shout *)self.shouts[row]).displayName];
-    NSString *stamp = [timeStamp stringByAppendingString:userName];
-    
-    if (shout.image) {
-        stamp = [stamp stringByAppendingString:@" (photo)"];
-    }
-    return stamp;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

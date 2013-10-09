@@ -16,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *shoutAgeUnitLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (weak, nonatomic) IBOutlet UIView *shoutAgeColorView;
+@property (weak, nonatomic) IBOutlet UIView *shadowingBackgroundView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewDropShadow;
 
 @end

@@ -12,8 +12,6 @@
 
 + (NSTimeInterval)getShoutAge:(NSString *)dateCreated;
 
-+ (NSString *)shoutAgeToString:(NSTimeInterval)age;
-
 + (NSArray *)shoutAgeToStrings:(NSTimeInterval)age;
 
 @end

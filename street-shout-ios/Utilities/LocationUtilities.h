@@ -19,11 +19,7 @@
 
 + (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng Animated:(BOOL)animated;
 
-+ (NSString *)formattedDistanceInMiles:(NSUInteger)distance;
-
-+ (NSString *)formattedDistanceInMeters:(NSUInteger)distance;
-
-+ (NSString *)formattedDistanceLat1:(double)lat1 lng1:(double)lng1 lat2:(double)lat2 lng2:(double)lng2;
++ (NSArray *)formattedDistanceLat1:(double)lat1 lng1:(double)lng1 lat2:(double)lat2 lng2:(double)lng2;
 
 + (NSUInteger)getMaxDistanceOnMap:(MKMapView *)mapView;
 

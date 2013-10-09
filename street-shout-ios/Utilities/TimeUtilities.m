@@ -23,34 +23,6 @@
     return -[shoutDate timeIntervalSinceNow];
 }
 
-+ (NSString *)shoutAgeToString:(NSTimeInterval)age
-{
-    if (age > 0) {
-        NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
-        if (hours > 1) {
-            NSString *result = [NSString stringWithFormat:@"%d %@", hours, NSLocalizedStringFromTable (@"hours_ago", @"Strings", @"comment")];
-            if (age > kShoutDuration) {
-                return [result stringByAppendingString:NSLocalizedStringFromTable (@"shout_expired", @"Strings", @"comment")];
-            }
-            return result;
-        } else if (hours == 1) {
-            return [NSString stringWithFormat:@"%d %@", hours, NSLocalizedStringFromTable (@"hour_ago", @"Strings", @"comment")];
-        } else {
-            NSUInteger minutes = ((NSUInteger)age) / ONE_MINUTE;
-            if (minutes > 1) {
-                return [NSString stringWithFormat:@"%d %@", minutes, NSLocalizedStringFromTable (@"minutes_ago", @"Strings", @"comment")];;
-            } else if (minutes == 1) {
-                return [NSString stringWithFormat:@"%d %@", minutes, NSLocalizedStringFromTable (@"minute_ago", @"Strings", @"comment")];;
-            } else {
-                return NSLocalizedStringFromTable (@"just_now", @"Strings", @"comment");
-            }
-        }
-        
-    } else {
-        return NSLocalizedStringFromTable (@"just_now", @"Strings", @"comment");
-    }
-}
-
 + (NSArray *)shoutAgeToStrings:(NSTimeInterval)age
 {
     if (age > 0) {

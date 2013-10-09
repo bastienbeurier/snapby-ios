@@ -55,14 +55,14 @@
     [self.mapContainerView.layer setShadowColor:[UIColor blackColor].CGColor];
     [self.mapContainerView.layer setShadowOpacity:0.3];
     [self.mapContainerView.layer setShadowRadius:3.0];
-    [self.mapContainerView.layer setShadowOffset:CGSizeMake(2, -2.0)];
+    [self.mapContainerView.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
     
     //Shout button drop shadow
     [self.shoutButton.layer setShadowColor:[UIColor blackColor].CGColor];
     [self.shoutButton.layer setShadowOpacity:0.3];
     [self.shoutButton.layer setShadowRadius:1.5];
     self.shoutButton.clipsToBounds = NO;
-    [self.shoutButton.layer setShadowOffset:CGSizeMake(2, -2)];
+    [self.shoutButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
     
     [super viewWillAppear:animated];
 }
@@ -218,6 +218,10 @@
     return self.mapViewController.mapView.userLocation;
 }
 
+- (IBAction)settingsButtonClicked:(id)sender {
+    
+}
+
 - (void)settingsButtonClicked
 {
     if ([GeneralUtilities connected]) {
@@ -242,6 +246,16 @@
     } else {
         NSLog(@"Could not send device info");
     }
+}
+
+- (void)endShoutSelectionModeInMapViewController
+{
+    [self.mapViewController endShoutSelectionModeInMapViewController];
+}
+
+- (void)animateMapWhenZoomOnShout:(Shout *)shout
+{
+    [self.mapViewController animateMapWhenZoomOnShout:shout];
 }
 
 @end

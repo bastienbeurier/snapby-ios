@@ -28,6 +28,10 @@
 
 - (void)refreshShoutsFromMapViewController;
 
+- (void)endShoutSelectionModeInMapViewController;
+
+- (void)animateMapWhenZoomOnShout:(Shout *)shout;
+
 @end
 
 @protocol MapViewControllerDelegate

@@ -57,19 +57,19 @@
     [self.myLocationButton.layer setShadowOpacity:0.3];
     [self.myLocationButton.layer setShadowRadius:1.5];
     self.myLocationButton.clipsToBounds = NO;
-    [self.myLocationButton.layer setShadowOffset:CGSizeMake(2, -2)];
+    [self.myLocationButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
     
     [self.dezoomMaxButton.layer setShadowColor:[UIColor blackColor].CGColor];
     [self.dezoomMaxButton.layer setShadowOpacity:0.3];
     [self.dezoomMaxButton.layer setShadowRadius:1.5];
     self.dezoomMaxButton.clipsToBounds = NO;
-    [self.dezoomMaxButton.layer setShadowOffset:CGSizeMake(2, -2)];
+    [self.dezoomMaxButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
     
     [self.settingsButton.layer setShadowColor:[UIColor blackColor].CGColor];
     [self.settingsButton.layer setShadowOpacity:0.3];
     [self.settingsButton.layer setShadowRadius:1.5];
     self.settingsButton.clipsToBounds = NO;
-    [self.settingsButton.layer setShadowOffset:CGSizeMake(2, -2)];
+    [self.settingsButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
     
     
     [super viewWillAppear:animated];
@@ -161,10 +161,20 @@
 
 - (void)animateMapWhenShoutSelected:(Shout *)shout
 {
-    self.preventShoutDeselection = YES;
-    NSUInteger newZoomDistance = kDistanceWhenShoutClickedFromMapOrFeed;
-    NSUInteger currentZoomDistance = [LocationUtilities getMaxDistanceOnMap:self.mapView];
+    [self animateMapInShoutSelectionModeWithShout:shout andDistance:kDistanceWhenShoutClickedFromMapOrFeed];
+}
 
+- (void)animateMapWhenZoomOnShout:(Shout *)shout
+{
+    [self animateMapInShoutSelectionModeWithShout:shout andDistance:kDistanceWhenShoutZoomed];
+}
+
+- (void)animateMapInShoutSelectionModeWithShout:(Shout *)shout andDistance:(NSUInteger)distance
+{
+    self.preventShoutDeselection = YES;
+    NSUInteger newZoomDistance = distance;
+    NSUInteger currentZoomDistance = [LocationUtilities getMaxDistanceOnMap:self.mapView];
+    
     //TODO: check the times 2 for the zoomDistance
     if (newZoomDistance != 0 && 2 * newZoomDistance < currentZoomDistance) {
         [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:newZoomDistance Animated:YES];

@@ -11,13 +11,22 @@
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
 #import "LocationUtilities.h"
+#import "GeneralUtilities.h"
+
+#define SHOUT_IMAGE_SIZE 60
 
 @interface ShoutViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *shoutUsername;
 @property (weak, nonatomic) IBOutlet UILabel *shoutContent;
-@property (weak, nonatomic) IBOutlet UILabel *shoutStamp;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *shoutZoomButton;
+@property (weak, nonatomic) IBOutlet UILabel *shoutAgeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shoutAgeUnitLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shoutDistanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shoutDistanceUnitLabel;
+@property (weak, nonatomic) IBOutlet UIView *shoutImageDropShadowView;
 
 @end
 
@@ -27,6 +36,40 @@
 {
     [super viewDidLoad];
     [self updateUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.view.backgroundColor = [GeneralUtilities getShoutAgeColor:self.shout];
+    
+    //Round shout image
+    self.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+    self.shoutImageView.clipsToBounds = YES;
+    self.shoutImageDropShadowView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+    self.shoutImageDropShadowView.clipsToBounds = NO;
+    
+    //Drop shadows
+    [self.view.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.view.layer setShadowOpacity:0.3];
+    [self.view.layer setShadowRadius:3.0];
+    [self.view.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+    
+    [self.shoutImageDropShadowView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.shoutImageDropShadowView.layer setShadowOpacity:0.3];
+    [self.shoutImageDropShadowView.layer setShadowRadius:3.0];
+    [self.shoutImageDropShadowView.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+    
+    [self.backButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.backButton.layer setShadowOpacity:0.3];
+    [self.backButton.layer setShadowRadius:3.0];
+    [self.backButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+    
+    [self.shoutZoomButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.shoutZoomButton.layer setShadowOpacity:0.3];
+    [self.shoutZoomButton.layer setShadowRadius:3.0];
+    [self.shoutZoomButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)setShout:(Shout *)shout
@@ -41,25 +84,58 @@
         if (self.shout.image) {
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
+            
             [self.shoutImageView setHidden:NO];
+            [self.shoutImageDropShadowView setHidden:NO];
         } else {
             [self.shoutImageView setHidden:YES];
+            [self.shoutImageDropShadowView setHidden:YES];
         }
         
-        self.shoutUsername.text = self.shout.displayName;
+        self.shoutUsername.text = [NSString stringWithFormat:@"by %@", self.shout.displayName];
+
         self.shoutContent.text = self.shout.description;
-        self.shoutStamp.text = [TimeUtilities shoutAgeToString:[TimeUtilities getShoutAge:self.shout.created]];
+        
+        NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToStrings:[TimeUtilities getShoutAge:self.shout.created]];
+        
+        self.shoutAgeLabel.text = [shoutAgeStrings firstObject];
+        
+        if (shoutAgeStrings.count > 1) {
+            self.shoutAgeUnitLabel.text = [NSString stringWithFormat:@"%@ %@", [shoutAgeStrings objectAtIndex:1], NSLocalizedStringFromTable (@"ago", @"Strings", @"comment")];
+        } else {
+            //The space instead of blank is a hack for the view to stay in place (helps in autolayout)
+            self.shoutAgeUnitLabel.text = @" ";
+        }
         
         MKUserLocation *myLocation = [self.shoutVCDelegate getMyLocation];
         
         if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
-            self.shoutStamp.text = [self.shoutStamp.text stringByAppendingFormat:@", %@", [LocationUtilities formattedDistanceLat1:myLocation.coordinate.latitude lng1:myLocation.coordinate.longitude lat2:self.shout.lat lng2:self.shout.lng]];
+            NSArray *shoutDistanceStrings = [LocationUtilities formattedDistanceLat1:myLocation.coordinate.latitude lng1:myLocation.coordinate.longitude lat2:self.shout.lat lng2:self.shout.lng];
+            self.shoutDistanceLabel.text = [shoutDistanceStrings firstObject];
+            
+            if (shoutDistanceStrings.count > 1) {
+                self.shoutDistanceUnitLabel.text = [NSString stringWithFormat:@"%@ %@", [shoutDistanceStrings objectAtIndex:1], NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
+            } else {
+                //The space instead of blank is a hack for the view to stay in place (helps in autolayout)
+                self.shoutDistanceUnitLabel.text = @" ";
+            }
+        } else {
+            self.shoutDistanceLabel.text = @"";
+            self.shoutDistanceUnitLabel.text = @"";
         }
     }
 }
 
 - (IBAction)shoutImageClicked:(UITapGestureRecognizer *)sender {    
     [self.shoutVCDelegate displayShoutImage:self.shoutImageView.image];
+}
+
+- (IBAction)backButtonClicked:(id)sender {
+    [self.shoutVCDelegate endShoutSelectionModeInMapViewController];
+}
+
+- (IBAction)shoutZoomButtonClicked:(id)sender {
+    [self.shoutVCDelegate animateMapWhenZoomOnShout:self.shout];
 }
 
 @end
