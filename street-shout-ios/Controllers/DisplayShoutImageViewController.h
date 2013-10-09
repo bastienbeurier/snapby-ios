@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Shout.h"
 
 @interface DisplayShoutImageViewController : UIViewController
 
-@property (strong, nonatomic) UIImage *shoutImage;
+@property (strong, nonatomic) Shout *shout;
 
 @end

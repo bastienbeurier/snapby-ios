@@ -165,9 +165,9 @@
     }
     
     if ([segueName isEqualToString: @"Display Shout Image"]) {
-        UIImage *shoutImage = (UIImage *)sender;
+        Shout *imageShout = (Shout *)sender;
         
-        ((DisplayShoutImageViewController *)[segue destinationViewController]).shoutImage = shoutImage;
+        ((DisplayShoutImageViewController *)[segue destinationViewController]).shout = imageShout;
     }
     
     if ([segueName isEqualToString: @"Settings Push Segue"]) {
@@ -175,9 +175,9 @@
     }
 }
 
-- (void)displayShoutImage:(UIImage *)image
+- (void)displayShoutImage:(Shout *)imageShout
 {
-    [self performSegueWithIdentifier:@"Display Shout Image" sender:image];
+    [self performSegueWithIdentifier:@"Display Shout Image" sender:imageShout];
 }
 
 - (void)dismissCreateShoutModal

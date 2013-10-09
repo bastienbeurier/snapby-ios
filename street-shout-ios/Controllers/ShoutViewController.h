@@ -22,7 +22,7 @@
 
 @protocol ShoutVCDelegate
 
-- (void)displayShoutImage:(UIImage *)image;
+- (void)displayShoutImage:(Shout *)shout;
 
 - (MKUserLocation *)getMyLocation;
 

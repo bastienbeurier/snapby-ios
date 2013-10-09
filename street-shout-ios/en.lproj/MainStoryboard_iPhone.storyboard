@@ -711,31 +711,70 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6VB-fU-KCL">
+                                <rect key="frame" x="20" y="144" width="280" height="280"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DsL-fq-e3D">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7c7-tZ-i2e">
-                                <rect key="frame" x="0.0" y="124" width="320" height="320"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rK0-Un-f3X">
+                                        <rect key="frame" x="20" y="164" width="280" height="280"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="280" id="UNJ-gr-Qxf"/>
+                                            <constraint firstAttribute="height" constant="280" id="VWQ-R3-MoB"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7pi-gV-JLm">
+                                        <rect key="frame" x="20" y="164" width="280" height="280"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="280" id="AfQ-vz-ldM"/>
+                                            <constraint firstAttribute="height" constant="280" id="qYd-zS-Ogo"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3m1-IK-MOW">
+                                        <rect key="frame" x="20" y="40" width="45" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="45" id="PgE-qo-QhM"/>
+                                            <constraint firstAttribute="height" constant="45" id="fhy-w3-Lbj"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="back-arrow-button-v3-blue.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backButtonClicked:" destination="ddt-rk-y7O" eventType="touchUpInside" id="ixQ-dh-CJe"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="320" id="wYL-ld-BYS"/>
+                                    <constraint firstAttribute="centerX" secondItem="7pi-gV-JLm" secondAttribute="centerX" id="9Bp-Se-gzJ"/>
+                                    <constraint firstItem="3m1-IK-MOW" firstAttribute="leading" secondItem="DsL-fq-e3D" secondAttribute="leading" constant="20" id="FvL-LY-kjj"/>
+                                    <constraint firstAttribute="centerY" secondItem="rK0-Un-f3X" secondAttribute="centerY" constant="-20" id="IGU-g7-Hw7"/>
+                                    <constraint firstItem="3m1-IK-MOW" firstAttribute="top" secondItem="DsL-fq-e3D" secondAttribute="top" constant="40" id="SOt-fq-S1W"/>
+                                    <constraint firstAttribute="centerX" secondItem="rK0-Un-f3X" secondAttribute="centerX" id="TPw-O6-1G5"/>
+                                    <constraint firstAttribute="centerY" secondItem="7pi-gV-JLm" secondAttribute="centerY" constant="-20" id="owh-rE-HJt"/>
                                 </constraints>
-                            </imageView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="DsL-fq-e3D" firstAttribute="bottom" secondItem="Waa-1Y-i3e" secondAttribute="bottom" id="02k-bq-Zsu"/>
-                            <constraint firstItem="7c7-tZ-i2e" firstAttribute="trailing" secondItem="Waa-1Y-i3e" secondAttribute="trailing" id="4XJ-wK-wAg"/>
                             <constraint firstItem="DsL-fq-e3D" firstAttribute="trailing" secondItem="Waa-1Y-i3e" secondAttribute="trailing" id="RfY-0X-N5H"/>
-                            <constraint firstItem="7c7-tZ-i2e" firstAttribute="leading" secondItem="Waa-1Y-i3e" secondAttribute="leading" id="cKd-Qh-H8m"/>
                             <constraint firstItem="DsL-fq-e3D" firstAttribute="leading" secondItem="Waa-1Y-i3e" secondAttribute="leading" id="cuH-hM-x4Z"/>
-                            <constraint firstItem="DsL-fq-e3D" firstAttribute="centerY" secondItem="7c7-tZ-i2e" secondAttribute="centerY" id="hh1-0P-KRW"/>
                             <constraint firstItem="DsL-fq-e3D" firstAttribute="top" secondItem="Waa-1Y-i3e" secondAttribute="top" id="l9L-6i-dRV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ytC-Yg-Xm5"/>
                     <connections>
-                        <outlet property="shoutImageView" destination="7c7-tZ-i2e" id="Nhc-DM-ZLx"/>
+                        <outlet property="backButton" destination="3m1-IK-MOW" id="d7z-4E-Npn"/>
+                        <outlet property="shoutImageDropShadowView" destination="rK0-Un-f3X" id="9f8-Zv-Q0Q"/>
+                        <outlet property="shoutImageView" destination="7pi-gV-JLm" id="y55-oD-060"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nyf-WS-0vF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -847,6 +886,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="back-arrow-button-v3-blue.png" width="300" height="300"/>
         <image name="back-arrow-button.png" width="300" height="300"/>
         <image name="dezoom-max-button.png" width="300" height="301"/>
         <image name="my-location-button.png" width="300" height="300"/>

@@ -129,7 +129,7 @@
 }
 
 - (IBAction)shoutImageClicked:(UITapGestureRecognizer *)sender {    
-    [self.shoutVCDelegate displayShoutImage:self.shoutImageView.image];
+    [self.shoutVCDelegate displayShoutImage:self.shout];
 }
 
 - (IBAction)backButtonClicked:(id)sender {
