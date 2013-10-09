@@ -78,12 +78,19 @@
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
 {
-    [self.feedTVC.activityIndicator startAnimating];
+    UIActivityIndicatorView *activityView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    activityView.center = self.feedTVC.view.center;
+    
+    [activityView startAnimating];
+    
+    [self.feedTVC.view addSubview:activityView];
+    
     self.feedTVC.shouts = @[@"Loading"];
     
     [MapRequestHandler pullShoutsInZone:mapBounds AndExecute:^(NSArray *shouts) {
         self.mapViewController.shouts = shouts;
-        [self.feedTVC.activityIndicator stopAnimating];
+        [activityView stopAnimating];
         self.feedTVC.shouts = shouts;
     }];
 }

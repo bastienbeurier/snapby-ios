@@ -14,7 +14,6 @@
 @interface FeedTVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *shouts;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) id <FeedTVCDelegate> feedTVCdelegate;
 
 @end
