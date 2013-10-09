@@ -106,6 +106,8 @@
         cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.displayName];
         
         if (shout.image) {
+            cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder"];
+            
             NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
             [cell.shoutImageView setImageWithURL:url placeholderImage:nil];
             

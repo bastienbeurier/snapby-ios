@@ -26,7 +26,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *shoutAgeUnitLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shoutDistanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shoutDistanceUnitLabel;
-@property (weak, nonatomic) IBOutlet UIView *shoutImageDropShadowView;
+@property (weak, nonatomic) IBOutlet UIImageView *shoutImageDropShadowView;
+
 
 @end
 
@@ -82,6 +83,7 @@
 {
     if (self.shout) {
         if (self.shout.image) {
+            self.shoutImageDropShadowView.image = [UIImage imageNamed:@"shout-image-place-holder"];
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             
