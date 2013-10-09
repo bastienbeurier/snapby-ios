@@ -13,7 +13,35 @@
 		<key>CFBundlePrimaryIcon</key>
 		<dict>
 			<key>CFBundleIconFiles</key>
-			<array/>
+			<array>
+				<string>shout-app-icon-80</string>
+				<string>shout-app-icon-58</string>
+				<string>shout-app-icon-29</string>
+				<string>shout-app-icon-120</string>
+				<string>shout-app-icon-114</string>
+				<string>shout-app-icon-57</string>
+			</array>
+		</dict>
+	</dict>
+	<key>CFBundleIcons~ipad</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>shout-app-icon-58</string>
+				<string>shout-app-icon-29</string>
+				<string>shout-app-icon-80</string>
+				<string>shout-app-icon-40</string>
+				<string>shout-app-icon-100</string>
+				<string>shout-app-icon-50</string>
+				<string>shout-app-icon</string>
+				<string>shout-app-icon-152</string>
+				<string>shout-app-icon-76</string>
+				<string>shout-app-icon-144</string>
+				<string>shout-app-icon-114</string>
+				<string>shout-app-icon-57</string>
+			</array>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
