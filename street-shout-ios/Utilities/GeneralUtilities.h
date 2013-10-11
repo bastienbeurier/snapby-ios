@@ -24,4 +24,6 @@
 
 + (UIColor *)getShoutAgeColor:(Shout *)shout;
 
++ (void)resizeView:(UIView *)view Width:(double)width;
+
 @end

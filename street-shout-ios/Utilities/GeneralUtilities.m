@@ -106,4 +106,16 @@
     }
 }
 
++ (void)resizeView:(UIView *)view Width:(double)width
+{
+    UIView *superView = view.superview;
+    [view removeFromSuperview];
+    [view setTranslatesAutoresizingMaskIntoConstraints:YES];
+    view.frame = CGRectMake(view.frame.origin.x,
+                            view.frame.origin.y,
+                            width,
+                            view.frame.size.height);
+    [superView addSubview:view];
+}
+
 @end

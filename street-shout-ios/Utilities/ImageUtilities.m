@@ -7,6 +7,7 @@
 //
 
 #import "ImageUtilities.h"
+#import "Constants.h"
 
 @implementation ImageUtilities
 
@@ -78,6 +79,52 @@
     } else {
         return 0;
     }
+}
+
+
+//Code taken from http://stackoverflow.com/questions/4431292/inner-shadow-effect-on-uiview-layer
++ (void)addInnerShadowToView:(UIView *)view
+{
+    CAShapeLayer* shadowLayer = [CAShapeLayer layer];
+    [shadowLayer setFrame:view.bounds];
+    
+    // Standard shadow stuff
+    [shadowLayer setShadowColor:[[UIColor colorWithWhite:0 alpha:1] CGColor]];
+    [shadowLayer setShadowOffset:CGSizeMake(0.0f, 0.0f)];
+    [shadowLayer setShadowOpacity:0.5f];
+    [shadowLayer setShadowRadius:5];
+    
+    // Causes the inner region in this example to NOT be filled.
+    [shadowLayer setFillRule:kCAFillRuleEvenOdd];
+    
+    // Create the larger rectangle path.
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, NULL, CGRectInset(view.bounds, -40, -40));
+    
+    // Add the inner path so it's subtracted from the outer path.
+    // someInnerPath could be a simple bounds rect, or maybe
+    // a rounded one for some extra fanciness.
+    CGPathAddPath(path, NULL, [[UIBezierPath bezierPathWithRect:[shadowLayer bounds]] CGPath]);
+    CGPathCloseSubpath(path);
+    
+    [shadowLayer setPath:path];
+    CGPathRelease(path);
+    
+    [view.layer addSublayer:shadowLayer];
+    
+    CAShapeLayer* maskLayer = [CAShapeLayer layer];
+    [maskLayer setPath:[[UIBezierPath bezierPathWithRect:[shadowLayer bounds]] CGPath]];
+    [shadowLayer setMask:maskLayer];
+}
+
++ (void)addDropShadowToView:(UIView *)view
+{
+    view.clipsToBounds = NO;
+    
+    [view.layer setShadowColor:[UIColor blackColor].CGColor];
+    [view.layer setShadowOpacity:0.3];
+    [view.layer setShadowRadius:1.5];
+    [view.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
 }
 
 @end

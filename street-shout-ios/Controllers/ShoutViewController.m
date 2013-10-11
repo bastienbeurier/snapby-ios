@@ -12,6 +12,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "LocationUtilities.h"
 #import "GeneralUtilities.h"
+#import "ImageUtilities.h"
 
 #define SHOUT_IMAGE_SIZE 60
 
@@ -47,28 +48,11 @@
     self.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
     self.shoutImageView.clipsToBounds = YES;
     self.shoutImageDropShadowView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
-    self.shoutImageDropShadowView.clipsToBounds = NO;
     
     //Drop shadows
-    [self.view.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.view.layer setShadowOpacity:0.3];
-    [self.view.layer setShadowRadius:3.0];
-    [self.view.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
-    
-    [self.shoutImageDropShadowView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.shoutImageDropShadowView.layer setShadowOpacity:0.3];
-    [self.shoutImageDropShadowView.layer setShadowRadius:3.0];
-    [self.shoutImageDropShadowView.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
-    
-    [self.backButton.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.backButton.layer setShadowOpacity:0.3];
-    [self.backButton.layer setShadowRadius:3.0];
-    [self.backButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
-    
-    [self.shoutZoomButton.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.shoutZoomButton.layer setShadowOpacity:0.3];
-    [self.shoutZoomButton.layer setShadowRadius:3.0];
-    [self.shoutZoomButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+    [ImageUtilities addDropShadowToView:self.shoutImageDropShadowView];
+    [ImageUtilities addDropShadowToView:self.backButton];
+    [ImageUtilities addDropShadowToView:self.shoutZoomButton];
     
     [super viewWillAppear:animated];
 }

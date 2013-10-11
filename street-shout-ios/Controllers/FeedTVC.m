@@ -15,11 +15,14 @@
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
 #import "GeneralUtilities.h"
+#import "ImageUtilities.h"
 
 #define SHOUT_TAG @"Shout"
 #define NO_SHOUT_TAG @"No Shout"
 #define LOADING_TAG @"Loading"
 #define SHOUT_IMAGE_SIZE 50
+#define SHOUT_CONTENT_WIDTH_WITH_PHOTO 186.0f
+#define SHOUT_CONTENT_WIDTH_WITHOUT_PHOTO 244.0f
 
 @interface FeedTVC ()
 
@@ -31,10 +34,16 @@
 {
     [super viewDidLoad];
     
-    [self.tableView setSeparatorColor:[UIColor whiteColor]];
-    
     [self.refreshControl addTarget:self
                             action:@selector(refreshShouts) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorColor = [UIColor clearColor];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)refreshShouts
@@ -88,7 +97,6 @@
     if ([self noShoutsInArray:self.shouts]) {
         static NSString *CellIdentifier = NO_SHOUT_TAG;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         return cell;
     } else {
         ShoutTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ShoutTableViewCell"];
@@ -102,9 +110,6 @@
         
         Shout *shout = (Shout *)self.shouts[indexPath.row];
         
-        cell.shoutContentLabel.text = shout.description;
-        cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.displayName];
-        
         if (shout.image) {
             cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder"];
             
@@ -115,19 +120,22 @@
             cell.shoutImageView.clipsToBounds = YES;
             
             cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
-            cell.imageViewDropShadow.clipsToBounds = NO;
             
-            [cell.imageViewDropShadow.layer setShadowColor:[UIColor blackColor].CGColor];
-            [cell.imageViewDropShadow.layer setShadowOpacity:0.3];
-            [cell.imageViewDropShadow.layer setShadowRadius:1.5];
-            [cell.imageViewDropShadow.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+            [ImageUtilities addDropShadowToView:cell.imageViewDropShadow];
+            
+            [GeneralUtilities resizeView:cell.shoutContentLabel Width:SHOUT_CONTENT_WIDTH_WITH_PHOTO];
             
             [cell.shoutImageView setHidden:NO];
             [cell.imageViewDropShadow setHidden:NO];
         } else {
+            [GeneralUtilities resizeView:cell.shoutContentLabel Width:SHOUT_CONTENT_WIDTH_WITHOUT_PHOTO];
+            
             [cell.shoutImageView setHidden:YES];
             [cell.imageViewDropShadow setHidden:YES];
         }
+        
+        cell.shoutContentLabel.text = shout.description;
+        cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.displayName];
         
         NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToStrings:[TimeUtilities getShoutAge:shout.created]];
         
@@ -140,13 +148,6 @@
         }
         
         cell.shoutAgeColorView.backgroundColor = [GeneralUtilities getShoutAgeColor:shout];
-        
-        cell.shadowingBackgroundView.clipsToBounds = NO;
-        
-        [cell.shadowingBackgroundView.layer setShadowColor:[UIColor blackColor].CGColor];
-        [cell.shadowingBackgroundView.layer setShadowOpacity:0.3];
-        [cell.shadowingBackgroundView.layer setShadowRadius:1.5];
-        [cell.shadowingBackgroundView.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
         
         return cell;
     }

@@ -241,6 +241,7 @@
                     <navigationItem key="navigationItem" id="94I-Zg-wmd"/>
                     <connections>
                         <outlet property="mapContainerView" destination="R9z-ng-Ift" id="Fdg-OE-M8c"/>
+                        <outlet property="topContainerView" destination="q8p-tE-cHT" id="dsj-7N-1Vt"/>
                         <segue destination="vn8-un-4WF" kind="modal" identifier="Create Shout Modal" id="rBF-pL-H2a"/>
                         <segue destination="ddt-rk-y7O" kind="push" identifier="Display Shout Image" id="d2q-2K-YkO"/>
                         <segue destination="EsS-z3-PWu" kind="push" identifier="Settings Push Segue" id="2ij-qQ-Pm3"/>

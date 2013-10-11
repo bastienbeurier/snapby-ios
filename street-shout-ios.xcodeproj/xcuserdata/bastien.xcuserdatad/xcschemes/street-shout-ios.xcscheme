@@ -95,7 +95,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
-      customArchiveName = "Shout"
+      customArchiveName = "Shatte"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

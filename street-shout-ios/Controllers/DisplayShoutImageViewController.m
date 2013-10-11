@@ -9,6 +9,7 @@
 #import "DisplayShoutImageViewController.h"
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
+#import "ImageUtilities.h"
 
 #define IMAGE_CORNER_RADIUS 20
 
@@ -37,20 +38,9 @@
     self.shoutImageView.clipsToBounds = YES;
     
     [self.shoutImageDropShadowView.layer setCornerRadius:IMAGE_CORNER_RADIUS];
-    self.shoutImageDropShadowView.clipsToBounds = NO;
     
-    [self.shoutImageDropShadowView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.shoutImageDropShadowView.layer setShadowOpacity:0.3];
-    [self.shoutImageDropShadowView.layer setShadowRadius:1.5];
-    
-    self.backButton.clipsToBounds = NO;
-    [self.backButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
-    
-    [self.backButton.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.backButton.layer setShadowOpacity:0.3];
-    [self.backButton.layer setShadowRadius:1.5];
-    
-    [self.backButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+    [ImageUtilities addDropShadowToView:self.shoutImageDropShadowView];
+    [ImageUtilities addDropShadowToView:self.backButton];
     
     [super viewWillAppear:animated];
 }

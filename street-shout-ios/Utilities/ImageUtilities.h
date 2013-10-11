@@ -19,4 +19,8 @@
 
 + (ALAssetOrientation)convertImageOrientationToAssetOrientation:(UIImageOrientation)orientation;
 
++ (void)addInnerShadowToView:(UIView *)view;
+
++ (void)addDropShadowToView:(UIView *)view;
+
 @end

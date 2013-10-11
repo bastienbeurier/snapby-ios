@@ -13,6 +13,7 @@
 #import "NavigationViewController.h"
 #import "Constants.h"
 #import "GeneralUtilities.h"
+#import "ImageUtilities.h"
 
 #define ZOOM_0 180
 #define ZOOM_1 10
@@ -53,24 +54,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     //Drop shadows for map buttons
-    [self.myLocationButton.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.myLocationButton.layer setShadowOpacity:0.3];
-    [self.myLocationButton.layer setShadowRadius:1.5];
-    self.myLocationButton.clipsToBounds = NO;
-    [self.myLocationButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
-    
-    [self.dezoomMaxButton.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.dezoomMaxButton.layer setShadowOpacity:0.3];
-    [self.dezoomMaxButton.layer setShadowRadius:1.5];
-    self.dezoomMaxButton.clipsToBounds = NO;
-    [self.dezoomMaxButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
-    
-    [self.settingsButton.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.settingsButton.layer setShadowOpacity:0.3];
-    [self.settingsButton.layer setShadowRadius:1.5];
-    self.settingsButton.clipsToBounds = NO;
-    [self.settingsButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
-    
+    [ImageUtilities addDropShadowToView:self.myLocationButton];
+    [ImageUtilities addDropShadowToView:self.dezoomMaxButton];
+    [ImageUtilities addDropShadowToView:self.settingsButton];
     
     [super viewWillAppear:animated];
 }

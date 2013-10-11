@@ -17,6 +17,7 @@
 #import "Reachability.h"
 #import "GeneralUtilities.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ImageUtilities.h"
 
 #define SHOUT_BUTTON_SIZE 72.0
 
@@ -27,6 +28,7 @@
 @property (nonatomic, weak) MapViewController *mapViewController;
 @property (weak, nonatomic) IBOutlet UIView *mapContainerView;
 @property (strong, nonatomic) UIButton *shoutButton;
+@property (weak, nonatomic) IBOutlet UIView *topContainerView;
 
 @end
 
@@ -46,25 +48,12 @@
     
     [self.view addSubview:self.shoutButton];
     
-    [super viewDidLoad];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    //Map shadow over feed
-    [self.mapContainerView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.mapContainerView.layer setShadowOpacity:0.3];
-    [self.mapContainerView.layer setShadowRadius:3.0];
-    [self.mapContainerView.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+    [ImageUtilities addInnerShadowToView:self.topContainerView];
     
     //Shout button drop shadow
-    [self.shoutButton.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.shoutButton.layer setShadowOpacity:0.3];
-    [self.shoutButton.layer setShadowRadius:1.5];
-    self.shoutButton.clipsToBounds = NO;
-    [self.shoutButton.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
+    [ImageUtilities addDropShadowToView:self.shoutButton];
     
-    [super viewWillAppear:animated];
+    [super viewDidLoad];
 }
 
 - (void)viewDidAppear:(BOOL)animated
