@@ -11,9 +11,9 @@
 #import "FeedTVC.h"
 #import "CreateShoutViewController.h"
 #import "ShoutViewController.h"
-#import "SettingsTVC.h"
+#import "SettingsViewController.h"
 
-@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, SettingsTVCDelegate>
+@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, SettingsViewControllerDelegate>
 
 - (void)onShoutNotificationPressed:(Shout *)shout;
 

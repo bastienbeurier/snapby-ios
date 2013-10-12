@@ -8,10 +8,12 @@
 
 #import "SettingPickerViewController.h"
 #import "Constants.h"
+#import "ImageUtilities.h"
 
 @interface SettingPickerViewController ()
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @end
 
@@ -33,6 +35,18 @@
             [self.pickerView selectRow:[index integerValue] inComponent:0 animated:NO];
         }
     }
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    //Round corners
+    NSUInteger buttonHeight = self.doneButton.bounds.size.height;
+    self.doneButton.layer.cornerRadius = buttonHeight/2;
+    
+    //Drop shadows
+    [ImageUtilities addDropShadowToView:self.doneButton];
 }
 
 - (IBAction)validateButtonClicked:(id)sender {

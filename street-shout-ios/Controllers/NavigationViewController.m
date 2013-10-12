@@ -167,7 +167,7 @@
     }
     
     if ([segueName isEqualToString: @"Settings Push Segue"]) {
-        ((SettingsTVC *) [segue destinationViewController]).settingsTVCDelegate = self;
+        ((SettingsViewController *) [segue destinationViewController]).settingsViewControllerDelegate = self;
     }
 }
 
