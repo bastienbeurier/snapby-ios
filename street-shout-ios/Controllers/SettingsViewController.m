@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
+#import "UIDevice-Hardware.h"
 
 #define APP_ID 123 //id from iTunesConnect
 
@@ -23,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *distanceUnitButton;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackButton;
 @property (weak, nonatomic) IBOutlet UIButton *ratemeButton;
+@property (weak, nonatomic) IBOutlet UIView *innterShadowingView;
 @property (strong, nonatomic) NSArray *distanceUnitPreferences;
 @property (strong, nonatomic) NSArray *notificationRadiusPreferences;
 
@@ -74,6 +76,9 @@
     [ImageUtilities addDropShadowToView:self.distanceUnitButton];
     [ImageUtilities addDropShadowToView:self.feedbackButton];
     [ImageUtilities addDropShadowToView:self.ratemeButton];
+    
+    //Inner shadow
+    [ImageUtilities addInnerShadowToView:self.innterShadowingView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -107,16 +112,11 @@
 }
 
 - (IBAction)feedbackClicked:(id)sender {
-    if ([GeneralUtilities connected]) {
-        [TestFlight openFeedbackView];
-    } else {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
-                                                          message:nil
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-        [message show];
-    }
+    NSString *email = @"mailto:info@street-shout.com";
+    
+    email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
 }
 
 - (IBAction)rateMeClicked:(id)sender {

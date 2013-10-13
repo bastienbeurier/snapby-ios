@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIView *innerShadowingView;
 
 @end
 
@@ -47,6 +48,9 @@
     
     //Drop shadows
     [ImageUtilities addDropShadowToView:self.doneButton];
+    
+    //Inner shasow
+    [ImageUtilities addInnerShadowToView:self.innerShadowingView];
 }
 
 - (IBAction)validateButtonClicked:(id)sender {

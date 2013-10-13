@@ -91,7 +91,7 @@
     // Standard shadow stuff
     [shadowLayer setShadowColor:[[UIColor colorWithWhite:0 alpha:1] CGColor]];
     [shadowLayer setShadowOffset:CGSizeMake(0.0f, 0.0f)];
-    [shadowLayer setShadowOpacity:0.5f];
+    [shadowLayer setShadowOpacity:0.3f];
     [shadowLayer setShadowRadius:5];
     
     // Causes the inner region in this example to NOT be filled.
@@ -122,9 +122,16 @@
     view.clipsToBounds = NO;
     
     [view.layer setShadowColor:[UIColor blackColor].CGColor];
-    [view.layer setShadowOpacity:0.3];
+    [view.layer setShadowOpacity:0.25];
     [view.layer setShadowRadius:1.5];
     [view.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
 }
+
+
++ (UIColor *)getShoutBlue
+{
+    return [UIColor colorWithRed:128/256.0 green:179/256.0 blue:255/256.0 alpha:1];
+}
+
 
 @end

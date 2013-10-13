@@ -25,42 +25,36 @@
 
 @interface CreateShoutViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *innerShadowingView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
 @property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
-@property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
 @property (strong, nonatomic) NSString *shoutImageName;
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
+@property (weak, nonatomic) IBOutlet UIButton *refineLocationButton;
+@property (weak, nonatomic) IBOutlet UIView *descriptionViewShadowingView;
 @property (strong, nonatomic) ImageEditorViewController *imageEditorController;
 @property(nonatomic,retain) ALAssetsLibrary *library;
+@property (weak, nonatomic) IBOutlet UIButton *removeShoutImage;
 @end
 
 @implementation CreateShoutViewController
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:USER_NAME_PREF];
-    
-    if (userName) {
-        self.usernameView.text = userName;
-    }
-    
-    if (!PRODUCTION) {
-        [self.createShoutButton setTitle:@"Shatte" forState:UIControlStateNormal];
-    }
-    
     [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:NO];
     
     [self.mapView removeAnnotations:self.mapView.annotations];
     MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
     shoutAnnotation.coordinate = self.shoutLocation.coordinate;
     [self.mapView addAnnotation:shoutAnnotation];
-    self.library = [[ALAssetsLibrary alloc] init];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -82,12 +76,42 @@
 
     self.usernameView.delegate = self;
     self.descriptionView.delegate = self;
+    
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:USER_NAME_PREF];
+    
+    if (userName) {
+        self.usernameView.text = userName;
+    }
 
-    //discriptionView formatting
+    self.library = [[ALAssetsLibrary alloc] init];
+    
+    //Inner shadow
+    [ImageUtilities addInnerShadowToView:self.innerShadowingView];
+    
+    //Round corners
+    NSUInteger buttonHeight = self.addPhotoButton.bounds.size.height;
+    self.shoutImageView.clipsToBounds = YES;
+    self.addPhotoButton.layer.cornerRadius = buttonHeight/2;
+    self.refineLocationButton.layer.cornerRadius = buttonHeight/2;
     self.descriptionView.layer.cornerRadius = 5;
+    self.descriptionViewShadowingView.layer.cornerRadius = 5;
+    self.usernameView.layer.cornerRadius = 5;
+    self.mapView.layer.cornerRadius = 15;
+    self.shoutImageView.layer.cornerRadius = 15;
+    
+    //Drop shadows
+    [ImageUtilities addDropShadowToView:self.createShoutButton];
+    [ImageUtilities addDropShadowToView:self.backButton];
+    [ImageUtilities addDropShadowToView:self.addPhotoButton];
+    [ImageUtilities addDropShadowToView:self.refineLocationButton];
+    [ImageUtilities addDropShadowToView:self.descriptionViewShadowingView];
+    [ImageUtilities addDropShadowToView:self.usernameView];
+    [ImageUtilities addDropShadowToView:self.removeShoutImage];
+    
+    //Textfield text inset
+    self.usernameView.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
+    
     self.descriptionView.clipsToBounds = YES;
-    [self.descriptionView.layer setBorderColor:[[[UIColor grayColor]colorWithAlphaComponent:0.5] CGColor]];
-    [self.descriptionView.layer setBorderWidth:2.0];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -240,7 +264,7 @@
     [self.createShoutVCDelegate dismissCreateShoutModal];
 }
 
-- (IBAction)settingsMapClicked:(id)sender {
+- (IBAction)refineLocationButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"Refine Shout Location" sender:nil];
 }
 
@@ -257,11 +281,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)addedPhotoClicked:(id)sender {
-    [self letUserChoosePhoto];
-}
-
-- (IBAction)addPhotoButtonClicked:(UIButton *)sender {
+- (IBAction)addPhotoButtonClicked:(id)sender {
     [self letUserChoosePhoto];
 }
 
@@ -269,7 +289,7 @@
     self.shoutImageView.image = nil;
     self.capturedImage = nil;
     [self.shoutImageView setHidden:YES];
-    [self.addPhotoButton setHidden:NO];
+    [self.removeShoutImage setHidden:YES];
 }
 
 - (void)letUserChoosePhoto
@@ -349,7 +369,7 @@
     if (self.capturedImage) {
         [self.shoutImageView setImage:self.capturedImage];
         [self.shoutImageView setHidden:NO];
-        [self.addPhotoButton setHidden:YES];
+        [self.removeShoutImage setHidden:NO];
     }
     
     self.imagePickerController = nil;
@@ -397,9 +417,8 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)viewDidUnload {
-    [self setAddPhotoButton:nil];
-    [self setCreateShoutButton:nil];
-    [super viewDidUnload];
+- (void)showMapInCreateShoutViewController
+{
+    [self.mapView setHidden:NO];
 }
 @end

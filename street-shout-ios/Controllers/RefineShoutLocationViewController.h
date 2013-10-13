@@ -24,4 +24,6 @@
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation;
 
+- (void)showMapInCreateShoutViewController;
+
 @end

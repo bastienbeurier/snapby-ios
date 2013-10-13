@@ -10,10 +10,16 @@
 #import "Constants.h"
 #import "LocationUtilities.h"
 #import "CreateShoutViewController.h"
+#import "ImageUtilities.h"
+
+#define MAP_CORNER_RADIUS 20
 
 @interface RefineShoutLocationViewController () <MKMapViewDelegate>
 
 @property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
+@property (weak, nonatomic) IBOutlet UIView *innerShadowingView;
+@property (weak, nonatomic) IBOutlet UIButton *refreshMapButton;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @end
 
@@ -24,6 +30,19 @@
     [super viewDidLoad];
     
     self.mapView.delegate = self;
+    
+    //Inner shadow
+    [ImageUtilities addInnerShadowToView:self.innerShadowingView];
+    
+    //Round corners
+    NSUInteger buttonHeight = self.doneButton.bounds.size.height;
+    [self.doneButton.layer setCornerRadius:buttonHeight/2];
+    [self.mapView.layer setCornerRadius:MAP_CORNER_RADIUS];
+    
+    
+    //Drop shadows
+    [ImageUtilities addDropShadowToView:self.refreshMapButton];
+    [ImageUtilities addDropShadowToView:self.doneButton];
     
     [self updateMyLocation];
 }
@@ -57,6 +76,7 @@
 }
 
 - (IBAction)doneButtonClicked:(id)sender {
+    [self.refineShoutLocationVCDelegate showMapInCreateShoutViewController];
     [self.refineShoutLocationVCDelegate dismissRefineShoutLocationModal];
 }
 

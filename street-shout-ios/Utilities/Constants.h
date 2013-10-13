@@ -48,8 +48,8 @@ static const double kMapInitialLongitude = 2.352401;
 static const NSUInteger kMapInitialSpan = 180;
 
 //Design
-static const double kDropShadowX = -2.0;
-static const double kDropShadowY = -2.0;
+static const double kDropShadowX = 2.0;
+static const double kDropShadowY = 2.0;
 
 //Development
 static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";

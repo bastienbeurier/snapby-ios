@@ -51,8 +51,10 @@
     
     //Drop shadows
     [ImageUtilities addDropShadowToView:self.shoutImageDropShadowView];
-    [ImageUtilities addDropShadowToView:self.backButton];
-    [ImageUtilities addDropShadowToView:self.shoutZoomButton];
+    
+    //Gabrielle recommendation
+
+    
     
     [super viewWillAppear:animated];
 }

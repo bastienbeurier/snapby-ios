@@ -23,4 +23,6 @@
 
 + (void)addDropShadowToView:(UIView *)view;
 
++ (UIColor *)getShoutBlue;
+
 @end

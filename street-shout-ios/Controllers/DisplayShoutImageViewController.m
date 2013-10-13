@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageDropShadowView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIView *innedShadowingView;
 
 @end
 
@@ -30,25 +31,18 @@
     self.shoutImageView.image = [UIImage imageNamed:@"shout-image-place-holder-square"];
     NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
     [self.shoutImageView setImageWithURL:url placeholderImage:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
+    
     [self.shoutImageView.layer setCornerRadius:IMAGE_CORNER_RADIUS];
     self.shoutImageView.clipsToBounds = YES;
     
     [self.shoutImageDropShadowView.layer setCornerRadius:IMAGE_CORNER_RADIUS];
     
+    //Drop shadows
     [ImageUtilities addDropShadowToView:self.shoutImageDropShadowView];
     [ImageUtilities addDropShadowToView:self.backButton];
     
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [super viewWillDisappear:animated];
+    //Inner shadow
+    [ImageUtilities addInnerShadowToView:self.innedShadowingView];
 }
 
 - (IBAction)backButtonClicked:(id)sender {
