@@ -181,9 +181,13 @@
         
         if ([self.displayedShouts objectForKey:shoutKey]) {
             //Use existing annotation
+            NSLog(@"REUSING ANNOTATION!!!!");
             shoutAnnotation = [self.displayedShouts objectForKey:shoutKey];
             [self.displayedShouts removeObjectForKey:shoutKey];
+            [self updateAnnotation:shoutAnnotation shoutInfo:shout];
+            [self updateAnnotation:shoutAnnotation pinAccordingToShoutInfo:shout];
         } else {
+            NSLog(@"CREATING ANNOTATION!!!!");
             //Create new annotation
             CLLocationCoordinate2D annotationCoordinate;
             annotationCoordinate.latitude = shout.lat;
@@ -192,26 +196,35 @@
             shoutAnnotation = [[MKPointAnnotation alloc] init];
             shoutAnnotation.coordinate = annotationCoordinate;
             
+            [self updateAnnotation:shoutAnnotation shoutInfo:shout];
             [self.mapView addAnnotation:shoutAnnotation];
         }
         
-        NSUInteger selectedShoutId = ((MKPointAnnotation *)[self.mapView.selectedAnnotations firstObject]).shout.identifier;
-        
-        //Otherwise, the selected shout icon image gets replaced by the deselected icon when new shouts load
-        if (shout.identifier != selectedShoutId) {
-            MKAnnotationView *annotationView = [self.mapView viewForAnnotation:shoutAnnotation];
-            [self setAnnotationView:annotationView pinImageForShout:shout selected:NO];
-        }
-        
-        shoutAnnotation.shout = shout;
         [newDisplayedShouts setObject:shoutAnnotation forKey:shoutKey];
     }
     
+    //Remove annotations that are not on screen anymore
     for (NSString *key in self.displayedShouts) {
         [self.mapView removeAnnotation:[self.displayedShouts objectForKey:key]];
     }
     
     self.displayedShouts = newDisplayedShouts;
+}
+
+- (void)updateAnnotation:(MKPointAnnotation *)shoutAnnotation pinAccordingToShoutInfo:(Shout *)shout
+{
+    NSUInteger selectedShoutId = ((MKPointAnnotation *)[self.mapView.selectedAnnotations firstObject]).shout.identifier;
+    
+    //Otherwise, the selected shout icon image gets replaced by the deselected icon when new shouts load
+    if (shout.identifier != selectedShoutId) {
+        MKAnnotationView *annotationView = [self.mapView viewForAnnotation:shoutAnnotation];
+        [self setAnnotationView:annotationView pinImageForShout:shout selected:NO];
+    }
+}
+
+- (void)updateAnnotation:(MKPointAnnotation *)shoutAnnotation shoutInfo:(Shout *)shout
+{
+    shoutAnnotation.shout = shout;
 }
 
 - (void)setAnnotationView:(MKAnnotationView *)annotationView pinImageForShout:(Shout *)shout selected:(BOOL)selected
@@ -261,6 +274,12 @@
 {
     for (MKAnnotationView *annView in annotationViews)
     {
+        MKPointAnnotation *annotation = (MKPointAnnotation *)annView.annotation;
+        
+        if ([annotation respondsToSelector:@selector(shout)]) {
+            [self updateAnnotation:annotation pinAccordingToShoutInfo:annotation.shout];
+        }
+        
         CGRect endFrame = annView.frame;
         annView.frame = CGRectOffset(endFrame, 0, -500);
         [UIView animateWithDuration:0.5
