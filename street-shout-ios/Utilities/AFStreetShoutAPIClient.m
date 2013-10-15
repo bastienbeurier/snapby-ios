@@ -47,7 +47,8 @@
     return self;
 }
 
-+ (void)pullShoutsInZone:(NSArray *)cornersCoordinates AndExecute:(void(^)(NSArray *shouts))block
++ (void)pullShoutsInZone:(NSArray *)cornersCoordinates
+       AndExecuteSuccess:(void(^)(NSArray *shouts))successBlock failure:(void (^)())failureBlock
 {
     NSDictionary *parameters = @{@"neLat": cornersCoordinates[0],
                                  @"neLng": cornersCoordinates[1],
@@ -60,11 +61,10 @@
         
         NSArray *rawShouts = [JSON valueForKeyPath:@"result"];
         
-        block([Shout rawShoutsToInstances:rawShouts]);
+        successBlock([Shout rawShoutsToInstances:rawShouts]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        NSLog(@"ERROR!!!");
-        //TODO: implement
+        failureBlock();
     }];
 }
 

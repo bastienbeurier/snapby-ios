@@ -11,9 +11,9 @@
 
 @implementation MapRequestHandler
 
-+ (void)pullShoutsInZone:(NSArray *)cornersCoordinates AndExecute:(void(^)(NSArray *shouts))block
++ (void)pullShoutsInZone:(NSArray *)cornersCoordinates AndExecuteSuccess:(void(^)(NSArray *shouts))successBlock failure:(void(^)())failureBlock
 {
-    [AFStreetShoutAPIClient pullShoutsInZone:cornersCoordinates AndExecute:block];
+    [AFStreetShoutAPIClient pullShoutsInZone:cornersCoordinates AndExecuteSuccess:successBlock failure:failureBlock];
 }
 
 @end

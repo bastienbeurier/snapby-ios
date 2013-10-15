@@ -181,13 +181,11 @@
         
         if ([self.displayedShouts objectForKey:shoutKey]) {
             //Use existing annotation
-            NSLog(@"REUSING ANNOTATION!!!!");
             shoutAnnotation = [self.displayedShouts objectForKey:shoutKey];
             [self.displayedShouts removeObjectForKey:shoutKey];
             [self updateAnnotation:shoutAnnotation shoutInfo:shout];
             [self updateAnnotation:shoutAnnotation pinAccordingToShoutInfo:shout];
         } else {
-            NSLog(@"CREATING ANNOTATION!!!!");
             //Create new annotation
             CLLocationCoordinate2D annotationCoordinate;
             annotationCoordinate.latitude = shout.lat;

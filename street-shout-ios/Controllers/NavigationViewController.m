@@ -29,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UIView *mapContainerView;
 @property (strong, nonatomic) UIButton *shoutButton;
 @property (weak, nonatomic) IBOutlet UIView *topContainerView;
+@property (strong, nonatomic) UIActivityIndicatorView *activityView;
+@property (nonatomic) BOOL loadingShoutsInArea;
 
 @end
 
@@ -53,6 +55,8 @@
     //Shout button drop shadow
     [ImageUtilities addDropShadowToView:self.shoutButton];
     
+    self.loadingShoutsInArea = NO;
+    
     [super viewDidLoad];
 }
 
@@ -67,20 +71,28 @@
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
 {
-    UIActivityIndicatorView *activityView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
-    activityView.center = self.feedTVC.view.center;
+    self.activityView.center = self.feedTVC.view.center;
     
-    [activityView startAnimating];
+    if (!self.loadingShoutsInArea) {
+        [self.activityView startAnimating];
+        self.loadingShoutsInArea = YES;
+    }
     
-    [self.feedTVC.view addSubview:activityView];
+    [self.feedTVC.view addSubview:self.activityView];
     
     self.feedTVC.shouts = @[@"Loading"];
     
-    [MapRequestHandler pullShoutsInZone:mapBounds AndExecute:^(NSArray *shouts) {
+    [MapRequestHandler pullShoutsInZone:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
+        [self.activityView stopAnimating];
+        self.loadingShoutsInArea = NO;
         self.mapViewController.shouts = shouts;
-        [activityView stopAnimating];
         self.feedTVC.shouts = shouts;
+    } failure:^{
+        [self.activityView stopAnimating];
+        self.loadingShoutsInArea = NO;
+        self.feedTVC.shouts = @[@"No connection"];
     }];
 }
 

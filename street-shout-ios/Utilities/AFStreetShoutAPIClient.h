@@ -16,7 +16,7 @@
 + (AFStreetShoutAPIClient *)sharedClient;
 
 + (void)pullShoutsInZone:(NSArray *)cornersCoordinates
-              AndExecute:(void(^)(NSArray *shouts))block;
+              AndExecuteSuccess:(void(^)(NSArray *shouts))sucessBlock failure:(void (^)())failureBlock;
 
 + (void)createShoutWithLat:(double)lat
                        Lng:(double)lng

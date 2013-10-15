@@ -20,6 +20,7 @@
 #define SHOUT_TAG @"Shout"
 #define NO_SHOUT_TAG @"No Shout"
 #define LOADING_TAG @"Loading"
+#define NO_CONNECTION_TAG @"No connection"
 #define SHOUT_IMAGE_SIZE 50
 #define SHOUT_CONTENT_WIDTH_WITH_PHOTO 186.0f
 #define SHOUT_CONTENT_WIDTH_WITHOUT_PHOTO 244.0f
@@ -78,6 +79,8 @@
         _shouts = @[NO_SHOUT_TAG];
     } else if ([shouts[0] isKindOfClass:[NSString class]] && [shouts[0] isEqualToString:LOADING_TAG]) {
         _shouts = @[];
+    } else if ([shouts[0] isKindOfClass:[NSString class]] && [shouts[0] isEqualToString:NO_CONNECTION_TAG]) {
+        _shouts = @[NO_CONNECTION_TAG];
     } else {
         _shouts = shouts;
     }
@@ -96,6 +99,10 @@
 {
     if ([self noShoutsInArray:self.shouts]) {
         static NSString *CellIdentifier = NO_SHOUT_TAG;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        return cell;
+    } else if ([self errorRetrievingShouts:self.shouts]) {
+        static NSString *CellIdentifier = NO_CONNECTION_TAG;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         return cell;
     } else {
@@ -156,6 +163,11 @@
 - (BOOL)noShoutsInArray:(NSArray *)shouts
 {
     return [shouts count] == 1 && [shouts[0] isKindOfClass:[NSString class]] && [shouts[0] isEqualToString:NO_SHOUT_TAG];
+}
+
+- (BOOL)errorRetrievingShouts:(NSArray *)shouts
+{
+    return [shouts count] == 1 && [shouts[0] isKindOfClass:[NSString class]] && [shouts[0] isEqualToString:NO_CONNECTION_TAG];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
