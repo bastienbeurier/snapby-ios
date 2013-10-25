@@ -19,12 +19,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *notificationRadiusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceUnitLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rateMeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *notificationRadiusButton;
 @property (weak, nonatomic) IBOutlet UIButton *distanceUnitButton;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackButton;
 @property (weak, nonatomic) IBOutlet UIButton *ratemeButton;
-@property (weak, nonatomic) IBOutlet UIView *innterShadowingView;
 @property (strong, nonatomic) NSArray *distanceUnitPreferences;
 @property (strong, nonatomic) NSArray *notificationRadiusPreferences;
 
@@ -71,19 +69,17 @@
     self.ratemeButton.layer.cornerRadius = buttonHeight/2;
     
     //Drop shadows
-    [ImageUtilities addDropShadowToView:self.backButton];
     [ImageUtilities addDropShadowToView:self.notificationRadiusButton];
     [ImageUtilities addDropShadowToView:self.distanceUnitButton];
     [ImageUtilities addDropShadowToView:self.feedbackButton];
     [ImageUtilities addDropShadowToView:self.ratemeButton];
     
-    //Inner shadow
-    [ImageUtilities addInnerShadowToView:self.innterShadowingView];
+    //Nav bar
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.settingsViewControllerDelegate refreshShouts];
     
     [super viewWillDisappear:animated];
@@ -135,10 +131,6 @@
     }
 }
 
-- (IBAction)backButtonClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Notification Radius"]) {
@@ -176,6 +168,22 @@
 - (void)sendDeviceInfo
 {
     [self.settingsViewControllerDelegate sendDeviceInfo];
+}
+
+- (IBAction)notificationRadiusHelpPressed:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notification Radius"
+                                                    message:NSLocalizedStringFromTable (@"notification_radius_instruction", @"Strings", @"comment")
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload {

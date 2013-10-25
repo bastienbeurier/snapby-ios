@@ -23,8 +23,6 @@
 
 @protocol CreateShoutViewControllerDelegate
 
-- (void)dismissCreateShoutModal;
-
 - (void)onShoutCreated:(Shout *)shout;
 
 @end

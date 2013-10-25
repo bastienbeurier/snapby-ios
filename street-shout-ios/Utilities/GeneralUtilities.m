@@ -75,22 +75,6 @@
             return [NSString stringWithFormat:@"shout-marker-%d-deselected", 1];
         }
     }
-    
-    for (int i = 1; i <= [self colorNumber]; i++) {
-        if (shoutAge < (kShoutDuration / [self colorNumber]) * i) {
-            if (selected) {
-                return [NSString stringWithFormat:@"shout-marker-%d-selected", [self colorNumber] - i + 1];
-            } else {
-                return [NSString stringWithFormat:@"shout-marker-%d-deselected", [self colorNumber] - i + 1];
-            }
-        }
-    }
-    
-    if (selected) {
-        return @"shout-marker-1-selected";
-    } else {
-        return @"shout-marker-1-deselected";
-    }
 }
 
 + (UIColor *)getShoutAgeColor:(Shout *)shout

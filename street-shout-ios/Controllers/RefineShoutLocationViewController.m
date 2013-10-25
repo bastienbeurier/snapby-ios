@@ -17,9 +17,8 @@
 @interface RefineShoutLocationViewController () <MKMapViewDelegate>
 
 @property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
-@property (weak, nonatomic) IBOutlet UIView *innerShadowingView;
+
 @property (weak, nonatomic) IBOutlet UIButton *refreshMapButton;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @end
 
@@ -31,27 +30,34 @@
     
     self.mapView.delegate = self;
     
-    //Inner shadow
-    [ImageUtilities addInnerShadowToView:self.innerShadowingView];
-    
     //Round corners
-    NSUInteger buttonHeight = self.doneButton.bounds.size.height;
-    [self.doneButton.layer setCornerRadius:buttonHeight/2];
     [self.mapView.layer setCornerRadius:MAP_CORNER_RADIUS];
     
     
     //Drop shadows
     [ImageUtilities addDropShadowToView:self.refreshMapButton];
-    [ImageUtilities addDropShadowToView:self.doneButton];
     
     [self updateMyLocation];
+    
+    //Navigation bar
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationItem.hidesBackButton = YES;
+    
+    //Add done button to nav bar
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Done"
+                                    style:UIBarButtonItemStyleBordered
+                                    target:self
+                                    action:@selector(doneButtonClicked)];
+    self.navigationItem.rightBarButtonItem = doneButton;
 }
 
 - (void)updateMyLocation
 {
     MKUserLocation *mapUserLocation = self.mapView.userLocation;
     
-    if (mapUserLocation && mapUserLocation.coordinate.longitude != 0 && mapUserLocation.coordinate.latitude != 0) {
+    if (mapUserLocation && mapUserLocation.coordinate.longitude != 0 && mapUserLocation.coordinate.latitude != 0 &&
+        mapUserLocation.coordinate.longitude != -180 && mapUserLocation.coordinate.latitude != -180) {
         self.myLocation = mapUserLocation.location;
     }
     
@@ -61,7 +67,7 @@
                       WithDistance:2*kShoutRadius
                           Animated:NO];
     
-    ((CreateShoutViewController *)[self parentViewController]).myLocation = self.myLocation;
+    self.refineShoutLocationVCDelegate.myLocation = self.myLocation;
         
     if (self.shoutAnnotation) [self.mapView removeAnnotation:self.shoutAnnotation];
     self.shoutAnnotation = [[MKPointAnnotation alloc] init];
@@ -75,9 +81,9 @@
     [self updateMyLocation];
 }
 
-- (IBAction)doneButtonClicked:(id)sender {
+- (void) doneButtonClicked {
     [self.refineShoutLocationVCDelegate showMapInCreateShoutViewController];
-    [self.refineShoutLocationVCDelegate dismissRefineShoutLocationModal];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState

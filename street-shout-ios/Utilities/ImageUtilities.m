@@ -31,39 +31,53 @@
     [imagePickerController.cameraOverlayView addSubview:overlayIV];
 }
 
-+ (UIImage *)cropImageToSquare:(UIImage *)image
+//From http://stackoverflow.com/questions/14917770/finding-the-biggest-centered-square-from-a-landscape-or-a-portrait-uiimage-and-s
++ (UIImage*) cropBiggestCenteredSquareImageFromImage:(UIImage*)image withSide:(CGFloat)side
 {
-    //Crop the image to a square
-    CGSize imageSize = image.size;
-    CGFloat width = imageSize.width;
-    CGFloat height = imageSize.height;
-    if (width != height) {
-        CGFloat newDimension = MIN(width, height);
-        CGFloat widthOffset = (width - newDimension) / 2;
-        CGFloat heightOffset = (height - newDimension) / 2;
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(newDimension, newDimension), NO, 0.);
-        [image drawAtPoint:CGPointMake(-widthOffset, -heightOffset)
-                 blendMode:kCGBlendModeCopy
-                     alpha:1.];
-        image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
+    // Get size of current image
+    CGSize size = [image size];
+    if( size.width == size.height && size.width == side){
+        return image;
     }
     
-    return image;
-}
-
-+ (UIImage *)resizeImage:(UIImage *)image withSize:(NSUInteger)size
-{
-    CGSize imageSize;
-    imageSize.height = size;
-    imageSize.width = size;
+    CGSize newSize = CGSizeMake(side, side);
+    double ratio;
+    double delta;
+    CGPoint offset;
     
-    UIGraphicsBeginImageContext(imageSize);
-    [image drawInRect:CGRectMake(0,0, imageSize.width, imageSize.height)];
-    image = UIGraphicsGetImageFromCurrentImageContext();
+    //make a new square size, that is the resized imaged width
+    CGSize sz = CGSizeMake(newSize.width, newSize.width);
+    
+    //figure out if the picture is landscape or portrait, then
+    //calculate scale factor and offset
+    if (image.size.width > image.size.height) {
+        ratio = newSize.height / image.size.height;
+        delta = ratio*(image.size.width - image.size.height);
+        offset = CGPointMake(delta/2, 0);
+    } else {
+        ratio = newSize.width / image.size.width;
+        delta = ratio*(image.size.height - image.size.width);
+        offset = CGPointMake(0, delta/2);
+    }
+    
+    //make the final clipping rect based on the calculated values
+    CGRect clipRect = CGRectMake(-offset.x, -offset.y,
+                                 (ratio * image.size.width),
+                                 (ratio * image.size.height));
+    
+    //start a new context, with scale factor 0.0 so retina displays get
+    //high quality image
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        UIGraphicsBeginImageContextWithOptions(sz, YES, 0.0);
+    } else {
+        UIGraphicsBeginImageContext(sz);
+    }
+    UIRectClip(clipRect);
+    [image drawInRect:clipRect];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    return image;
+    return newImage;
 }
 
 + (ALAssetOrientation)convertImageOrientationToAssetOrientation:(UIImageOrientation)orientation

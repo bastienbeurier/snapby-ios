@@ -20,10 +20,10 @@
 
 @protocol RefineShoutLocationViewControllerDelegate
 
-- (void)dismissRefineShoutLocationModal;
-
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation;
 
 - (void)showMapInCreateShoutViewController;
+
+@property (nonatomic, strong) CLLocation *myLocation;
 
 @end

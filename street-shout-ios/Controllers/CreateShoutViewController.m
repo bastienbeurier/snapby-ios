@@ -16,7 +16,6 @@
 #import "GeneralUtilities.h"
 #import "MBProgressHUD.h"
 #import "ImageUtilities.h"
-#import "ImageEditorViewController.h"
 #import "NavigationAppDelegate.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
@@ -25,7 +24,6 @@
 
 @interface CreateShoutViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView *innerShadowingView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -36,12 +34,9 @@
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
-@property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
-@property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
 @property (weak, nonatomic) IBOutlet UIButton *refineLocationButton;
 @property (weak, nonatomic) IBOutlet UIView *descriptionViewShadowingView;
-@property (strong, nonatomic) ImageEditorViewController *imageEditorController;
 @property(nonatomic,retain) ALAssetsLibrary *library;
 @property (weak, nonatomic) IBOutlet UIButton *removeShoutImage;
 @end
@@ -63,6 +58,8 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:userName forKey:USER_NAME_PREF];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
@@ -85,9 +82,6 @@
 
     self.library = [[ALAssetsLibrary alloc] init];
     
-    //Inner shadow
-    [ImageUtilities addInnerShadowToView:self.innerShadowingView];
-    
     //Round corners
     NSUInteger buttonHeight = self.addPhotoButton.bounds.size.height;
     self.shoutImageView.clipsToBounds = YES;
@@ -100,18 +94,42 @@
     self.shoutImageView.layer.cornerRadius = 15;
     
     //Drop shadows
-    [ImageUtilities addDropShadowToView:self.createShoutButton];
-    [ImageUtilities addDropShadowToView:self.backButton];
     [ImageUtilities addDropShadowToView:self.addPhotoButton];
     [ImageUtilities addDropShadowToView:self.refineLocationButton];
     [ImageUtilities addDropShadowToView:self.descriptionViewShadowingView];
     [ImageUtilities addDropShadowToView:self.usernameView];
     [ImageUtilities addDropShadowToView:self.removeShoutImage];
     
+    self.descriptionViewShadowingView.clipsToBounds = NO;
+    
+    [self.descriptionViewShadowingView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.descriptionViewShadowingView.layer setShadowOpacity:0.25];
+    [self.descriptionViewShadowingView.layer setShadowRadius:3];
+    [self.descriptionViewShadowingView.layer setShadowOffset:CGSizeMake(0, 0)];
+    
+    self.usernameView.clipsToBounds = NO;
+    
+    [self.usernameView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.usernameView.layer setShadowOpacity:0.25];
+    [self.usernameView.layer setShadowRadius:3];
+    [self.usernameView.layer setShadowOffset:CGSizeMake(0, 0)];
+    
     //Textfield text inset
     self.usernameView.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
     
     self.descriptionView.clipsToBounds = YES;
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    //Nav bar
+    UIBarButtonItem *shoutButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Shout!"
+                                    style:UIBarButtonItemStyleBordered
+                                    target:self
+                                    action:@selector(createShoutClicked)];
+    self.navigationItem.rightBarButtonItem = shoutButton;
+    
+    self.navigationItem.title = NSLocalizedStringFromTable (@"create_shout_bar_title", @"Strings", @"comment");
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -133,7 +151,7 @@
     return YES;
 }
 
-- (IBAction)createShoutClicked:(id)sender {
+- (void)createShoutClicked {
     [self.usernameView resignFirstResponder];
     [self.descriptionView resignFirstResponder];
     
@@ -194,7 +212,7 @@
     SuccessBlock successBlock = ^(Shout *shout) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [self.createShoutVCDelegate dismissCreateShoutModal];
+            [self.navigationController popViewControllerAnimated:YES];
             [self.createShoutVCDelegate onShoutCreated:shout];
         });
         
@@ -260,10 +278,6 @@
     });
 }
 
-- (IBAction)cancelShoutClicked:(id)sender {
-    [self.createShoutVCDelegate dismissCreateShoutModal];
-}
-
 - (IBAction)refineLocationButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"Refine Shout Location" sender:nil];
 }
@@ -275,10 +289,6 @@
         ((RefineShoutLocationViewController *) [segue destinationViewController]).myLocation = self.myLocation;
         ((RefineShoutLocationViewController *) [segue destinationViewController]).refineShoutLocationVCDelegate = self;
     }
-}
-
-- (void)dismissRefineShoutLocationModal {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)addPhotoButtonClicked:(id)sender {
@@ -327,19 +337,6 @@
         imagePickerController.showsCameraControls = YES;
     }
     
-    self.imageEditorController = [[ImageEditorViewController alloc] initWithNibName:@"ImageEditor" bundle:nil];
-    self.imageEditorController.checkBounds = YES;
-        
-    __weak typeof(self) weakSelf = self;
-        
-    self.imageEditorController.doneCallback = ^(UIImage *editedImage, BOOL canceled){
-        if(!canceled) {
-            [weakSelf resizeAndSaveSelectedImageAndUpdate:editedImage];
-        }
-
-        [weakSelf dismissViewControllerAnimated:YES completion:NULL];
-    };
-    
     self.imagePickerController = imagePickerController;
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
 }
@@ -379,33 +376,21 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         [self saveImageToFileSystem:image];
     }
     
-    [self.library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-        UIImage *preview = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
-            
-        self.imageEditorController.sourceImage = image;
-        self.imageEditorController.previewImage = preview;
-        [self.imageEditorController reset:NO];
-            
-            
-        [picker pushViewController:self.imageEditorController animated:YES];
-        [picker setNavigationBarHidden:YES animated:NO];
-            
-    } failureBlock:^(NSError *error) {
-        NSLog(@"Failed to get asset from library");
-    }];
+    if (image) {
+        [self resizeAndSaveSelectedImageAndUpdate:image];
+    } else {
+        NSLog(@"Failed to get image");
+    }
 }
 
 - (void)resizeAndSaveSelectedImageAndUpdate:(UIImage *)image
 {
-    image = [ImageUtilities resizeImage:image withSize:kShoutImageSize];
-    
-    self.capturedImage = image;
+    self.capturedImage = [ImageUtilities cropBiggestCenteredSquareImageFromImage:image withSide:kShoutImageSize];
     self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
     self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
     

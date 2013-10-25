@@ -30,7 +30,6 @@
 @property (strong, nonatomic) UIButton *shoutButton;
 @property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
-@property (nonatomic) BOOL loadingShoutsInArea;
 
 @end
 
@@ -55,8 +54,6 @@
     //Shout button drop shadow
     [ImageUtilities addDropShadowToView:self.shoutButton];
     
-    self.loadingShoutsInArea = NO;
-    
     [super viewDidLoad];
 }
 
@@ -65,33 +62,38 @@
     [self sendDeviceInfo];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    //Nav bar
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [self sendDeviceInfo];
 }
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
 {
-    self.activityView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    
+    if (!self.activityView) {
+        self.activityView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
+
     self.activityView.center = self.feedTVC.view.center;
     
-    if (!self.loadingShoutsInArea) {
-        [self.activityView startAnimating];
-        self.loadingShoutsInArea = YES;
-    }
-    
+    [self.activityView startAnimating];
+        
     [self.feedTVC.view addSubview:self.activityView];
     
     self.feedTVC.shouts = @[@"Loading"];
     
     [MapRequestHandler pullShoutsInZone:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
         [self.activityView stopAnimating];
-        self.loadingShoutsInArea = NO;
         self.mapViewController.shouts = shouts;
         self.feedTVC.shouts = shouts;
     } failure:^{
         [self.activityView stopAnimating];
-        self.loadingShoutsInArea = NO;
         self.feedTVC.shouts = @[@"No connection"];
     }];
 }
@@ -119,13 +121,6 @@
     }
 }
 
-- (void)dismissShoutViewControllerIfNeeded
-{
-    if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
-        [self.feedNavigationController popViewControllerAnimated:YES];
-    }
-}
-
 - (void)shoutSelectionComingFromFeed:(Shout *)shout
 {
     [self.mapViewController startShoutSelectionModeInMapViewController:shout];
@@ -148,6 +143,13 @@
     [self handleShoutRedirection:shout];
     
     [self.mapViewController animateMapWhenShoutSelected:shout];
+}
+
+- (void)dismissShoutViewControllerIfNeeded
+{
+    if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
+        [self.feedNavigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -186,11 +188,6 @@
 - (void)displayShoutImage:(Shout *)imageShout
 {
     [self performSegueWithIdentifier:@"Display Shout Image" sender:imageShout];
-}
-
-- (void)dismissCreateShoutModal
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)createShoutButtonClicked
