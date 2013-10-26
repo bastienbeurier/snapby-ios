@@ -94,8 +94,6 @@
     self.shoutImageView.layer.cornerRadius = 15;
     
     //Drop shadows
-//    [ImageUtilities addDropShadowToView:self.addPhotoButton];
-//    [ImageUtilities addDropShadowToView:self.refineLocationButton];
     [ImageUtilities addDropShadowToView:self.removeShoutImage];
     
     self.descriptionViewShadowingView.clipsToBounds = NO;
@@ -236,11 +234,12 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        typedef void (^CreateShoutBlock)();
-        CreateShoutBlock createShoutBlock;
+        typedef void (^UploadImageCompletionBlock)();
+        UploadImageCompletionBlock createShoutSuccessBlock;
+        UploadImageCompletionBlock createShoutFailureBlock;
         
         if (self.capturedImage && self.shoutImageUrl) {
-            createShoutBlock = ^{
+            createShoutSuccessBlock = ^{
                 [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
                 [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                        Lng:self.shoutLocation.coordinate.longitude
@@ -252,13 +251,18 @@
                                                    Failure:failureBlock];
             };
             
+            createShoutFailureBlock = ^{
+                failureBlock();
+            };
+            
             AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
-            imageUploader.completionBlock = createShoutBlock;
+            imageUploader.uploadImageSuccessBlock = createShoutSuccessBlock;
+            imageUploader.uploadImageFailureBlock = createShoutFailureBlock;
             NSOperationQueue *operationQueue = [NSOperationQueue new];
             [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
             [operationQueue addOperation:imageUploader];
         } else {
-            createShoutBlock = ^{
+            createShoutSuccessBlock = ^{
                 [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                        Lng:self.shoutLocation.coordinate.longitude
                                                   Username:self.usernameView.text
@@ -269,7 +273,7 @@
                                                    Failure:failureBlock];
             };
             
-            createShoutBlock();
+            createShoutSuccessBlock();
         }
     });
 }

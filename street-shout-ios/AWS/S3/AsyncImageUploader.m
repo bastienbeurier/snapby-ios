@@ -89,19 +89,21 @@
 
 -(void)request:(AmazonServiceRequest *)request didCompleteWithResponse:(AmazonServiceResponse *)response
 {
+    self.uploadImageSuccessBlock();
+    
     [self finish];
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error
 {
-    NSLog(@"%@", error);
+    self.uploadImageFailureBlock();
     
     [self finish];
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithServiceException:(NSException *)exception
 {
-    NSLog(@"%@", exception);
+    self.uploadImageFailureBlock();
     
     [self finish];
 }

@@ -16,6 +16,8 @@
 #import <Foundation/Foundation.h>
 #import <AWSRuntime/AWSRuntime.h>
 
+typedef void (^UploadImageCompletionBlock)();
+
 @interface AsyncImageUploader:NSOperation<AmazonServiceRequestDelegate>
 {
     UIImage *shoutImage;
@@ -24,6 +26,10 @@
     BOOL isExecuting;
     BOOL isFinished;
 }
+
+@property (readwrite, copy) UploadImageCompletionBlock uploadImageSuccessBlock;
+@property (readwrite, copy) UploadImageCompletionBlock uploadImageFailureBlock;
+
 
 -(id)initWithImage:(UIImage *)image AndName:(NSString *)imageName;
 
