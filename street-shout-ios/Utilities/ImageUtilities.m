@@ -31,6 +31,27 @@
     [imagePickerController.cameraOverlayView addSubview:overlayIV];
 }
 
++ (UIImage *)cropImageToSquare:(UIImage *)image
+{
+    //Crop the image to a square
+    CGSize imageSize = image.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    if (width != height) {
+        CGFloat newDimension = MIN(width, height);
+        CGFloat widthOffset = (width - newDimension) / 2;
+        CGFloat heightOffset = (height - newDimension) / 2;
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(newDimension, newDimension), NO, 0.);
+        [image drawAtPoint:CGPointMake(-widthOffset, -heightOffset)
+                 blendMode:kCGBlendModeCopy
+                     alpha:1.];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    
+    return image;
+}
+
 //From http://stackoverflow.com/questions/14917770/finding-the-biggest-centered-square-from-a-landscape-or-a-portrait-uiimage-and-s
 + (UIImage*) cropBiggestCenteredSquareImageFromImage:(UIImage*)image withSide:(CGFloat)side
 {
@@ -141,10 +162,10 @@
     [view.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
 }
 
-
+//Shout be 139-172-224
 + (UIColor *)getShoutBlue
 {
-    return [UIColor colorWithRed:128/256.0 green:179/256.0 blue:255/256.0 alpha:1];
+    return [UIColor colorWithRed:139/256.0 green:172/256.0 blue:224/256.0 alpha:1];
 }
 
 

@@ -94,10 +94,8 @@
     self.shoutImageView.layer.cornerRadius = 15;
     
     //Drop shadows
-    [ImageUtilities addDropShadowToView:self.addPhotoButton];
-    [ImageUtilities addDropShadowToView:self.refineLocationButton];
-    [ImageUtilities addDropShadowToView:self.descriptionViewShadowingView];
-    [ImageUtilities addDropShadowToView:self.usernameView];
+//    [ImageUtilities addDropShadowToView:self.addPhotoButton];
+//    [ImageUtilities addDropShadowToView:self.refineLocationButton];
     [ImageUtilities addDropShadowToView:self.removeShoutImage];
     
     self.descriptionViewShadowingView.clipsToBounds = NO;
@@ -128,12 +126,6 @@
                                     target:self
                                     action:@selector(createShoutClicked)];
     self.navigationItem.rightBarButtonItem = shoutButton;
-    
-    NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    if ([[ver objectAtIndex:0] intValue] >= 7) {
-        self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-        self.navigationController.navigationBar.translucent = NO;
-    }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {

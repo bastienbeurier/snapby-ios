@@ -14,7 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
-@property (weak, nonatomic) IBOutlet UIView *innerShadowingView;
 
 @end
 
@@ -47,10 +46,7 @@
     self.doneButton.layer.cornerRadius = buttonHeight/2;
     
     //Drop shadows
-    [ImageUtilities addDropShadowToView:self.doneButton];
-    
-    //Inner shasow
-    [ImageUtilities addInnerShadowToView:self.innerShadowingView];
+//    [ImageUtilities addDropShadowToView:self.doneButton];
 }
 
 - (IBAction)validateButtonClicked:(id)sender {

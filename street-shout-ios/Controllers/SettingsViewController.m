@@ -68,11 +68,11 @@
     self.feedbackButton.layer.cornerRadius = buttonHeight/2;
     self.ratemeButton.layer.cornerRadius = buttonHeight/2;
     
-    //Drop shadows
-    [ImageUtilities addDropShadowToView:self.notificationRadiusButton];
-    [ImageUtilities addDropShadowToView:self.distanceUnitButton];
-    [ImageUtilities addDropShadowToView:self.feedbackButton];
-    [ImageUtilities addDropShadowToView:self.ratemeButton];
+//    //Drop shadows
+//    [ImageUtilities addDropShadowToView:self.notificationRadiusButton];
+//    [ImageUtilities addDropShadowToView:self.distanceUnitButton];
+//    [ImageUtilities addDropShadowToView:self.feedbackButton];
+//    [ImageUtilities addDropShadowToView:self.ratemeButton];
     
     //Nav bar
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
