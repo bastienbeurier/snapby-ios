@@ -47,6 +47,5 @@
 "nearby" = "near";
 "far_away" = "far";
 "notification_radius_instruction" = "Adjust your notification radius to get notified when somebody shouts near you. Choose \"none\" to disable notifications.";
-"create_shout_bar_title" = "Create Shout";
 
  

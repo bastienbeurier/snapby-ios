@@ -129,7 +129,11 @@
                                     action:@selector(createShoutClicked)];
     self.navigationItem.rightBarButtonItem = shoutButton;
     
-    self.navigationItem.title = NSLocalizedStringFromTable (@"create_shout_bar_title", @"Strings", @"comment");
+    NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    if ([[ver objectAtIndex:0] intValue] >= 7) {
+        self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+        self.navigationController.navigationBar.translucent = NO;
+    }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {

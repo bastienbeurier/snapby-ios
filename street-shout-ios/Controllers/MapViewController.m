@@ -14,6 +14,7 @@
 #import "Constants.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
+#import "MKMapView+ZoomLevel.h"
 
 #define ZOOM_0 180
 #define ZOOM_1 10
@@ -31,8 +32,9 @@
 
 @property (nonatomic) BOOL hasSentDeviceInfo;
 @property (weak, nonatomic) IBOutlet UIButton *myLocationButton;
-@property (weak, nonatomic) IBOutlet UIButton *dezoomMaxButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+@property (weak, nonatomic) IBOutlet UIButton *zoomMinusButton;
+@property (weak, nonatomic) IBOutlet UIButton *zoomPlusButton;
 
 
 @end
@@ -55,7 +57,8 @@
 {
     //Drop shadows for map buttons
     [ImageUtilities addDropShadowToView:self.myLocationButton];
-    [ImageUtilities addDropShadowToView:self.dezoomMaxButton];
+    [ImageUtilities addDropShadowToView:self.zoomPlusButton];
+    [ImageUtilities addDropShadowToView:self.zoomMinusButton];
     [ImageUtilities addDropShadowToView:self.settingsButton];
     
     [super viewWillAppear:animated];
@@ -263,9 +266,29 @@
 
 }
 
-- (IBAction)dezoomButtonClicked:(id)sender {
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(180, 360));
-    [self.mapView setRegion:region animated:YES];
+- (IBAction)zoomPlusButton:(id)sender {
+    double oldSpan = self.mapView.region.span.latitudeDelta;
+    double newSpan;
+    
+    if (oldSpan >= ZOOM_1) {
+        newSpan = ZOOM_2;
+        [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
+    } else {
+        NSLog(@"No its not");
+        [self.mapView setCenterCoordinate:self.mapView.centerCoordinate zoomLevel:[self.mapView zoomLevel]+1 animated:YES];
+    }
+}
+
+
+- (IBAction)zoomMinusButton:(id)sender {
+    double oldSpan = self.mapView.region.span.latitudeDelta;
+    
+    if (oldSpan >= ZOOM_2) {
+        MKCoordinateRegion region = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(180, 360));
+        [self.mapView setRegion:region animated:YES];
+    } else {
+        [self.mapView setCenterCoordinate:self.mapView.centerCoordinate zoomLevel:[self.mapView zoomLevel]-1 animated:YES];
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
