@@ -274,7 +274,6 @@
         newSpan = ZOOM_2;
         [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
     } else {
-        NSLog(@"No its not");
         [self.mapView setCenterCoordinate:self.mapView.centerCoordinate zoomLevel:[self.mapView zoomLevel]+1 animated:YES];
     }
 }

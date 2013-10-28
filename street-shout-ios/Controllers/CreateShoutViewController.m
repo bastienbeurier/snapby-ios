@@ -133,8 +133,7 @@
     } else {
         NSInteger charCount = [textView.text length] + [text length] - range.length;
         NSInteger remainingCharCount = kShoutMaxLength - charCount;
-        NSString *countStr = [NSString stringWithFormat:@"%d", remainingCharCount];
-        self.charCount.text = [countStr stringByAppendingFormat:@" %@", NSLocalizedStringFromTable (@"characters", @"Strings", @"comment")];
+        self.charCount.text = [NSString stringWithFormat:@"%d", remainingCharCount];
         return YES;
     }
 }

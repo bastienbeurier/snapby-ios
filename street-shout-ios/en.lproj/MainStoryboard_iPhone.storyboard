@@ -350,20 +350,20 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="next"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="What's happening here and now?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kl0-r2-Rhh">
-                                <rect key="frame" x="20" y="97" width="209" height="22"/>
+                                <rect key="frame" x="20" y="97" width="253" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="JsY-Q7-VZR"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Optional" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMX-Ip-TrI">
-                                <rect key="frame" x="20" y="194" width="55" height="20"/>
+                                <rect key="frame" x="20" y="194" width="67" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="YYc-DJ-eU0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -372,7 +372,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="old-ez-0n4"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -384,8 +384,8 @@
                                     <constraint firstAttribute="height" constant="130" id="ZYN-Er-e1q"/>
                                 </constraints>
                             </mapView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="140 char" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIW-r1-Gqy">
-                                <rect key="frame" x="255" y="100" width="45" height="17"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIW-r1-Gqy">
+                                <rect key="frame" x="281" y="189" width="19" height="17"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -419,7 +419,7 @@
                                     <constraint firstAttribute="width" constant="130" id="0gm-Za-AKJ"/>
                                     <constraint firstAttribute="height" constant="40" id="GCB-1E-LEx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                 <state key="normal" title="Add photo">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -436,7 +436,7 @@
                                     <constraint firstAttribute="width" constant="130" id="7CH-96-hnY"/>
                                     <constraint firstAttribute="height" constant="40" id="E09-IB-DcF"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                 <state key="normal" title="Refine location">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -463,7 +463,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qMX-Ip-TrI" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="20" id="3f6-iy-FyK"/>
-                            <constraint firstItem="Kl0-r2-Rhh" firstAttribute="centerY" secondItem="dIW-r1-Gqy" secondAttribute="centerY" id="4w5-uU-NQh"/>
                             <constraint firstItem="vmE-VY-PeI" firstAttribute="trailing" secondItem="6gF-na-Ube" secondAttribute="trailing" id="5D5-YV-p6Z"/>
                             <constraint firstItem="ysa-NC-Kml" firstAttribute="top" secondItem="Occ-ze-Sdu" secondAttribute="bottom" constant="5" id="BiB-rJ-KoL"/>
                             <constraint firstItem="vmE-VY-PeI" firstAttribute="top" secondItem="6gF-na-Ube" secondAttribute="top" id="Cbl-S0-cVV"/>
@@ -492,6 +491,7 @@
                             <constraint firstItem="7FI-Me-l61" firstAttribute="trailing" secondItem="S4w-al-2Mc" secondAttribute="trailing" constant="-5" id="rnp-yh-obA"/>
                             <constraint firstItem="7FI-Me-l61" firstAttribute="top" secondItem="S4w-al-2Mc" secondAttribute="top" constant="5" id="rrQ-WA-xxZ"/>
                             <constraint firstAttribute="trailing" secondItem="ysa-NC-Kml" secondAttribute="trailing" constant="20" symbolic="YES" id="s33-On-WgX"/>
+                            <constraint firstItem="dIW-r1-Gqy" firstAttribute="top" secondItem="6gF-na-Ube" secondAttribute="bottom" constant="5" id="smP-JR-K2y"/>
                             <constraint firstItem="km4-tT-Xle" firstAttribute="centerX" secondItem="S4w-al-2Mc" secondAttribute="centerX" id="unp-3K-jFb"/>
                         </constraints>
                     </view>
@@ -982,16 +982,16 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back-arrow-button.png" width="300" height="300"/>
-        <image name="my-location-button.png" width="300" height="300"/>
-        <image name="nav_settigns_button.png" width="300" height="300"/>
-        <image name="question-mark-button.png" width="100" height="100"/>
-        <image name="refresh-map-button.png" width="300" height="300"/>
-        <image name="remove-photo-button.png" width="150" height="150"/>
-        <image name="shout-button-v9.png" width="500" height="500"/>
-        <image name="shout-zoom-button.png" width="300" height="300"/>
-        <image name="zoom_minus_button.png" width="200" height="199"/>
-        <image name="zoom_plus_button.png" width="200" height="199"/>
+        <image name="back-arrow-button.png" width="75" height="75"/>
+        <image name="my-location-button.png" width="75" height="75"/>
+        <image name="nav_settigns_button.png" width="75" height="75"/>
+        <image name="question-mark-button.png" width="25" height="25"/>
+        <image name="refresh-map-button.png" width="75" height="75"/>
+        <image name="remove-photo-button.png" width="37" height="37"/>
+        <image name="shout-button-v9.png" width="125" height="125"/>
+        <image name="shout-zoom-button.png" width="75" height="75"/>
+        <image name="zoom_minus_button.png" width="50" height="50"/>
+        <image name="zoom_plus_button.png" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
