@@ -30,6 +30,7 @@
 @property (strong, nonatomic) UIButton *shoutButton;
 @property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
+@property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 
 @end
 
@@ -37,22 +38,12 @@
 
 - (void)viewDidLoad
 {
-    self.shoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.shoutButton addTarget:self action:@selector(createShoutButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    CGRect viewBounds = [self.view bounds];
-    self.shoutButton.frame = CGRectMake(viewBounds.size.width/2 - SHOUT_BUTTON_SIZE/2, viewBounds.size.height - SHOUT_BUTTON_SIZE - 5, SHOUT_BUTTON_SIZE, SHOUT_BUTTON_SIZE);
-    self.shoutButton.layer.cornerRadius = SHOUT_BUTTON_SIZE/2;
-    
-    UIImage *shoutButtonImage = [UIImage imageNamed:@"shout-button-v9.png"];
-    
-    [self.shoutButton setImage:shoutButtonImage forState:UIControlStateNormal];
-    
     [self.view addSubview:self.shoutButton];
     
     [ImageUtilities addInnerShadowToView:self.topContainerView];
     
     //Shout button drop shadow
-    [ImageUtilities addDropShadowToView:self.shoutButton];
+    [ImageUtilities addDropShadowToView:self.createShoutButton];
     
     //Nav bar color
     NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
@@ -73,7 +64,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     //Nav bar
-    [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
     [super viewWillAppear:animated];
 }
@@ -197,9 +188,7 @@
 {
     [self performSegueWithIdentifier:@"Display Shout Image" sender:imageShout];
 }
-
-- (void)createShoutButtonClicked
-{
+- (IBAction)createShoutButtonClicked:(id)sender {
     NSString *errorMessageTitle;
     NSString *errorMessageBody;
     
@@ -229,10 +218,6 @@
 - (MKUserLocation *)getMyLocation
 {
     return self.mapViewController.mapView.userLocation;
-}
-
-- (IBAction)settingsButtonClicked:(id)sender {
-    
 }
 
 - (void)settingsButtonClicked

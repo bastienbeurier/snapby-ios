@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="846-Xq-lpJ">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="846-Xq-lpJ">
                                 <rect key="frame" x="20" y="63" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54384768447734422" green="0.67525305837189975" blue="0.87976323341836737" alpha="1" colorSpace="calibratedRGB"/>
@@ -32,7 +32,7 @@
                                     <segue destination="gUy-0m-C7a" kind="modal" identifier="Notification Radius" id="2zB-sU-M6q"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYA-g0-PL1">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYA-g0-PL1">
                                 <rect key="frame" x="20" y="121" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -47,7 +47,7 @@
                                     <segue destination="gUy-0m-C7a" kind="modal" identifier="Distance Unit" id="ySR-z5-IUO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRm-ql-Sm7">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRm-ql-Sm7">
                                 <rect key="frame" x="20" y="224" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,7 +63,7 @@
                                     <action selector="feedbackClicked:" destination="sd5-g2-Szr" eventType="touchUpInside" id="CnN-hw-fdG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ozb-mL-Alt">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ozb-mL-Alt">
                                 <rect key="frame" x="20" y="282" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -135,7 +135,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdy-oX-7QO">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdy-oX-7QO">
                                 <rect key="frame" x="187" y="78" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -222,7 +222,7 @@
                                     <outlet property="delegate" destination="gUy-0m-C7a" id="9Qd-bf-u9E"/>
                                 </connections>
                             </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drC-Vq-uAs">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drC-Vq-uAs">
                                 <rect key="frame" x="20" y="498" width="280" height="50"/>
                                 <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -286,9 +286,24 @@
                                     <segue destination="d4j-A5-G8j" kind="embed" identifier="mapViewController" id="arO-Xs-A7p"/>
                                 </connections>
                             </containerView>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GYc-Jq-bK9">
+                                <rect key="frame" x="124" y="491" width="72" height="72"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="72" id="6vz-UF-ULw"/>
+                                    <constraint firstAttribute="height" constant="72" id="bMV-WH-aCV"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="shout-button-v9.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="createShoutButtonClicked:" destination="2" eventType="touchUpInside" id="IwT-P2-Uqk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="g04-xb-cCJ" firstAttribute="top" secondItem="GYc-Jq-bK9" secondAttribute="bottom" constant="5" id="0Sz-tB-Kf4"/>
                             <constraint firstItem="q8p-tE-cHT" firstAttribute="top" secondItem="9At-1p-99c" secondAttribute="bottom" id="Rsz-Sh-rFb"/>
                             <constraint firstItem="q8p-tE-cHT" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="Uf9-B7-ngW"/>
                             <constraint firstAttribute="trailing" secondItem="R9z-ng-Ift" secondAttribute="trailing" id="VqC-Zq-MDE"/>
@@ -296,10 +311,12 @@
                             <constraint firstAttribute="bottom" secondItem="R9z-ng-Ift" secondAttribute="bottom" id="d0s-sq-vWo"/>
                             <constraint firstItem="R9z-ng-Ift" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="fJ6-tc-YPg"/>
                             <constraint firstItem="q8p-tE-cHT" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="rrZ-Rz-ZTu"/>
+                            <constraint firstAttribute="centerX" secondItem="GYc-Jq-bK9" secondAttribute="centerX" id="xJ4-u0-ObM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="94I-Zg-wmd"/>
                     <connections>
+                        <outlet property="createShoutButton" destination="GYc-Jq-bK9" id="H2U-0S-QAa"/>
                         <outlet property="mapContainerView" destination="R9z-ng-Ift" id="Fdg-OE-M8c"/>
                         <outlet property="topContainerView" destination="q8p-tE-cHT" id="dsj-7N-1Vt"/>
                         <segue destination="vn8-un-4WF" kind="push" identifier="Create Shout Modal" id="rBF-pL-H2a"/>
@@ -323,7 +340,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ysa-NC-Kml">
+                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ysa-NC-Kml">
                                 <rect key="frame" x="20" y="57" width="280" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -381,7 +398,7 @@
                                     <constraint firstAttribute="width" constant="130" id="lJ0-tX-fwn"/>
                                 </constraints>
                             </imageView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7FI-Me-l61">
+                            <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7FI-Me-l61">
                                 <rect key="frame" x="120" y="274" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="mCt-Lc-0Zt"/>
@@ -394,7 +411,7 @@
                                     <action selector="clearPhoto:" destination="vn8-un-4WF" eventType="touchUpInside" id="vvr-TB-BX2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="km4-tT-Xle">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="km4-tT-Xle">
                                 <rect key="frame" x="20" y="219" width="130" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -411,7 +428,7 @@
                                     <action selector="addPhotoButtonClicked:" destination="vn8-un-4WF" eventType="touchUpInside" id="MmJ-Q3-8rr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqd-M7-JXd">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqd-M7-JXd">
                                 <rect key="frame" x="170" y="219" width="130" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -522,7 +539,7 @@
                                     <constraint firstAttribute="height" constant="280" id="RYo-YC-qc4"/>
                                 </constraints>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shM-ay-FJO">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shM-ay-FJO">
                                 <rect key="frame" x="240" y="91" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="DCW-Wf-xSP"/>
@@ -669,7 +686,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ruT-9F-lwV">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ruT-9F-lwV">
                                 <rect key="frame" x="20" y="13" width="45" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -683,7 +700,7 @@
                                     <action selector="backButtonClicked:" destination="qtI-Lc-vOJ" eventType="touchUpInside" id="Rrc-bI-Sab"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSy-Bq-dig">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSy-Bq-dig">
                                 <rect key="frame" x="255" y="13" width="45" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -841,7 +858,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="348"/>
                                 <gestureRecognizers/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uDD-7A-8lx">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uDD-7A-8lx">
                                 <rect key="frame" x="20" y="20" width="38" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -855,7 +872,7 @@
                                     <action selector="myLocationButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="IYo-S8-892"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3DY-Ho-QTP">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3DY-Ho-QTP">
                                 <rect key="frame" x="20" y="78" width="38" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -869,7 +886,7 @@
                                     <action selector="zoomPlusButton:" destination="d4j-A5-G8j" eventType="touchUpInside" id="qpn-NU-p8c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXB-LH-r0c">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXB-LH-r0c">
                                 <rect key="frame" x="262" y="20" width="38" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -883,7 +900,7 @@
                                     <action selector="settingsButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="LKf-dC-3ku"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBk-cc-jMs">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBk-cc-jMs">
                                 <rect key="frame" x="20" y="116" width="38" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -971,6 +988,7 @@
         <image name="question-mark-button.png" width="100" height="100"/>
         <image name="refresh-map-button.png" width="300" height="300"/>
         <image name="remove-photo-button.png" width="150" height="150"/>
+        <image name="shout-button-v9.png" width="500" height="500"/>
         <image name="shout-zoom-button.png" width="300" height="300"/>
         <image name="zoom_minus_button.png" width="200" height="199"/>
         <image name="zoom_plus_button.png" width="200" height="199"/>

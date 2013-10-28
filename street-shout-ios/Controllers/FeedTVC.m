@@ -128,8 +128,6 @@
             
             cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
             
-            [ImageUtilities addDropShadowToView:cell.imageViewDropShadow];
-            
             [GeneralUtilities resizeView:cell.shoutContentLabel Width:SHOUT_CONTENT_WIDTH_WITH_PHOTO];
             
             [cell.shoutImageView setHidden:NO];

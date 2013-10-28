@@ -49,9 +49,6 @@
     self.shoutImageView.clipsToBounds = YES;
     self.shoutImageDropShadowView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
     
-    //Drop shadows
-    [ImageUtilities addDropShadowToView:self.shoutImageDropShadowView];
-    
     //Gabrielle recommendation
 
     
