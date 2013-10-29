@@ -162,11 +162,8 @@
     [view.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
 }
 
-//Shout be 139-172-224
 + (UIColor *)getShoutBlue
 {
     return [UIColor colorWithRed:139/256.0 green:172/256.0 blue:224/256.0 alpha:1];
 }
-
-
 @end
