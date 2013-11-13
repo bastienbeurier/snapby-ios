@@ -171,4 +171,22 @@
     }];
 }
 
++ (void)getBlackListedDevicesAndExecute:(void(^)(NSArray *blackListedDeviceIds))block;
+{
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] getPath:@"black_listed_devices.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        NSArray *rawBlackListedDevices = [JSON valueForKeyPath:@"result"];
+        NSMutableArray *blackListedDeviceIds = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *rawBlackListedDevice in rawBlackListedDevices) {
+            [blackListedDeviceIds addObject:[rawBlackListedDevice objectForKey:@"device_id"]];
+        }
+        
+        if (block) {
+            block(blackListedDeviceIds);
+        }
+    } failure:nil];
+}
+
 @end

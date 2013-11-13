@@ -33,6 +33,8 @@
 
 + (void)reportShout:(NSUInteger)shoutId withMotive:(NSUInteger)motiveIndex AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock;
 
++ (void)getBlackListedDevicesAndExecute:(void(^)(NSArray *blackListedDeviceIds))block;
+
 @end
 
 static NSString *const MyFirstConstant = API_VERSION;

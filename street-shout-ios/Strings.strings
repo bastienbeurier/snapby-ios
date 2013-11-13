@@ -54,5 +54,6 @@
 "other_content" = "Other legal claim";
 "flag_action_sheet_title" = "Why do you want to flag this shout?";
 "flag_thanks_alert" = "Thank you for sharing your concerns!";
-
+"black_listed_alert_title" = "Blacklisted";
+"black_listed_alert_text" = "You have been blacklisted due to Terms of Use violations.";
  

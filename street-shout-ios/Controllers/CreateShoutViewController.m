@@ -39,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIView *descriptionViewShadowingView;
 @property(nonatomic,retain) ALAssetsLibrary *library;
 @property (weak, nonatomic) IBOutlet UIButton *removeShoutImage;
+@property (nonatomic) BOOL blackListed;
 @end
 
 @implementation CreateShoutViewController
@@ -50,6 +51,7 @@
     MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
     shoutAnnotation.coordinate = self.shoutLocation.coordinate;
     [self.mapView addAnnotation:shoutAnnotation];
+    [self checkIfBlackListedDevice];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -70,6 +72,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.blackListed = NO;
 
     self.usernameView.delegate = self;
     self.descriptionView.delegate = self;
@@ -179,6 +183,12 @@
         message.title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
         NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxShoutDescriptionLength];
         message.message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
+        error = YES;
+    }
+    
+    if (self.blackListed) {
+        message.title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
+        message.message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
         error = YES;
     }
     
@@ -404,5 +414,14 @@
 - (void)showMapInCreateShoutViewController
 {
     [self.mapView setHidden:NO];
+}
+
+- (void)checkIfBlackListedDevice
+{
+    [AFStreetShoutAPIClient getBlackListedDevicesAndExecute:^(NSArray *blackListedDeviceIds){
+        if ([blackListedDeviceIds containsObject:[GeneralUtilities getDeviceID]]) {
+            self.blackListed = YES;
+        }
+    }];
 }
 @end
