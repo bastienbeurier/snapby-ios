@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ulg-pG-c5t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ulg-pG-c5t">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <scenes>
         <!--Settings View Controller-->
@@ -741,6 +741,20 @@
                                     <outletCollection property="gestureRecognizers" destination="R8D-Ri-EkC" appends="YES" id="8R0-lf-fbx"/>
                                 </connections>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bmb-t4-BYG">
+                                <rect key="frame" x="150" y="160" width="20" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="OeA-Md-lij"/>
+                                    <constraint firstAttribute="height" constant="23" id="vH2-IK-naX"/>
+                                </constraints>
+                                <state key="normal" title="Flag" image="flag-button.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="flagButtonClicked:" destination="qtI-Lc-vOJ" eventType="touchUpInside" id="0Jd-WW-qVt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.57575197553821722" blue="0.99571530000243869" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -752,11 +766,13 @@
                             <constraint firstItem="Azd-BI-MqV" firstAttribute="top" secondItem="t1I-mr-98j" secondAttribute="bottom" constant="5" id="FCp-dO-37K"/>
                             <constraint firstItem="MhG-Is-qMB" firstAttribute="centerY" secondItem="nSy-Bq-dig" secondAttribute="centerY" id="O1C-c5-hNu"/>
                             <constraint firstItem="MhG-Is-qMB" firstAttribute="centerX" secondItem="0N0-Q0-5gK" secondAttribute="centerX" id="PHV-Sf-ZNk"/>
+                            <constraint firstAttribute="centerX" secondItem="Bmb-t4-BYG" secondAttribute="centerX" id="SJe-aQ-bMd"/>
                             <constraint firstItem="MhG-Is-qMB" firstAttribute="top" secondItem="O9f-bp-CmH" secondAttribute="bottom" constant="5" id="T1O-ew-iUp"/>
                             <constraint firstAttribute="centerX" secondItem="cRS-g9-DDb" secondAttribute="centerX" id="WxQ-P6-YJF"/>
                             <constraint firstItem="r11-PZ-JQP" firstAttribute="centerX" secondItem="t1I-mr-98j" secondAttribute="centerX" priority="500" id="X1I-Cs-zIR"/>
                             <constraint firstAttribute="trailing" secondItem="nSy-Bq-dig" secondAttribute="trailing" constant="20" id="aap-SA-ypq"/>
                             <constraint firstAttribute="centerX" secondItem="hPB-zM-m3y" secondAttribute="centerX" id="azv-mb-srQ"/>
+                            <constraint firstItem="r11-PZ-JQP" firstAttribute="bottom" secondItem="Bmb-t4-BYG" secondAttribute="bottom" id="dPd-ql-5da"/>
                             <constraint firstItem="MhG-Is-qMB" firstAttribute="centerY" secondItem="0N0-Q0-5gK" secondAttribute="centerY" id="g9F-pU-X2W"/>
                             <constraint firstItem="nSy-Bq-dig" firstAttribute="centerX" secondItem="G5i-KQ-T9g" secondAttribute="centerX" id="gx6-bW-gNt"/>
                             <constraint firstItem="Azd-BI-MqV" firstAttribute="top" secondItem="Byr-Cr-Waa" secondAttribute="bottom" constant="5" id="hgX-BF-EHN"/>
@@ -983,6 +999,7 @@
     </scenes>
     <resources>
         <image name="back-arrow-button.png" width="75" height="75"/>
+        <image name="flag-button.png" width="125" height="150"/>
         <image name="my-location-button.png" width="75" height="75"/>
         <image name="nav_settigns_button.png" width="75" height="75"/>
         <image name="question-mark-button.png" width="25" height="25"/>

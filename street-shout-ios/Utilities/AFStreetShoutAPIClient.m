@@ -148,4 +148,27 @@
     }];
 }
 
++ (void)reportShout:(NSUInteger)shoutId withMotive:(NSUInteger)motiveIndex AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
+    
+    [parameters setObject:[NSNumber numberWithInt:shoutId] forKey:@"id"];
+    [parameters setObject:[NSNumber numberWithInt:motiveIndex] forKey:@"motive"];
+    [parameters setObject:[GeneralUtilities getDeviceID] forKey:@"device_id"];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] postPath:@"flag_shout" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        if (successBlock) {
+            successBlock();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        if (failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
 @end
