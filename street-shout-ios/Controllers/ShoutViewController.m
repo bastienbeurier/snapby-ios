@@ -13,8 +13,16 @@
 #import "LocationUtilities.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
+#import "AFStreetShoutAPIClient.h"
 
 #define SHOUT_IMAGE_SIZE 60
+
+#define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
+#define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
+#define FLAG_ACTION_SHEET_OPTION_3 NSLocalizedStringFromTable (@"privacy_content", @"Strings", @"comment")
+#define FLAG_ACTION_SHEET_OPTION_4 NSLocalizedStringFromTable (@"inaccurate_content", @"Strings", @"comment")
+#define FLAG_ACTION_SHEET_OPTION_5 NSLocalizedStringFromTable (@"other_content", @"Strings", @"comment")
+#define FLAG_ACTION_SHEET_CANCEL NSLocalizedStringFromTable (@"cancel", @"Strings", @"comment")
 
 @interface ShoutViewController ()
 
@@ -121,6 +129,27 @@
 
 - (IBAction)shoutZoomButtonClicked:(id)sender {
     [self.shoutVCDelegate animateMapWhenZoomOnShout:self.shout];
+}
+
+- (IBAction)flagButtonClicked:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
+ delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
+    
+    [actionSheet showInView:self.shoutVCDelegate.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
+        [AFStreetShoutAPIClient reportShout:self.shout.identifier withMotive:buttonIndex AndExecute:nil Failure:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment")
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles: nil];
+        [alert show];
+    }
 }
 
 @end

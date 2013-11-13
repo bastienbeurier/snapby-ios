@@ -31,6 +31,8 @@
 
 + (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock;
 
++ (void)reportShout:(NSUInteger)shoutId withMotive:(NSUInteger)motiveIndex AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock;
+
 @end
 
 static NSString *const MyFirstConstant = API_VERSION;

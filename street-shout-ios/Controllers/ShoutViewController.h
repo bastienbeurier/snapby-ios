@@ -12,7 +12,7 @@
 
 @protocol ShoutVCDelegate;
 
-@interface ShoutViewController : UIViewController
+@interface ShoutViewController : UIViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) Shout *shout;
 
@@ -29,5 +29,7 @@
 - (void)endShoutSelectionModeInMapViewController;
 
 - (void)animateMapWhenZoomOnShout:(Shout *)shout;
+
+@property (strong, nonatomic) UIView *view;
 
 @end

@@ -47,5 +47,12 @@
 "nearby" = "near";
 "far_away" = "far";
 "notification_radius_instruction" = "Adjust your notification radius to get notified when somebody shouts near you. Choose \"none\" to disable notifications.";
+"abusive_content" = "Abusive content";
+"spam_content" = "Spam or scam";
+"privacy_content" = "Invades my privacy";
+"inaccurate_content" = "Inaccurate content";
+"other_content" = "Other legal claim";
+"flag_action_sheet_title" = "Why do you want to flag this shout?";
+"flag_thanks_alert" = "Thank you for sharing your concerns!";
 
  
