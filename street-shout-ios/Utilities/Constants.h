@@ -42,6 +42,7 @@ static const NSUInteger kDistanceWhenShoutClickedFromNotif = 6000;
 static const NSUInteger kDistanceWhenRedirectedFromCreateShout = 250;
 static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;
 static const NSUInteger kDistanceWhenShoutZoomed = 200;
+static const NSUInteger kDistanceAtStartup = 6000;
 
 //Initialize map on Paris, with max zoom out
 static const double kMapInitialLatitude = 48.856541;

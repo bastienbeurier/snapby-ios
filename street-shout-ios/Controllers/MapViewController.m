@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *zoomMinusButton;
 @property (weak, nonatomic) IBOutlet UIButton *zoomPlusButton;
+@property (nonatomic) BOOL hasZoomedAtStartUp;
 
 
 @end
@@ -72,6 +73,12 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
+    if (self.hasZoomedAtStartUp == NO && userLocation.coordinate.latitude != 0 && userLocation.coordinate.latitude != -180 && userLocation.coordinate.longitude != 0 && userLocation.coordinate.longitude != -180) {
+        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:kDistanceAtStartup Animated:YES];
+        self.hasZoomedAtStartUp = YES;
+    }
+
+    
     MKAnnotationView* annotationView = [mapView viewForAnnotation:userLocation];
     annotationView.canShowCallout = NO;
 }
@@ -255,6 +262,8 @@
         } else {
             [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude Animated:YES];
         }
+        
+        self.hasZoomedAtStartUp = YES;
     } else {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
                                                           message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")
