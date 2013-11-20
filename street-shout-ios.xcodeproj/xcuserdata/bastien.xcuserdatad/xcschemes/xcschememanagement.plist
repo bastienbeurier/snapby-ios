@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Shout Beta.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Shout copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>street-shout-ios copy.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,6 +38,21 @@
 			<true/>
 		</dict>
 		<key>0B07B9DD17E6FF8300DA26EE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0B0CD4C918362C1600EB3752</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0B608ECB18362A5C000A4606</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0B608EE118362A5D000A4606</key>
 		<dict>
 			<key>primary</key>
 			<true/>

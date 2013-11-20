@@ -56,13 +56,13 @@
 {
     NSTimeInterval shoutAge = [TimeUtilities getShoutAge:shout.created];
     
-    if (shoutAge < kShoutDuration / 24) {
+    if (shoutAge < kShoutDuration / kShoutDurationHours) {
         if (selected) {
             return [NSString stringWithFormat:@"shout-marker-%d-selected", 3];
         } else {
             return [NSString stringWithFormat:@"shout-marker-%d-deselected", 3];
         }
-    } else if (shoutAge < 23 * (kShoutDuration / 24)) {
+    } else if (shoutAge < 3 * (kShoutDuration / kShoutDurationHours)) {
         if (selected) {
             return [NSString stringWithFormat:@"shout-marker-%d-selected", 2];
         } else {
@@ -81,9 +81,9 @@
 {
     NSTimeInterval shoutAge = [TimeUtilities getShoutAge:shout.created];
     
-    if (shoutAge < kShoutDuration / 24) {
+    if (shoutAge < kShoutDuration / kShoutDurationHours) {
         return [[self getShoutAgeColors] objectAtIndex:0];
-    } else if (shoutAge < 23 * (kShoutDuration / 24)) {
+    } else if (shoutAge < 3 * (kShoutDuration / kShoutDurationHours)) {
         return [[self getShoutAgeColors] objectAtIndex:1];
     } else {
         return [[self getShoutAgeColors] objectAtIndex:2];

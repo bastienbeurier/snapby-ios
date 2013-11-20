@@ -742,12 +742,13 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bmb-t4-BYG">
-                                <rect key="frame" x="150" y="160" width="20" height="23"/>
+                                <rect key="frame" x="145" y="149" width="30" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="OeA-Md-lij"/>
-                                    <constraint firstAttribute="height" constant="23" id="vH2-IK-naX"/>
+                                    <constraint firstAttribute="width" constant="30" id="OeA-Md-lij"/>
+                                    <constraint firstAttribute="height" constant="34" id="vH2-IK-naX"/>
                                 </constraints>
+                                <inset key="imageEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
                                 <state key="normal" title="Flag" image="flag-button.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
