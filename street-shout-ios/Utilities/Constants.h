@@ -58,8 +58,8 @@ static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-
 static NSString * const kDevTestFlightAppToken = @"71154ced-9c90-4a19-9715-c74a2f8e57ee";
 
 //Production
-static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5"; //For beta in House distribution
-//static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347"
+static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5"; //Street Shout
+//static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347" //Shout
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 
 static NSString * const kApiVersion = @"1.0";
