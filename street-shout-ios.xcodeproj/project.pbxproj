@@ -1186,7 +1186,7 @@
 					"PRODUCTION=\"$(inProduction)\"",
 				);
 				HEADER_SEARCH_PATHS = "Airship/**";
-				INFOPLIST_FILE = "street-shout-ios copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/street-shout-ios-dev/street-shout-ios-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1195,8 +1195,8 @@
 					"\"$(SRCROOT)/Airship\"",
 				);
 				PRODUCT_NAME = Shatte;
-				PROVISIONING_PROFILE = "7FEA10AF-F32F-4F50-948E-8AC97C5E4CD6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7FEA10AF-F32F-4F50-948E-8AC97C5E4CD6";
+				PROVISIONING_PROFILE = "8425E6AA-4534-484C-92DC-1AD607B108A6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8425E6AA-4534-484C-92DC-1AD607B108A6";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = NO;
@@ -1206,8 +1206,8 @@
 		0B07BA2B17E6FF8300DA26EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1216,7 +1216,7 @@
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "PRODUCTION=\"$(inProduction)\"";
 				HEADER_SEARCH_PATHS = "Airship/**";
-				INFOPLIST_FILE = "street-shout-ios copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/street-shout-ios-dev/street-shout-ios-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1225,7 +1225,7 @@
 					"\"$(SRCROOT)/Airship\"",
 				);
 				PRODUCT_NAME = Shatte;
-				PROVISIONING_PROFILE = "4F981EC2-93AF-45A4-965F-911F537997C2";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F981EC2-93AF-45A4-965F-911F537997C2";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1237,7 +1237,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bastien Beurier (63863BWF5M)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

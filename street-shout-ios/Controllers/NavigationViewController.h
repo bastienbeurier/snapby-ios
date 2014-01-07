@@ -13,7 +13,7 @@
 #import "ShoutViewController.h"
 #import "SettingsViewController.h"
 
-@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, SettingsViewControllerDelegate>
+@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, SettingsViewControllerDelegate, UIAlertViewDelegate>
 
 - (void)onShoutNotificationPressed:(Shout *)shout;
 

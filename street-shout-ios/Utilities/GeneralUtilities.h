@@ -26,4 +26,6 @@
 
 + (void)resizeView:(UIView *)view Width:(double)width;
 
++ (void)redirectToAppStore;
+
 @end

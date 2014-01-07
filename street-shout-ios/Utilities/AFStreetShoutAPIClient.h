@@ -35,6 +35,8 @@
 
 + (void)getBlackListedDevicesAndExecute:(void(^)(NSArray *blackListedDeviceIds))block;
 
++ (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())block;
+
 @end
 
 static NSString *const MyFirstConstant = API_VERSION;
