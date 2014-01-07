@@ -171,7 +171,7 @@
     }];
 }
 
-+ (void)getBlackListedDevicesAndExecute:(void(^)(NSArray *blackListedDeviceIds))block;
++ (void)getBlackListedDevicesAndExecute:(void(^)(NSArray *blackListedDeviceIds))block
 {
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] getPath:@"black_listed_devices.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -186,7 +186,24 @@
         if (block) {
             block(blackListedDeviceIds);
         }
-    } failure:nil];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    }];
+}
+
++ (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())block
+{
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    NSDictionary *parameters = @{@"api_version": apiVersion};
+    [[AFStreetShoutAPIClient sharedClient] getPath:@"obsolete_api.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        if ([[JSON valueForKeyPath:@"result"]  isEqualToString: @"IsObsolete"]) {
+            block();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"checkAPIVersion: We should not pass in this block!!!!");
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    }];
 }
 
 @end

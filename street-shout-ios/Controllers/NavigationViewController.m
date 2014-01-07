@@ -27,10 +27,10 @@
 @property (nonatomic, weak) FeedTVC *feedTVC;
 @property (nonatomic, weak) MapViewController *mapViewController;
 @property (weak, nonatomic) IBOutlet UIView *mapContainerView;
-@property (strong, nonatomic) UIButton *shoutButton;
 @property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
+@property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
 
 @end
 
@@ -38,8 +38,6 @@
 
 - (void)viewDidLoad
 {
-    [self.view addSubview:self.shoutButton];
-    
     [ImageUtilities addInnerShadowToView:self.topContainerView];
     
     //Shout button drop shadow
@@ -59,6 +57,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self sendDeviceInfo];
+    
+    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
+        [self createObsoleteAPIAlertView];
+    }];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -254,6 +256,24 @@
 - (void)animateMapWhenZoomOnShout:(Shout *)shout
 {
     [self.mapViewController animateMapWhenZoomOnShout:shout];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.obsoleteAPIAlertView) {
+        [GeneralUtilities redirectToAppStore];
+        [self createObsoleteAPIAlertView];
+    }
+}
+
+- (void)createObsoleteAPIAlertView
+{
+    self.obsoleteAPIAlertView = [[UIAlertView alloc] initWithTitle:@"Obsolete API"
+                                                           message:@"Download the new version"
+                                                          delegate:self
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
+    [self.obsoleteAPIAlertView show];
 }
 
 @end

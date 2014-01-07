@@ -102,4 +102,10 @@
     [superView addSubview:view];
 }
 
++ (void)redirectToAppStore
+{
+    NSString *reviewURL = [NSString stringWithFormat:@"http://itunes.apple.com/app/id%d?mt=8",APP_ID];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+};
+
 @end

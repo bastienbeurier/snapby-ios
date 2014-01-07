@@ -13,7 +13,6 @@
 #import "ImageUtilities.h"
 #import "UIDevice-Hardware.h"
 
-#define APP_ID 734887535 //id from iTunesConnect
 
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *notificationRadiusLabel;
@@ -111,8 +110,7 @@
 
 - (IBAction)rateMeClicked:(id)sender {
     if ([GeneralUtilities connected]) {
-        NSString *reviewURL = [NSString stringWithFormat:@"itms://itunes.com/app/id%d",APP_ID];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+        [GeneralUtilities redirectToAppStore];
     } else {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
                                                           message:nil
