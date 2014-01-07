@@ -194,7 +194,7 @@
 + (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())block
 {
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    NSDictionary *parameters = @{@"API_Version": apiVersion};
+    NSDictionary *parameters = @{@"api_version": apiVersion};
     [[AFStreetShoutAPIClient sharedClient] getPath:@"obsolete_api.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         if ([[JSON valueForKeyPath:@"result"]  isEqualToString: @"IsObsolete"]) {
