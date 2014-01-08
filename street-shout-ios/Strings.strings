@@ -56,4 +56,7 @@
 "flag_thanks_alert" = "Thank you for sharing your concerns!";
 "black_listed_alert_title" = "Blacklisted";
 "black_listed_alert_text" = "You have been blacklisted due to Terms of Use violations.";
+"invalid_sign_in_message" = "Your email or password is incorrect."
+"invalid_email_alert_text" = "Please enter a valid email."
+"password_length_alert_text" = "Your password should contain at least 6 characters."
  

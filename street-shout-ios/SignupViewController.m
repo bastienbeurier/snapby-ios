@@ -8,6 +8,8 @@
 
 #import "SignupViewController.h"
 #import "GeneralUtilities.h"
+#import "MBProgressHUD.h"
+#import "AFStreetShoutAPIClient.h"
 
 @interface SignupViewController ()
 
@@ -25,7 +27,7 @@
     
     BOOL error = NO;
     
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:nil
                                                       message:@""
                                                      delegate:nil
                                             cancelButtonTitle:@"OK"
@@ -38,11 +40,9 @@
     NSTextCheckingResult *match = [regex firstMatchInString:self.emailTextView.text options:0 range:NSMakeRange(0, [self.emailTextView.text length])];
     
     if (!match){
-        message.title = NSLocalizedStringFromTable (@"invalid_email_alert_title", @"Strings", @"comment");
         message.message = NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (!(6 <= self.passwordTextView.text.length <= 128)) {
-        message.title = NSLocalizedStringFromTable (@"password_length_alert_title", @"Strings", @"comment");
         message.message = NSLocalizedStringFromTable (@"password_length_alert_text", @"Strings", @"comment");
         error = YES;
     }
@@ -54,10 +54,7 @@
             [self signinUser];
            
             
-            signinWithEmail:self.emailTextView.text
-                   password:self.passwordTextView.text
-                    success:(void(^)(id JSON))successBlock
-                    failure:(void(^)(NSError *error))failureBlock
+            
         } else {
             UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
                                                               message:nil
@@ -75,18 +72,23 @@
     SuccessBlock successBlock = ^(User *user, NSString *auth_token) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [self.navigationController popViewControllerAnimated:YES];
-            [self.createShoutVCDelegate onShoutCreated:shout];
+            
+            // TODO go to navigation
         });
     };
     
-    typedef void (^FailureBlock)();
-    FailureBlock failureBlock = ^{
+    typedef void (^FailureBlock)(NSError *);
+    FailureBlock failureBlock = ^(NSError *error){
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
-            NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
+            NSString *title = nil;
+            NSString *message = nil;
+            if (error.code == 401) {
+                message = NSLocalizedStringFromTable (@"invalid_sign_in_message", @"Strings", @"comment");
+            } else {
+                title = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
+            }
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                             message:message
                                                            delegate:nil
@@ -95,8 +97,15 @@
             [alert show];
         });
     };
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [AFStreetShoutAPIClient signinWithEmail:self.emailTextView.text
+                                       password:self.passwordTextView.text
+                                        success:(void(^)(User *user, NSString *auth_token))successBlock
+                                        failure:(void(^)(NSError *error))failureBlock];
+    });
     
 }
 
