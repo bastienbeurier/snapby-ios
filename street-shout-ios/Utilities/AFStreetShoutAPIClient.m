@@ -33,7 +33,7 @@
 
 + (NSString *)getBasePath
 {
-    return [NSString stringWithFormat:@"api/%@/", API_VERSION];
+    return [NSString stringWithFormat:@"api/v%@/", kApiVersion];
 }
 
 - (id)initWithBaseURL:(NSURL *)url
@@ -66,7 +66,9 @@
     [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
-        NSArray *rawShouts = [JSON valueForKeyPath:@"result"];
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        
+        NSArray *rawShouts = [result valueForKeyPath:@"shouts"];
         
         successBlock([Shout rawShoutsToInstances:rawShouts]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -83,7 +85,9 @@
     [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
-        Shout *rawShout = [JSON valueForKeyPath:@"result"];
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        
+        NSDictionary *rawShout = [result valueForKeyPath:@"shout"];
         
         successBlock([Shout rawShoutToInstance:rawShout]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -111,7 +115,10 @@
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        NSString *rawShout = [JSON valueForKeyPath:@"result"];
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSString *rawShout = [result valueForKeyPath:@"shout"];
+        
         successBlock([Shout rawShoutToInstance:rawShout]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
@@ -214,7 +221,10 @@
     NSDictionary *parameters = @{@"api_version": apiVersion};
     [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        if ([[[JSON valueForKeyPath:@"result"] valueForKeyPath:@"obsolete"]  isEqualToString: @"true"]) {
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        
+        if ([[result valueForKeyPath:@"obsolete"] isEqualToString: @"true"]) {
             obsoleteBlock();
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -223,7 +233,7 @@
     }];
 }
 
-+ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(id JSON))successBlock failure:(void(^)(NSError *error))failureBlock
++ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/sign_in.json"];
     
@@ -236,14 +246,21 @@
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        
+        NSDictionary *rawUser = [result valueForKeyPath:@"user"];
+        User *user = [User rawUserToInstance:rawUser];
+    
+        NSString *authToken = [result objectForKey:@"auth_token"];
+        
         if (successBlock) {
-            successBlock(JSON);
+            successBlock(user, authToken);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
         if (failureBlock) {
-            failureBlock(error);
+            failureBlock(operation);
         }
     }];
 }

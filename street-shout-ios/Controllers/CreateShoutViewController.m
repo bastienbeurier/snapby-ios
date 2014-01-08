@@ -51,7 +51,8 @@
     MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
     shoutAnnotation.coordinate = self.shoutLocation.coordinate;
     [self.mapView addAnnotation:shoutAnnotation];
-    [self checkIfBlackListedDevice];
+    //TODO: check if user blacklisted
+//    [self checkIfBlackListedDevice];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -227,8 +228,6 @@
         });
     };
     
-    NSString *deviceId = [GeneralUtilities getDeviceID];
-    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -236,16 +235,18 @@
         UploadImageCompletionBlock createShoutSuccessBlock;
         UploadImageCompletionBlock createShoutFailureBlock;
         
+        User *currentUser = [User currentUser];
+        
         if (self.capturedImage && self.shoutImageUrl) {
             createShoutSuccessBlock = ^{
                 [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
                 //TODO: take username and userId from saved user info
                 [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                        Lng:self.shoutLocation.coordinate.longitude
-                                                  Username:self.usernameView.text
+                                                  Username:currentUser.username
                                                Description:self.descriptionView.text
                                                      Image:self.shoutImageUrl
-                                                  DeviceId:deviceId
+                                                    UserId:currentUser.identifier
                                          AndExecuteSuccess:successBlock
                                                    Failure:failureBlock];
             };
@@ -264,10 +265,10 @@
             //TODO: take username and userId from saved user info
             [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                    Lng:self.shoutLocation.coordinate.longitude
-                                              Username:self.usernameView.text
+                                              Username:currentUser.username
                                            Description:self.descriptionView.text
                                                  Image:nil
-                                              DeviceId:deviceId
+                                              UserId:currentUser.identifier
                                      AndExecuteSuccess:successBlock
                                                Failure:failureBlock];
         }

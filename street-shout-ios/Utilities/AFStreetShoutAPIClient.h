@@ -8,8 +8,7 @@
 
 #import "AFHTTPClient.h"
 #import "Shout.h"
-
-#define API_VERSION @"2.0"
+#import "User.h"
 
 @interface AFStreetShoutAPIClient : AFHTTPClient
 
@@ -33,11 +32,9 @@
 
 + (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())obsoleteBlock;
 
-+ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(id JSON))successBlock failure:(void(^)(NSError *error))failureBlock;
++ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
 
 + (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(id JSON))successBlock failure:(void(^)(NSError *error))failureBlock;
 
 @end
-
-static NSString *const MyFirstConstant = API_VERSION;
 

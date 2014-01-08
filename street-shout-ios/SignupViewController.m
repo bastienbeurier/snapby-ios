@@ -10,6 +10,8 @@
 #import "GeneralUtilities.h"
 #import "MBProgressHUD.h"
 #import "AFStreetShoutAPIClient.h"
+#import "User.h"
+#import "AFJSONRequestOperation.h"
 
 @interface SignupViewController ()
 
@@ -42,7 +44,7 @@
     if (!match){
         message.message = NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment");
         error = YES;
-    } else if (!(6 <= self.passwordTextView.text.length <= 128)) {
+    } else if (self.passwordTextView.text.length < 6 || self.passwordTextView.text.length > 128) {
         message.message = NSLocalizedStringFromTable (@"password_length_alert_text", @"Strings", @"comment");
         error = YES;
     }
@@ -69,22 +71,24 @@
 - (void)signinUser {
     
     typedef void (^SuccessBlock)(User *, NSString *);
-    SuccessBlock successBlock = ^(User *user, NSString *auth_token) {
+    SuccessBlock successBlock = ^(User *user, NSString *authToken) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [User updateCurrentUserInfoInPhone:user];
+            [User securelySaveCurrentUserToken:authToken];
             
-            // TODO go to navigation
+            [self performSegueWithIdentifier:@"Navigation Push Segue" sender:nil];
         });
     };
     
-    typedef void (^FailureBlock)(NSError *);
-    FailureBlock failureBlock = ^(NSError *error){
+    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
+    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation){
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
             NSString *title = nil;
             NSString *message = nil;
-            if (error.code == 401) {
+            if ([operation.response statusCode] == 401) {
                 message = NSLocalizedStringFromTable (@"invalid_sign_in_message", @"Strings", @"comment");
             } else {
                 title = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
@@ -104,7 +108,7 @@
         [AFStreetShoutAPIClient signinWithEmail:self.emailTextView.text
                                        password:self.passwordTextView.text
                                         success:(void(^)(User *user, NSString *auth_token))successBlock
-                                        failure:(void(^)(NSError *error))failureBlock];
+                                        failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock];
     });
     
 }
