@@ -155,9 +155,9 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)sendDeviceInfo
+- (void)updateUserInfo
 {
-    [self.settingsViewControllerDelegate sendDeviceInfo];
+    [self.settingsViewControllerDelegate updateUserInfo];
 }
 
 - (IBAction)notificationRadiusHelpPressed:(id)sender {

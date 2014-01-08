@@ -55,7 +55,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.settingPickerVCDelegate dismissSettingPickerModal:self];
-    [self.settingPickerVCDelegate sendDeviceInfo];
+    [self.settingPickerVCDelegate updateUserInfo];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView

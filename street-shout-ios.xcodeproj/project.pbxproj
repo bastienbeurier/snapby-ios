@@ -231,6 +231,8 @@
 		0B97D107181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F1181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png */; };
 		0B97D109181EA88900CE08A3 /* shout-marker-3-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F2181EA88900CE08A3 /* shout-marker-3-selected.png */; };
 		0B97D10B181EA88900CE08A3 /* shout-marker-3-selected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F3181EA88900CE08A3 /* shout-marker-3-selected@2x~iphone.png */; };
+		0BB44FB7187D746000AE4A64 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FB6187D746000AE4A64 /* SignupViewController.m */; };
+		0BB44FB8187D746000AE4A64 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FB6187D746000AE4A64 /* SignupViewController.m */; };
 		0BCA5F3B18095063003A8637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCA5F3918095063003A8637 /* SettingsViewController.m */; };
 		0BE2D85617E89BE300AD700D /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE2D85417E89BE300AD700D /* ImageUtilities.m */; };
 		0BF3312B18034ABA00E5C59B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BF3312918034AAE00E5C59B /* QuartzCore.framework */; };
@@ -371,6 +373,8 @@
 		0B97D0F1181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-marker-3-deselected@2x~iphone.png"; sourceTree = "<group>"; };
 		0B97D0F2181EA88900CE08A3 /* shout-marker-3-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-marker-3-selected.png"; sourceTree = "<group>"; };
 		0B97D0F3181EA88900CE08A3 /* shout-marker-3-selected@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-marker-3-selected@2x~iphone.png"; sourceTree = "<group>"; };
+		0BB44FB5187D746000AE4A64 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
+		0BB44FB6187D746000AE4A64 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		0BB9AF1B17E34A3B004D0E2F /* libUAirship-2.0.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-2.0.2.a"; path = "Airship/libUAirship-2.0.2.a"; sourceTree = "<group>"; };
 		0BB9AF1D17E37B65004D0E2F /* UIDevice-Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Hardware.h"; sourceTree = "<group>"; };
 		0BB9AF1E17E37B65004D0E2F /* UIDevice-Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Hardware.m"; sourceTree = "<group>"; };
@@ -666,6 +670,8 @@
 				0B3AA88D17BC69450091E103 /* DisplayShoutImageViewController.m */,
 				0BCA5F3818095063003A8637 /* SettingsViewController.h */,
 				0BCA5F3918095063003A8637 /* SettingsViewController.m */,
+				0BB44FB5187D746000AE4A64 /* SignupViewController.h */,
+				0BB44FB6187D746000AE4A64 /* SignupViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1081,6 +1087,7 @@
 				0B07BA0A17E6FF8300DA26EE /* UIDevice-Hardware.m in Sources */,
 				0B4BDC1E181AF0AF00782A0C /* MKMapView+ZoomLevel.m in Sources */,
 				0BE2D85617E89BE300AD700D /* ImageUtilities.m in Sources */,
+				0BB44FB7187D746000AE4A64 /* SignupViewController.m in Sources */,
 				0B10B09017EC528500507381 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1136,6 +1143,7 @@
 				0B0CD4F718362C1600EB3752 /* UIDevice-Hardware.m in Sources */,
 				0B0CD4F818362C1600EB3752 /* MKMapView+ZoomLevel.m in Sources */,
 				0B0CD4F918362C1600EB3752 /* ImageUtilities.m in Sources */,
+				0BB44FB8187D746000AE4A64 /* SignupViewController.m in Sources */,
 				0B0CD4FC18362C1600EB3752 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

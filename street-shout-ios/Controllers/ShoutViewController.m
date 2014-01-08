@@ -85,7 +85,7 @@
             [self.shoutImageDropShadowView setHidden:YES];
         }
         
-        self.shoutUsername.text = [NSString stringWithFormat:@"by %@", self.shout.displayName];
+        self.shoutUsername.text = [NSString stringWithFormat:@"by %@", self.shout.username];
 
         self.shoutContent.text = self.shout.description;
         

@@ -160,41 +160,32 @@
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
 
-    if (self.usernameView.text.length == 0) {
+    if (self.blackListed) {
+        message.title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
+        message.message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
+        error = YES;
+    } else if (self.usernameView.text.length == 0) {
         message.title = NSLocalizedStringFromTable (@"incorrect_username", @"Strings", @"comment");
         message.message = NSLocalizedStringFromTable (@"username_blank", @"Strings", @"comment");
         error = YES;
-    }
-    
-    if (self.usernameView.text.length > kMaxUsernameLength) {
+    } else if (self.usernameView.text.length > kMaxUsernameLength) {
         message.title = NSLocalizedStringFromTable (@"incorrect_username", @"Strings", @"comment");
         NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxUsernameLength];
         message.message = [(NSLocalizedStringFromTable (@"username_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
         error = YES;
-    }
-
-    if (self.descriptionView.text.length == 0) {
+    } else if (self.descriptionView.text.length == 0) {
         message.title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
         message.message = NSLocalizedStringFromTable (@"shout_description_blank", @"Strings", @"comment");
         error = YES;
-    }
-    
-    if (self.descriptionView.text.length > kMaxShoutDescriptionLength) {
+    } else if (self.descriptionView.text.length > kMaxShoutDescriptionLength) {
         message.title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
         NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxShoutDescriptionLength];
         message.message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
         error = YES;
     }
     
-    if (self.blackListed) {
-        message.title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
-        message.message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
-        error = YES;
-    }
-    
     if (error) {
         [message show];
-        return;
     } else {
         if ([GeneralUtilities connected]) {
             [self createShout];
@@ -218,8 +209,6 @@
             [self.navigationController popViewControllerAnimated:YES];
             [self.createShoutVCDelegate onShoutCreated:shout];
         });
-        
-        
     };
     
     typedef void (^FailureBlock)();
@@ -250,6 +239,7 @@
         if (self.capturedImage && self.shoutImageUrl) {
             createShoutSuccessBlock = ^{
                 [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+                //TODO: take username and userId from saved user info
                 [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                        Lng:self.shoutLocation.coordinate.longitude
                                                   Username:self.usernameView.text
@@ -271,18 +261,15 @@
             [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
             [operationQueue addOperation:imageUploader];
         } else {
-            createShoutSuccessBlock = ^{
-                [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
-                                                       Lng:self.shoutLocation.coordinate.longitude
-                                                  Username:self.usernameView.text
-                                               Description:self.descriptionView.text
-                                                     Image:nil
-                                                  DeviceId:deviceId
-                                         AndExecuteSuccess:successBlock
-                                                   Failure:failureBlock];
-            };
-            
-            createShoutSuccessBlock();
+            //TODO: take username and userId from saved user info
+            [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
+                                                   Lng:self.shoutLocation.coordinate.longitude
+                                              Username:self.usernameView.text
+                                           Description:self.descriptionView.text
+                                                 Image:nil
+                                              DeviceId:deviceId
+                                     AndExecuteSuccess:successBlock
+                                               Failure:failureBlock];
         }
     });
 }
@@ -416,12 +403,13 @@
     [self.mapView setHidden:NO];
 }
 
-- (void)checkIfBlackListedDevice
-{
-    [AFStreetShoutAPIClient getBlackListedDevicesAndExecute:^(NSArray *blackListedDeviceIds){
-        if ([blackListedDeviceIds containsObject:[GeneralUtilities getDeviceID]]) {
-            self.blackListed = YES;
-        }
-    }];
-}
+//TODO: check if user is black listed in user prefs
+//- (void)checkIfBlackListedDevice
+//{
+//    [AFStreetShoutAPIClient getBlackListedDevicesAndExecute:^(NSArray *blackListedDeviceIds){
+//        if ([blackListedDeviceIds containsObject:[GeneralUtilities getDeviceID]]) {
+//            self.blackListed = YES;
+//        }
+//    }];
+//}
 @end

@@ -56,7 +56,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self sendDeviceInfo];
+    [self updateUserInfo];
     
     [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
         [self createObsoleteAPIAlertView];
@@ -72,7 +72,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [self sendDeviceInfo];
+    [self updateUserInfo];
 }
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
@@ -236,13 +236,14 @@
     }
 }
 
-- (void)sendDeviceInfo
+- (void)updateUserInfo
 {
     MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
     
     if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
-            [AFStreetShoutAPIClient sendDeviceInfoWithLat:myLocation.location.coordinate.latitude
-                                                      Lng:myLocation.location.coordinate.longitude];
+        //TODO: Method to update user info
+//            [AFStreetShoutAPIClient sendDeviceInfoWithLat:myLocation.location.coordinate.latitude Lng:myLocation.location.coordinate.longitude];
+        //TODO: update user info
     } else {
         NSLog(@"Could not send device info");
     }

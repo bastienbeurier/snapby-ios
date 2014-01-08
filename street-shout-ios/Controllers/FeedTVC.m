@@ -140,7 +140,7 @@
         }
         
         cell.shoutContentLabel.text = shout.description;
-        cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.displayName];
+        cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.username];
         
         NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToStrings:[TimeUtilities getShoutAge:shout.created]];
         
