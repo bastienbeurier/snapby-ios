@@ -151,6 +151,11 @@
 }
 
 - (void)createShoutClicked {
+    
+    if (![SessionUtilities loggedIn]){
+        [SessionUtilities redirectToSignIn];
+        return;
+    }
     [self.usernameView resignFirstResponder];
     [self.descriptionView resignFirstResponder];
     

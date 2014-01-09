@@ -116,7 +116,7 @@
 
 
 - (IBAction)signupButtonClicked:(id)sender {
-    
+    [self performSegueWithIdentifier:@"Navigation Push Segue" sender:nil];
 }
 
 @end

@@ -57,13 +57,11 @@
     return self;
 }
 
-// If sign in, enrich parameters with token, else redirect to sign in
+// Enrich parameters with token
 + (void) enrichParametersWithToken:(NSMutableDictionary *) parameters
 {
     if ([SessionUtilities loggedIn]){
         [parameters setObject:[SessionUtilities getCurrentUserToken] forKey:@"auth_token"];
-    } else {
-        [SessionUtilities redirectToSignIn];
     }
 }
 
@@ -125,6 +123,9 @@
 {    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
+    // Enrich with token
+    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
+    
     [parameters setObject:username forKey:@"user_name"];
     [parameters setObject:description forKey:@"description"];
     [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
@@ -134,8 +135,6 @@
     if (imageUrl) {
         [parameters setObject:imageUrl forKey:@"image"];
     }
-    
-    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
     
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts.json"];
     
@@ -201,15 +200,15 @@
 
 + (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock
 {
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
+    
+    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
     
     [parameters setObject:[NSNumber numberWithInt:shoutId] forKey:@"shout_id"];
     [parameters setObject:motive forKey:@"motive"];
     [parameters setObject:[NSNumber numberWithInt:flaggerId] forKey:@"flagger_id"];
-    
-    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
 
-    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"flag_shout"];
+    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"flags.json"];
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -262,7 +261,7 @@
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
-        
+        NSLog(@"result %@",[result valueForKeyPath:@"obsolete"]);
         if ([[result valueForKeyPath:@"obsolete"] isEqualToString: @"true"]) {
             obsoleteBlock();
         }
