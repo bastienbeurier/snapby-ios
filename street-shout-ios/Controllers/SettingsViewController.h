@@ -15,13 +15,13 @@
 
 @property (weak, nonatomic) id <SettingsViewControllerDelegate> settingsViewControllerDelegate;
 
-- (void)sendDeviceInfo;
+- (void)updateUserInfo;
 
 @end
 
 @protocol SettingsViewControllerDelegate
 
-- (void)sendDeviceInfo;
+- (void)updateUserInfo;
 
 - (void)refreshShouts;
 

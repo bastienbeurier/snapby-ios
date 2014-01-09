@@ -22,6 +22,11 @@
 #define NOTIFICATION_RADIUS_PREF @"Notification Radius"
 #define DISTANCE_UNIT_PREF @"Distance Unit"
 #define USER_NAME_PREF @"Username preference"
+#define USER_EMAIL_PREF @"User model email preference"
+#define USER_ID_PREF @"User model id preference"
+#define USERNAME_PREF @"User model username preference"
+#define USER_AUTH_TOKEN_PREF @"User authentication token preference"
+
 
 @interface Constants : NSObject
 
@@ -64,4 +69,4 @@ static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e406
 //static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347" //Shout
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 
-static NSString * const kApiVersion = @"1.0";
+static NSString * const kApiVersion = @"2";

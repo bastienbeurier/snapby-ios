@@ -8,8 +8,7 @@
 
 #import "AFHTTPClient.h"
 #import "Shout.h"
-
-#define API_VERSION @"1.0"
+#import "User.h"
 
 @interface AFStreetShoutAPIClient : AFHTTPClient
 
@@ -20,24 +19,22 @@
 
 + (void)createShoutWithLat:(double)lat
                        Lng:(double)lng
-                  Username:(NSString *)userName
+                  Username:(NSString *)username
                Description:(NSString *)description
-                     Image:(NSString *) imageUrl
-                  DeviceId:(NSString *)deviceId
+                     Image:(NSString *)imageUrl
+                    UserId:(NSUInteger)userId
          AndExecuteSuccess:(void(^)(Shout *))successBlock
                    Failure:(void(^)())failureBlock;
 
-+ (void)sendDeviceInfoWithLat:(double)lat Lng:(double)lng;
-
 + (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock;
 
-+ (void)reportShout:(NSUInteger)shoutId withMotive:(NSUInteger)motiveIndex AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock;
++ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock;
 
-+ (void)getBlackListedDevicesAndExecute:(void(^)(NSArray *blackListedDeviceIds))block;
++ (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())obsoleteBlock;
 
-+ (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())block;
++ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
+
++ (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(id JSON))successBlock failure:(void(^)(NSError *error))failureBlock;
 
 @end
-
-static NSString *const MyFirstConstant = API_VERSION;
 

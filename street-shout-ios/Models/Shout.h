@@ -14,12 +14,13 @@
 + (Shout *)rawShoutToInstance:(id)rawShout;
 
 @property (nonatomic) NSUInteger identifier;
+@property (nonatomic) NSUInteger userId;
 @property (nonatomic) double lat;
 @property (nonatomic) double lng;
 @property (strong, nonatomic) NSString *description;
 @property (strong, nonatomic) NSString *created;
 @property (strong, nonatomic) NSString *source;
-@property (strong, nonatomic) NSString *displayName;
+@property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *image;
 
 @end

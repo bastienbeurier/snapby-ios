@@ -85,7 +85,7 @@
             [self.shoutImageDropShadowView setHidden:YES];
         }
         
-        self.shoutUsername.text = [NSString stringWithFormat:@"by %@", self.shout.displayName];
+        self.shoutUsername.text = [NSString stringWithFormat:@"by %@", self.shout.username];
 
         self.shoutContent.text = self.shout.description;
         
@@ -142,7 +142,8 @@
 {
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
-        [AFStreetShoutAPIClient reportShout:self.shout.identifier withMotive:buttonIndex AndExecute:nil Failure:nil];
+        //TODO: report shout differently
+//        [AFStreetShoutAPIClient reportShout:self.shout.identifier withMotive:buttonIndex AndExecute:nil Failure:nil];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment")
                                                        delegate:nil
