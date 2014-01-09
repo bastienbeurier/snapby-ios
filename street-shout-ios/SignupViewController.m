@@ -12,6 +12,7 @@
 #import "AFStreetShoutAPIClient.h"
 #import "User.h"
 #import "AFJSONRequestOperation.h"
+#import "SessionUtilities.h"
 
 @interface SignupViewController ()
 
@@ -74,8 +75,8 @@
     SuccessBlock successBlock = ^(User *user, NSString *authToken) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [User updateCurrentUserInfoInPhone:user];
-            [User securelySaveCurrentUserToken:authToken];
+            [SessionUtilities updateCurrentUserInfoInPhone:user];
+            [SessionUtilities securelySaveCurrentUserToken:authToken];
             
             [self performSegueWithIdentifier:@"Navigation Push Segue" sender:nil];
         });

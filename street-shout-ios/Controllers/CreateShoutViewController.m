@@ -17,6 +17,7 @@
 #import "MBProgressHUD.h"
 #import "ImageUtilities.h"
 #import "NavigationAppDelegate.h"
+#import "SessionUtilities.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
 #define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
@@ -235,7 +236,7 @@
         UploadImageCompletionBlock createShoutSuccessBlock;
         UploadImageCompletionBlock createShoutFailureBlock;
         
-        User *currentUser = [User currentUser];
+        User *currentUser = [SessionUtilities getCurrentUser];
         
         if (self.capturedImage && self.shoutImageUrl) {
             createShoutSuccessBlock = ^{

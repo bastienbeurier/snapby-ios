@@ -12,13 +12,6 @@
 
 + (User *)rawUserToInstance:(NSDictionary *)rawUser;
 
-+ (void)updateCurrentUserInfoInPhone:(User *)user;
-
-+ (void)securelySaveCurrentUserToken:(NSString *)authToken;
-
-+ (NSString *)getCurrentUserToken;
-
-+ (User *)currentUser;
 
 @property (nonatomic) NSUInteger identifier;
 @property (nonatomic, strong) NSString *email;

@@ -57,14 +57,15 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self updateUserInfo];
-    
-    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
-        [self createObsoleteAPIAlertView];
-    }];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    // Check if API obsolete
+    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
+        [self createObsoleteAPIAlertView];
+    }];
+    
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
