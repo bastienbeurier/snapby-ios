@@ -24,11 +24,11 @@
                      Image:(NSString *)imageUrl
                     UserId:(NSUInteger)userId
          AndExecuteSuccess:(void(^)(Shout *))successBlock
-                   Failure:(void(^)())failureBlock;
+                   Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
 
 + (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock;
 
-+ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock;
++ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
 
 + (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())obsoleteBlock;
 

@@ -18,6 +18,7 @@
 #import "ImageUtilities.h"
 #import "NavigationAppDelegate.h"
 #import "SessionUtilities.h"
+#import "AFJSONRequestOperation.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
 #define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
@@ -180,19 +181,24 @@
         });
     };
     
-    typedef void (^FailureBlock)();
-    FailureBlock failureBlock = ^{
+    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
+    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
-            NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
+            //In this case, 401 means that the auth token is no valid.
+            if ([SessionUtilities invalidTokenResponse:operation]) {
+                [SessionUtilities redirectToSignIn];
+            } else {
+                NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
+                NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                                message:message
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
         });
     };
     
@@ -219,7 +225,7 @@
             };
             
             createShoutFailureBlock = ^{
-                failureBlock();
+                failureBlock(nil);
             };
             
             AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];

@@ -76,6 +76,7 @@
             
             NSString *title = nil;
             NSString *message = nil;
+            //In this case, 401 means email/password combination doesn't match
             if ([operation.response statusCode] == 401) {
                 message = NSLocalizedStringFromTable (@"invalid_sign_in_message", @"Strings", @"comment");
             } else {

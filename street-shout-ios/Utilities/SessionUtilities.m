@@ -72,4 +72,9 @@
     window.rootViewController = [storyboard instantiateInitialViewController];
 }
 
++ (BOOL)invalidTokenResponse:(AFHTTPRequestOperation *)operation
+{
+    return operation && [operation.response statusCode] == 401;
+}
+
 @end
