@@ -152,7 +152,6 @@
     
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
-        //TODO: report shout differently
         
         NSString *motive = nil;
         

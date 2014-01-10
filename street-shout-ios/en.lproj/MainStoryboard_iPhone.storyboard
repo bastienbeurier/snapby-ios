@@ -79,6 +79,22 @@
                                     <action selector="rateMeClicked:" destination="sd5-g2-Szr" eventType="touchUpInside" id="cvg-2T-15j"/>
                                 </connections>
                             </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="441-1F-fMN">
+                                <rect key="frame" x="20" y="385" width="280" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="dgF-cY-LcT"/>
+                                    <constraint firstAttribute="height" constant="50" id="t2c-Ta-H2C"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutButtonClicked:" destination="sd5-g2-Szr" eventType="touchUpInside" id="kIj-fA-S5v"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i2O-jr-Txe">
                                 <rect key="frame" x="127" y="30" width="66" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -88,6 +104,13 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Participate!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHB-BI-ATE">
                                 <rect key="frame" x="114" y="191" width="92" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log out" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ux8-Ic-IEw">
+                                <rect key="frame" x="129" y="352" width="63" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -135,6 +158,13 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log out" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ap3-lu-0QX">
+                                <rect key="frame" x="131" y="398" width="59" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdy-oX-7QO">
                                 <rect key="frame" x="187" y="78" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -153,26 +183,33 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="846-Xq-lpJ" firstAttribute="trailing" secondItem="IZT-aF-rmx" secondAttribute="trailing" constant="20" id="05J-OL-Ygj"/>
+                            <constraint firstAttribute="centerX" secondItem="ux8-Ic-IEw" secondAttribute="centerX" id="24c-ZI-PAz"/>
                             <constraint firstItem="RYA-g0-PL1" firstAttribute="leading" secondItem="Jla-k8-TFB" secondAttribute="leading" constant="20" id="6ET-BV-B67"/>
                             <constraint firstItem="fRm-ql-Sm7" firstAttribute="leading" secondItem="Jla-k8-TFB" secondAttribute="leading" constant="20" id="6ay-4p-VBf"/>
                             <constraint firstAttribute="trailing" secondItem="fRm-ql-Sm7" secondAttribute="trailing" constant="20" id="9HU-To-0ru"/>
                             <constraint firstAttribute="centerX" secondItem="i2O-jr-Txe" secondAttribute="centerX" id="Dd3-WP-eCb"/>
+                            <constraint firstItem="441-1F-fMN" firstAttribute="centerX" secondItem="ap3-lu-0QX" secondAttribute="centerX" id="GO5-FD-Pbq"/>
                             <constraint firstItem="dn8-RW-UTt" firstAttribute="leading" secondItem="ozb-mL-Alt" secondAttribute="leading" constant="20" id="HMq-C9-ADx"/>
                             <constraint firstItem="846-Xq-lpJ" firstAttribute="top" secondItem="i2O-jr-Txe" secondAttribute="bottom" constant="8" id="HYL-jw-9yD"/>
+                            <constraint firstAttribute="trailing" secondItem="441-1F-fMN" secondAttribute="trailing" constant="20" id="Hzb-oK-XLz"/>
                             <constraint firstItem="xHB-BI-ATE" firstAttribute="top" secondItem="RYA-g0-PL1" secondAttribute="bottom" constant="20" id="IIN-WR-99I"/>
                             <constraint firstItem="RYA-g0-PL1" firstAttribute="top" secondItem="846-Xq-lpJ" secondAttribute="bottom" constant="8" id="JqI-MU-QHa"/>
                             <constraint firstItem="846-Xq-lpJ" firstAttribute="centerY" secondItem="rDA-3t-oaE" secondAttribute="centerY" id="K4y-dF-a5A"/>
+                            <constraint firstItem="441-1F-fMN" firstAttribute="centerY" secondItem="ap3-lu-0QX" secondAttribute="centerY" id="Kbj-AA-lS6"/>
                             <constraint firstItem="fRm-ql-Sm7" firstAttribute="leading" secondItem="Wv1-3U-2eq" secondAttribute="leading" constant="-20" id="MmI-g2-mdu"/>
                             <constraint firstAttribute="trailing" secondItem="ozb-mL-Alt" secondAttribute="trailing" constant="20" id="Ns5-J1-ls8"/>
                             <constraint firstAttribute="centerX" secondItem="xHB-BI-ATE" secondAttribute="centerX" id="PQt-K7-GhO"/>
                             <constraint firstItem="846-Xq-lpJ" firstAttribute="leading" secondItem="Jla-k8-TFB" secondAttribute="leading" constant="20" id="SyX-dY-vsl"/>
+                            <constraint firstItem="441-1F-fMN" firstAttribute="top" secondItem="ux8-Ic-IEw" secondAttribute="bottom" constant="8" id="Tu3-gI-X9E"/>
                             <constraint firstItem="Pjx-l9-RjJ" firstAttribute="centerY" secondItem="RYA-g0-PL1" secondAttribute="centerY" id="UHq-uB-05f"/>
                             <constraint firstItem="846-Xq-lpJ" firstAttribute="centerY" secondItem="IZT-aF-rmx" secondAttribute="centerY" id="WqB-Ci-aih"/>
+                            <constraint firstItem="ux8-Ic-IEw" firstAttribute="top" secondItem="ozb-mL-Alt" secondAttribute="bottom" constant="20" id="X6Q-gS-Jp4"/>
                             <constraint firstItem="wdy-oX-7QO" firstAttribute="leading" secondItem="rDA-3t-oaE" secondAttribute="trailing" constant="8" id="YYm-wc-Kzk"/>
                             <constraint firstItem="ozb-mL-Alt" firstAttribute="leading" secondItem="Jla-k8-TFB" secondAttribute="leading" constant="20" id="Yet-HZ-DP1"/>
                             <constraint firstItem="IEn-Fd-atI" firstAttribute="trailing" secondItem="RYA-g0-PL1" secondAttribute="trailing" constant="-20" id="aKh-qM-p0O"/>
                             <constraint firstItem="ozb-mL-Alt" firstAttribute="top" secondItem="fRm-ql-Sm7" secondAttribute="bottom" constant="8" id="c41-CY-3zG"/>
                             <constraint firstItem="fRm-ql-Sm7" firstAttribute="centerY" secondItem="Wv1-3U-2eq" secondAttribute="centerY" id="fBd-iV-ljl"/>
+                            <constraint firstItem="441-1F-fMN" firstAttribute="leading" secondItem="Jla-k8-TFB" secondAttribute="leading" constant="20" id="fbW-We-nGk"/>
                             <constraint firstItem="i2O-jr-Txe" firstAttribute="top" secondItem="doY-1Q-Ifn" secondAttribute="bottom" constant="10" id="fgP-BH-K6W"/>
                             <constraint firstItem="Pjx-l9-RjJ" firstAttribute="leading" secondItem="RYA-g0-PL1" secondAttribute="leading" constant="20" id="hyn-yr-y07"/>
                             <constraint firstItem="fRm-ql-Sm7" firstAttribute="top" secondItem="xHB-BI-ATE" secondAttribute="bottom" constant="8" id="i7C-4d-Pa3"/>
@@ -190,6 +227,7 @@
                         <outlet property="distanceUnitButton" destination="RYA-g0-PL1" id="Wxu-ZP-X6Y"/>
                         <outlet property="distanceUnitLabel" destination="IEn-Fd-atI" id="1nb-FA-ciH"/>
                         <outlet property="feedbackButton" destination="fRm-ql-Sm7" id="UUh-Mz-MuM"/>
+                        <outlet property="logOutButton" destination="441-1F-fMN" id="k7n-jG-efb"/>
                         <outlet property="notificationRadiusButton" destination="846-Xq-lpJ" id="8Hp-wK-dhO"/>
                         <outlet property="notificationRadiusLabel" destination="IZT-aF-rmx" id="m29-Ca-XzU"/>
                         <outlet property="rateMeLabel" destination="dn8-RW-UTt" id="jNW-XR-yUR"/>
@@ -260,7 +298,7 @@
         <!--Navigation View Controller-->
         <scene sceneID="5">
             <objects>
-                <viewController id="2" customClass="NavigationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NavigationViewController" id="2" customClass="NavigationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9At-1p-99c"/>
                         <viewControllerLayoutGuide type="bottom" id="g04-xb-cCJ"/>
@@ -1064,7 +1102,7 @@
         <!--Welcome View Controller-->
         <scene sceneID="mti-zj-el5">
             <objects>
-                <viewController id="PlT-GB-KMl" customClass="WelcomeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeViewController" id="PlT-GB-KMl" customClass="WelcomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jad-Vk-a6M"/>
                         <viewControllerLayoutGuide type="bottom" id="uCa-5A-rHl"/>
@@ -1100,6 +1138,7 @@
                     <connections>
                         <segue destination="vDb-ke-i4Z" kind="push" identifier="Signup Push Segue" id="A40-3P-OSY"/>
                         <segue destination="rza-Wx-gpU" kind="push" identifier="Signin Push Segue" id="Q4V-zu-SF7"/>
+                        <segue destination="2" kind="push" identifier="Navigation Push Segue From Welcome" id="Ehx-8e-FBl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FWt-Ol-muJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1187,7 +1226,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jeb-yC-wvX"/>
+        <segue reference="InE-sI-u17"/>
         <segue reference="2zB-sU-M6q"/>
     </inferredMetricsTieBreakers>
 </document>

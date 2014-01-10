@@ -7,6 +7,7 @@
 //
 
 #import "WelcomeViewController.h"
+#import "SessionUtilities.h"
 
 @interface WelcomeViewController ()
 
@@ -21,6 +22,14 @@
 
 - (IBAction)signinButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"Signin Push Segue" sender:nil];
+}
+
+- (void)viewDidLoad
+{
+    //Check if user is logged in
+    if ([SessionUtilities loggedIn]) {
+        [self performSegueWithIdentifier:@"Navigation Push Segue From Welcome" sender:nil];
+    }
 }
 
 @end

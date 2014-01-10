@@ -65,11 +65,19 @@
 }
 
 // redirect to entry view (sign in)
-+ (void) redirectToSignIn
++ (void)redirectToSignIn
 {
+    [SessionUtilities wipeOffCredentials];
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     window.rootViewController = [storyboard instantiateInitialViewController];
+}
+
++ (void)wipeOffCredentials
+{
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
 
 + (BOOL)invalidTokenResponse:(AFHTTPRequestOperation *)operation
