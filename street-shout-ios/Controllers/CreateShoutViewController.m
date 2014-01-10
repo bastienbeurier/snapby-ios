@@ -208,7 +208,6 @@
         if (self.capturedImage && self.shoutImageUrl) {
             createShoutSuccessBlock = ^{
                 [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-                //TODO: take username and userId from saved user info
                 [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                        Lng:self.shoutLocation.coordinate.longitude
                                                   Username:currentUser.username
@@ -230,7 +229,6 @@
             [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
             [operationQueue addOperation:imageUploader];
         } else {
-            //TODO: take username and userId from saved user info
             [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                    Lng:self.shoutLocation.coordinate.longitude
                                               Username:currentUser.username

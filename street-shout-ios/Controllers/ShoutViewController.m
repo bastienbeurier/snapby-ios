@@ -149,7 +149,29 @@
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
         //TODO: report shout differently
-//        [AFStreetShoutAPIClient reportShout:self.shout.identifier withMotive:buttonIndex AndExecute:nil Failure:nil];
+        
+        NSString *motive = nil;
+        
+        switch (buttonIndex) {
+            case 0:
+                motive = @"abuse";
+                break;
+            case 1:
+                motive = @"spam";
+                break;
+            case 2:
+                motive = @"privacy";
+                break;
+            case 3:
+                motive = @"inaccurate";
+                break;
+            case 4:
+                motive = @"other";
+                break;
+        }
+        
+        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:nil];
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment")
                                                        delegate:nil
