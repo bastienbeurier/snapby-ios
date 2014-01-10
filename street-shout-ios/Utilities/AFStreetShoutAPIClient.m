@@ -10,7 +10,6 @@
 #import "AFJSONRequestOperation.h"
 #import "GeneralUtilities.h"
 #import "Constants.h"
-#import "UIDevice-Hardware.h"
 #import "NavigationAppDelegate.h"
 #import "SessionUtilities.h"
 
@@ -153,46 +152,45 @@
     }];
 }
 
-//TODO: Replace by update_user_info
-//+ (void)sendDeviceInfoWithLat:(double)lat Lng:(double)lng
-//{    
-//    NSString *deviceId = [GeneralUtilities getDeviceID];
-//    NSString *uaDeviceToken = [GeneralUtilities getUADeviceToken];
-//    NSNumber *notificationRadius = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREF];
-//    
-//    if (!notificationRadius) {
-//        notificationRadius = [NSNumber numberWithInt:kDefaultNotificationRadiusIndex];
-//    }
-//    
-//    NSString *deviceModel = [[UIDevice currentDevice] platformString];
-//    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
-//    NSString *osType = @"ios";
-//    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-//    NSString *apiVersion = kApiVersion;
-//    
-//    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
-//    
-//    [parameters setObject:deviceId forKey:@"device_id"];
-//    [parameters setObject:notificationRadius forKey:@"notification_radius"];
-//    [parameters setObject:deviceModel forKey:@"device_model"];
-//    [parameters setObject:osVersion forKey:@"os_version"];
-//    [parameters setObject:osType forKey:@"os_type"];
-//    [parameters setObject:appVersion forKey:@"app_version"];
-//    [parameters setObject:apiVersion forKey:@"api_version"];
-//    [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
-//    [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
-//    
-//    if (uaDeviceToken) {
-//        [parameters setObject:uaDeviceToken forKey:@"push_token"];
-//    }
-//    
-//    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-//    [[AFStreetShoutAPIClient sharedClient] postPath:@"update_device_info" parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-//        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-//    }];
-//}
++ (void)updateUserInfo
+{
+    [AFStreetShoutAPIClient updateUserInfoWithLat:0 Lng:0];
+}
+
++ (void)updateUserInfoWithLat:(double)lat Lng:(double)lng;
+{
+    NSString *uaDeviceToken = [GeneralUtilities getUADeviceToken];
+    NSNumber *notificationRadius = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREF];
+    
+    if (!notificationRadius) {
+        notificationRadius = [NSNumber numberWithInt:kDefaultNotificationRadiusIndex];
+    }
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
+    
+    [parameters setObject:notificationRadius forKey:@"notification_radius"];
+    
+    if (lat != 0 && lng != 0) {
+        [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
+        [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
+    }
+    
+    if (uaDeviceToken) {
+        [parameters setObject:uaDeviceToken forKey:@"push_token"];
+    }
+    
+    [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
+    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
+    
+    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingFormat:@"users/%d.json", [SessionUtilities getCurrentUser].identifier];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] putPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    }];
+}
 
 + (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock
 {
@@ -220,27 +218,6 @@
         }
     }];
 }
-
-//TODO: Replace by check if user black listed instead
-//+ (void)getBlackListedDevicesAndExecute:(void(^)(NSArray *blackListedDeviceIds))block
-//{
-//    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-//    [[AFStreetShoutAPIClient sharedClient] getPath:@"black_listed_devices.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-//        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-//        NSArray *rawBlackListedDevices = [JSON valueForKeyPath:@"result"];
-//        NSMutableArray *blackListedDeviceIds = [[NSMutableArray alloc] init];
-//        
-//        for (NSDictionary *rawBlackListedDevice in rawBlackListedDevices) {
-//            [blackListedDeviceIds addObject:[rawBlackListedDevice objectForKey:@"device_id"]];
-//        }
-//        
-//        if (block) {
-//            block(blackListedDeviceIds);
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-//    }];
-//}
 
 // Check and redirect to App store API is obsolete
 + (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())obsoleteBlock
@@ -305,6 +282,8 @@
     [parameters setObject:email forKey:@"email"];
     [parameters setObject:password forKey:@"password"];
     [parameters setObject:username forKey:@"username"];
+    
+    [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {

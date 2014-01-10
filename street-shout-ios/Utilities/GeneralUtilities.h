@@ -34,4 +34,6 @@
 
 + (NSArray *)checkForRemovedShouts:(NSArray *)shouts;
 
++ (void)enrichParamsWithGeneralUserAndDeviceInfo:(NSMutableDictionary *)parameters;
+
 @end

@@ -11,8 +11,8 @@
 #import "Constants.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
-#import "UIDevice-Hardware.h"
 #import "SessionUtilities.h"
+#import "AFStreetShoutAPIClient.h"
 
 
 @interface SettingsViewController ()
@@ -147,7 +147,7 @@
 - (void)dismissSettingPickerModal:(SettingPickerViewController *)settingPickerViewController
 {
     if ([settingPickerViewController.preferenceType isEqualToString:NOTIFICATION_RADIUS_PREF]) {
-        //TODO: send device info
+        [AFStreetShoutAPIClient updateUserInfo];
         
         [self updateNotificationRadiusLabel];
     } else if ([settingPickerViewController.preferenceType isEqualToString:DISTANCE_UNIT_PREF]) {

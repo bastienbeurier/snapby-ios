@@ -36,5 +36,9 @@
 
 + (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
 
++ (void)updateUserInfoWithLat:(double)lat Lng:(double)lng;
+
++ (void)updateUserInfo;
+
 @end
 

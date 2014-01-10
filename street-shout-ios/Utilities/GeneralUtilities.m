@@ -9,6 +9,7 @@
 #import "GeneralUtilities.h"
 #import "Constants.h"
 #import "TimeUtilities.h"
+#import "DeviceUtilities.h"
 
 @implementation GeneralUtilities
 
@@ -142,6 +143,21 @@
     }
     
     return filteredShouts;
+}
+
++ (void)enrichParamsWithGeneralUserAndDeviceInfo:(NSMutableDictionary *)parameters;
+{
+    NSString *deviceModel = [DeviceUtilities platformString];
+    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
+    NSString *osType = @"ios";
+    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *apiVersion = kApiVersion;
+    
+    [parameters setObject:deviceModel forKey:@"device_model"];
+    [parameters setObject:osVersion forKey:@"os_version"];
+    [parameters setObject:osType forKey:@"os_type"];
+    [parameters setObject:appVersion forKey:@"app_version"];
+    [parameters setObject:apiVersion forKey:@"api_version"];
 }
 
 @end

@@ -30,7 +30,6 @@
 
 @interface MapViewController () <MKMapViewDelegate>
 
-@property (nonatomic) BOOL hasSentDeviceInfo;
 @property (weak, nonatomic) IBOutlet UIButton *myLocationButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *zoomMinusButton;
@@ -48,8 +47,6 @@
     [super viewDidLoad];
     self.mapView.delegate = self;
     self.preventShoutDeselection = NO;
-    
-    self.hasSentDeviceInfo = NO;
     
     [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude WithSpan:ZOOM_0 Animated:NO];
 }
