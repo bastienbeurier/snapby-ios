@@ -126,7 +126,7 @@
     // Enrich with token
     [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
     
-    [parameters setObject:username forKey:@"user_name"];
+    [parameters setObject:username forKey:@"username"];
     [parameters setObject:description forKey:@"description"];
     [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
     [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];

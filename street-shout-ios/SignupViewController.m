@@ -34,13 +34,13 @@
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
     
-    if ([GeneralUtilities validUsername:self.usernameTextView.text]) {
+    if (![GeneralUtilities validUsername:self.usernameTextView.text]) {
         message.message = NSLocalizedStringFromTable (@"invalid_username_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (self.usernameTextView.text.length < 6 || self.usernameTextView.text.length > 20) {
         message.message = NSLocalizedStringFromTable (@"username_length_alert_text", @"Strings", @"comment");
         error = YES;
-    } else if ([GeneralUtilities validEmail:self.emailTextView.text]) {
+    } else if (![GeneralUtilities validEmail:self.emailTextView.text]) {
         message.message = NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (self.passwordTextView.text.length < 6 || self.passwordTextView.text.length > 128) {

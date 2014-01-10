@@ -32,7 +32,7 @@
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
     
-    if ([GeneralUtilities validEmail:self.emailTextView.text]){
+    if (![GeneralUtilities validEmail:self.emailTextView.text]){
         message.message = NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (self.passwordTextView.text.length < 6 || self.passwordTextView.text.length > 128) {
@@ -45,9 +45,6 @@
     } else {
         if ([GeneralUtilities connected]) {
             [self signinUser];
-            
-            
-            
         } else {
             UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
                                                               message:nil
@@ -101,7 +98,6 @@
                                         success:(void(^)(User *user, NSString *auth_token))successBlock
                                         failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock];
     });
-    
 }
 
 
