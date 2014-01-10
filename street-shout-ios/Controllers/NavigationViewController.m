@@ -18,6 +18,7 @@
 #import "GeneralUtilities.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageUtilities.h"
+#import "SessionUtilities.h"
 
 #define SHOUT_BUTTON_SIZE 72.0
 
@@ -57,14 +58,15 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self updateUserInfo];
-    
-    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
-        [self createObsoleteAPIAlertView];
-    }];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    // Check if API obsolete
+    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
+        [self createObsoleteAPIAlertView];
+    }];
+    
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
@@ -191,6 +193,12 @@
     [self performSegueWithIdentifier:@"Display Shout Image" sender:imageShout];
 }
 - (IBAction)createShoutButtonClicked:(id)sender {
+    
+    if (![SessionUtilities loggedIn]){
+        [SessionUtilities redirectToSignIn];
+        return;
+    }
+    
     NSString *errorMessageTitle;
     NSString *errorMessageBody;
     
@@ -224,6 +232,11 @@
 
 - (void)settingsButtonClicked
 {
+    if (![SessionUtilities loggedIn]){
+        [SessionUtilities redirectToSignIn];
+        return;
+    }
+    
     if ([GeneralUtilities connected]) {
         [self performSegueWithIdentifier:@"Settings Push Segue" sender:nil];
     } else {

@@ -12,8 +12,13 @@
 #import "Constants.h"
 #import "UIDevice-Hardware.h"
 #import "NavigationAppDelegate.h"
+#import "SessionUtilities.h"
 
 @implementation AFStreetShoutAPIClient
+
+// ---------------
+// Utilities
+// ---------------
 
 + (AFStreetShoutAPIClient *)sharedClient
 {
@@ -52,6 +57,21 @@
     return self;
 }
 
+// Enrich parameters with token
++ (void) enrichParametersWithToken:(NSMutableDictionary *) parameters
+{
+    if ([SessionUtilities loggedIn]){
+        [parameters setObject:[SessionUtilities getCurrentUserToken] forKey:@"auth_token"];
+    }
+}
+
+
+
+// ---------------
+// Requests
+// ---------------
+
+// Retrieve and display shouts on the map
 + (void)pullShoutsInZone:(NSArray *)cornersCoordinates
        AndExecuteSuccess:(void(^)(NSArray *shouts))successBlock failure:(void (^)())failureBlock
 {
@@ -63,6 +83,7 @@
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"bound_box_shouts.json"];
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    
     [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
@@ -77,6 +98,7 @@
     }];
 }
 
+// Display shout from notification
 + (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock
 {
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"shouts/%d", shoutId]];
@@ -96,9 +118,13 @@
     }];
 }
 
+// Shout creation
 + (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)username Description:(NSString *)description Image:(NSString *)imageUrl UserId:(NSUInteger)userId AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)())failureBlock
 {    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
+    
+    // Enrich with token
+    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
     
     [parameters setObject:username forKey:@"user_name"];
     [parameters setObject:description forKey:@"description"];
@@ -122,6 +148,11 @@
         successBlock([Shout rawShoutToInstance:rawShout]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        // If auth error, redirect to sign in
+        if ([[[operation response] allHeaderFields] valueForKey:@"authentication"]) {
+            [SessionUtilities redirectToSignIn];
+        }
         failureBlock();
     }];
 }
@@ -169,13 +200,15 @@
 
 + (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock
 {
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
+    
+    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
     
     [parameters setObject:[NSNumber numberWithInt:shoutId] forKey:@"shout_id"];
     [parameters setObject:motive forKey:@"motive"];
     [parameters setObject:[NSNumber numberWithInt:flaggerId] forKey:@"flagger_id"];
-    
-    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"flag_shout"];
+
+    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"flags.json"];
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -186,6 +219,10 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
+        // If auth error, redirect to sign in
+        if ([[[operation response] allHeaderFields] valueForKey:@"authentication"]) {
+            [SessionUtilities redirectToSignIn];
+        }
         if (failureBlock) {
             failureBlock();
         }
@@ -213,6 +250,7 @@
 //    }];
 //}
 
+// Check and redirect to App store API is obsolete
 + (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())obsoleteBlock
 {
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"obsolete_api.json"];
@@ -223,7 +261,7 @@
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
-        
+        NSLog(@"result %@",[result valueForKeyPath:@"obsolete"]);
         if ([[result valueForKeyPath:@"obsolete"] isEqualToString: @"true"]) {
             obsoleteBlock();
         }
@@ -233,6 +271,7 @@
     }];
 }
 
+// Sign in
 + (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/sign_in.json"];
@@ -265,6 +304,7 @@
     }];
 }
 
+// Sign up
 + (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(id JSON))successBlock failure:(void(^)(NSError *error))failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users.json"];

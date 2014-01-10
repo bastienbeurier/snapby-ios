@@ -14,6 +14,7 @@
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
 #import "AFStreetShoutAPIClient.h"
+#import "SessionUtilities.h"
 
 #define SHOUT_IMAGE_SIZE 60
 
@@ -132,6 +133,11 @@
 }
 
 - (IBAction)flagButtonClicked:(id)sender {
+    if (![SessionUtilities loggedIn]){
+        [SessionUtilities redirectToSignIn];
+        return;
+    }
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
  delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
     

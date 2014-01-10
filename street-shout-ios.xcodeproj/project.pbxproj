@@ -249,6 +249,8 @@
 		0BF72BB9180B4F87002F5FC8 /* Default@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF72BB4180B4F87002F5FC8 /* Default@2x~iphone.png */; };
 		0BF72BBB180B4F87002F5FC8 /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF72BB5180B4F87002F5FC8 /* Default-568h@2x~iphone.png */; };
 		0BFEAB661803241B009B5D12 /* ShoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */; };
+		3C301606187EAF0A0006F70A /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
+		3C301607187EAF0A0006F70A /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -433,6 +435,8 @@
 		0BF72BB4180B4F87002F5FC8 /* Default@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~iphone.png"; sourceTree = "<group>"; };
 		0BF72BB5180B4F87002F5FC8 /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoutTableViewCell.xib; sourceTree = "<group>"; };
+		3C301604187EAF0A0006F70A /* SessionUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionUtilities.h; path = Utilities/SessionUtilities.h; sourceTree = "<group>"; };
+		3C301605187EAF0A0006F70A /* SessionUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionUtilities.m; path = Utilities/SessionUtilities.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -710,6 +714,8 @@
 				0B3B0A32179F36AC0026EE12 /* Constants.m */,
 				0BE2D85317E89BE300AD700D /* ImageUtilities.h */,
 				0BE2D85417E89BE300AD700D /* ImageUtilities.m */,
+				3C301604187EAF0A0006F70A /* SessionUtilities.h */,
+				3C301605187EAF0A0006F70A /* SessionUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1046,6 +1052,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C301606187EAF0A0006F70A /* SessionUtilities.m in Sources */,
 				0BB44FBB187DAF0500AE4A64 /* User.m in Sources */,
 				0B07B9DF17E6FF8300DA26EE /* main.m in Sources */,
 				0B07B9E017E6FF8300DA26EE /* NavigationAppDelegate.m in Sources */,
@@ -1103,6 +1110,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C301607187EAF0A0006F70A /* SessionUtilities.m in Sources */,
 				0BB44FBC187DAF0500AE4A64 /* User.m in Sources */,
 				0B0CD4CB18362C1600EB3752 /* main.m in Sources */,
 				0B0CD4CC18362C1600EB3752 /* NavigationAppDelegate.m in Sources */,
