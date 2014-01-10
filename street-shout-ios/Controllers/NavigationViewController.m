@@ -93,6 +93,9 @@
     
     [MapRequestHandler pullShoutsInZone:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
         [self.activityView stopAnimating];
+        
+        shouts = [GeneralUtilities checkForRemovedShouts:shouts];
+        
         self.mapViewController.shouts = shouts;
         self.feedTVC.shouts = shouts;
     } failure:^{

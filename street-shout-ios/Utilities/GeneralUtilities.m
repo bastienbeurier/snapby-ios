@@ -130,4 +130,18 @@
     return usernameMatches == [username length];
 }
 
++ (NSArray *)checkForRemovedShouts:(NSArray *)shouts
+{
+    NSMutableArray *filteredShouts = [[NSMutableArray alloc] initWithCapacity:[shouts count]];
+    
+    for (Shout *shout in shouts) {
+        if (!shout.removed) {
+            [filteredShouts addObject:shout];
+
+        }
+    }
+    
+    return filteredShouts;
+}
+
 @end

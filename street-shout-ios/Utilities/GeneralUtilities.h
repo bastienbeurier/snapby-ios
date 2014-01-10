@@ -32,4 +32,6 @@
 
 + (BOOL)validUsername:(NSString *)username;
 
++ (NSArray *)checkForRemovedShouts:(NSArray *)shouts;
+
 @end

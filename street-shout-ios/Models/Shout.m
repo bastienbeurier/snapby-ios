@@ -18,6 +18,7 @@
 #define SHOUT_SOURCE @"source"
 #define SHOUT_USERNAME @"username"
 #define SHOUT_IMAGE @"image"
+#define SHOUT_REMOVED @"removed"
 
 @implementation Shout
 
@@ -33,6 +34,7 @@
     shout.source = [rawShout objectForKey:SHOUT_SOURCE];
     shout.username = [rawShout objectForKey:SHOUT_USERNAME];
     shout.image = [rawShout objectForKey:SHOUT_IMAGE];
+    shout.removed = [[rawShout objectForKey:SHOUT_REMOVED] integerValue] == 1 ? YES : NO;
     
     if (shout.image && shout.image != (id)[NSNull null] && shout.image.length != 0 && ![shout.image isEqualToString:@"null"]) {
         shout.image = [@"http://" stringByAppendingString:shout.image];
