@@ -32,14 +32,7 @@
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
     
-    NSString *expression = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-    
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression options:NSRegularExpressionCaseInsensitive error:nil];
-    
-    NSUInteger match = [regex numberOfMatchesInString:self.emailTextView.text options:0 range:NSMakeRange(0, [self.emailTextView.text length])];
-    
-    
-    if (match != 1){
+    if ([GeneralUtilities validEmail:self.emailTextView.text]){
         message.message = NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (self.passwordTextView.text.length < 6 || self.passwordTextView.text.length > 128) {

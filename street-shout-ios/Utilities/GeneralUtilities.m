@@ -108,4 +108,26 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
 };
 
++ (BOOL)validEmail:(NSString *)email
+{
+    NSString *emailExp = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    
+    NSRegularExpression *emailRegex = [NSRegularExpression regularExpressionWithPattern:emailExp options:NSRegularExpressionCaseInsensitive error:nil];
+    
+    NSUInteger emailMatches = [emailRegex numberOfMatchesInString:email options:0 range:NSMakeRange(0, [email length])];
+    
+    return emailMatches == 1;
+}
+
++ (BOOL)validUsername:(NSString *)username
+{
+    NSString *usernameExp = @"[A-Z0-9a-z._%+-]";
+    
+    NSRegularExpression *usernameRegex = [NSRegularExpression regularExpressionWithPattern:usernameExp options:NSRegularExpressionCaseInsensitive error:nil];
+    
+    NSUInteger usernameMatches = [usernameRegex numberOfMatchesInString:username options:0 range:NSMakeRange(0, [username length])];
+    
+    return usernameMatches == [username length];
+}
+
 @end

@@ -28,4 +28,8 @@
 
 + (void)redirectToAppStore;
 
++ (BOOL)validEmail:(NSString *)email;
+
++ (BOOL)validUsername:(NSString *)username;
+
 @end

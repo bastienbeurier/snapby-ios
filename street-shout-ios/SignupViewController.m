@@ -34,24 +34,13 @@
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
     
-    NSString *emailExp = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-    NSString *usernameExp = @"[A-Z0-9a-z._%+-]";
-    
-    NSRegularExpression *emailRegex = [NSRegularExpression regularExpressionWithPattern:emailExp options:NSRegularExpressionCaseInsensitive error:nil];
-    
-    NSRegularExpression *usernameRegex = [NSRegularExpression regularExpressionWithPattern:usernameExp options:NSRegularExpressionCaseInsensitive error:nil];
-    
-    NSUInteger emailMatches = [emailRegex numberOfMatchesInString:self.emailTextView.text options:0 range:NSMakeRange(0, [self.emailTextView.text length])];
-    
-    NSUInteger usernameMatches = [usernameRegex numberOfMatchesInString:self.usernameTextView.text options:0 range:NSMakeRange(0, [self.usernameTextView.text length])];
-    
-    if (usernameMatches != self.usernameTextView.text.length) {
+    if ([GeneralUtilities validUsername:self.usernameTextView.text]) {
         message.message = NSLocalizedStringFromTable (@"invalid_username_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (self.usernameTextView.text.length < 6 || self.usernameTextView.text.length > 20) {
         message.message = NSLocalizedStringFromTable (@"username_length_alert_text", @"Strings", @"comment");
         error = YES;
-    } else if (emailMatches != 1) {
+    } else if ([GeneralUtilities validEmail:self.emailTextView.text]) {
         message.message = NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (self.passwordTextView.text.length < 6 || self.passwordTextView.text.length > 128) {
