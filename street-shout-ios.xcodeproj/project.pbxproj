@@ -219,6 +219,10 @@
 		0B4BDC1A181AE74C00782A0C /* zoom_plus_button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4BDC16181AE74C00782A0C /* zoom_plus_button@2x~iphone.png */; };
 		0B4BDC1E181AF0AF00782A0C /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDC1C181AF0AF00782A0C /* MKMapView+ZoomLevel.m */; };
 		0B4CD1351819B42C000A8A20 /* question-mark-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CD1331819B42C000A8A20 /* question-mark-button@2x~iphone.png */; };
+		0B597352187FF40600E27402 /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597351187FF40600E27402 /* SigninViewController.m */; };
+		0B597353187FF40600E27402 /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597351187FF40600E27402 /* SigninViewController.m */; };
+		0B597356187FF41500E27402 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597355187FF41500E27402 /* WelcomeViewController.m */; };
+		0B597357187FF41500E27402 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597355187FF41500E27402 /* WelcomeViewController.m */; };
 		0B97D0F5181EA88900CE08A3 /* shout-marker-1-deselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0E8181EA88900CE08A3 /* shout-marker-1-deselected.png */; };
 		0B97D0F7181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0E9181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png */; };
 		0B97D0F9181EA88900CE08A3 /* shout-marker-1-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0EA181EA88900CE08A3 /* shout-marker-1-selected.png */; };
@@ -347,6 +351,10 @@
 		0B4BDC1B181AF0AF00782A0C /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		0B4BDC1C181AF0AF00782A0C /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		0B4CD1331819B42C000A8A20 /* question-mark-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "question-mark-button@2x~iphone.png"; sourceTree = "<group>"; };
+		0B597350187FF40600E27402 /* SigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SigninViewController.h; path = Controllers/SigninViewController.h; sourceTree = "<group>"; };
+		0B597351187FF40600E27402 /* SigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SigninViewController.m; path = Controllers/SigninViewController.m; sourceTree = "<group>"; };
+		0B597354187FF41500E27402 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeViewController.h; path = Controllers/WelcomeViewController.h; sourceTree = "<group>"; };
+		0B597355187FF41500E27402 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WelcomeViewController.m; path = Controllers/WelcomeViewController.m; sourceTree = "<group>"; };
 		0B608EE318362A5D000A4606 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		0B65F7231795C66500F37227 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0B65F7251795C66500F37227 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -680,6 +688,10 @@
 				0BCA5F3918095063003A8637 /* SettingsViewController.m */,
 				0BB44FB5187D746000AE4A64 /* SignupViewController.h */,
 				0BB44FB6187D746000AE4A64 /* SignupViewController.m */,
+				0B597350187FF40600E27402 /* SigninViewController.h */,
+				0B597351187FF40600E27402 /* SigninViewController.m */,
+				0B597354187FF41500E27402 /* WelcomeViewController.h */,
+				0B597355187FF41500E27402 /* WelcomeViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1095,11 +1107,13 @@
 				0B07BA0417E6FF8300DA26EE /* ResponseHandler.m in Sources */,
 				0B07BA0517E6FF8300DA26EE /* AsyncImageUploader.m in Sources */,
 				0B07BA0617E6FF8300DA26EE /* AmazonClientManager.m in Sources */,
+				0B597356187FF41500E27402 /* WelcomeViewController.m in Sources */,
 				0B07BA0717E6FF8300DA26EE /* GeneralUtilities.m in Sources */,
 				0B07BA0817E6FF8300DA26EE /* DisplayShoutImageViewController.m in Sources */,
 				0B07BA0917E6FF8300DA26EE /* MBProgressHUD.m in Sources */,
 				0B07BA0A17E6FF8300DA26EE /* UIDevice-Hardware.m in Sources */,
 				0B4BDC1E181AF0AF00782A0C /* MKMapView+ZoomLevel.m in Sources */,
+				0B597352187FF40600E27402 /* SigninViewController.m in Sources */,
 				0BE2D85617E89BE300AD700D /* ImageUtilities.m in Sources */,
 				0BB44FB7187D746000AE4A64 /* SignupViewController.m in Sources */,
 				0B10B09017EC528500507381 /* Reachability.m in Sources */,
@@ -1153,11 +1167,13 @@
 				0B0CD4F118362C1600EB3752 /* ResponseHandler.m in Sources */,
 				0B0CD4F218362C1600EB3752 /* AsyncImageUploader.m in Sources */,
 				0B0CD4F318362C1600EB3752 /* AmazonClientManager.m in Sources */,
+				0B597357187FF41500E27402 /* WelcomeViewController.m in Sources */,
 				0B0CD4F418362C1600EB3752 /* GeneralUtilities.m in Sources */,
 				0B0CD4F518362C1600EB3752 /* DisplayShoutImageViewController.m in Sources */,
 				0B0CD4F618362C1600EB3752 /* MBProgressHUD.m in Sources */,
 				0B0CD4F718362C1600EB3752 /* UIDevice-Hardware.m in Sources */,
 				0B0CD4F818362C1600EB3752 /* MKMapView+ZoomLevel.m in Sources */,
+				0B597353187FF40600E27402 /* SigninViewController.m in Sources */,
 				0B0CD4F918362C1600EB3752 /* ImageUtilities.m in Sources */,
 				0BB44FB8187D746000AE4A64 /* SignupViewController.m in Sources */,
 				0B0CD4FC18362C1600EB3752 /* Reachability.m in Sources */,

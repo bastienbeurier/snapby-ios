@@ -34,7 +34,7 @@
 
 + (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
 
-+ (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(id JSON))successBlock failure:(void(^)(NSError *error))failureBlock;
++ (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
 
 @end
 

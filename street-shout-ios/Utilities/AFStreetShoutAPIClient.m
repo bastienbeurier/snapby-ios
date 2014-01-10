@@ -149,10 +149,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
-        // If auth error, redirect to sign in
-        if ([[[operation response] allHeaderFields] valueForKey:@"authentication"]) {
-            [SessionUtilities redirectToSignIn];
-        }
         failureBlock();
     }];
 }
@@ -219,10 +215,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
-        // If auth error, redirect to sign in
-        if ([[[operation response] allHeaderFields] valueForKey:@"authentication"]) {
-            [SessionUtilities redirectToSignIn];
-        }
         if (failureBlock) {
             failureBlock();
         }
@@ -261,7 +253,6 @@
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
-        NSLog(@"result %@",[result valueForKeyPath:@"obsolete"]);
         if ([[result valueForKeyPath:@"obsolete"] isEqualToString: @"true"]) {
             obsoleteBlock();
         }
@@ -305,7 +296,7 @@
 }
 
 // Sign up
-+ (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(id JSON))successBlock failure:(void(^)(NSError *error))failureBlock
++ (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSDictionary *))failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users.json"];
     
@@ -319,15 +310,29 @@
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
-        if (successBlock) {
-            successBlock(JSON);
+        NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
+        
+        NSLog(@"SERVER ERRORS: %@", errors);
+        
+        if (errors) {
+            failureBlock(errors);
+        } else {
+            NSDictionary *result = [JSON valueForKeyPath:@"result"];
+            
+            NSDictionary *rawUser = [result valueForKeyPath:@"user"];
+            User *user = [User rawUserToInstance:rawUser];
+            
+            NSString *authToken = [result objectForKey:@"auth_token"];
+            
+            if (successBlock) {
+                successBlock(user, authToken);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
-        if (failureBlock) {
-            failureBlock(error);
-        }
+        NSLog(@"WRONG STATUS");
+        failureBlock(nil);
     }];
 }
 
