@@ -28,4 +28,12 @@
 
 + (void)redirectToAppStore;
 
++ (BOOL)validEmail:(NSString *)email;
+
++ (BOOL)validUsername:(NSString *)username;
+
++ (NSArray *)checkForRemovedShouts:(NSArray *)shouts;
+
++ (void)enrichParamsWithGeneralUserAndDeviceInfo:(NSMutableDictionary *)parameters;
+
 @end

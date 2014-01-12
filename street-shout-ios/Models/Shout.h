@@ -22,5 +22,6 @@
 @property (strong, nonatomic) NSString *source;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *image;
+@property (nonatomic) BOOL removed;
 
 @end

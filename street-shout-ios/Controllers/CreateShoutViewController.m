@@ -18,6 +18,7 @@
 #import "ImageUtilities.h"
 #import "NavigationAppDelegate.h"
 #import "SessionUtilities.h"
+#import "AFJSONRequestOperation.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
 #define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
@@ -25,7 +26,6 @@
 
 @interface CreateShoutViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *usernameView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
@@ -56,16 +56,6 @@
 //    [self checkIfBlackListedDevice];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    NSString *userName = self.usernameView.text;
-    
-    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:USER_NAME_PREF];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [super viewWillDisappear:animated];
-}
-
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
 {
     self.shoutLocation = shoutLocation;
@@ -77,15 +67,8 @@
     
     self.blackListed = NO;
 
-    self.usernameView.delegate = self;
     self.descriptionView.delegate = self;
     
-    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:USER_NAME_PREF];
-    
-    if (userName) {
-        self.usernameView.text = userName;
-    }
-
     self.library = [[ALAssetsLibrary alloc] init];
     
     //Round corners
@@ -95,7 +78,6 @@
     self.refineLocationButton.layer.cornerRadius = buttonHeight/2;
     self.descriptionView.layer.cornerRadius = 5;
     self.descriptionViewShadowingView.layer.cornerRadius = 5;
-    self.usernameView.layer.cornerRadius = 5;
     self.mapView.layer.cornerRadius = 15;
     self.shoutImageView.layer.cornerRadius = 15;
     
@@ -108,16 +90,6 @@
     [self.descriptionViewShadowingView.layer setShadowOpacity:0.25];
     [self.descriptionViewShadowingView.layer setShadowRadius:3];
     [self.descriptionViewShadowingView.layer setShadowOffset:CGSizeMake(0, 0)];
-    
-    self.usernameView.clipsToBounds = NO;
-    
-    [self.usernameView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.usernameView.layer setShadowOpacity:0.25];
-    [self.usernameView.layer setShadowRadius:3];
-    [self.usernameView.layer setShadowOffset:CGSizeMake(0, 0)];
-    
-    //Textfield text inset
-    self.usernameView.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
     
     self.descriptionView.clipsToBounds = YES;
     
@@ -156,7 +128,7 @@
         [SessionUtilities redirectToSignIn];
         return;
     }
-    [self.usernameView resignFirstResponder];
+    
     [self.descriptionView resignFirstResponder];
     
     BOOL error = NO;
@@ -170,15 +142,6 @@
     if (self.blackListed) {
         message.title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
         message.message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
-        error = YES;
-    } else if (self.usernameView.text.length == 0) {
-        message.title = NSLocalizedStringFromTable (@"incorrect_username", @"Strings", @"comment");
-        message.message = NSLocalizedStringFromTable (@"username_blank", @"Strings", @"comment");
-        error = YES;
-    } else if (self.usernameView.text.length > kMaxUsernameLength) {
-        message.title = NSLocalizedStringFromTable (@"incorrect_username", @"Strings", @"comment");
-        NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxUsernameLength];
-        message.message = [(NSLocalizedStringFromTable (@"username_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
         error = YES;
     } else if (self.descriptionView.text.length == 0) {
         message.title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
@@ -218,19 +181,24 @@
         });
     };
     
-    typedef void (^FailureBlock)();
-    FailureBlock failureBlock = ^{
+    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
+    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
-            NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
+            //In this case, 401 means that the auth token is no valid.
+            if ([SessionUtilities invalidTokenResponse:operation]) {
+                [SessionUtilities redirectToSignIn];
+            } else {
+                NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
+                NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                                message:message
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
         });
     };
     
@@ -246,7 +214,6 @@
         if (self.capturedImage && self.shoutImageUrl) {
             createShoutSuccessBlock = ^{
                 [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-                //TODO: take username and userId from saved user info
                 [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                        Lng:self.shoutLocation.coordinate.longitude
                                                   Username:currentUser.username
@@ -258,7 +225,7 @@
             };
             
             createShoutFailureBlock = ^{
-                failureBlock();
+                failureBlock(nil);
             };
             
             AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
@@ -268,7 +235,6 @@
             [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
             [operationQueue addOperation:imageUploader];
         } else {
-            //TODO: take username and userId from saved user info
             [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                    Lng:self.shoutLocation.coordinate.longitude
                                               Username:currentUser.username

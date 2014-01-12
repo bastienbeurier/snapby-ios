@@ -11,7 +11,8 @@
 #import "Constants.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
-#import "UIDevice-Hardware.h"
+#import "SessionUtilities.h"
+#import "AFStreetShoutAPIClient.h"
 
 
 @interface SettingsViewController ()
@@ -22,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *distanceUnitButton;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackButton;
 @property (weak, nonatomic) IBOutlet UIButton *ratemeButton;
+@property (weak, nonatomic) IBOutlet UIButton *logOutButton;
 @property (strong, nonatomic) NSArray *distanceUnitPreferences;
 @property (strong, nonatomic) NSArray *notificationRadiusPreferences;
 
@@ -66,6 +68,7 @@
     self.distanceUnitButton.layer.cornerRadius = buttonHeight/2;
     self.feedbackButton.layer.cornerRadius = buttonHeight/2;
     self.ratemeButton.layer.cornerRadius = buttonHeight/2;
+    self.logOutButton.layer.cornerRadius = buttonHeight/2;
     
     //Nav bar
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
@@ -144,7 +147,7 @@
 - (void)dismissSettingPickerModal:(SettingPickerViewController *)settingPickerViewController
 {
     if ([settingPickerViewController.preferenceType isEqualToString:NOTIFICATION_RADIUS_PREF]) {
-        //TODO: send device info
+        [AFStreetShoutAPIClient updateUserInfo];
         
         [self updateNotificationRadiusLabel];
     } else if ([settingPickerViewController.preferenceType isEqualToString:DISTANCE_UNIT_PREF]) {
@@ -179,6 +182,10 @@
 - (void)viewDidUnload {
     [self setRateMeLabel:nil];
     [super viewDidUnload];
+}
+
+- (IBAction)logoutButtonClicked:(id)sender {
+    [SessionUtilities redirectToSignIn];
 }
 
 @end

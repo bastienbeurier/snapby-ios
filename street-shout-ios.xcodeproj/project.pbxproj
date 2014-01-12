@@ -49,7 +49,6 @@
 		0B07BA0717E6FF8300DA26EE /* GeneralUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB475B17BC3FEA00369A14 /* GeneralUtilities.m */; };
 		0B07BA0817E6FF8300DA26EE /* DisplayShoutImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3AA88D17BC69450091E103 /* DisplayShoutImageViewController.m */; };
 		0B07BA0917E6FF8300DA26EE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3AA93217BD8D980091E103 /* MBProgressHUD.m */; };
-		0B07BA0A17E6FF8300DA26EE /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB9AF1E17E37B65004D0E2F /* UIDevice-Hardware.m */; };
 		0B07BA0C17E6FF8300DA26EE /* libUAirship-2.0.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB9AF1B17E34A3B004D0E2F /* libUAirship-2.0.2.a */; };
 		0B07BA0D17E6FF8300DA26EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B363B4917BEC71800C3104A /* AudioToolbox.framework */; };
 		0B07BA0E17E6FF8300DA26EE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B363B4717BEC70F00C3104A /* MessageUI.framework */; };
@@ -118,7 +117,6 @@
 		0B0CD4F418362C1600EB3752 /* GeneralUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB475B17BC3FEA00369A14 /* GeneralUtilities.m */; };
 		0B0CD4F518362C1600EB3752 /* DisplayShoutImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3AA88D17BC69450091E103 /* DisplayShoutImageViewController.m */; };
 		0B0CD4F618362C1600EB3752 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3AA93217BD8D980091E103 /* MBProgressHUD.m */; };
-		0B0CD4F718362C1600EB3752 /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB9AF1E17E37B65004D0E2F /* UIDevice-Hardware.m */; };
 		0B0CD4F818362C1600EB3752 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDC1C181AF0AF00782A0C /* MKMapView+ZoomLevel.m */; };
 		0B0CD4F918362C1600EB3752 /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE2D85417E89BE300AD700D /* ImageUtilities.m */; };
 		0B0CD4FC18362C1600EB3752 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10B08E17EC528500507381 /* Reachability.m */; };
@@ -219,6 +217,12 @@
 		0B4BDC1A181AE74C00782A0C /* zoom_plus_button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4BDC16181AE74C00782A0C /* zoom_plus_button@2x~iphone.png */; };
 		0B4BDC1E181AF0AF00782A0C /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDC1C181AF0AF00782A0C /* MKMapView+ZoomLevel.m */; };
 		0B4CD1351819B42C000A8A20 /* question-mark-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CD1331819B42C000A8A20 /* question-mark-button@2x~iphone.png */; };
+		0B597352187FF40600E27402 /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597351187FF40600E27402 /* SigninViewController.m */; };
+		0B597353187FF40600E27402 /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597351187FF40600E27402 /* SigninViewController.m */; };
+		0B597356187FF41500E27402 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597355187FF41500E27402 /* WelcomeViewController.m */; };
+		0B597357187FF41500E27402 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597355187FF41500E27402 /* WelcomeViewController.m */; };
+		0B59735A1880649B00E27402 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5973591880649B00E27402 /* DeviceUtilities.m */; };
+		0B59735B1880649B00E27402 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5973591880649B00E27402 /* DeviceUtilities.m */; };
 		0B97D0F5181EA88900CE08A3 /* shout-marker-1-deselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0E8181EA88900CE08A3 /* shout-marker-1-deselected.png */; };
 		0B97D0F7181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0E9181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png */; };
 		0B97D0F9181EA88900CE08A3 /* shout-marker-1-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0EA181EA88900CE08A3 /* shout-marker-1-selected.png */; };
@@ -347,6 +351,12 @@
 		0B4BDC1B181AF0AF00782A0C /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		0B4BDC1C181AF0AF00782A0C /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		0B4CD1331819B42C000A8A20 /* question-mark-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "question-mark-button@2x~iphone.png"; sourceTree = "<group>"; };
+		0B597350187FF40600E27402 /* SigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SigninViewController.h; path = Controllers/SigninViewController.h; sourceTree = "<group>"; };
+		0B597351187FF40600E27402 /* SigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SigninViewController.m; path = Controllers/SigninViewController.m; sourceTree = "<group>"; };
+		0B597354187FF41500E27402 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeViewController.h; path = Controllers/WelcomeViewController.h; sourceTree = "<group>"; };
+		0B597355187FF41500E27402 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WelcomeViewController.m; path = Controllers/WelcomeViewController.m; sourceTree = "<group>"; };
+		0B5973581880649B00E27402 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceUtilities.h; path = Utilities/DeviceUtilities.h; sourceTree = "<group>"; };
+		0B5973591880649B00E27402 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceUtilities.m; path = Utilities/DeviceUtilities.m; sourceTree = "<group>"; };
 		0B608EE318362A5D000A4606 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		0B65F7231795C66500F37227 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0B65F7251795C66500F37227 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -382,8 +392,6 @@
 		0BB44FB9187DAF0500AE4A64 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Models/User.h; sourceTree = "<group>"; };
 		0BB44FBA187DAF0500AE4A64 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Models/User.m; sourceTree = "<group>"; };
 		0BB9AF1B17E34A3B004D0E2F /* libUAirship-2.0.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-2.0.2.a"; path = "Airship/libUAirship-2.0.2.a"; sourceTree = "<group>"; };
-		0BB9AF1D17E37B65004D0E2F /* UIDevice-Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Hardware.h"; sourceTree = "<group>"; };
-		0BB9AF1E17E37B65004D0E2F /* UIDevice-Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Hardware.m"; sourceTree = "<group>"; };
 		0BBED65D17BAA87E00C7880D /* RefineShoutLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RefineShoutLocationViewController.h; path = Controllers/RefineShoutLocationViewController.h; sourceTree = "<group>"; };
 		0BBED65E17BAA87F00C7880D /* RefineShoutLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RefineShoutLocationViewController.m; path = Controllers/RefineShoutLocationViewController.m; sourceTree = "<group>"; };
 		0BCA5F3818095063003A8637 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Controllers/SettingsViewController.h; sourceTree = "<group>"; };
@@ -567,15 +575,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		0B10B08B17EC526700507381 /* UIDeviceHardware */ = {
-			isa = PBXGroup;
-			children = (
-				0BB9AF1D17E37B65004D0E2F /* UIDevice-Hardware.h */,
-				0BB9AF1E17E37B65004D0E2F /* UIDevice-Hardware.m */,
-			);
-			name = UIDeviceHardware;
-			sourceTree = "<group>";
-		};
 		0B10B08C17EC527A00507381 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,7 +648,6 @@
 			isa = PBXGroup;
 			children = (
 				0B10B08C17EC527A00507381 /* Reachability */,
-				0B10B08B17EC526700507381 /* UIDeviceHardware */,
 				0B3AA93017BD8D8A0091E103 /* MBProgressHUD */,
 				0B3B0A3A17A082350026EE12 /* TestFlightSDK1.2.6 */,
 				0B42A6ED17970ABB00312BFD /* AFNetworking */,
@@ -680,6 +678,10 @@
 				0BCA5F3918095063003A8637 /* SettingsViewController.m */,
 				0BB44FB5187D746000AE4A64 /* SignupViewController.h */,
 				0BB44FB6187D746000AE4A64 /* SignupViewController.m */,
+				0B597350187FF40600E27402 /* SigninViewController.h */,
+				0B597351187FF40600E27402 /* SigninViewController.m */,
+				0B597354187FF41500E27402 /* WelcomeViewController.h */,
+				0B597355187FF41500E27402 /* WelcomeViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -716,6 +718,8 @@
 				0BE2D85417E89BE300AD700D /* ImageUtilities.m */,
 				3C301604187EAF0A0006F70A /* SessionUtilities.h */,
 				3C301605187EAF0A0006F70A /* SessionUtilities.m */,
+				0B5973581880649B00E27402 /* DeviceUtilities.h */,
+				0B5973591880649B00E27402 /* DeviceUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1068,6 +1072,7 @@
 				0B07B9E917E6FF8300DA26EE /* AFXMLRequestOperation.m in Sources */,
 				0B07B9EA17E6FF8300DA26EE /* UIImageView+AFNetworking.m in Sources */,
 				0B07B9EB17E6FF8300DA26EE /* AFStreetShoutAPIClient.m in Sources */,
+				0B59735A1880649B00E27402 /* DeviceUtilities.m in Sources */,
 				0B07B9EC17E6FF8300DA26EE /* Shout.m in Sources */,
 				0B07B9ED17E6FF8300DA26EE /* MapRequestHandler.m in Sources */,
 				0B07B9EE17E6FF8300DA26EE /* LocationUtilities.m in Sources */,
@@ -1095,11 +1100,12 @@
 				0B07BA0417E6FF8300DA26EE /* ResponseHandler.m in Sources */,
 				0B07BA0517E6FF8300DA26EE /* AsyncImageUploader.m in Sources */,
 				0B07BA0617E6FF8300DA26EE /* AmazonClientManager.m in Sources */,
+				0B597356187FF41500E27402 /* WelcomeViewController.m in Sources */,
 				0B07BA0717E6FF8300DA26EE /* GeneralUtilities.m in Sources */,
 				0B07BA0817E6FF8300DA26EE /* DisplayShoutImageViewController.m in Sources */,
 				0B07BA0917E6FF8300DA26EE /* MBProgressHUD.m in Sources */,
-				0B07BA0A17E6FF8300DA26EE /* UIDevice-Hardware.m in Sources */,
 				0B4BDC1E181AF0AF00782A0C /* MKMapView+ZoomLevel.m in Sources */,
+				0B597352187FF40600E27402 /* SigninViewController.m in Sources */,
 				0BE2D85617E89BE300AD700D /* ImageUtilities.m in Sources */,
 				0BB44FB7187D746000AE4A64 /* SignupViewController.m in Sources */,
 				0B10B09017EC528500507381 /* Reachability.m in Sources */,
@@ -1126,6 +1132,7 @@
 				0B0CD4D618362C1600EB3752 /* AFXMLRequestOperation.m in Sources */,
 				0B0CD4D718362C1600EB3752 /* UIImageView+AFNetworking.m in Sources */,
 				0B0CD4D818362C1600EB3752 /* AFStreetShoutAPIClient.m in Sources */,
+				0B59735B1880649B00E27402 /* DeviceUtilities.m in Sources */,
 				0B0CD4D918362C1600EB3752 /* Shout.m in Sources */,
 				0B0CD4DA18362C1600EB3752 /* MapRequestHandler.m in Sources */,
 				0B0CD4DB18362C1600EB3752 /* LocationUtilities.m in Sources */,
@@ -1153,11 +1160,12 @@
 				0B0CD4F118362C1600EB3752 /* ResponseHandler.m in Sources */,
 				0B0CD4F218362C1600EB3752 /* AsyncImageUploader.m in Sources */,
 				0B0CD4F318362C1600EB3752 /* AmazonClientManager.m in Sources */,
+				0B597357187FF41500E27402 /* WelcomeViewController.m in Sources */,
 				0B0CD4F418362C1600EB3752 /* GeneralUtilities.m in Sources */,
 				0B0CD4F518362C1600EB3752 /* DisplayShoutImageViewController.m in Sources */,
 				0B0CD4F618362C1600EB3752 /* MBProgressHUD.m in Sources */,
-				0B0CD4F718362C1600EB3752 /* UIDevice-Hardware.m in Sources */,
 				0B0CD4F818362C1600EB3752 /* MKMapView+ZoomLevel.m in Sources */,
+				0B597353187FF40600E27402 /* SigninViewController.m in Sources */,
 				0B0CD4F918362C1600EB3752 /* ImageUtilities.m in Sources */,
 				0BB44FB8187D746000AE4A64 /* SignupViewController.m in Sources */,
 				0B0CD4FC18362C1600EB3752 /* Reachability.m in Sources */,

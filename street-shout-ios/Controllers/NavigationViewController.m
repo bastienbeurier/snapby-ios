@@ -93,6 +93,9 @@
     
     [MapRequestHandler pullShoutsInZone:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
         [self.activityView stopAnimating];
+        
+        shouts = [GeneralUtilities checkForRemovedShouts:shouts];
+        
         self.mapViewController.shouts = shouts;
         self.feedTVC.shouts = shouts;
     } failure:^{
@@ -254,9 +257,7 @@
     MKUserLocation *myLocation = self.mapViewController.mapView.userLocation;
     
     if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
-        //TODO: Method to update user info
-//            [AFStreetShoutAPIClient sendDeviceInfoWithLat:myLocation.location.coordinate.latitude Lng:myLocation.location.coordinate.longitude];
-        //TODO: update user info
+        [AFStreetShoutAPIClient updateUserInfoWithLat:myLocation.location.coordinate.latitude Lng:myLocation.location.coordinate.longitude];
     } else {
         NSLog(@"Could not send device info");
     }

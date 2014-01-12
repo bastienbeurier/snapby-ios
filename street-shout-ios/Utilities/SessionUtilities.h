@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
+#import "AFJSONRequestOperation.h"
 
 @interface SessionUtilities : NSObject
 
@@ -21,6 +22,8 @@
 
 + (BOOL)loggedIn;
 
-+ (void) redirectToSignIn;
++ (void)redirectToSignIn;
+
++ (BOOL)invalidTokenResponse:(AFHTTPRequestOperation *)operation;
 
 @end

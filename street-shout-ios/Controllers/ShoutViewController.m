@@ -58,10 +58,6 @@
     self.shoutImageView.clipsToBounds = YES;
     self.shoutImageDropShadowView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
     
-    //Gabrielle recommendation
-
-    
-    
     [super viewWillAppear:animated];
 }
 
@@ -146,16 +142,46 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
+    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
+        //In this case, 401 means that the auth token is no valid.
+        if ([SessionUtilities invalidTokenResponse:operation]) {
+            [SessionUtilities redirectToSignIn];
+        }
+    };
+    
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
-        //TODO: report shout differently
-//        [AFStreetShoutAPIClient reportShout:self.shout.identifier withMotive:buttonIndex AndExecute:nil Failure:nil];
+        
+        NSString *motive = nil;
+        
+        switch (buttonIndex) {
+            case 0:
+                motive = @"abuse";
+                break;
+            case 1:
+                motive = @"spam";
+                break;
+            case 2:
+                motive = @"privacy";
+                break;
+            case 3:
+                motive = @"inaccurate";
+                break;
+            case 4:
+                motive = @"other";
+                break;
+        }
+        
+        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment")
                                                        delegate:nil
                                               cancelButtonTitle:@"Ok"
                                               otherButtonTitles: nil];
         [alert show];
+        
     }
 }
 
