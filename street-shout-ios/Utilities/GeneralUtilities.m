@@ -122,7 +122,7 @@
 
 + (BOOL)validUsername:(NSString *)username
 {
-    NSString *usernameExp = @"[A-Z0-9a-z._%+-]";
+    NSString *usernameExp = @"[A-Z0-9a-z._+-]";
     
     NSRegularExpression *usernameRegex = [NSRegularExpression regularExpressionWithPattern:usernameExp options:NSRegularExpressionCaseInsensitive error:nil];
     

@@ -1147,9 +1147,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jd-Fd-kDT">
-                                <rect key="frame" x="20" y="463" width="280" height="50"/>
+                                <rect key="frame" x="20" y="478" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="cFU-aE-o8h"/>
                                 </constraints>
@@ -1165,9 +1164,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGa-Kz-pwK">
-                                <rect key="frame" x="20" y="403" width="280" height="50"/>
+                                <rect key="frame" x="20" y="418" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="8GI-gA-1A1"/>
                                 </constraints>
@@ -1177,20 +1176,20 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="facebookButtonCancelledClicking:" destination="PlT-GB-KMl" eventType="touchUpOutside" id="6UC-HV-77e"/>
                                     <action selector="facebookButtonClicked:" destination="PlT-GB-KMl" eventType="touchUpInside" id="xD4-OQ-CbY"/>
                                     <action selector="facebookButtonStartedClicking:" destination="PlT-GB-KMl" eventType="touchDown" id="WAw-01-xit"/>
-                                    <action selector="signupButtonDidCancelledClicking:" destination="PlT-GB-KMl" eventType="touchUpOutside" id="aam-BH-evF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miH-iR-RP7">
-                                <rect key="frame" x="125" y="518" width="241" height="50"/>
+                                <rect key="frame" x="125" y="523" width="241" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Zhc-q5-nQa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Sign in now.">
+                                <state key="normal" title="Sign in here.">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1198,14 +1197,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SN1-6u-Np7">
-                                <rect key="frame" x="41" y="533" width="199" height="20"/>
+                                <rect key="frame" x="41" y="538" width="199" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up with" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiU-id-dF6">
-                                <rect key="frame" x="84" y="476" width="111" height="24"/>
+                                <rect key="frame" x="84" y="491" width="111" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1216,7 +1215,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yf-nc-Za2">
-                                <rect key="frame" x="184" y="476" width="44" height="24"/>
+                                <rect key="frame" x="184" y="491" width="44" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1227,25 +1226,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect with" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqF-lG-j5w">
-                                <rect key="frame" x="66" y="416" width="102" height="24"/>
+                                <rect key="frame" x="66" y="431" width="102" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="AkU-kB-nzu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ns-Wx-Cog">
-                                <rect key="frame" x="171" y="416" width="78" height="24"/>
+                                <rect key="frame" x="171" y="431" width="78" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="uTe-ni-56U"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1264,7 +1263,7 @@
                             <constraint firstItem="hGa-Kz-pwK" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" constant="20" id="Nk6-st-9AT"/>
                             <constraint firstItem="7Ns-Wx-Cog" firstAttribute="leading" secondItem="iqF-lG-j5w" secondAttribute="trailing" constant="3" id="Vg2-QF-pJl"/>
                             <constraint firstItem="uCa-5A-rHl" firstAttribute="top" secondItem="7lt-qk-zfF" secondAttribute="bottom" id="WFR-si-vTU"/>
-                            <constraint firstItem="miH-iR-RP7" firstAttribute="top" secondItem="7Jd-Fd-kDT" secondAttribute="bottom" constant="5" id="YwF-54-Y4f"/>
+                            <constraint firstItem="miH-iR-RP7" firstAttribute="top" secondItem="7Jd-Fd-kDT" secondAttribute="bottom" constant="-5" id="YwF-54-Y4f"/>
                             <constraint firstItem="7lt-qk-zfF" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" id="ayg-lO-7rC"/>
                             <constraint firstItem="7Jd-Fd-kDT" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" constant="20" id="b5R-wy-p9T"/>
                             <constraint firstAttribute="trailing" secondItem="hGa-Kz-pwK" secondAttribute="trailing" constant="20" id="eUl-kM-X1v"/>
@@ -1276,7 +1275,7 @@
                             <constraint firstAttribute="trailing" secondItem="7lt-qk-zfF" secondAttribute="trailing" id="o0U-IE-Adc"/>
                             <constraint firstItem="hGa-Kz-pwK" firstAttribute="centerY" secondItem="iqF-lG-j5w" secondAttribute="centerY" id="pQS-oX-YG5"/>
                             <constraint firstItem="miH-iR-RP7" firstAttribute="centerY" secondItem="SN1-6u-Np7" secondAttribute="centerY" id="qfB-kH-FQ6"/>
-                            <constraint firstItem="uCa-5A-rHl" firstAttribute="top" secondItem="miH-iR-RP7" secondAttribute="bottom" id="r43-xI-PEf"/>
+                            <constraint firstItem="uCa-5A-rHl" firstAttribute="top" secondItem="miH-iR-RP7" secondAttribute="bottom" constant="-5" id="r43-xI-PEf"/>
                             <constraint firstAttribute="trailing" secondItem="fiU-id-dF6" secondAttribute="trailing" constant="125" id="wv1-0Z-MFe"/>
                             <constraint firstAttribute="trailing" secondItem="7Ns-Wx-Cog" secondAttribute="trailing" constant="71" id="zCK-NZ-jnh"/>
                         </constraints>
