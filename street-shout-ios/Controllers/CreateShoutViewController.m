@@ -175,6 +175,8 @@
     typedef void (^SuccessBlock)(Shout *);
     SuccessBlock successBlock = ^(Shout *shout) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [self.navigationController popViewControllerAnimated:YES];
             [self.createShoutVCDelegate onShoutCreated:shout];
