@@ -44,14 +44,6 @@
     //Shout button drop shadow
     [ImageUtilities addDropShadowToView:self.createShoutButton];
     
-    //Nav bar color
-    NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    if ([[ver objectAtIndex:0] intValue] >= 7) {
-        self.navigationController.navigationBar.barTintColor = [ImageUtilities getShoutBlue];
-        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-        self.navigationController.navigationBar.translucent = NO;
-    }
-    
     [super viewDidLoad];
 }
 

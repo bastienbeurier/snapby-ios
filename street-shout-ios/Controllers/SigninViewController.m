@@ -27,7 +27,10 @@
 
 - (void)viewDidLoad
 {
+    //Nav bar
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
     
+    //Textview border
     [ImageUtilities drawBottomBorderForView:self.emailTextView withColor:[UIColor lightGrayColor]];
     [ImageUtilities drawBottomBorderForView:self.passwordTextView withColor:[UIColor lightGrayColor]];
     

@@ -27,6 +27,14 @@
 
 - (void)viewDidLoad
 {
+    //Nav bar color
+    NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    if ([[ver objectAtIndex:0] intValue] >= 7) {
+        self.navigationController.navigationBar.barTintColor = [ImageUtilities getShoutBlue];
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        self.navigationController.navigationBar.translucent = NO;
+    }
+    
     //Check if user is logged in
     if ([SessionUtilities loggedIn]) {
         [self performSegueWithIdentifier:@"Navigation Push Segue From Welcome" sender:nil];
@@ -50,6 +58,14 @@
     [[self.signupButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
     [[self.facebookButtonView layer] setBorderWidth:2.0f];
     [[self.facebookButtonView layer] setBorderColor:[ImageUtilities getFacebookBlue].CGColor];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    //Nav bar
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    
+    [super viewWillAppear:animated];
 }
 
 - (IBAction)facebookButtonStartedClicking:(id)sender {

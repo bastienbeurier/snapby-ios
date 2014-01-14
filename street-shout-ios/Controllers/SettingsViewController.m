@@ -172,13 +172,6 @@
     [alert show];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
-    
-    [super viewWillDisappear:animated];
-}
-
 - (void)viewDidUnload {
     [self setRateMeLabel:nil];
     [super viewDidUnload];
