@@ -25,6 +25,14 @@
 
 @implementation SignupViewController
 
+- (void)viewDidLoad
+{
+    //Nav bar
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    
+    [super viewDidLoad];
+}
+
 - (IBAction)signupButtonClicked:(id)sender {
     BOOL error = NO;
     

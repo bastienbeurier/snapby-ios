@@ -64,4 +64,6 @@
 "passwords_matching_alert_text" = "Passwords don't match.";
 "email_already_taken_message" = "Email already taken.";
 "username_already_taken_message" = "Username already taken.";
+"obsolete_api_error_title" = "Outdated version of the app";
+"obsolete_api_error_message" = "Download the latest version on the App Store";
  
