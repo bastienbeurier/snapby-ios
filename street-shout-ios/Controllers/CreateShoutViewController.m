@@ -19,6 +19,7 @@
 #import "NavigationAppDelegate.h"
 #import "SessionUtilities.h"
 #import "AFJSONRequestOperation.h"
+#import "TrackingUtilities.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
 #define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
@@ -176,6 +177,10 @@
     SuccessBlock successBlock = ^(Shout *shout) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
+            //Mixpanel tracking
+            BOOL imagePresent = shout.image != nil;
+            NSUInteger textLength = [shout.description length];
+            [TrackingUtilities trackCreateShoutImage:imagePresent textLength:textLength];
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [self.navigationController popViewControllerAnimated:YES];

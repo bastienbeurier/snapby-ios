@@ -38,7 +38,7 @@
 #import "NSData+MPBase64.h"
 #import "UIView+MPSnapshotImage.h"
 
-#define VERSION @"2.2.3"
+#define VERSION @"2.2.2"
 
 #ifdef MIXPANEL_LOG
 #define MixpanelLog(...) NSLog(__VA_ARGS__)
@@ -582,7 +582,7 @@ static Mixpanel *sharedInstance = nil;
         self.people.unidentifiedQueue = [NSMutableArray array];
         self.eventsQueue = [NSMutableArray array];
         self.peopleQueue = [NSMutableArray array];
-        [self archive];
+        [self archiveFromSerialQueue];
     });
 }
 
@@ -650,16 +650,22 @@ static Mixpanel *sharedInstance = nil;
 - (void)flushEvents
 {
     [self flushQueue:_eventsQueue
-            endpoint:@"/track/"];
+            endpoint:@"/track/"
+       batchComplete:^{
+           [self archiveEvents];
+       }];
 }
 
 - (void)flushPeople
 {
     [self flushQueue:_peopleQueue
-            endpoint:@"/engage/"];
+            endpoint:@"/engage/"
+       batchComplete:^{
+           [self archivePeople];
+       }];
 }
 
-- (void)flushQueue:(NSMutableArray *)queue endpoint:(NSString *)endpoint
+- (void)flushQueue:(NSMutableArray *)queue endpoint:(NSString *)endpoint batchComplete:(void(^)())batchCompleteCallback
 {
     while ([queue count] > 0) {
         NSUInteger batchSize = ([queue count] > 50) ? 50 : [queue count];
@@ -688,6 +694,7 @@ static Mixpanel *sharedInstance = nil;
         };
 
         [queue removeObjectsInArray:batch];
+        batchCompleteCallback();
     }
 }
 
@@ -743,6 +750,14 @@ static Mixpanel *sharedInstance = nil;
 
 - (void)archive
 {
+   // Must archive from the serial queue to avoid conflicts from data mutation
+   dispatch_sync(self.serialQueue, ^{
+      [self archiveFromSerialQueue];
+   });
+}
+
+- (void)archiveFromSerialQueue
+{
     [self archiveEvents];
     [self archivePeople];
     [self archiveProperties];
@@ -751,9 +766,8 @@ static Mixpanel *sharedInstance = nil;
 - (void)archiveEvents
 {
     NSString *filePath = [self eventsFilePath];
-    NSMutableArray *eventsQueueCopy = [NSMutableArray arrayWithArray:[self.eventsQueue copy]];
-    MixpanelDebug(@"%@ archiving events data to %@: %@", self, filePath, eventsQueueCopy);
-    if (![NSKeyedArchiver archiveRootObject:eventsQueueCopy toFile:filePath]) {
+    MixpanelDebug(@"%@ archiving events data to %@: %@", self, filePath, self.eventsQueue);
+    if (![NSKeyedArchiver archiveRootObject:self.eventsQueue toFile:filePath]) {
         NSLog(@"%@ unable to archive events data", self);
     }
 }
@@ -761,9 +775,8 @@ static Mixpanel *sharedInstance = nil;
 - (void)archivePeople
 {
     NSString *filePath = [self peopleFilePath];
-    NSMutableArray *peopleQueueCopy = [NSMutableArray arrayWithArray:[self.peopleQueue copy]];
-    MixpanelDebug(@"%@ archiving people data to %@: %@", self, filePath, peopleQueueCopy);
-    if (![NSKeyedArchiver archiveRootObject:peopleQueueCopy toFile:filePath]) {
+    MixpanelDebug(@"%@ archiving people data to %@: %@", self, filePath, self.peopleQueue);
+    if (![NSKeyedArchiver archiveRootObject:self.peopleQueue toFile:filePath]) {
         NSLog(@"%@ unable to archive people data", self);
     }
 }
@@ -800,12 +813,8 @@ static Mixpanel *sharedInstance = nil;
     }
     @catch (NSException *exception) {
         NSLog(@"%@ unable to unarchive events data, starting fresh", self);
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         self.eventsQueue = nil;
-    }
-    NSError *error;
-    BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-    if (!removed) {
-        NSLog(@"%@ unable to remove archived events file at %@ - %@", self, filePath, error);
     }
     if (!self.eventsQueue) {
         self.eventsQueue = [NSMutableArray array];
@@ -821,12 +830,8 @@ static Mixpanel *sharedInstance = nil;
     }
     @catch (NSException *exception) {
         NSLog(@"%@ unable to unarchive people data, starting fresh", self);
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         self.peopleQueue = nil;
-    }
-    NSError *error;
-    BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-    if (!removed) {
-        NSLog(@"%@ unable to remove archived people file at %@ - %@", self, filePath, error);
     }
     if (!self.peopleQueue) {
         self.peopleQueue = [NSMutableArray array];
@@ -843,11 +848,7 @@ static Mixpanel *sharedInstance = nil;
     }
     @catch (NSException *exception) {
         NSLog(@"%@ unable to unarchive properties data, starting fresh", self);
-    }
-    NSError *error;
-    BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-    if (!removed) {
-        NSLog(@"%@ unable to remove archived properties file at %@ - %@", self, filePath, error);
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
     }
     if (properties) {
         self.distinctId = properties[@"distinctId"] ? properties[@"distinctId"] : [self defaultDistinctId];
@@ -891,13 +892,12 @@ static Mixpanel *sharedInstance = nil;
         self.taskId = UIBackgroundTaskInvalid;
     }];
     MixpanelDebug(@"%@ starting background cleanup task %lu", self, (unsigned long)self.taskId);
-    
+
+    [self archive];
     if (self.flushOnBackground) {
         [self flush];
     }
-    
     dispatch_async(_serialQueue, ^{
-        [self archive];
         MixpanelDebug(@"%@ ending background cleanup task %lu", self, (unsigned long)self.taskId);
         if (self.taskId != UIBackgroundTaskInvalid) {
             [[UIApplication sharedApplication] endBackgroundTask:self.taskId];
@@ -922,9 +922,7 @@ static Mixpanel *sharedInstance = nil;
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
     MixpanelDebug(@"%@ application will terminate", self);
-    dispatch_async(_serialQueue, ^{
-       [self archive];
-    });
+    [self archive];
 }
 
 #pragma mark - Surveys

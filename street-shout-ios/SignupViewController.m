@@ -15,6 +15,7 @@
 #import "SessionUtilities.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageUtilities.h"
+#import "TrackingUtilities.h"
 
 @interface SignupViewController ()
 
@@ -129,6 +130,9 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
+            
+            //Mixpanel identification
+            [TrackingUtilities identifyWithMixpanel:user];
             
             [self performSegueWithIdentifier:@"Navigation Push Segue From Signup" sender:nil];
         });

@@ -15,6 +15,7 @@
 #import "SessionUtilities.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageUtilities.h"
+#import "TrackingUtilities.h"
 
 @interface SigninViewController ()
 
@@ -112,6 +113,9 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
+            
+            //Mixpanel identification
+            [TrackingUtilities identifyWithMixpanel:user];
             
             [self performSegueWithIdentifier:@"Navigation Push Segue From Signin" sender:nil];
         });
