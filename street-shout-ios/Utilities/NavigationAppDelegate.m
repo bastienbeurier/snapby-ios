@@ -16,6 +16,7 @@
 #import "NavigationViewController.h"
 #import "Shout.h"
 #import "AFStreetShoutAPIClient.h"
+#import "Mixpanel.h"
 
 @implementation NavigationAppDelegate
 
@@ -37,13 +38,15 @@
     
     if (PRODUCTION) {
         [TestFlight takeOff:kProdTestFlightAppToken];
+        [Mixpanel sharedInstanceWithToken:kProdMixPanelToken];
         config.inProduction = YES;
     } else {
         [TestFlight takeOff:kDevTestFlightAppToken];
+        [Mixpanel sharedInstanceWithToken:kDevMixPanelToken];
         config.inProduction = NO;
     }
     
-    // Call takeOff (which creates the UAirship singleton)	
+    // Urban airship config
     [UAirship takeOff:config];
     
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];

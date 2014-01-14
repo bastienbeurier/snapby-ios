@@ -70,3 +70,7 @@ static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e406
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 
 static NSString * const kApiVersion = @"2";
+
+//Mixpanel token
+static NSString * const kProdMixPanelToken = @"24dc482a232028564063bd3dd7e84e93";
+static NSString * const kDevMixPanelToken = @"468e53159f354365149b1a46a7ecdec3";
