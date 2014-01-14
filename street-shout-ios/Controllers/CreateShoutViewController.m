@@ -119,7 +119,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.descriptionView becomeFirstResponder];
-    return YES;
+    return NO;
 }
 
 - (void)createShoutClicked {

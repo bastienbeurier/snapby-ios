@@ -179,4 +179,60 @@
     bottomBorder.backgroundColor = color.CGColor;
     [view.layer addSublayer:bottomBorder];
 }
+
++ (void)drawCustomNavBarWithBackItem:(BOOL)back okItem:(BOOL)ok title:(NSString *)title inViewController:(UIViewController *)viewController
+{
+    //Constants
+    NSUInteger barHeight = 80;
+    NSUInteger buttonSize = 45;
+    NSUInteger buttonSideMargin = 10;
+    NSUInteger buttonTopMargin = 25;
+    
+    //Create bar view
+    UIView *customNavBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewController.view.frame.size.width, barHeight)];
+    [customNavBar setBackgroundColor:[ImageUtilities getShoutBlue]];
+    [viewController.view addSubview:customNavBar];
+    
+    //Add ok button
+    if (ok) {
+        UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        okButton.frame = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin , buttonTopMargin, buttonSize, buttonSize);
+        [okButton addTarget:viewController action:@selector(okButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIImage *okImage = [UIImage imageNamed:@"ok-item-icon.png"];
+        [okButton setBackgroundImage:okImage forState:UIControlStateNormal];
+        
+        [customNavBar addSubview:okButton];
+    }
+    
+    //Add back Button
+    if (back) {
+        
+        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        backButton.frame = CGRectMake(buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
+        [backButton addTarget:viewController action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIImage *backImage = [UIImage imageNamed:@"back-item-icon.png"];
+        [backButton setBackgroundImage:backImage forState:UIControlStateNormal];
+        
+        [customNavBar addSubview:backButton];
+    }
+    
+    //Add title
+    if (title) {
+        UIFont *customFont = [UIFont fontWithName:@"Avenir Heavy" size:20];
+        NSString *text = title;
+        
+        CGSize labelSize = [text sizeWithFont:customFont constrainedToSize:CGSizeMake(380, 20) lineBreakMode:NSLineBreakByTruncatingTail];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(viewController.view.frame.size.width/2 - labelSize.width/2, 32, labelSize.width, labelSize.height)];
+        label.text = text;
+        label.font = customFont;
+        label.numberOfLines = 1;
+        label.textColor = [UIColor whiteColor];
+        
+        [customNavBar addSubview:label];
+    }
+}
+
 @end

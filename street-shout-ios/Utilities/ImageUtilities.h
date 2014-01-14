@@ -27,4 +27,6 @@
 
 + (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color;
 
++ (void)drawCustomNavBarWithBackItem:(BOOL)back okItem:(BOOL)ok title:(NSString *)title inViewController:(UIViewController *)viewController;
+
 @end
