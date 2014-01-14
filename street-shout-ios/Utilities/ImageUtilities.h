@@ -23,4 +23,8 @@
 
 + (UIImage*) cropBiggestCenteredSquareImageFromImage:(UIImage*)image withSide:(CGFloat)side;
 
++ (UIColor *)getFacebookBlue;
+
++ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color;
+
 @end

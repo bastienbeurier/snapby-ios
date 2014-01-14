@@ -115,9 +115,9 @@
     
     NSRegularExpression *emailRegex = [NSRegularExpression regularExpressionWithPattern:emailExp options:NSRegularExpressionCaseInsensitive error:nil];
     
-    NSUInteger emailMatches = [emailRegex numberOfMatchesInString:email options:0 range:NSMakeRange(0, [email length])];
+    NSRange matchRange = [emailRegex rangeOfFirstMatchInString:email options:0 range:NSMakeRange(0, [email length])];
     
-    return emailMatches == 1;
+    return matchRange.length == [email length];
 }
 
 + (BOOL)validUsername:(NSString *)username

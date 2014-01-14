@@ -166,4 +166,17 @@
 {
     return [UIColor colorWithRed:139/256.0 green:172/256.0 blue:224/256.0 alpha:1];
 }
+
++ (UIColor *)getFacebookBlue
+{
+    return [UIColor colorWithRed:59/256.0 green:89/256.0 blue:152/256.0 alpha:1];
+}
+
++ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color
+{
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, view.frame.size.height - 1.0f, view.frame.size.width, 1.0f);
+    bottomBorder.backgroundColor = color.CGColor;
+    [view.layer addSublayer:bottomBorder];
+}
 @end

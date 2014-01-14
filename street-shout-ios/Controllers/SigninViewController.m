@@ -13,6 +13,8 @@
 #import "User.h"
 #import "AFJSONRequestOperation.h"
 #import "SessionUtilities.h"
+#import <QuartzCore/QuartzCore.h>
+#import "ImageUtilities.h"
 
 @interface SigninViewController ()
 
@@ -22,6 +24,15 @@
 @end
 
 @implementation SigninViewController
+
+- (void)viewDidLoad
+{
+    
+    [ImageUtilities drawBottomBorderForView:self.emailTextView withColor:[UIColor lightGrayColor]];
+    [ImageUtilities drawBottomBorderForView:self.passwordTextView withColor:[UIColor lightGrayColor]];
+    
+    [super viewDidLoad];
+}
 
 - (IBAction)signinButtonClicked:(id)sender {
     BOOL error = NO;
