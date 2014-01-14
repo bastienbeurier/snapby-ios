@@ -331,6 +331,8 @@
 		0BFEAB661803241B009B5D12 /* ShoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */; };
 		3C301606187EAF0A0006F70A /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
 		3C301607187EAF0A0006F70A /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
+		3C6D196C18840E3F00041803 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6D196B18840E3F00041803 /* FacebookSDK.framework */; };
+		3C6D196D18840E3F00041803 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6D196B18840E3F00041803 /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -570,6 +572,7 @@
 		0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoutTableViewCell.xib; sourceTree = "<group>"; };
 		3C301604187EAF0A0006F70A /* SessionUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionUtilities.h; path = Utilities/SessionUtilities.h; sourceTree = "<group>"; };
 		3C301605187EAF0A0006F70A /* SessionUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionUtilities.m; path = Utilities/SessionUtilities.m; sourceTree = "<group>"; };
+		3C6D196B18840E3F00041803 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -599,6 +602,7 @@
 				0B07BA1B17E6FF8300DA26EE /* libTestFlight.a in Frameworks */,
 				0B07BA1C17E6FF8300DA26EE /* AWSRuntime.framework in Frameworks */,
 				0B07BA1D17E6FF8300DA26EE /* AWSS3.framework in Frameworks */,
+				3C6D196C18840E3F00041803 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +632,7 @@
 				0B0CD50F18362C1600EB3752 /* libTestFlight.a in Frameworks */,
 				0B0CD51018362C1600EB3752 /* AWSRuntime.framework in Frameworks */,
 				0B0CD51118362C1600EB3752 /* AWSS3.framework in Frameworks */,
+				3C6D196D18840E3F00041803 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -896,6 +901,7 @@
 				0B57FB921885E17F00FC23BF /* SenTestingKit.framework */,
 				0B57FAC61885DFDF00FC23BF /* Accelerate.framework */,
 				0B57FAC31885DF8A00FC23BF /* AdSupport.framework */,
+				3C6D196B18840E3F00041803 /* FacebookSDK.framework */,
 				0B10B08817E9C2DF00507381 /* AssetsLibrary.framework */,
 				0BF3312918034AAE00E5C59B /* QuartzCore.framework */,
 				0BB9AF1B17E34A3B004D0E2F /* libUAirship-2.0.2.a */,
@@ -1464,11 +1470,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bastien Beurier (63863BWF5M)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/baptistetruchot/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
@@ -1486,8 +1493,8 @@
 					"\"$(SRCROOT)/Airship\"",
 				);
 				PRODUCT_NAME = Shatte;
-				PROVISIONING_PROFILE = "8425E6AA-4534-484C-92DC-1AD607B108A6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8425E6AA-4534-484C-92DC-1AD607B108A6";
+				PROVISIONING_PROFILE = "A9A0A225-4FA8-49ED-A9FC-26B27A63D34C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A9A0A225-4FA8-49ED-A9FC-26B27A63D34C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = NO;
@@ -1497,12 +1504,13 @@
 		0B07BA2B17E6FF8300DA26EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/baptistetruchot/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
@@ -1517,8 +1525,8 @@
 					"\"$(SRCROOT)/Airship\"",
 				);
 				PRODUCT_NAME = Shatte;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F981EC2-93AF-45A4-965F-911F537997C2";
+				PROVISIONING_PROFILE = "A9A0A225-4FA8-49ED-A9FC-26B27A63D34C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A9A0A225-4FA8-49ED-A9FC-26B27A63D34C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = NO;
@@ -1534,6 +1542,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/baptistetruchot/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
@@ -1568,6 +1577,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/baptistetruchot/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";

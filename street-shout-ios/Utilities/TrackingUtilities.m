@@ -41,9 +41,9 @@
 {
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
-    NSString *loggedInParam = [SessionUtilities loggedIn] ? @"Yes" : @"No";
+    NSString *signedInParam = [SessionUtilities isSignedIn] ? @"Yes" : @"No";
     
-    [mixpanel track:@"Open app" properties:@{@"Signed in": loggedInParam}];
+    [mixpanel track:@"Open app" properties:@{@"Signed in": signedInParam}];
     
     [mixpanel.people increment:@"Open app count" by:[NSNumber numberWithInt:1]];
 }

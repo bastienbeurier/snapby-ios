@@ -129,7 +129,7 @@
 }
 
 - (IBAction)flagButtonClicked:(id)sender {
-    if (![SessionUtilities loggedIn]){
+    if (![SessionUtilities isSignedIn]){
         [SessionUtilities redirectToSignIn];
         return;
     }

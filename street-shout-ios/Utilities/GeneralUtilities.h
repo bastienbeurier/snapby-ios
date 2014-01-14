@@ -36,4 +36,6 @@
 
 + (void)enrichParamsWithGeneralUserAndDeviceInfo:(NSMutableDictionary *)parameters;
 
++ (void)showMessage:(NSString *)text withTitle:(NSString *)title;
+
 @end

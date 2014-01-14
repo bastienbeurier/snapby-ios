@@ -9,6 +9,9 @@
 #import "WelcomeViewController.h"
 #import "SessionUtilities.h"
 #import "ImageUtilities.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "NavigationAppDelegate.h"
+
 
 @interface WelcomeViewController ()
 
@@ -70,9 +73,32 @@
 }
 
 - (IBAction)facebookButtonClicked:(id)sender {
+    
     self.facebookFirstLabel.textColor = [UIColor whiteColor];
     self.facebookSecondLabel.textColor = [UIColor whiteColor];
     [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
+    
+    //todoBT
+    // We should not have any token or open session here
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded
+        || FBSession.activeSession.state == FBSessionStateOpen
+        || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
+        
+        [SessionUtilities redirectToSignIn];
+        
+    } else {
+        // Open a session showing the user the login UI
+        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"email"]
+                                           allowLoginUI:YES
+                                      completionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {
+             
+             // Retrieve the app delegate
+             NavigationAppDelegate* navigationAppDelegate = [UIApplication sharedApplication].delegate;
+             // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+             [navigationAppDelegate sessionStateChanged:session state:state error:error];
+         }];
+    }
 }
 
 - (IBAction)facebookButtonCancelledClicking:(id)sender {

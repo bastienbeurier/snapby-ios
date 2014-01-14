@@ -18,6 +18,9 @@
 #import "AFStreetShoutAPIClient.h"
 #import "Mixpanel.h"
 #import "TrackingUtilities.h"
+#import "SessionUtilities.h"
+#import "WelcomeViewController.h"
+#import "GeneralUtilities.h"
 
 @implementation NavigationAppDelegate
 
@@ -54,6 +57,31 @@
     
     if(remoteNotif) {
         [self application:application handlePushNotification:remoteNotif];
+    }
+    
+    // Check if the user has not been logged out
+    if ([SessionUtilities isSignedIn]){
+        
+        // Check if he logged in with facebook
+        if([SessionUtilities currentUserIsConnectingWithFacebook]){
+            
+            // In this case, there should be facebook token
+            if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+                // If there's one, just open the session silently, without showing the user the login UI
+                // It will automatically skip the welcome controller
+                [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"email"]
+                                                   allowLoginUI:NO
+                                              completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                                  // Handler for session state changes
+                                                  [self sessionStateChanged:session state:state error:error];
+                                              }];
+            } else {
+                // If there's no cached session, we delete everything and go normally to welcome
+                [SessionUtilities wipeOffCredentials];
+            }
+        } else{
+            [self skipWelcomeController];
+        }
     }
     
     return YES;
@@ -95,12 +123,19 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
     [TrackingUtilities trackAppOpened];
+    
+    // Handle the user leaving the app while the Facebook login dialog is being shown
+    [FBAppCall handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    // Close the FB session before quitting
+    [FBSession.activeSession close];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
@@ -126,7 +161,7 @@
     }
 }
 
-//Code from http://oleb.net/blog/2009/09/managing-the-network-activity-indicator/
+// Code from http://oleb.net/blog/2009/09/managing-the-network-activity-indicator/
 - (void)setNetworkActivityIndicatorVisible:(BOOL)setVisible {
     static NSInteger NumberOfCallsToSetVisible = 0;
     if (setVisible)
@@ -136,6 +171,90 @@
     
     // Display the indicator as long as our static counter is > 0.
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:(NumberOfCallsToSetVisible > 0)];
+}
+
+// Jump directly to Navigation View Controller
+-(void)skipWelcomeController
+{
+    WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
+    [welcomeViewController performSegueWithIdentifier:@"Navigation Push Segue From Welcome" sender:nil];
+}
+
+// This method will handle ALL the session state changes in the app
+- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
+{
+    // If the session was opened successfully
+    if (!error && state == FBSessionStateOpen){
+        
+        // In case there is no server token yet
+        if(![SessionUtilities isSignedIn]){
+            //TODO
+            [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+                if (!error) {
+                    //NSString *email = [user objectForKey:@"email"];
+                }
+            }];
+            // look for the user in the database
+            // if it exist, add facebook login
+            // if it does not exist, create a user with login facebook..
+            // save user and token pref
+        }
+            
+        [self skipWelcomeController];
+        return;
+    }
+    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
+        // If the session is closed
+        NSLog(@"Session closed");
+    }
+    
+    // Handle errors
+    if (error){
+        NSLog(@"Error");
+        NSString *alertText;
+        NSString *alertTitle;
+        // If the error requires people using an app to make an action outside of the app in order to recover
+        if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
+            alertTitle = @"Something went wrong";
+            alertText = [FBErrorUtility userMessageForError:error];
+            [GeneralUtilities showMessage:alertText withTitle:alertTitle];
+        } else {
+            
+            // If the user cancelled login, do nothing
+            if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+                NSLog(@"User cancelled login");
+                
+                // Handle session closures that happen outside of the app
+            } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession){
+                alertTitle = @"Session Error";
+                alertText = @"Your current session is no longer valid. Please log in again.";
+                [GeneralUtilities showMessage:alertText withTitle:alertTitle];
+                
+                // For simplicity, here we just show a generic message for all other errors
+                // You can learn how to handle other errors using our guide: https://developers.facebook.com/docs/ios/errors
+            } else {
+                //Get more error information from the error
+                NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
+                
+                // Show the user an error message
+                alertTitle = @"Something went wrong";
+                alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
+                [GeneralUtilities showMessage:alertText withTitle:alertTitle];
+            }
+        }
+        // Clear tokens
+        [SessionUtilities redirectToSignIn];
+    }
+}
+
+// After facebook authentication, the app is called back with the session information.
+// Override application:openURL:sourceApplication:annotation to call the FBsession object that handles the incoming URL
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [FBSession.activeSession handleOpenURL:url];
 }
 
 @end

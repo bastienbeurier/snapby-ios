@@ -59,7 +59,7 @@
 // Enrich parameters with token
 + (void) enrichParametersWithToken:(NSMutableDictionary *) parameters
 {
-    if ([SessionUtilities loggedIn]){
+    if ([SessionUtilities isSignedIn]){
         [parameters setObject:[SessionUtilities getCurrentUserToken] forKey:@"auth_token"];
     }
 }
