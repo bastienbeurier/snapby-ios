@@ -16,9 +16,9 @@
 
 + (User *)getCurrentUser;
 
-+ (void)saveCurrentUserIsConnectingWithFacebook:(BOOL)facebookConnect;
++ (void)setFBConnectedPref:(BOOL)isFBConnected;
 
-+ (BOOL) currentUserIsConnectingWithFacebook;
++ (BOOL) isFBConnected;
 
 + (void)securelySaveCurrentUserToken:(NSString *)authToken;
 

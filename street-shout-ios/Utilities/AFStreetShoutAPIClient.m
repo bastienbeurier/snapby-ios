@@ -277,7 +277,7 @@
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users.json"];
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
     [parameters setObject:email forKey:@"email"];
     [parameters setObject:password forKey:@"password"];
@@ -316,11 +316,16 @@
 }
 
 // Sign in or up with Facebook
-+ (void)signInOrUpWithFacebookWithParameters: (NSMutableDictionary *)parameters success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)())failureBlock
++ (void)signInOrUpWithFacebookWithParameters: (id) params success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)())failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/facebook_create_or_update.json"];
     
-    [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
+    
+    [parameters setObject:[params objectForKey:@"email"] forKey:@"email"];
+    [parameters setObject:[params objectForKey:@"id"] forKey:@"facebook_id"];
+    [parameters setObject:[params objectForKey:@"name"] forKey:@"facebook_name"];
+    [parameters setObject:[params objectForKey:@"username"] forKey:@"username"];
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {

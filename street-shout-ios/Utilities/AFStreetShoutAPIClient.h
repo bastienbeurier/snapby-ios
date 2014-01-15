@@ -40,7 +40,7 @@
 
 + (void)updateUserInfo;
 
-+ (void)signInOrUpWithFacebookWithParameters: (NSMutableDictionary *)parameters success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)())failureBlock;
++ (void)signInOrUpWithFacebookWithParameters: (id)params success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)())failureBlock;
 
 @end
 

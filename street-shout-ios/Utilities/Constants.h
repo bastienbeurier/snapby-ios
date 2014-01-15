@@ -26,7 +26,7 @@
 #define USER_EMAIL_PREF @"User model email preference"
 #define USER_ID_PREF @"User model id preference"
 #define USERNAME_PREF @"User model username preference"
-#define USER_CONNECT_PREF @"User connection preference (FB or email)"
+#define USER_CONNECT_PREF @"FB connect preference"
 #define USER_AUTH_TOKEN_PREF @"User authentication token preference"
 
 @interface Constants : NSObject

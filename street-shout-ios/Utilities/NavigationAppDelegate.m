@@ -64,7 +64,7 @@
     if ([SessionUtilities isSignedIn]){
         
         // Check if he logged in with facebook
-        if([SessionUtilities currentUserIsConnectingWithFacebook]){
+        if([SessionUtilities isFBConnected]){
             
             // In this case, there should be facebook token
             if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
@@ -192,27 +192,22 @@
             // Request information about the user
             [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                 if (!error) {
-                    // if it worked, send a request to the server
-                    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
-                    
-                    [parameters setObject:[result objectForKey:@"email"] forKey:@"email"];
-                    [parameters setObject:[result objectForKey:@"id"] forKey:@"facebook_id"];
-                    [parameters setObject:[result objectForKey:@"name"] forKey:@"facebook_name"];
-                    [parameters setObject:[result objectForKey:@"username"] forKey:@"username"];
-                    
                     // Get the user and token from the database
                     // If the user does not exist, it is created
-                    [self sendSignInOrUpRequestWithFacebookParameters: parameters];
+                    [self sendSignInOrUpRequestWithFacebookParameters: result];
+                    
+                    // Set in the phone our connection preference
+                    [SessionUtilities setFBConnectedPref:true];
             
                 } else {
                     // todoBT
-                    // An error occurred, we need to handle the error
-                    // See: https://developers.facebook.com/docs/ios/errors   
+                    // display an alert
                 }
             }];
         }
-            
-        [self skipWelcomeController];
+        else{
+            [self skipWelcomeController];
+        }
         return;
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
@@ -253,9 +248,10 @@
                 alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
                 [GeneralUtilities showMessage:alertText withTitle:alertTitle];
             }
+            
+            // Clear tokens
+            [SessionUtilities redirectToSignIn];
         }
-        // Clear tokens
-        [SessionUtilities redirectToSignIn];
     }
 }
 
@@ -271,7 +267,7 @@
 
 
 // Prepare failure and success block for the signInOrUpWithFacebookWithParameters request
-- (void)sendSignInOrUpRequestWithFacebookParameters: (NSMutableDictionary *)parameters
+- (void)sendSignInOrUpRequestWithFacebookParameters: (id)params
 {
     WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
     
@@ -307,7 +303,7 @@
     [MBProgressHUD showHUDAddedTo:welcomeViewController.view animated:YES];
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [AFStreetShoutAPIClient signInOrUpWithFacebookWithParameters:parameters success:successBlock failure:failureBlock];
+        [AFStreetShoutAPIClient signInOrUpWithFacebookWithParameters:params success:successBlock failure:failureBlock];
     });
 }
 

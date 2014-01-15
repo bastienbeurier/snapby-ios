@@ -42,18 +42,17 @@
     }
 }
 
-+ (void)saveCurrentUserIsConnectingWithFacebook:(BOOL)facebookConnect
++ (void)setFBConnectedPref:(BOOL)isFBConnected
 {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSNumber *fbConnect = [NSNumber numberWithBool:facebookConnect];
+    NSNumber *fbConnect = [NSNumber numberWithBool:isFBConnected];
     [prefs setObject:fbConnect forKey:USER_CONNECT_PREF];
 
 }
 
-+ (BOOL) currentUserIsConnectingWithFacebook
++ (BOOL) isFBConnected
 {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
     return [[prefs objectForKey:USER_CONNECT_PREF] integerValue];
 }
 
