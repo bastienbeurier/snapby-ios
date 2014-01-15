@@ -316,7 +316,7 @@
 }
 
 // Sign in or up with Facebook
-+ (void)signInOrUpWithFacebookWithParameters: (id) params success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)())failureBlock
++ (void)signInOrUpWithFacebookWithParameters: (id) params success:(void(^)(User *user, NSString *authToken, BOOL isSignup))successBlock failure:(void(^)())failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/facebook_create_or_update.json"];
     
@@ -332,12 +332,17 @@
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        
+        NSLog(@"IS SIGNUP %@", [result valueForKey:@"is_signup"]);
+        
+        BOOL isSignup = [[result valueForKey:@"is_signup"] isEqualToString:@"1"] ? YES : NO;
+        
         NSDictionary *rawUser = [result valueForKeyPath:@"user"];
         User *user = [User rawUserToInstance:rawUser];
         NSString *authToken = [result objectForKey:@"auth_token"];
             
         if (successBlock) {
-                successBlock(user, authToken);
+                successBlock(user, authToken, isSignup);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
