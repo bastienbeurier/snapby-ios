@@ -61,7 +61,7 @@
     
     NSString *imageParam = shout.image ? @"Yes" : @"No";
     
-    [mixpanel track:@"Sign up" properties:@{@"Source": source, @"Image": imageParam}];
+    [mixpanel track:@"Display shout" properties:@{@"Source": source, @"Image": imageParam}];
     
     [mixpanel.people increment:@"Display shout count" by:[NSNumber numberWithInt:1]];
 }

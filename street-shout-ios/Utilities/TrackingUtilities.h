@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Mixpanel.h"
 #import "User.h"
+#import "Shout.h"
 
 @interface TrackingUtilities : NSObject
 
@@ -20,6 +21,6 @@
 
 + (void)trackSignUpWithSource:(NSString *)source;
 
-+ (void)trackDisplayShout:(Shout *)source withSource:(NSString *)source
++ (void)trackDisplayShout:(Shout *)source withSource:(NSString *)source;
 
 @end
