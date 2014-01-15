@@ -15,7 +15,8 @@
 #define S3_URL @"street-shout1.s3.amazonaws.com/"
 #define S3_BUCKET @"street-shout1"
 
-#define APP_ID 734887535 //id from iTunesConnect
+// iTunesConnect (must be consistent with the one in Facebook Developper) 
+#define APP_ID 734887535
 
 #define UA_DEVICE_TOKEN_PROD_PREF @"UA Device Token Production"
 #define UA_DEVICE_TOKEN_DEV_PREF @"UA Device Token Development"
@@ -25,12 +26,25 @@
 #define USER_EMAIL_PREF @"User model email preference"
 #define USER_ID_PREF @"User model id preference"
 #define USERNAME_PREF @"User model username preference"
+#define USER_CONNECT_PREF @"FB connect preference"
 #define USER_AUTH_TOKEN_PREF @"User authentication token preference"
-
 
 @interface Constants : NSObject
 
 @end
+
+
+// API Version
+static NSString * const kApiVersion = @"2";
+
+//Development
+static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
+static NSString * const kDevTestFlightAppToken = @"71154ced-9c90-4a19-9715-c74a2f8e57ee";
+
+//Production
+static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5"; //Street Shout
+//static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347" //Shout
+static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 
 //Shout duration in seconds
 static const NSUInteger kShoutDuration = 4 * 60 * 60;
@@ -60,17 +74,7 @@ static const NSUInteger kMapInitialSpan = 180;
 static const double kDropShadowX = 2.0;
 static const double kDropShadowY = 2.0;
 
-//Development
-static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
-static NSString * const kDevTestFlightAppToken = @"71154ced-9c90-4a19-9715-c74a2f8e57ee";
-
-//Production
-static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5"; //Street Shout
-//static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347" //Shout
-static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
-
-static NSString * const kApiVersion = @"2";
-
 //Mixpanel token
 static NSString * const kProdMixPanelToken = @"24dc482a232028564063bd3dd7e84e93";
 static NSString * const kDevMixPanelToken = @"468e53159f354365149b1a46a7ecdec3";
+

@@ -9,6 +9,7 @@
 #import "SessionUtilities.h"
 #import "Constants.h"
 #import "Mixpanel.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @implementation SessionUtilities
 
@@ -41,6 +42,20 @@
     }
 }
 
++ (void)setFBConnectedPref:(BOOL)isFBConnected
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSNumber *fbConnect = [NSNumber numberWithBool:isFBConnected];
+    [prefs setObject:fbConnect forKey:USER_CONNECT_PREF];
+
+}
+
++ (BOOL) isFBConnected
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    return [[prefs objectForKey:USER_CONNECT_PREF] integerValue];
+}
+
 //TODO: store securely in keychain
 + (void)securelySaveCurrentUserToken:(NSString *)authToken
 {
@@ -60,7 +75,7 @@
 }
 
 // Check User and token are stored in the phone
-+ (BOOL)loggedIn
++ (BOOL)isSignedIn
 {
     return [SessionUtilities getCurrentUser] && [SessionUtilities getCurrentUserToken];
 }
@@ -75,6 +90,7 @@
     window.rootViewController = [storyboard instantiateInitialViewController];
 }
 
+// Remove FB session and user token
 + (void)wipeOffCredentials
 {
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
@@ -82,8 +98,15 @@
     
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    // Close the FB session and remove the access token from the cache
+    // The session state handler (in the app delegate) will be called automatically
+    [FBSession.activeSession closeAndClearTokenInformation];
+    [FBSession.activeSession close];
+    [FBSession setActiveSession:nil];
 }
 
+// Check if this is an invalid token response
 + (BOOL)invalidTokenResponse:(AFHTTPRequestOperation *)operation
 {
     return operation && [operation.response statusCode] == 401;

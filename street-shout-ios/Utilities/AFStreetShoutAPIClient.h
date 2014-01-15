@@ -40,5 +40,7 @@
 
 + (void)updateUserInfo;
 
++ (void)signInOrUpWithFacebookWithParameters: (id)params success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)())failureBlock;
+
 @end
 

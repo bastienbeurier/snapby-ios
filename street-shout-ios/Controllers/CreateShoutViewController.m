@@ -125,7 +125,7 @@
 
 - (void)createShoutClicked {
     
-    if (![SessionUtilities loggedIn]){
+    if (![SessionUtilities isSignedIn]){
         [SessionUtilities redirectToSignIn];
         return;
     }

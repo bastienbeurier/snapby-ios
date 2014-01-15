@@ -189,7 +189,7 @@
 }
 - (IBAction)createShoutButtonClicked:(id)sender {
     
-    if (![SessionUtilities loggedIn]){
+    if (![SessionUtilities isSignedIn]){
         [SessionUtilities redirectToSignIn];
         return;
     }
@@ -227,7 +227,7 @@
 
 - (void)settingsButtonClicked
 {
-    if (![SessionUtilities loggedIn]){
+    if (![SessionUtilities isSignedIn]){
         [SessionUtilities redirectToSignIn];
         return;
     }

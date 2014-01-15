@@ -14,16 +14,22 @@
 
 + (void)updateCurrentUserInfoInPhone:(User *)user;
 
++ (User *)getCurrentUser;
+
++ (void)setFBConnectedPref:(BOOL)isFBConnected;
+
++ (BOOL) isFBConnected;
+
 + (void)securelySaveCurrentUserToken:(NSString *)authToken;
 
 + (NSString *)getCurrentUserToken;
 
-+ (User *)getCurrentUser;
-
-+ (BOOL)loggedIn;
++ (BOOL)isSignedIn;
 
 + (void)redirectToSignIn;
 
 + (BOOL)invalidTokenResponse:(AFHTTPRequestOperation *)operation;
+
++ (void)wipeOffCredentials;
 
 @end

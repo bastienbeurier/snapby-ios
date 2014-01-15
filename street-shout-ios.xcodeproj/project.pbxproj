@@ -270,6 +270,8 @@
 		0B97D107181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F1181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png */; };
 		0B97D109181EA88900CE08A3 /* shout-marker-3-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F2181EA88900CE08A3 /* shout-marker-3-selected.png */; };
 		0B97D10B181EA88900CE08A3 /* shout-marker-3-selected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F3181EA88900CE08A3 /* shout-marker-3-selected@2x~iphone.png */; };
+		0B9D3DBF1886E0C500A3CACF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9D3DBE1886E0C500A3CACF /* FacebookSDK.framework */; };
+		0B9D3DC01886E0C500A3CACF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9D3DBE1886E0C500A3CACF /* FacebookSDK.framework */; };
 		0BB44FB7187D746000AE4A64 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FB6187D746000AE4A64 /* SignupViewController.m */; };
 		0BB44FB8187D746000AE4A64 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FB6187D746000AE4A64 /* SignupViewController.m */; };
 		0BB44FBB187DAF0500AE4A64 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FBA187DAF0500AE4A64 /* User.m */; };
@@ -482,6 +484,7 @@
 		0B97D0F1181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-marker-3-deselected@2x~iphone.png"; sourceTree = "<group>"; };
 		0B97D0F2181EA88900CE08A3 /* shout-marker-3-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-marker-3-selected.png"; sourceTree = "<group>"; };
 		0B97D0F3181EA88900CE08A3 /* shout-marker-3-selected@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-marker-3-selected@2x~iphone.png"; sourceTree = "<group>"; };
+		0B9D3DBE1886E0C500A3CACF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		0BB44FB5187D746000AE4A64 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		0BB44FB6187D746000AE4A64 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		0BB44FB9187DAF0500AE4A64 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Models/User.h; sourceTree = "<group>"; };
@@ -589,6 +592,7 @@
 				0B07BA1117E6FF8300DA26EE /* libz.dylib in Frameworks */,
 				0B07BA1217E6FF8300DA26EE /* CoreLocation.framework in Frameworks */,
 				0B07BA1317E6FF8300DA26EE /* MobileCoreServices.framework in Frameworks */,
+				0B9D3DBF1886E0C500A3CACF /* FacebookSDK.framework in Frameworks */,
 				0B07BA1417E6FF8300DA26EE /* SystemConfiguration.framework in Frameworks */,
 				0B07BA1517E6FF8300DA26EE /* Security.framework in Frameworks */,
 				0B07BA1617E6FF8300DA26EE /* CFNetwork.framework in Frameworks */,
@@ -618,6 +622,7 @@
 				0B0CD50518362C1600EB3752 /* libz.dylib in Frameworks */,
 				0B0CD50618362C1600EB3752 /* CoreLocation.framework in Frameworks */,
 				0B0CD50718362C1600EB3752 /* MobileCoreServices.framework in Frameworks */,
+				0B9D3DC01886E0C500A3CACF /* FacebookSDK.framework in Frameworks */,
 				0B0CD50818362C1600EB3752 /* SystemConfiguration.framework in Frameworks */,
 				0B0CD50918362C1600EB3752 /* Security.framework in Frameworks */,
 				0B0CD50A18362C1600EB3752 /* CFNetwork.framework in Frameworks */,
@@ -893,6 +898,7 @@
 		0B65F7221795C66500F37227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0B9D3DBE1886E0C500A3CACF /* FacebookSDK.framework */,
 				0B57FB921885E17F00FC23BF /* SenTestingKit.framework */,
 				0B57FAC61885DFDF00FC23BF /* Accelerate.framework */,
 				0B57FAC31885DF8A00FC23BF /* AdSupport.framework */,
@@ -1497,7 +1503,7 @@
 		0B07BA2B17E6FF8300DA26EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1517,8 +1523,8 @@
 					"\"$(SRCROOT)/Airship\"",
 				);
 				PRODUCT_NAME = Shatte;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F981EC2-93AF-45A4-965F-911F537997C2";
+				PROVISIONING_PROFILE = "8425E6AA-4534-484C-92DC-1AD607B108A6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A9A0A225-4FA8-49ED-A9FC-26B27A63D34C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = NO;
@@ -1534,6 +1540,9 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/baptistetruchot/Documents/FacebookSDK,
+					"/Users/baptistetruchot/Documents/XCode_Projects/street-shout-ios",
+					"/Users/bastien/Developer/iOS/street-shout-ios",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
@@ -1568,6 +1577,9 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/baptistetruchot/Documents/FacebookSDK,
+					"/Users/baptistetruchot/Documents/XCode_Projects/street-shout-ios",
+					"/Users/bastien/Developer/iOS/street-shout-ios",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";

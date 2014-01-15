@@ -160,4 +160,14 @@
     [parameters setObject:apiVersion forKey:@"api_version"];
 }
 
+// Show an alert message
++ (void)showMessage:(NSString *)text withTitle:(NSString *)title
+{
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:text
+                               delegate:nil
+                      cancelButtonTitle:@"OK!"
+                      otherButtonTitles:nil] show];
+}
+
 @end
