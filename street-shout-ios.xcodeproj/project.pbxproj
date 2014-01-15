@@ -839,12 +839,8 @@
 		0B42A71117970CBE00312BFD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0B42A7121797133500312BFD /* AFStreetShoutAPIClient.h */,
-				0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */,
 				0B42A71B17971AF300312BFD /* Shout.h */,
 				0B42A71C17971AF300312BFD /* Shout.m */,
-				0B42A71E17971B1D00312BFD /* MapRequestHandler.h */,
-				0B42A71F17971B1D00312BFD /* MapRequestHandler.m */,
 				0BB44FB9187DAF0500AE4A64 /* User.h */,
 				0BB44FBA187DAF0500AE4A64 /* User.m */,
 			);
@@ -854,8 +850,12 @@
 		0B42A7161797135000312BFD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0B42A7121797133500312BFD /* AFStreetShoutAPIClient.h */,
+				0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */,
 				0B65F7321795C66500F37227 /* NavigationAppDelegate.h */,
 				0B65F7331795C66500F37227 /* NavigationAppDelegate.m */,
+				0B42A71E17971B1D00312BFD /* MapRequestHandler.h */,
+				0B42A71F17971B1D00312BFD /* MapRequestHandler.m */,
 				0BDB475A17BC3FEA00369A14 /* GeneralUtilities.h */,
 				0BDB475B17BC3FEA00369A14 /* GeneralUtilities.m */,
 				0B42A72117975E5C00312BFD /* LocationUtilities.h */,
@@ -1481,6 +1481,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"PRODUCTION=\"$(inProduction)\"",
+					"MIXPANEL_LOG=1",
 				);
 				HEADER_SEARCH_PATHS = "Airship/**";
 				INFOPLIST_FILE = "$(SRCROOT)/street-shout-ios-dev/street-shout-ios-dev-Info.plist";
@@ -1512,7 +1513,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "PRODUCTION=\"$(inProduction)\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PRODUCTION=\"$(inProduction)\"",
+					"MIXPANEL_LOG=1",
+				);
 				HEADER_SEARCH_PATHS = "Airship/**";
 				INFOPLIST_FILE = "$(SRCROOT)/street-shout-ios-dev/street-shout-ios-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

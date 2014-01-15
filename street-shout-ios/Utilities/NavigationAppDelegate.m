@@ -271,12 +271,18 @@
 {
     WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
     
-    typedef void (^SuccessBlock)(User *, NSString *);
-    SuccessBlock successBlock = ^(User *user, NSString *authToken) {
+    typedef void (^SuccessBlock)(User *, NSString *, BOOL);
+    SuccessBlock successBlock = ^(User *user, NSString *authToken, BOOL isSignup) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:welcomeViewController.view animated:YES];
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
+            
+            //Mixpanel tracking
+            [TrackingUtilities identifyWithMixpanel:user];
+            if (isSignup) {
+                [TrackingUtilities trackSignUpWithSource:@"Facebook"];
+            }
         
             [self skipWelcomeController];
         });
