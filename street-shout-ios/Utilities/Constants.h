@@ -18,7 +18,6 @@
 // iTunesConnect (must be consistent with the one in Facebook Developper) 
 #define APP_ID 734887535
 
-
 #define UA_DEVICE_TOKEN_PROD_PREF @"UA Device Token Production"
 #define UA_DEVICE_TOKEN_DEV_PREF @"UA Device Token Development"
 #define NOTIFICATION_RADIUS_PREF @"Notification Radius"
@@ -29,7 +28,6 @@
 #define USERNAME_PREF @"User model username preference"
 #define USER_CONNECT_PREF @"User connection preference (FB or email)"
 #define USER_AUTH_TOKEN_PREF @"User authentication token preference"
-
 
 @interface Constants : NSObject
 
@@ -75,7 +73,6 @@ static const NSUInteger kMapInitialSpan = 180;
 //Design
 static const double kDropShadowX = 2.0;
 static const double kDropShadowY = 2.0;
-
 
 //Mixpanel token
 static NSString * const kProdMixPanelToken = @"24dc482a232028564063bd3dd7e84e93";

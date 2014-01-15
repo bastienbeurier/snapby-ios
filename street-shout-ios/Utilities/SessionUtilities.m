@@ -103,6 +103,8 @@
     // Close the FB session and remove the access token from the cache
     // The session state handler (in the app delegate) will be called automatically
     [FBSession.activeSession closeAndClearTokenInformation];
+    [FBSession.activeSession close];
+    [FBSession setActiveSession:nil];
 }
 
 // Check if this is an invalid token response

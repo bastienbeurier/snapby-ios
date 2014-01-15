@@ -21,6 +21,7 @@
 #import "SessionUtilities.h"
 #import "WelcomeViewController.h"
 #import "GeneralUtilities.h"
+#import "MBProgressHUD.h"
 
 @implementation NavigationAppDelegate
 
@@ -123,7 +124,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    
     [TrackingUtilities trackAppOpened];
     
     // Handle the user leaving the app while the Facebook login dialog is being shown
@@ -188,16 +188,28 @@
         
         // In case there is no server token yet
         if(![SessionUtilities isSignedIn]){
-            //TODO
-            [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+            
+            // Request information about the user
+            [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                 if (!error) {
-                    //NSString *email = [user objectForKey:@"email"];
+                    // if it worked, send a request to the server
+                    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
+                    
+                    [parameters setObject:[result objectForKey:@"email"] forKey:@"email"];
+                    [parameters setObject:[result objectForKey:@"id"] forKey:@"facebook_id"];
+                    [parameters setObject:[result objectForKey:@"name"] forKey:@"facebook_name"];
+                    [parameters setObject:[result objectForKey:@"username"] forKey:@"username"];
+                    
+                    // Get the user and token from the database
+                    // If the user does not exist, it is created
+                    [self sendSignInOrUpRequestWithFacebookParameters: parameters];
+            
+                } else {
+                    // todoBT
+                    // An error occurred, we need to handle the error
+                    // See: https://developers.facebook.com/docs/ios/errors   
                 }
             }];
-            // look for the user in the database
-            // if it exist, add facebook login
-            // if it does not exist, create a user with login facebook..
-            // save user and token pref
         }
             
         [self skipWelcomeController];
@@ -255,6 +267,48 @@
          annotation:(id)annotation
 {
     return [FBSession.activeSession handleOpenURL:url];
+}
+
+
+// Prepare failure and success block for the signInOrUpWithFacebookWithParameters request
+- (void)sendSignInOrUpRequestWithFacebookParameters: (NSMutableDictionary *)parameters
+{
+    WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
+    
+    typedef void (^SuccessBlock)(User *, NSString *);
+    SuccessBlock successBlock = ^(User *user, NSString *authToken) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:welcomeViewController.view animated:YES];
+            [SessionUtilities updateCurrentUserInfoInPhone:user];
+            [SessionUtilities securelySaveCurrentUserToken:authToken];
+        
+            [self skipWelcomeController];
+        });
+    };
+
+    typedef void (^FailureBlock)(NSDictionary *);
+    FailureBlock failureBlock = ^(NSDictionary * errors){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:welcomeViewController.view animated:YES];
+            
+            NSString *title = NSLocalizedStringFromTable (@"fb_sign_in_error_title", @"Strings", @"comment");
+            NSString *message = NSLocalizedStringFromTable (@"fb_sign_in_error_message", @"Strings", @"comment");
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [SessionUtilities redirectToSignIn];
+        });
+    };
+
+    [MBProgressHUD showHUDAddedTo:welcomeViewController.view animated:YES];
+
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [AFStreetShoutAPIClient signInOrUpWithFacebookWithParameters:parameters success:successBlock failure:failureBlock];
+    });
 }
 
 @end

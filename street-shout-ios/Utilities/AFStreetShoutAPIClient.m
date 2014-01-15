@@ -315,4 +315,31 @@
     }];
 }
 
+// Sign in or up with Facebook
++ (void)signInOrUpWithFacebookWithParameters: (NSMutableDictionary *)parameters success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/facebook_create_or_update.json"];
+    
+    [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSDictionary *rawUser = [result valueForKeyPath:@"user"];
+        User *user = [User rawUserToInstance:rawUser];
+        NSString *authToken = [result objectForKey:@"auth_token"];
+            
+        if (successBlock) {
+                successBlock(user, authToken);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        NSLog(@"Failure in signInOrUpWithFacebook");
+        failureBlock();
+    }];
+}
+
+
 @end

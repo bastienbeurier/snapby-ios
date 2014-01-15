@@ -78,12 +78,14 @@
     self.facebookSecondLabel.textColor = [UIColor whiteColor];
     [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
     
-    //todoBT
+    // todoBT prevent double clicking
+    
     // We should not have any token or open session here
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded
         || FBSession.activeSession.state == FBSessionStateOpen
         || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
         
+        NSLog(@"%u",FBSession.activeSession.state);
         [SessionUtilities redirectToSignIn];
         
     } else {
