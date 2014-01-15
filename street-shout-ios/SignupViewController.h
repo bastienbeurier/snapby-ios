@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignupViewController : UIViewController
+@interface SignupViewController : UIViewController <UITextFieldDelegate>
+
 
 @end

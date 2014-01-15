@@ -15,6 +15,7 @@
 #import "SessionUtilities.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageUtilities.h"
+#import "TrackingUtilities.h"
 
 @interface SigninViewController ()
 
@@ -27,17 +28,46 @@
 
 - (void)viewDidLoad
 {
-    //Nav bar
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    //Nav Bar
+    [ImageUtilities drawCustomNavBarWithBackItem:YES okItem:YES title:@"Sign in" inViewController:self];
     
     //Textview border
     [ImageUtilities drawBottomBorderForView:self.emailTextView withColor:[UIColor lightGrayColor]];
     [ImageUtilities drawBottomBorderForView:self.passwordTextView withColor:[UIColor lightGrayColor]];
     
+    //Set textview tags
+    self.emailTextView.tag = 0;
+    self.passwordTextView.tag = 1;
+    
+    //Set TextField delegate
+    self.emailTextView.delegate = self;
+    self.passwordTextView.delegate = self;
+    
     [super viewDidLoad];
 }
 
-- (IBAction)signinButtonClicked:(id)sender {
+- (BOOL)textFieldShouldReturn:(UITextField*)textField;
+{
+    NSInteger nextTag = textField.tag + 1;
+    UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+    if (nextResponder) {
+        [nextResponder becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+    }
+    return NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    //First responder
+    [self.emailTextView becomeFirstResponder];
+    
+    [super viewDidAppear:animated];
+}
+
+- (void)okButtonClicked
+{
     BOOL error = NO;
     
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:nil
@@ -70,6 +100,11 @@
     }
 }
 
+- (void)backButtonClicked
+{
+    [[self navigationController] popViewControllerAnimated:YES];
+}
+
 - (void)signinUser {
     
     typedef void (^SuccessBlock)(User *, NSString *);
@@ -78,6 +113,9 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
+            
+            //Mixpanel identification
+            [TrackingUtilities identifyWithMixpanel:user isSigningUp:NO];
             
             [self performSegueWithIdentifier:@"Navigation Push Segue From Signin" sender:nil];
         });

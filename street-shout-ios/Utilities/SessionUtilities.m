@@ -8,6 +8,7 @@
 
 #import "SessionUtilities.h"
 #import "Constants.h"
+#import "Mixpanel.h"
 
 @implementation SessionUtilities
 
@@ -76,6 +77,9 @@
 
 + (void)wipeOffCredentials
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel reset];
+    
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }

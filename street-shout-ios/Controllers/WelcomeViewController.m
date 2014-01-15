@@ -35,11 +35,6 @@
         self.navigationController.navigationBar.translucent = NO;
     }
     
-    //Check if user is logged in
-    if ([SessionUtilities loggedIn]) {
-        [self performSegueWithIdentifier:@"Navigation Push Segue From Welcome" sender:nil];
-    }
-    
     //Set background image
     NSString *filename = @"Welcome.png";
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -57,7 +52,7 @@
     [[self.signupButtonView layer] setBorderWidth:2.0f];
     [[self.signupButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
     [[self.facebookButtonView layer] setBorderWidth:2.0f];
-    [[self.facebookButtonView layer] setBorderColor:[ImageUtilities getFacebookBlue].CGColor];
+    [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,15 +70,15 @@
 }
 
 - (IBAction)facebookButtonClicked:(id)sender {
-    self.facebookFirstLabel.textColor = [ImageUtilities getFacebookBlue];
-    self.facebookSecondLabel.textColor = [ImageUtilities getFacebookBlue];
-    [[self.facebookButtonView layer] setBorderColor:[ImageUtilities getFacebookBlue].CGColor];
+    self.facebookFirstLabel.textColor = [UIColor whiteColor];
+    self.facebookSecondLabel.textColor = [UIColor whiteColor];
+    [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
 }
 
-- (IBAction)signupButtonDidCancelledClicking:(id)sender {
-    self.facebookFirstLabel.textColor = [ImageUtilities getFacebookBlue];
-    self.facebookSecondLabel.textColor = [ImageUtilities getFacebookBlue];
-    [[self.facebookButtonView layer] setBorderColor:[ImageUtilities getFacebookBlue].CGColor];
+- (IBAction)facebookButtonCancelledClicking:(id)sender {
+    self.facebookFirstLabel.textColor = [UIColor whiteColor];
+    self.facebookSecondLabel.textColor = [UIColor whiteColor];
+    [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
 }
 
 

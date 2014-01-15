@@ -13,6 +13,9 @@
 #import "User.h"
 #import "AFJSONRequestOperation.h"
 #import "SessionUtilities.h"
+#import <QuartzCore/QuartzCore.h>
+#import "ImageUtilities.h"
+#import "TrackingUtilities.h"
 
 @interface SignupViewController ()
 
@@ -27,13 +30,52 @@
 
 - (void)viewDidLoad
 {
-    //Nav bar
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    //Nav Bar
+    [ImageUtilities drawCustomNavBarWithBackItem:YES okItem:YES title:@"Sign up" inViewController:self];
+    
+    //Textview border
+    [ImageUtilities drawBottomBorderForView:self.usernameTextView withColor:[UIColor lightGrayColor]];
+    [ImageUtilities drawBottomBorderForView:self.emailTextView withColor:[UIColor lightGrayColor]];
+    [ImageUtilities drawBottomBorderForView:self.passwordTextView withColor:[UIColor lightGrayColor]];
+    [ImageUtilities drawBottomBorderForView:self.confirmPasswordTextView withColor:[UIColor lightGrayColor]];
+    
+    //Set textview tags
+    self.usernameTextView.tag = 0;
+    self.emailTextView.tag = 1;
+    self.passwordTextView.tag = 2;
+    self.confirmPasswordTextView.tag = 3;
+    
+    //Set TextField delegate
+    self.usernameTextView.delegate = self;
+    self.emailTextView.delegate = self;
+    self.passwordTextView.delegate = self;
+    self.confirmPasswordTextView.delegate = self;
     
     [super viewDidLoad];
 }
 
-- (IBAction)signupButtonClicked:(id)sender {
+- (void)viewDidAppear:(BOOL)animated
+{
+    //First responder
+    [self.usernameTextView becomeFirstResponder];
+    
+    [super viewDidAppear:animated];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField;
+{
+    NSInteger nextTag = textField.tag + 1;
+    UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+    if (nextResponder) {
+        [nextResponder becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+    }
+    return NO;
+}
+
+- (void)okButtonClicked
+{
     BOOL error = NO;
     
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:nil
@@ -75,6 +117,11 @@
     }
 }
 
+- (void)backButtonClicked
+{
+    [[self navigationController] popViewControllerAnimated:YES];
+}
+
 - (void)signupUser {
     
     typedef void (^SuccessBlock)(User *, NSString *);
@@ -83,6 +130,10 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
+            
+            //Mixpanel identification and tracking
+            [TrackingUtilities identifyWithMixpanel:user isSigningUp:YES];
+            [TrackingUtilities trackSignUpWithSource:@"Email"];
             
             [self performSegueWithIdentifier:@"Navigation Push Segue From Signup" sender:nil];
         });
