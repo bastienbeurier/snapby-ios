@@ -12,8 +12,14 @@
 
 @interface TrackingUtilities : NSObject
 
-+ (void)identifyWithMixpanel:(User *)user;
++ (void)identifyWithMixpanel:(User *)user isSigningUp:(BOOL)isSigningUp;
 
 + (void)trackCreateShoutImage:(BOOL)image textLength:(NSUInteger)length;
+
++ (void)trackAppOpened;
+
++ (void)trackSignUpWithSource:(NSString *)source;
+
++ (void)trackDisplayShout:(Shout *)source withSource:(NSString *)source
 
 @end

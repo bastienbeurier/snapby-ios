@@ -16,6 +16,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
+#import "TrackingUtilities.h"
 
 #define SHOUT_TAG @"Shout"
 #define NO_SHOUT_TAG @"No Shout"
@@ -172,6 +173,9 @@
 {
     Shout *shout = self.shouts[indexPath.row];
     [self.feedTVCdelegate shoutSelectionComingFromFeed:shout];
+    
+    //Mixpanel tracking
+    [TrackingUtilities trackDisplayShout:shout withSource:@"Feed"];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

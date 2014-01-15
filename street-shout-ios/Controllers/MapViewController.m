@@ -15,6 +15,7 @@
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
 #import "MKMapView+ZoomLevel.h"
+#import "TrackingUtilities.h"
 
 #define ZOOM_0 180
 #define ZOOM_1 10
@@ -107,6 +108,10 @@
     
     if ([annotation respondsToSelector:@selector(shout)]) {
         Shout *shout = annotation.shout;
+        
+        //Mixpanel tracking
+        [TrackingUtilities trackDisplayShout:shout withSource:@"Map"];
+        
         [self setAnnotationView:view pinImageForShout:shout selected:YES];
         view.centerOffset = CGPointMake(13,-13);
         

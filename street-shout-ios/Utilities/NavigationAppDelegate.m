@@ -17,6 +17,7 @@
 #import "Shout.h"
 #import "AFStreetShoutAPIClient.h"
 #import "Mixpanel.h"
+#import "TrackingUtilities.h"
 
 @implementation NavigationAppDelegate
 
@@ -94,7 +95,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [TrackingUtilities trackAppOpened];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

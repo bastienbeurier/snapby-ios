@@ -131,8 +131,9 @@
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
             
-            //Mixpanel identification
-            [TrackingUtilities identifyWithMixpanel:user];
+            //Mixpanel identification and tracking
+            [TrackingUtilities identifyWithMixpanel:user isSigningUp:YES];
+            [TrackingUtilities trackSignUpWithSource:@"Email"];
             
             [self performSegueWithIdentifier:@"Navigation Push Segue From Signup" sender:nil];
         });
