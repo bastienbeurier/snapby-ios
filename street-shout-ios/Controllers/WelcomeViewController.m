@@ -11,6 +11,7 @@
 #import "ImageUtilities.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "NavigationAppDelegate.h"
+#import "GeneralUtilities.h"
 
 
 @interface WelcomeViewController ()
@@ -77,8 +78,9 @@
     self.facebookFirstLabel.textColor = [UIColor whiteColor];
     self.facebookSecondLabel.textColor = [UIColor whiteColor];
     [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
-    
+
     // todoBT prevent double clicking
+    
     
     // We should not have any token or open session here
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded
@@ -89,6 +91,12 @@
         [SessionUtilities redirectToSignIn];
         
     } else {
+        // Check connection
+        if (![GeneralUtilities connected]) {
+            [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
+            return;
+        }
+        
         // Open a session showing the user the login UI
         [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"email"]
                                            allowLoginUI:YES
