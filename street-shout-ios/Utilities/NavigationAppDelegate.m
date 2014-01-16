@@ -183,6 +183,9 @@
 // This method will handle ALL the session state changes in the app
 - (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
 {
+    
+    __block NSString *alertText, *alertTitle;
+    
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen){
         
@@ -200,10 +203,13 @@
                     [SessionUtilities setFBConnectedPref:true];
             
                 } else {
-                    // todoBT
-                    // display an alert
+                    [MBProgressHUD hideHUDForView:self.window animated:YES];
+                    alertTitle = NSLocalizedStringFromTable (@"fb_sign_in_error_title", @"Strings", @"comment");
+                    alertText = NSLocalizedStringFromTable (@"fb_sign_in_error_message", @"Strings", @"comment");
+                    [GeneralUtilities showMessage:alertText withTitle:alertTitle];
                 }
             }];
+            [MBProgressHUD showHUDAddedTo:self.window animated:YES];
         }
         else{
             [self skipWelcomeController];
@@ -218,8 +224,6 @@
     // Handle errors
     if (error){
         NSLog(@"Error");
-        NSString *alertText;
-        NSString *alertTitle;
         // If the error requires people using an app to make an action outside of the app in order to recover
         if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
             alertTitle = @"Something went wrong";
@@ -269,12 +273,12 @@
 // Prepare failure and success block for the signInOrUpWithFacebookWithParameters request
 - (void)sendSignInOrUpRequestWithFacebookParameters: (id)params
 {
-    WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
+//    WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
     
     typedef void (^SuccessBlock)(User *, NSString *, BOOL);
     SuccessBlock successBlock = ^(User *user, NSString *authToken, BOOL isSignup) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:welcomeViewController.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.window animated:YES];
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
             
@@ -291,7 +295,7 @@
     typedef void (^FailureBlock)(NSDictionary *);
     FailureBlock failureBlock = ^(NSDictionary * errors){
         dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:welcomeViewController.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.window animated:YES];
             
             NSString *title = NSLocalizedStringFromTable (@"fb_sign_in_error_title", @"Strings", @"comment");
             NSString *message = NSLocalizedStringFromTable (@"fb_sign_in_error_message", @"Strings", @"comment");
@@ -300,8 +304,6 @@
             [SessionUtilities redirectToSignIn];
         });
     };
-
-    [MBProgressHUD showHUDAddedTo:welcomeViewController.view animated:YES];
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [AFStreetShoutAPIClient signInOrUpWithFacebookWithParameters:params success:successBlock failure:failureBlock];
