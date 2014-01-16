@@ -205,7 +205,7 @@
                 } else {
                     [MBProgressHUD hideHUDForView:self.window animated:YES];
                     alertTitle = NSLocalizedStringFromTable (@"fb_sign_in_error_title", @"Strings", @"comment");
-                    alertText = NSLocalizedStringFromTable (@"fb_sign_in_error_message", @"Strings", @"comment");
+                    alertText = NSLocalizedStringFromTable (@"Try_again_message", @"Strings", @"comment");
                     [GeneralUtilities showMessage:alertText withTitle:alertTitle];
                 }
             }];
@@ -298,7 +298,7 @@
             [MBProgressHUD hideHUDForView:self.window animated:YES];
             
             NSString *title = NSLocalizedStringFromTable (@"fb_sign_in_error_title", @"Strings", @"comment");
-            NSString *message = NSLocalizedStringFromTable (@"fb_sign_in_error_message", @"Strings", @"comment");
+            NSString *message = NSLocalizedStringFromTable (@"Try_again_message", @"Strings", @"comment");
             
             [GeneralUtilities showMessage:message withTitle:title];
             [SessionUtilities redirectToSignIn];

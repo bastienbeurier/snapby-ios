@@ -67,6 +67,10 @@
 "obsolete_api_error_title" = "Outdated version of the app";
 "obsolete_api_error_message" = "Download the latest version on the App Store";
 "fb_sign_in_error_title" = "Facebook sign-in failure";
-"fb_sign_in_error_message" = "Try to sign in with email";
+"reset_password_sent_success_message" = "An email with reset password instructions has just been sent.";
+"reset_password_sent_failure_title" = "The reset password failed";
+"Try_again_message" = "Please try again.";
+"email_not_in_database_message" = "Your email does not correspond to any existing user";
+
 
  
