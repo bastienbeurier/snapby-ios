@@ -28,10 +28,14 @@
 @property (nonatomic, weak) FeedTVC *feedTVC;
 @property (nonatomic, weak) MapViewController *mapViewController;
 @property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
+@property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
+@property (strong, nonatomic) UIView *darkMapOverlayView;
+@property (weak, nonatomic) MKMapView *mapView;
+@property (nonatomic) float showShoutAnimationHeightDelta;
 
 @end
 
@@ -41,10 +45,6 @@
 {
     //Status bar style  
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
-    //Feed inner shadow
-    [ImageUtilities addInnerShadowToView:self.bottomContainerView];
-    
     //Buttons round corner
     NSUInteger buttonHeight = self.createShoutButton.bounds.size.height;
     self.createShoutButton.layer.cornerRadius = buttonHeight/2;
@@ -53,9 +53,20 @@
     [super viewDidLoad];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewDidLayoutSubviews
 {
-    [self updateUserInfo];
+    self.darkMapOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.topContainerView.frame.size.width, self.topContainerView.frame.size.height)];
+    self.darkMapOverlayView.backgroundColor = [UIColor blackColor];
+    self.darkMapOverlayView.alpha = 0.5;
+    [self.topContainerView addSubview:self.darkMapOverlayView];
+    self.darkMapOverlayView.hidden = YES;
+    
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(darkMapOverlayTapped:)];
+    [self.darkMapOverlayView addGestureRecognizer:singleFingerTap];
+    
+    self.mapView = self.mapViewController.mapView;
+    
+    [super viewDidLayoutSubviews];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -68,11 +79,20 @@
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
+    [self refreshShouts];
+    
     [super viewWillAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [self updateUserInfo];
+    
+    [super viewDidDisappear:animated];
+}
+
+- (void)refreshShouts
+{
+    [self pullShoutsInZone:[LocationUtilities getMapBounds:self.mapViewController.mapView]];
 }
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
@@ -121,18 +141,81 @@
     if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
         ((ShoutViewController *)[self.feedNavigationController topViewController]).shout = shout;
     } else {
+        self.mapViewController.savedMapLocation = self.mapViewController.mapView.centerCoordinate;
+        
+        self.mapView.zoomEnabled = NO;
+        self.mapView.scrollEnabled = NO;
+        self.mapView.userInteractionEnabled = NO;
+        self.darkMapOverlayView.hidden = NO;
+        self.mapViewController.updateShoutsOnMapMove = NO;
+        
         [self.feedTVC performSegueWithIdentifier:@"Show Shout" sender:shout];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            self.showShoutAnimationHeightDelta = self.topContainerView.frame.size.height - 100;
+            
+            self.topContainerView.frame = CGRectMake(self.topContainerView.frame.origin.x,
+                                                     self.topContainerView.frame.origin.y,
+                                                     self.topContainerView.frame.size.width,
+                                                     self.topContainerView.frame.size.height - self.showShoutAnimationHeightDelta);
+            
+            self.mapView.frame = CGRectMake(self.mapView.frame.origin.x,
+                                            self.mapView.frame.origin.y,
+                                            self.mapView.frame.size.width,
+                                            self.mapView.frame.size.width - self.showShoutAnimationHeightDelta);
+            
+            self.bottomContainerView.frame = CGRectMake(self.bottomContainerView.frame.origin.x,
+                                                        self.bottomContainerView.frame.origin.y - self.showShoutAnimationHeightDelta,
+                                                        self.bottomContainerView.frame.size.width,
+                                                        self.bottomContainerView.frame.size.height + self.showShoutAnimationHeightDelta);
+            
+            self.createShoutButton.hidden = YES;
+            self.moreButton.hidden = YES;
+            
+            self.darkMapOverlayView.alpha = 0.5;
+        }];
     }
+}
+
+- (void)darkMapOverlayTapped:(UITapGestureRecognizer *)recognizer {
+    [self.mapViewController endShoutSelectionModeInMapViewController];
+    
+    self.mapViewController.preventShoutsReload = YES;
+    [self.mapViewController animateMapToLat:self.mapViewController.savedMapLocation.latitude lng:self.mapViewController.savedMapLocation.longitude];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.topContainerView.frame = CGRectMake(self.topContainerView.frame.origin.x,
+                                                 self.topContainerView.frame.origin.y,
+                                                 self.topContainerView.frame.size.width,
+                                                 self.topContainerView.frame.size.height + self.showShoutAnimationHeightDelta);
+        
+        self.mapView.frame = CGRectMake(self.mapView.frame.origin.x,
+                                        self.mapView.frame.origin.y,
+                                        self.mapView.frame.size.width,
+                                        self.mapView.frame.size.width + self.showShoutAnimationHeightDelta);
+        
+        self.bottomContainerView.frame = CGRectMake(self.bottomContainerView.frame.origin.x,
+                                                    self.bottomContainerView.frame.origin.y + self.showShoutAnimationHeightDelta,
+                                                    self.bottomContainerView.frame.size.width,
+                                                    self.bottomContainerView.frame.size.height - self.showShoutAnimationHeightDelta);
+        
+        self.createShoutButton.hidden = NO;
+        self.moreButton.hidden = NO;
+        
+        self.darkMapOverlayView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.mapView.zoomEnabled = YES;
+        self.mapView.scrollEnabled = YES;
+        self.mapView.userInteractionEnabled = YES;
+        self.darkMapOverlayView.hidden = YES;
+        
+        self.mapViewController.updateShoutsOnMapMove = YES;
+    }];
 }
 
 - (void)shoutSelectionComingFromFeed:(Shout *)shout
 {
     [self.mapViewController startShoutSelectionModeInMapViewController:shout];
-}
-
-- (void)refreshShouts
-{
-    [self.mapViewController refreshShoutsFromMapViewController];
 }
 
 - (void)onShoutCreated:(Shout *)shout

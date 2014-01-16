@@ -375,6 +375,7 @@
                         <outlet property="bottomContainerView" destination="R9z-ng-Ift" id="1hv-08-G5c"/>
                         <outlet property="createShoutButton" destination="OTR-fb-maE" id="trM-gr-C6w"/>
                         <outlet property="moreButton" destination="CoJ-3a-fJQ" id="m27-fF-xOH"/>
+                        <outlet property="topContainerView" destination="q8p-tE-cHT" id="wu4-Kd-2gO"/>
                         <segue destination="vn8-un-4WF" kind="push" identifier="Create Shout Modal" id="rBF-pL-H2a"/>
                         <segue destination="sd5-g2-Szr" kind="push" identifier="Settings Push Segue" id="7WF-t0-jVs"/>
                         <segue destination="Br7-Nb-Oar" kind="push" identifier="Display Shout Image" id="Rlx-Vg-XRj"/>
@@ -660,7 +661,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
-                        <segue destination="qtI-Lc-vOJ" kind="push" identifier="Show Shout" id="QaI-XW-tuo"/>
+                        <segue destination="qtI-Lc-vOJ" kind="push" identifier="Show Shout" customClass="PushNoAnimationSegue" id="QaI-XW-tuo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QY6-fM-sTX" userLabel="First Responder" sceneMemberID="firstResponder"/>

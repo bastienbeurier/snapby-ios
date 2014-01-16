@@ -34,7 +34,9 @@
 {
     [super viewDidLoad];
     self.mapView.delegate = self;
-    self.preventShoutDeselection = NO;
+    self.updateShoutsOnMapMove = YES;
+    
+    self.preventShoutsReload = NO;
     
     [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude WithSpan:ZOOM_0 Animated:NO];
 }
@@ -67,18 +69,11 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    if (!self.preventShoutDeselection) {
-        [self endShoutSelectionModeInMapViewController];
+    if (self.updateShoutsOnMapMove && !self.preventShoutsReload) {
+        [self.mapVCdelegate refreshShouts];
     }
     
-    self.preventShoutDeselection = NO;
-    
-    [self.mapVCdelegate pullShoutsInZone:[LocationUtilities getMapBounds:mapView]];
-}
-
-- (void)refreshShoutsFromMapViewController
-{
-    [self mapView:self.mapView regionDidChangeAnimated:NO];
+    self.preventShoutsReload = NO;
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
@@ -144,18 +139,23 @@
 
 - (void)animateMapWhenShoutSelected:(Shout *)shout
 {
-    [self animateMapInShoutSelectionModeWithShout:shout andDistance:kDistanceWhenShoutClickedFromMapOrFeed];
+    [self animateMapToLat:shout.lat lng:shout.lng];
+}
+
+- (void) animateMapToLat:(float)lat lng:(float)lng
+{
+    CLLocationCoordinate2D shoutCoordinate;
+    shoutCoordinate.latitude = lat;
+    shoutCoordinate.longitude = lng;
+    
+    [self.mapView setCenterCoordinate:shoutCoordinate animated:YES];
+
 }
 
 - (void)animateMapWhenZoomOnShout:(Shout *)shout
 {
-    [self animateMapInShoutSelectionModeWithShout:shout andDistance:kDistanceWhenShoutZoomed];
-}
-
-- (void)animateMapInShoutSelectionModeWithShout:(Shout *)shout andDistance:(NSUInteger)distance
-{
-    self.preventShoutDeselection = YES;
-    NSUInteger newZoomDistance = distance;
+    //Change variable name
+    NSUInteger newZoomDistance = kDistanceWhenShoutZoomed;
     NSUInteger currentZoomDistance = [LocationUtilities getMaxDistanceOnMap:self.mapView];
     
     //TODO: check the times 2 for the zoomDistance
