@@ -85,7 +85,7 @@ This will allow you to have the best possible information during testing. **When
     
 ##Checkpoint API
 
-When a tester does something you care about in your app you can pass a checkpoint. For example completing a level, adding a todo item, etc. The checkpoint progress is used to provide insight into how your testers are testing your apps. The passed checkpoints are also attached to crashes, which can help when creating steps to replicate.
+When a tester does something you care about in your app you can pass a checkpoint. For example completing a level, adding a to do item, etc. The checkpoint progress is used to provide insight into how your testers are testing your apps. The passed checkpoints are also attached to crashes, which can help when creating steps to replicate.
 
 `[TestFlight passCheckpoint:@"CHECKPOINT_NAME"];` Use `passCheckpoint:` to track when a user performs certain tasks in your application. This can be useful for making sure testers are hitting all parts of your application, as well as tracking which testers are being thorough.
 

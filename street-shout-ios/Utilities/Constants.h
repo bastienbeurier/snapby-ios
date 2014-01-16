@@ -28,6 +28,7 @@
 #define USERNAME_PREF @"User model username preference"
 #define USER_CONNECT_PREF @"FB connect preference"
 #define USER_AUTH_TOKEN_PREF @"User authentication token preference"
+#define USER_BLACKLISTED @"Is user blacklisted?"
 
 @interface Constants : NSObject
 

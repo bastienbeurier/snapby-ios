@@ -53,8 +53,8 @@
     MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
     shoutAnnotation.coordinate = self.shoutLocation.coordinate;
     [self.mapView addAnnotation:shoutAnnotation];
-    //TODO: check if user blacklisted
-//    [self checkIfBlackListedDevice];
+    
+    self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
 }
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
@@ -362,13 +362,4 @@
     [self.mapView setHidden:NO];
 }
 
-//TODO: check if user is black listed in user prefs
-//- (void)checkIfBlackListedDevice
-//{
-//    [AFStreetShoutAPIClient getBlackListedDevicesAndExecute:^(NSArray *blackListedDeviceIds){
-//        if ([blackListedDeviceIds containsObject:[GeneralUtilities getDeviceID]]) {
-//            self.blackListed = YES;
-//        }
-//    }];
-//}
 @end
