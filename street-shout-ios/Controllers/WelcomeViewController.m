@@ -77,8 +77,8 @@
     [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
     
     // Prevent double clicking
-    UIButton *theButton = (UIButton *) sender;
-    theButton.enabled = NO;
+    UIButton *facebookButton = (UIButton *) sender;
+    facebookButton.enabled = NO;
     
     // We should not have any token or open session here
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded
@@ -105,7 +105,7 @@
              [navigationAppDelegate sessionStateChanged:session state:state error:error];
          }];
         }
-        theButton.enabled = YES;
+        facebookButton.enabled = YES;
     }
 }
 
