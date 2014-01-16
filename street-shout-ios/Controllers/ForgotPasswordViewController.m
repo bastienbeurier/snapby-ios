@@ -27,15 +27,15 @@
 - (IBAction)resetPasswordButtonClicked:(id)sender {
     
     // Prevent double clicking
-    UIButton *facebookButton = (UIButton *) sender;
-    facebookButton.enabled = NO;
+    UIButton *resetButton = (UIButton *) sender;
+    resetButton.enabled = NO;
     
     if (![GeneralUtilities validEmail:self.emailTextView.text]){
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment") withTitle:nil];
-        facebookButton.enabled = YES;
+        resetButton.enabled = YES;
     } else if (![GeneralUtilities connected]) {
         [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
-        facebookButton.enabled = YES;
+        resetButton.enabled = YES;
     } else {
         void(^successBlock)() = ^(id JSON) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -46,12 +46,12 @@
                 [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"reset_password_sent_success_message", @"Strings", @"comment") withTitle:nil];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
-            facebookButton.enabled = YES;
+            resetButton.enabled = YES;
         };
         void(^failureBlock)() = ^() {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"Try_again_message", @"Strings", @"comment") withTitle:NSLocalizedStringFromTable (@"reset_password_sent_failure_title", @"Strings", @"comment")];
-            facebookButton.enabled = YES;
+            resetButton.enabled = YES;
         };
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];

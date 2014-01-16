@@ -273,7 +273,6 @@
 // Prepare failure and success block for the signInOrUpWithFacebookWithParameters request
 - (void)sendSignInOrUpRequestWithFacebookParameters: (id)params
 {
-//    WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
     
     typedef void (^SuccessBlock)(User *, NSString *, BOOL);
     SuccessBlock successBlock = ^(User *user, NSString *authToken, BOOL isSignup) {
