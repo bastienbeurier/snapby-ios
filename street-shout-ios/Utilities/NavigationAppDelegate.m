@@ -222,6 +222,8 @@
     }
     
     // Handle errors
+    // see https://developers.facebook.com/docs/ios/errors for improvement
+
     if (error){
         NSLog(@"Error");
         // If the error requires people using an app to make an action outside of the app in order to recover
@@ -240,9 +242,7 @@
                 alertTitle = @"Session Error";
                 alertText = @"Your current session is no longer valid. Please log in again.";
                 [GeneralUtilities showMessage:alertText withTitle:alertTitle];
-                
-                // For simplicity, here we just show a generic message for all other errors
-                // You can learn how to handle other errors using our guide: https://developers.facebook.com/docs/ios/errors
+
             } else {
                 //Get more error information from the error
                 NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
