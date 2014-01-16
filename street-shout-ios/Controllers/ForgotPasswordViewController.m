@@ -50,7 +50,7 @@
         };
         void(^failureBlock)() = ^() {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"Try_again_message", @"Strings", @"comment") withTitle:NSLocalizedStringFromTable (@"reset_password_sent_failure_title", @"Strings", @"comment")];
+            [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"Try_again_message", @"Strings", @"comment") withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
             resetButton.enabled = YES;
         };
         
