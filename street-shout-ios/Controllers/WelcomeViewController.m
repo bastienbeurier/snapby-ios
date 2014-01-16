@@ -75,9 +75,10 @@
     self.facebookFirstLabel.textColor = [UIColor whiteColor];
     self.facebookSecondLabel.textColor = [UIColor whiteColor];
     [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
-
-    // todoBT prevent double clicking
     
+    // Prevent double clicking
+    UIButton *facebookButton = (UIButton *) sender;
+    facebookButton.enabled = NO;
     
     // We should not have any token or open session here
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded
@@ -91,9 +92,7 @@
         // Check connection
         if (![GeneralUtilities connected]) {
             [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
-            return;
-        }
-        
+        } else {
         // Open a session showing the user the login UI
         [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"email"]
                                            allowLoginUI:YES
@@ -105,6 +104,8 @@
              // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
              [navigationAppDelegate sessionStateChanged:session state:state error:error];
          }];
+        }
+        facebookButton.enabled = YES;
     }
 }
 

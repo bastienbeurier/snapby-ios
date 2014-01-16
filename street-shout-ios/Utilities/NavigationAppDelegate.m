@@ -183,6 +183,9 @@
 // This method will handle ALL the session state changes in the app
 - (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
 {
+    
+    __block NSString *alertText, *alertTitle;
+    
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen){
         
@@ -200,10 +203,13 @@
                     [SessionUtilities setFBConnectedPref:true];
             
                 } else {
-                    // todoBT
-                    // display an alert
+                    [MBProgressHUD hideHUDForView:self.window animated:YES];
+                    alertTitle = NSLocalizedStringFromTable (@"fb_sign_in_error_title", @"Strings", @"comment");
+                    alertText = NSLocalizedStringFromTable (@"Try_again_message", @"Strings", @"comment");
+                    [GeneralUtilities showMessage:alertText withTitle:alertTitle];
                 }
             }];
+            [MBProgressHUD showHUDAddedTo:self.window animated:YES];
         }
         else{
             [self skipWelcomeController];
@@ -216,10 +222,10 @@
     }
     
     // Handle errors
+    // see https://developers.facebook.com/docs/ios/errors for improvement
+
     if (error){
         NSLog(@"Error");
-        NSString *alertText;
-        NSString *alertTitle;
         // If the error requires people using an app to make an action outside of the app in order to recover
         if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
             alertTitle = @"Something went wrong";
@@ -236,9 +242,7 @@
                 alertTitle = @"Session Error";
                 alertText = @"Your current session is no longer valid. Please log in again.";
                 [GeneralUtilities showMessage:alertText withTitle:alertTitle];
-                
-                // For simplicity, here we just show a generic message for all other errors
-                // You can learn how to handle other errors using our guide: https://developers.facebook.com/docs/ios/errors
+
             } else {
                 //Get more error information from the error
                 NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
@@ -269,12 +273,11 @@
 // Prepare failure and success block for the signInOrUpWithFacebookWithParameters request
 - (void)sendSignInOrUpRequestWithFacebookParameters: (id)params
 {
-    WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
     
     typedef void (^SuccessBlock)(User *, NSString *, BOOL);
     SuccessBlock successBlock = ^(User *user, NSString *authToken, BOOL isSignup) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:welcomeViewController.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.window animated:YES];
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
             
@@ -291,17 +294,15 @@
     typedef void (^FailureBlock)(NSDictionary *);
     FailureBlock failureBlock = ^(NSDictionary * errors){
         dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:welcomeViewController.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.window animated:YES];
             
             NSString *title = NSLocalizedStringFromTable (@"fb_sign_in_error_title", @"Strings", @"comment");
-            NSString *message = NSLocalizedStringFromTable (@"fb_sign_in_error_message", @"Strings", @"comment");
+            NSString *message = NSLocalizedStringFromTable (@"Try_again_message", @"Strings", @"comment");
             
             [GeneralUtilities showMessage:message withTitle:title];
             [SessionUtilities redirectToSignIn];
         });
     };
-
-    [MBProgressHUD showHUDAddedTo:welcomeViewController.view animated:YES];
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [AFStreetShoutAPIClient signInOrUpWithFacebookWithParameters:params success:successBlock failure:failureBlock];

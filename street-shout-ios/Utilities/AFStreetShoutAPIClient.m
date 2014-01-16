@@ -349,5 +349,22 @@
     }];
 }
 
++ (void)sendResetPasswordInstructionsToEmail: (NSString *) email success:(void(^)())successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/password.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:1];
+    
+    [parameters setObject:email forKey:@"email"];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        successBlock(JSON);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        failureBlock();
+    }];
+}
 
 @end

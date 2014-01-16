@@ -137,7 +137,9 @@
     });
 }
 
+// Send reset password instructions by email and close the modal
 - (IBAction)forgotPasswordButtonClicked:(id)sender {
+    [self performSegueWithIdentifier:@"Forgot Password Modal From Sign In" sender:nil];
 }
 
 
