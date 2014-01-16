@@ -168,7 +168,6 @@
 		0B0CD53018362C1600EB3752 /* question-mark-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CD1331819B42C000A8A20 /* question-mark-button@2x~iphone.png */; };
 		0B0CD53118362C1600EB3752 /* shout-marker-3-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F1181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png */; };
 		0B0CD53218362C1600EB3752 /* zoom_plus_button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4BDC16181AE74C00782A0C /* zoom_plus_button@2x~iphone.png */; };
-		0B0CD53318362C1600EB3752 /* my-location-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF331691804845100E5C59B /* my-location-button@2x~iphone.png */; };
 		0B0CD53518362C1600EB3752 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */; };
 		0B0CD53618362C1600EB3752 /* back-arrow-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF33191180569FD00E5C59B /* back-arrow-button@2x~iphone.png */; };
 		0B0CD53718362C1600EB3752 /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2F179F35520026EE12 /* Strings.strings */; };
@@ -258,6 +257,18 @@
 		0B597357187FF41500E27402 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597355187FF41500E27402 /* WelcomeViewController.m */; };
 		0B59735A1880649B00E27402 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5973591880649B00E27402 /* DeviceUtilities.m */; };
 		0B59735B1880649B00E27402 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5973591880649B00E27402 /* DeviceUtilities.m */; };
+		0B71A30E1887F4FA009F68C0 /* more-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A30C1887F4FA009F68C0 /* more-button@2x~iphone.png */; };
+		0B71A30F1887F4FA009F68C0 /* more-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A30C1887F4FA009F68C0 /* more-button@2x~iphone.png */; };
+		0B71A3101887F4FA009F68C0 /* create-shout-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A30D1887F4FA009F68C0 /* create-shout-button@2x~iphone.png */; };
+		0B71A3111887F4FA009F68C0 /* create-shout-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A30D1887F4FA009F68C0 /* create-shout-button@2x~iphone.png */; };
+		0B71A3131887FAA1009F68C0 /* my-location-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A3121887FAA1009F68C0 /* my-location-button@2x~iphone.png */; };
+		0B71A3141887FAA1009F68C0 /* my-location-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A3121887FAA1009F68C0 /* my-location-button@2x~iphone.png */; };
+		0B71A318188801BF009F68C0 /* create-shout-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A315188801BF009F68C0 /* create-shout-button.png */; };
+		0B71A319188801BF009F68C0 /* create-shout-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A315188801BF009F68C0 /* create-shout-button.png */; };
+		0B71A31A188801BF009F68C0 /* more-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A316188801BF009F68C0 /* more-button.png */; };
+		0B71A31B188801BF009F68C0 /* more-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A316188801BF009F68C0 /* more-button.png */; };
+		0B71A31C188801BF009F68C0 /* my-location-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A317188801BF009F68C0 /* my-location-button.png */; };
+		0B71A31D188801BF009F68C0 /* my-location-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A317188801BF009F68C0 /* my-location-button.png */; };
 		0B97D0F5181EA88900CE08A3 /* shout-marker-1-deselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0E8181EA88900CE08A3 /* shout-marker-1-deselected.png */; };
 		0B97D0F7181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0E9181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png */; };
 		0B97D0F9181EA88900CE08A3 /* shout-marker-1-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0EA181EA88900CE08A3 /* shout-marker-1-selected.png */; };
@@ -282,7 +293,6 @@
 		0BF3312F180362C200E5C59B /* ShoutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF3312D180362C200E5C59B /* ShoutTableViewCell.m */; };
 		0BF331631804805100E5C59B /* dezoom-max-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF331601804805100E5C59B /* dezoom-max-button@2x~iphone.png */; };
 		0BF33168180480F500E5C59B /* shout-button-v9@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF33166180480F500E5C59B /* shout-button-v9@2x~iphone.png */; };
-		0BF3316B1804845100E5C59B /* my-location-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF331691804845100E5C59B /* my-location-button@2x~iphone.png */; };
 		0BF33193180569FD00E5C59B /* shout-zoom-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF33190180569FD00E5C59B /* shout-zoom-button@2x~iphone.png */; };
 		0BF33195180569FD00E5C59B /* back-arrow-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF33191180569FD00E5C59B /* back-arrow-button@2x~iphone.png */; };
 		0BF63ED91885E50C002B1254 /* TrackingUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63ED81885E50C002B1254 /* TrackingUtilities.m */; };
@@ -468,6 +478,12 @@
 		0B65F7411795C66500F37227 /* NavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NavigationViewController.h; path = Controllers/NavigationViewController.h; sourceTree = "<group>"; };
 		0B65F7421795C66500F37227 /* NavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NavigationViewController.m; path = Controllers/NavigationViewController.m; sourceTree = "<group>"; };
 		0B65F7491795CA7900F37227 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0B71A30C1887F4FA009F68C0 /* more-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-button@2x~iphone.png"; sourceTree = "<group>"; };
+		0B71A30D1887F4FA009F68C0 /* create-shout-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create-shout-button@2x~iphone.png"; sourceTree = "<group>"; };
+		0B71A3121887FAA1009F68C0 /* my-location-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my-location-button@2x~iphone.png"; sourceTree = "<group>"; };
+		0B71A315188801BF009F68C0 /* create-shout-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create-shout-button.png"; sourceTree = "<group>"; };
+		0B71A316188801BF009F68C0 /* more-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-button.png"; sourceTree = "<group>"; };
+		0B71A317188801BF009F68C0 /* my-location-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my-location-button.png"; sourceTree = "<group>"; };
 		0B7BA61217AB254400F8F67D /* SettingPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingPickerViewController.h; path = Controllers/SettingPickerViewController.h; sourceTree = "<group>"; };
 		0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingPickerViewController.m; path = Controllers/SettingPickerViewController.m; sourceTree = "<group>"; };
 		0B89CB971799DEB500C9BD18 /* FeedTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedTVC.h; path = Controllers/FeedTVC.h; sourceTree = "<group>"; };
@@ -533,7 +549,6 @@
 		0BF3312D180362C200E5C59B /* ShoutTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoutTableViewCell.m; sourceTree = "<group>"; };
 		0BF331601804805100E5C59B /* dezoom-max-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dezoom-max-button@2x~iphone.png"; sourceTree = "<group>"; };
 		0BF33166180480F500E5C59B /* shout-button-v9@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-button-v9@2x~iphone.png"; sourceTree = "<group>"; };
-		0BF331691804845100E5C59B /* my-location-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my-location-button@2x~iphone.png"; sourceTree = "<group>"; };
 		0BF33190180569FD00E5C59B /* shout-zoom-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-zoom-button@2x~iphone.png"; sourceTree = "<group>"; };
 		0BF33191180569FD00E5C59B /* back-arrow-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-arrow-button@2x~iphone.png"; sourceTree = "<group>"; };
 		0BF63ED71885E50C002B1254 /* TrackingUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrackingUtilities.h; path = Utilities/TrackingUtilities.h; sourceTree = "<group>"; };
@@ -642,6 +657,12 @@
 		0B0602E917FF0A3B00EA69F0 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				0B71A315188801BF009F68C0 /* create-shout-button.png */,
+				0B71A316188801BF009F68C0 /* more-button.png */,
+				0B71A317188801BF009F68C0 /* my-location-button.png */,
+				0B71A3121887FAA1009F68C0 /* my-location-button@2x~iphone.png */,
+				0B71A30C1887F4FA009F68C0 /* more-button@2x~iphone.png */,
+				0B71A30D1887F4FA009F68C0 /* create-shout-button@2x~iphone.png */,
 				0B57F99E1885C00500FC23BF /* cancel-item-icon.png */,
 				0B57F99F1885C00500FC23BF /* ok-item-icon.png */,
 				0B57F9A01885C00500FC23BF /* back-item-icon.png */,
@@ -686,7 +707,6 @@
 				0B1A879E1805AEFE00548BE2 /* shout-image-place-holder@2x~iphone.png */,
 				0BF33190180569FD00E5C59B /* shout-zoom-button@2x~iphone.png */,
 				0BF33191180569FD00E5C59B /* back-arrow-button@2x~iphone.png */,
-				0BF331691804845100E5C59B /* my-location-button@2x~iphone.png */,
 				0B97D0E8181EA88900CE08A3 /* shout-marker-1-deselected.png */,
 				0B97D0E9181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png */,
 				0B97D0EA181EA88900CE08A3 /* shout-marker-1-selected.png */,
@@ -1132,10 +1152,12 @@
 				0BF63F511885E969002B1254 /* MPLogo.png in Resources */,
 				0B1A87CD1805DB9700548BE2 /* shout-app-icon-72.png in Resources */,
 				0BF63F451885E969002B1254 /* MPArrowRight.png in Resources */,
+				0B71A31A188801BF009F68C0 /* more-button.png in Resources */,
 				0B97D105181EA88900CE08A3 /* shout-marker-3-deselected.png in Resources */,
 				0B97D0FF181EA88900CE08A3 /* shout-marker-2-deselected@2x~iphone.png in Resources */,
 				0B97D0FB181EA88900CE08A3 /* shout-marker-1-selected@2x~iphone.png in Resources */,
 				0B97D103181EA88900CE08A3 /* shout-marker-2-selected@2x~iphone.png in Resources */,
+				0B71A318188801BF009F68C0 /* create-shout-button.png in Resources */,
 				0B1A87C41805DB1B00548BE2 /* shout-app-icon-40.png in Resources */,
 				0BF63F431885E969002B1254 /* MPArrowLeft@2x.png in Resources */,
 				0BF33168180480F500E5C59B /* shout-button-v9@2x~iphone.png in Resources */,
@@ -1161,7 +1183,6 @@
 				0BF63F471885E969002B1254 /* MPArrowRight@2x.png in Resources */,
 				0B1A87CA1805DB1B00548BE2 /* shout-app-icon-144.png in Resources */,
 				0B1A87B61805DB1B00548BE2 /* shout-app-icon-152.png in Resources */,
-				0BF3316B1804845100E5C59B /* my-location-button@2x~iphone.png in Resources */,
 				0B1A87B41805DB1B00548BE2 /* shout-app-icon-29.png in Resources */,
 				0B97D0FD181EA88900CE08A3 /* shout-marker-2-deselected.png in Resources */,
 				0B1A87D01805DBD500548BE2 /* shout-app-icon-50.png in Resources */,
@@ -1174,12 +1195,14 @@
 				0B57F99A1885A99700FC23BF /* Welcome-568h@2x~iphone.png in Resources */,
 				0B57F9A81885C00500FC23BF /* back-item-icon.png in Resources */,
 				0B57F9541885452700FC23BF /* email-icon@2x~iphone.png in Resources */,
+				0B71A31C188801BF009F68C0 /* my-location-button.png in Resources */,
 				0B07BA2317E6FF8300DA26EE /* MainStoryboard_iPhone.storyboard in Resources */,
 				0B4CD1351819B42C000A8A20 /* question-mark-button@2x~iphone.png in Resources */,
 				0B97D107181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png in Resources */,
 				0BF63F4F1885E969002B1254 /* MPDismissKeyboard@2x.png in Resources */,
 				0B4BDC1A181AE74C00782A0C /* zoom_plus_button@2x~iphone.png in Resources */,
 				0B07BA2517E6FF8300DA26EE /* Strings.strings in Resources */,
+				0B71A3131887FAA1009F68C0 /* my-location-button@2x~iphone.png in Resources */,
 				0BF33193180569FD00E5C59B /* shout-zoom-button@2x~iphone.png in Resources */,
 				0B07BA2617E6FF8300DA26EE /* README.md in Resources */,
 				0B57F9A61885C00500FC23BF /* ok-item-icon.png in Resources */,
@@ -1189,6 +1212,7 @@
 				0B57F9961885A99700FC23BF /* Welcome@2x~iphone 2.png in Resources */,
 				0BF63F4D1885E969002B1254 /* MPDismissKeyboard.png in Resources */,
 				0B07BA2817E6FF8300DA26EE /* AirshipConfig.plist in Resources */,
+				0B71A3101887F4FA009F68C0 /* create-shout-button@2x~iphone.png in Resources */,
 				0B1A87C81805DB1B00548BE2 /* shout-app-icon-80.png in Resources */,
 				0B1A87C21805DB1B00548BE2 /* shout-app-icon-60.png in Resources */,
 				0B97D109181EA88900CE08A3 /* shout-marker-3-selected.png in Resources */,
@@ -1200,6 +1224,7 @@
 				0BF331631804805100E5C59B /* dezoom-max-button@2x~iphone.png in Resources */,
 				0B97D0F7181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png in Resources */,
 				0B57F94A1885452700FC23BF /* email-icon.png in Resources */,
+				0B71A30E1887F4FA009F68C0 /* more-button@2x~iphone.png in Resources */,
 				0B57F9941885A99700FC23BF /* Welcome~iphone 2.png in Resources */,
 				0B1A87B81805DB1B00548BE2 /* shout-app-icon-58.png in Resources */,
 				0B4BDC141819B88200782A0C /* nav_settigns_button@2x~iphone.png in Resources */,
@@ -1216,10 +1241,12 @@
 				0BF63F521885E969002B1254 /* MPLogo.png in Resources */,
 				0B0CD51318362C1600EB3752 /* shout-app-icon-58.png in Resources */,
 				0BF63F461885E969002B1254 /* MPArrowRight.png in Resources */,
+				0B71A31B188801BF009F68C0 /* more-button.png in Resources */,
 				0B0CD51418362C1600EB3752 /* shout-marker-3-deselected.png in Resources */,
 				0B0CD51518362C1600EB3752 /* shout-marker-2-deselected@2x~iphone.png in Resources */,
 				0B0CD51618362C1600EB3752 /* shout-marker-1-selected@2x~iphone.png in Resources */,
 				0B0CD51718362C1600EB3752 /* shout-marker-2-selected@2x~iphone.png in Resources */,
+				0B71A319188801BF009F68C0 /* create-shout-button.png in Resources */,
 				0B0CD51818362C1600EB3752 /* shout-app-icon-50.png in Resources */,
 				0BF63F441885E969002B1254 /* MPArrowLeft@2x.png in Resources */,
 				0B0CD51918362C1600EB3752 /* shout-button-v9@2x~iphone.png in Resources */,
@@ -1257,13 +1284,14 @@
 				0B57F94D1885452700FC23BF /* password-icon.png in Resources */,
 				0B57F99B1885A99700FC23BF /* Welcome-568h@2x~iphone.png in Resources */,
 				0B57F9A91885C00500FC23BF /* back-item-icon.png in Resources */,
+				0B71A31D188801BF009F68C0 /* my-location-button.png in Resources */,
 				0B57F9551885452700FC23BF /* email-icon@2x~iphone.png in Resources */,
 				0B0CD52F18362C1600EB3752 /* shout-app-icon-120.png in Resources */,
 				0B0CD53018362C1600EB3752 /* question-mark-button@2x~iphone.png in Resources */,
 				0B0CD53118362C1600EB3752 /* shout-marker-3-deselected@2x~iphone.png in Resources */,
 				0BF63F501885E969002B1254 /* MPDismissKeyboard@2x.png in Resources */,
 				0B0CD53218362C1600EB3752 /* zoom_plus_button@2x~iphone.png in Resources */,
-				0B0CD53318362C1600EB3752 /* my-location-button@2x~iphone.png in Resources */,
+				0B71A3141887FAA1009F68C0 /* my-location-button@2x~iphone.png in Resources */,
 				0B0CD53518362C1600EB3752 /* MainStoryboard_iPhone.storyboard in Resources */,
 				0B0CD53618362C1600EB3752 /* back-arrow-button@2x~iphone.png in Resources */,
 				0B57F9A71885C00500FC23BF /* ok-item-icon.png in Resources */,
@@ -1273,6 +1301,7 @@
 				0B57F9971885A99700FC23BF /* Welcome@2x~iphone 2.png in Resources */,
 				0BF63F4E1885E969002B1254 /* MPDismissKeyboard.png in Resources */,
 				0B0CD53918362C1600EB3752 /* release_notes.md in Resources */,
+				0B71A3111887F4FA009F68C0 /* create-shout-button@2x~iphone.png in Resources */,
 				0B0CD53A18362C1600EB3752 /* refresh-map-button@2x~iphone.png in Resources */,
 				0B0CD53B18362C1600EB3752 /* shout-app-icon-40.png in Resources */,
 				0B0CD53C18362C1600EB3752 /* shout-marker-3-selected.png in Resources */,
@@ -1284,6 +1313,7 @@
 				0B0CD54018362C1600EB3752 /* AirshipConfig.plist in Resources */,
 				0B0CD54118362C1600EB3752 /* shout-marker-1-deselected@2x~iphone.png in Resources */,
 				0B57F94B1885452700FC23BF /* email-icon.png in Resources */,
+				0B71A30F1887F4FA009F68C0 /* more-button@2x~iphone.png in Resources */,
 				0B57F9951885A99700FC23BF /* Welcome~iphone 2.png in Resources */,
 				0B0CD54218362C1600EB3752 /* shout-zoom-button@2x~iphone.png in Resources */,
 				0B0CD54318362C1600EB3752 /* shout-app-icon-60.png in Resources */,

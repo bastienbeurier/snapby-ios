@@ -333,7 +333,7 @@
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
-        BOOL isSignup = (BOOL) [result valueForKey:@"is_signup"] ;
+        BOOL isSignup = (BOOL) [result valueForKey:@"is_signup"];
         
         NSDictionary *rawUser = [result valueForKeyPath:@"user"];
         User *user = [User rawUserToInstance:rawUser];

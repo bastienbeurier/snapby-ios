@@ -18,23 +18,10 @@
 #import "TrackingUtilities.h"
 
 #define ZOOM_0 180
-#define ZOOM_1 10
-#define ZOOM_2 3
-#define ZOOM_3 1
-#define ZOOM_4 0.3
-#define ZOOM_5 0.1
-#define ZOOM_6 0.03
-#define ZOOM_7 0.01
-#define ZOOM_8 0.003
-#define ZOOM_9 0.001
-#define ZOOM_10 0.0005
 
 @interface MapViewController () <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *myLocationButton;
-@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
-@property (weak, nonatomic) IBOutlet UIButton *zoomMinusButton;
-@property (weak, nonatomic) IBOutlet UIButton *zoomPlusButton;
 @property (nonatomic) BOOL hasZoomedAtStartUp;
 
 
@@ -54,11 +41,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    //Drop shadows for map buttons
-    [ImageUtilities addDropShadowToView:self.myLocationButton];
-    [ImageUtilities addDropShadowToView:self.zoomPlusButton];
-    [ImageUtilities addDropShadowToView:self.zoomMinusButton];
-    [ImageUtilities addDropShadowToView:self.settingsButton];
+    //Buttons round corner
+    NSUInteger buttonHeight = self.myLocationButton.bounds.size.height;
+    self.myLocationButton.layer.cornerRadius = buttonHeight/2;
     
     [super viewWillAppear:animated];
 }
@@ -272,30 +257,6 @@
 
 }
 
-- (IBAction)zoomPlusButton:(id)sender {
-    double oldSpan = self.mapView.region.span.latitudeDelta;
-    double newSpan;
-    
-    if (oldSpan >= ZOOM_1) {
-        newSpan = ZOOM_2;
-        [LocationUtilities animateMap:self.mapView ToLatitude:self.mapView.region.center.latitude Longitude:self.mapView.region.center.longitude WithSpan:newSpan Animated:YES];
-    } else {
-        [self.mapView setCenterCoordinate:self.mapView.centerCoordinate zoomLevel:[self.mapView zoomLevel]+1 animated:YES];
-    }
-}
-
-
-- (IBAction)zoomMinusButton:(id)sender {
-    double oldSpan = self.mapView.region.span.latitudeDelta;
-    
-    if (oldSpan >= ZOOM_2) {
-        MKCoordinateRegion region = MKCoordinateRegionMake(self.mapView.centerCoordinate, MKCoordinateSpanMake(180, 360));
-        [self.mapView setRegion:region animated:YES];
-    } else {
-        [self.mapView setCenterCoordinate:self.mapView.centerCoordinate zoomLevel:[self.mapView zoomLevel]-1 animated:YES];
-    }
-}
-
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
 {
     for (MKAnnotationView *annView in annotationViews)
@@ -311,10 +272,6 @@
         [UIView animateWithDuration:0.5
                          animations:^{ annView.frame = endFrame; }];
     }
-}
-
-- (IBAction)settingsButtonClicked:(id)sender {
-    [self.mapVCdelegate settingsButtonClicked];
 }
 
 @end

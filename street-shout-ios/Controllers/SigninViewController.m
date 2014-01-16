@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     //Nav Bar
-    [ImageUtilities drawCustomNavBarWithBackItem:YES okItem:YES title:@"Sign in" inViewController:self];
+    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:@"ok" title:@"Sign in" sizeBig:YES inViewController:self];
     
     //Textview border
     [ImageUtilities drawBottomBorderForView:self.emailTextView withColor:[UIColor lightGrayColor]];
@@ -135,6 +135,9 @@
                                         success:(void(^)(User *user, NSString *auth_token))successBlock
                                         failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock];
     });
+}
+
+- (IBAction)forgotPasswordButtonClicked:(id)sender {
 }
 
 
