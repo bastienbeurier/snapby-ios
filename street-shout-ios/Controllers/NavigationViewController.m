@@ -27,10 +27,10 @@
 @property (nonatomic, weak) UINavigationController *feedNavigationController;
 @property (nonatomic, weak) FeedTVC *feedTVC;
 @property (nonatomic, weak) MapViewController *mapViewController;
-@property (weak, nonatomic) IBOutlet UIView *mapContainerView;
-@property (weak, nonatomic) IBOutlet UIView *topContainerView;
+@property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
+@property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
 
 @end
@@ -39,10 +39,15 @@
 
 - (void)viewDidLoad
 {
-    [ImageUtilities addInnerShadowToView:self.topContainerView];
+    //Status bar style  
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
-    //Shout button drop shadow
-    [ImageUtilities addDropShadowToView:self.createShoutButton];
+    [ImageUtilities addInnerShadowToView:self.bottomContainerView];
+    
+    //Buttons round corner
+    NSUInteger buttonHeight = self.createShoutButton.bounds.size.height;
+    self.createShoutButton.layer.cornerRadius = buttonHeight/2;
+    self.moreButton.layer.cornerRadius = buttonHeight/2;
     
     [super viewDidLoad];
 }
@@ -187,6 +192,7 @@
 {
     [self performSegueWithIdentifier:@"Display Shout Image" sender:imageShout];
 }
+
 - (IBAction)createShoutButtonClicked:(id)sender {
     
     if (![SessionUtilities isSignedIn]){
@@ -220,8 +226,7 @@
     return self.mapViewController.mapView.userLocation;
 }
 
-- (void)settingsButtonClicked
-{
+- (IBAction)moreButtonClicked:(id)sender {
     if (![SessionUtilities isSignedIn]){
         [SessionUtilities redirectToSignIn];
         return;

@@ -31,7 +31,7 @@
 - (void)viewDidLoad
 {
     //Nav Bar
-    [ImageUtilities drawCustomNavBarWithBackItem:YES okItem:YES title:@"Sign up" inViewController:self];
+    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:@"ok" title:@"Sign up" sizeBig:YES inViewController:self];
     
     //Textview border
     [ImageUtilities drawBottomBorderForView:self.usernameTextView withColor:[UIColor lightGrayColor]];
