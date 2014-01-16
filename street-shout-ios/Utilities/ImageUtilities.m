@@ -191,7 +191,10 @@
     
     //Create bar view
     UIView *customNavBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewController.view.frame.size.width, barHeight)];
-    [customNavBar setBackgroundColor:[ImageUtilities getShoutBlue]];
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, customNavBar.frame.size.height - 0.5f, customNavBar.frame.size.width, 0.5f);
+    bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [customNavBar.layer addSublayer:bottomBorder];
     [viewController.view addSubview:customNavBar];
     
     //Add ok button
@@ -200,7 +203,7 @@
         okButton.frame = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin , buttonTopMargin, buttonSize, buttonSize);
         [okButton addTarget:viewController action:@selector(okButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         
-        UIImage *okImage = [UIImage imageNamed:@"ok-item-icon.png"];
+        UIImage *okImage = [UIImage imageNamed:@"ok-item-button.png"];
         [okButton setBackgroundImage:okImage forState:UIControlStateNormal];
         
         [customNavBar addSubview:okButton];
@@ -213,7 +216,7 @@
         backButton.frame = CGRectMake(buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
         [backButton addTarget:viewController action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         
-        UIImage *backImage = [UIImage imageNamed:@"back-item-icon.png"];
+        UIImage *backImage = [UIImage imageNamed:@"back-item-button.png"];
         [backButton setBackgroundImage:backImage forState:UIControlStateNormal];
         
         [customNavBar addSubview:backButton];
@@ -230,7 +233,7 @@
         label.text = text;
         label.font = customFont;
         label.numberOfLines = 1;
-        label.textColor = [UIColor whiteColor];
+        label.textColor = [UIColor lightGrayColor];
         
         [customNavBar addSubview:label];
     }

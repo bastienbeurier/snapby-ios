@@ -31,10 +31,6 @@
 
 - (void)viewDidLoad
 {
-    //Nav bar color
-    self.navigationController.navigationBar.barTintColor = [ImageUtilities getShoutBlue];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.translucent = NO;
     
     //Set background image
     NSString *filename = @"Welcome.png";
@@ -60,6 +56,9 @@
 {
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    
+    //Status bar style
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [super viewWillAppear:animated];
 }

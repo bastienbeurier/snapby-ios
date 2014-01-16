@@ -42,6 +42,7 @@
     //Status bar style  
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
+    //Feed inner shadow
     [ImageUtilities addInnerShadowToView:self.bottomContainerView];
     
     //Buttons round corner
