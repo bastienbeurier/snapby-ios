@@ -68,34 +68,23 @@
 
 - (void)okButtonClicked
 {
-    BOOL error = NO;
-    
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:nil
-                                                      message:@""
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
+    BOOL error = NO; NSString *message;
     
     if (![GeneralUtilities validEmail:self.emailTextView.text]){
-        message.message = NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment");
+        message = NSLocalizedStringFromTable (@"invalid_email_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (self.passwordTextView.text.length < 6 || self.passwordTextView.text.length > 128) {
-        message.message = NSLocalizedStringFromTable (@"password_length_alert_text", @"Strings", @"comment");
+        message = NSLocalizedStringFromTable (@"password_length_alert_text", @"Strings", @"comment");
         error = YES;
     }
     
     if (error) {
-        [message show];
+        [GeneralUtilities showMessage:message withTitle:nil];
     } else {
         if ([GeneralUtilities connected]) {
             [self signinUser];
         } else {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
-                                                              message:nil
-                                                             delegate:nil
-                                                    cancelButtonTitle:@"OK"
-                                                    otherButtonTitles:nil];
-            [message show];
+            [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
         }
     }
 }
@@ -134,12 +123,7 @@
             } else {
                 title = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
             }
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
+            [GeneralUtilities showMessage:message withTitle:title];
         });
     };
     

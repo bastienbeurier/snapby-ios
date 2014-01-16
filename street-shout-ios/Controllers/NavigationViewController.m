@@ -212,12 +212,7 @@
         errorMessageTitle = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
     }
     
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:errorMessageTitle
-                                                      message:errorMessageBody
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-    [message show];
+    [GeneralUtilities showMessage:errorMessageBody withTitle:errorMessageTitle];
 }
 
 - (MKUserLocation *)getMyLocation
@@ -235,12 +230,7 @@
     if ([GeneralUtilities connected]) {
         [self performSegueWithIdentifier:@"Settings Push Segue" sender:nil];
     } else {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
-                                                          message:nil
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-        [message show];
+        [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
     }
 }
 
