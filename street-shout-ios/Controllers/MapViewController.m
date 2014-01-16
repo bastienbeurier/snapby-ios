@@ -267,12 +267,7 @@
         
         self.hasZoomedAtStartUp = YES;
     } else {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")
-                                                          message:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment")
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-        [message show];
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment") withTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")];
     }
 
 }

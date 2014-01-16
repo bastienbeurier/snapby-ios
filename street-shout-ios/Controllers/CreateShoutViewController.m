@@ -132,41 +132,30 @@
     
     [self.descriptionView resignFirstResponder];
     
-    BOOL error = NO;
-    
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
-                                                      message:@""
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
+    BOOL error = NO; NSString *title; NSString *message;
 
     if (self.blackListed) {
-        message.title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
-        message.message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
+        title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
+        message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (self.descriptionView.text.length == 0) {
-        message.title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
-        message.message = NSLocalizedStringFromTable (@"shout_description_blank", @"Strings", @"comment");
+        title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
+        message = NSLocalizedStringFromTable (@"shout_description_blank", @"Strings", @"comment");
         error = YES;
     } else if (self.descriptionView.text.length > kMaxShoutDescriptionLength) {
-        message.title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
+        title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
         NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxShoutDescriptionLength];
-        message.message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
+        message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
         error = YES;
     }
     
     if (error) {
-        [message show];
+        [GeneralUtilities showMessage:message withTitle:title];
     } else {
         if ([GeneralUtilities connected]) {
             [self createShout];
         } else {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
-                                                              message:nil
-                                                             delegate:nil
-                                                    cancelButtonTitle:@"OK"
-                                                    otherButtonTitles:nil];
-            [message show];
+            [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
         }
     }
 }
@@ -199,12 +188,7 @@
             } else {
                 NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
                 NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                                message:message
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
+                [GeneralUtilities showMessage:message withTitle:title];
             }
         });
     };
@@ -325,12 +309,7 @@
                                        orientation:[ImageUtilities convertImageOrientationToAssetOrientation:image.imageOrientation]
                                    completionBlock:^(NSURL *assetURL, NSError *error){
                                        if (error) {
-                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Saving"
-                                                                                           message:[error localizedDescription]
-                                                                                          delegate:nil
-                                                                                 cancelButtonTitle:@"Ok"
-                                                                                 otherButtonTitles: nil];
-                                           [alert show];
+                                           [GeneralUtilities showMessage:[error localizedDescription] withTitle:@"Error Saving"];
                                        }
                                    }];
 }

@@ -296,12 +296,7 @@
             NSString *title = NSLocalizedStringFromTable (@"fb_sign_in_error_title", @"Strings", @"comment");
             NSString *message = NSLocalizedStringFromTable (@"fb_sign_in_error_message", @"Strings", @"comment");
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
+            [GeneralUtilities showMessage:message withTitle:title];
             [SessionUtilities redirectToSignIn];
         });
     };

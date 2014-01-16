@@ -115,12 +115,7 @@
     if ([GeneralUtilities connected]) {
         [GeneralUtilities redirectToAppStore];
     } else {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")
-                                                          message:nil
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-        [message show];
+        [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
     }
 }
 
@@ -164,12 +159,7 @@
 }
 
 - (IBAction)notificationRadiusHelpPressed:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notification Radius"
-                                                    message:NSLocalizedStringFromTable (@"notification_radius_instruction", @"Strings", @"comment")
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+    [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"notification_radius_instruction", @"Strings", @"comment") withTitle:@"Notification Radius"];
 }
 
 - (void)viewDidUnload {
