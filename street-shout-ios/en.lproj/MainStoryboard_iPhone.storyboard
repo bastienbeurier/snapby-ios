@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3017" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ulg-pG-c5t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ulg-pG-c5t">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -1263,7 +1263,7 @@
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="fzo-xc-uWO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="612" image="email-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="fzo-xc-uWO">
                                 <rect key="frame" x="20" y="137" width="23" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -1317,7 +1317,7 @@
                         <outlet property="emailTextView" destination="W3J-dY-UzK" id="8s8-rn-Aob"/>
                         <outlet property="passwordTextView" destination="tD7-Dt-yvn" id="7gm-eO-rWf"/>
                         <segue destination="2" kind="push" identifier="Navigation Push Segue From Signin" id="jeb-yC-wvX"/>
-                        <segue destination="u0S-Nc-D7q" kind="modal" identifier="Forgot Password Modal From Sign In" id="9nd-6c-HOY"/>
+                        <segue destination="u0S-Nc-D7q" kind="push" identifier="Forgot Password Modal From Sign In" id="9nd-6c-HOY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BJI-rf-iGq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1336,37 +1336,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zS-eF-Tdq">
-                                <rect key="frame" x="171" y="157" width="112" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QNv-N8-nMc">
+                                <rect key="frame" x="60" y="130" width="240" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Reset Password">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="resetPasswordButtonClicked:" destination="u0S-Nc-D7q" eventType="touchUpInside" id="Tek-Q3-rcr"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9br-Uw-yRi">
-                                <rect key="frame" x="88" y="106" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="B2a-C7-iZi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ops-T4-kWd">
-                                <rect key="frame" x="31" y="45" width="35" height="30"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="3MN-hr-QZv">
+                                <rect key="frame" x="20" y="136" width="23" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Back">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="closeButtonClicked:" destination="u0S-Nc-D7q" eventType="touchUpInside" id="zwx-yr-KUh"/>
-                                </connections>
-                            </button>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="Ofk-9k-QTJ"/>
+                                    <constraint firstAttribute="width" constant="23" id="vSH-MY-Lzl"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QNv-N8-nMc" firstAttribute="top" secondItem="Fe3-aw-sxv" secondAttribute="bottom" constant="110" id="7Rt-pr-jbe"/>
+                            <constraint firstItem="QNv-N8-nMc" firstAttribute="leading" secondItem="v0g-Kx-3DN" secondAttribute="leading" constant="60" id="XVA-0w-4O9"/>
+                            <constraint firstAttribute="trailing" secondItem="QNv-N8-nMc" secondAttribute="trailing" constant="20" id="b3e-2h-wFd"/>
+                            <constraint firstItem="3MN-hr-QZv" firstAttribute="leading" secondItem="v0g-Kx-3DN" secondAttribute="leading" constant="20" id="ggg-Jl-Gq3"/>
+                            <constraint firstItem="3MN-hr-QZv" firstAttribute="centerY" secondItem="QNv-N8-nMc" secondAttribute="centerY" id="ne8-Gi-3eG"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="emailTextView" destination="9br-Uw-yRi" id="gCr-j1-Qve"/>
+                        <outlet property="emailTextView" destination="QNv-N8-nMc" id="tDX-G0-CDw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SAj-OG-jBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1392,7 +1390,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="jeb-yC-wvX"/>
         <segue reference="ySR-z5-IUO"/>
-        <segue reference="WWO-rE-4Oh"/>
     </inferredMetricsTieBreakers>
 </document>

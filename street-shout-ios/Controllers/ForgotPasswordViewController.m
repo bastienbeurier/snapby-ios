@@ -10,6 +10,7 @@
 #import "GeneralUtilities.h"
 #import "AFStreetShoutAPIClient.h"
 #import "MBProgressHUD.h"
+#import "ImageUtilities.h"
 
 @interface ForgotPasswordViewController ()
 
@@ -19,12 +20,52 @@
 
 @implementation ForgotPasswordViewController
 
-- (IBAction)closeButtonClicked:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)viewDidLoad
+{
+    //Nav Bar
+    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:@"ok" title:@"Reset password" sizeBig:YES inViewController:self];
+    
+    //Status bar style
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
+    //Textview border
+    [ImageUtilities drawBottomBorderForView:self.emailTextView withColor:[UIColor lightGrayColor]];
+    
+    //Set textview tags
+    self.emailTextView.tag = 0;
+    
+    //Set TextField delegate
+    self.emailTextView.delegate = self;
+    
+    [super viewDidLoad];
 }
 
-// Send reset password instructions by email and dismiss the modal
-- (IBAction)resetPasswordButtonClicked:(id)sender {
+- (BOOL)textFieldShouldReturn:(UITextField*)textField;
+{
+    NSInteger nextTag = textField.tag + 1;
+    UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+    if (nextResponder) {
+        [nextResponder becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+    }
+    return NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    //First responder
+    [self.emailTextView becomeFirstResponder];
+    
+    [super viewDidAppear:animated];
+}
+
+- (void)backButtonClicked {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+// Send reset password instructions by email and pop the view
+- (void)okButtonClicked:(id)sender {
     
     // Prevent double clicking
     UIButton *resetButton = (UIButton *) sender;
