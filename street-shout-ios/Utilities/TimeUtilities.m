@@ -42,12 +42,12 @@
             } else if (minutes == 1) {
                 return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", minutes], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
             } else {
-                return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"now", @"Strings", @"comment"), nil, nil];
+                return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
             }
         }
         
     } else {
-        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"now", @"Strings", @"comment"), nil, nil];
+        return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
     }
 }
 

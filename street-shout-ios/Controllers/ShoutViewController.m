@@ -49,13 +49,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.view.backgroundColor = [GeneralUtilities getShoutAgeColor:self.shout];
-    
-    //Round shout image
-    self.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
-    self.shoutImageView.clipsToBounds = YES;
-    self.shoutImageDropShadowView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
-    
     ////Hack to remove the selection highligh from the cell during the back animation
     [self.shoutVCDelegate redisplayFeed];
     
