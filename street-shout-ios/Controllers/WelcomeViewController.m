@@ -98,8 +98,6 @@
         // Check connection
         if (![GeneralUtilities connected]) {
             [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
-            facebookButton.enabled = YES;
-            [self setButtonsAndLabelsAlphaTo:1];
         } else {
             // Display loading
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -114,8 +112,11 @@
                  NavigationAppDelegate* navigationAppDelegate = [UIApplication sharedApplication].delegate;
                  [navigationAppDelegate sessionStateChanged:session state:state error:error];
              }];
+            return;
         }
     }
+    facebookButton.enabled = YES;
+    [self setButtonsAndLabelsAlphaTo:1];
 }
 
 - (IBAction)facebookButtonCancelledClicking:(id)sender {
