@@ -35,7 +35,6 @@
 @property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
 @property (strong, nonatomic) UIView *darkMapOverlayView;
 @property (weak, nonatomic) MKMapView *mapView;
-@property (nonatomic) float showShoutAnimationHeightDelta;
 
 @end
 
@@ -149,37 +148,18 @@
     } else {
         self.mapViewController.savedMapLocation = self.mapViewController.mapView.centerCoordinate;
         
-        self.mapView.zoomEnabled = NO;
-        self.mapView.scrollEnabled = NO;
-        self.mapView.userInteractionEnabled = NO;
-        self.darkMapOverlayView.hidden = NO;
         self.mapViewController.updateShoutsOnMapMove = NO;
         
+        //Start animations to display shout controller
         [self.feedTVC performSegueWithIdentifier:@"Show Shout" sender:shout];
         
-        [UIView animateWithDuration:0.5 animations:^{
-            self.showShoutAnimationHeightDelta = self.topContainerView.frame.size.height - 100;
-            
-            self.topContainerView.frame = CGRectMake(self.topContainerView.frame.origin.x,
-                                                     self.topContainerView.frame.origin.y,
-                                                     self.topContainerView.frame.size.width,
-                                                     self.topContainerView.frame.size.height - self.showShoutAnimationHeightDelta);
-            
-            self.mapView.frame = CGRectMake(self.mapView.frame.origin.x,
-                                            self.mapView.frame.origin.y,
-                                            self.mapView.frame.size.width,
-                                            self.mapView.frame.size.width - self.showShoutAnimationHeightDelta);
-            
-            self.bottomContainerView.frame = CGRectMake(self.bottomContainerView.frame.origin.x,
-                                                        self.bottomContainerView.frame.origin.y - self.showShoutAnimationHeightDelta,
-                                                        self.bottomContainerView.frame.size.width,
-                                                        self.bottomContainerView.frame.size.height + self.showShoutAnimationHeightDelta);
-            
-            self.createShoutButton.hidden = YES;
-            self.moreButton.hidden = YES;
-            
-            self.darkMapOverlayView.alpha = 0.5;
-        }];
+        [ImageUtilities displayShoutAnimationsTopContainer:self.topContainerView
+                                           bottomContainer:self.bottomContainerView
+                                                   mapView:self.mapView
+                                         createShoutButton:self.createShoutButton
+                                                moreButton:self.moreButton
+                                        darkMapOverlayView:self.darkMapOverlayView
+                                         mapViewController:self.mapViewController];
     }
 }
 
@@ -189,34 +169,17 @@
     self.mapViewController.preventShoutsReload = YES;
     [self.mapViewController animateMapToLat:self.mapViewController.savedMapLocation.latitude lng:self.mapViewController.savedMapLocation.longitude];
     
-    [UIView animateWithDuration:0.5 animations:^{
-        self.topContainerView.frame = CGRectMake(self.topContainerView.frame.origin.x,
-                                                 self.topContainerView.frame.origin.y,
-                                                 self.topContainerView.frame.size.width,
-                                                 self.topContainerView.frame.size.height + self.showShoutAnimationHeightDelta);
-        
-        self.mapView.frame = CGRectMake(self.mapView.frame.origin.x,
-                                        self.mapView.frame.origin.y,
-                                        self.mapView.frame.size.width,
-                                        self.mapView.frame.size.width + self.showShoutAnimationHeightDelta);
-        
-        self.bottomContainerView.frame = CGRectMake(self.bottomContainerView.frame.origin.x,
-                                                    self.bottomContainerView.frame.origin.y + self.showShoutAnimationHeightDelta,
-                                                    self.bottomContainerView.frame.size.width,
-                                                    self.bottomContainerView.frame.size.height - self.showShoutAnimationHeightDelta);
-        
-        self.createShoutButton.hidden = NO;
-        self.moreButton.hidden = NO;
-        
-        self.darkMapOverlayView.alpha = 0;
-    } completion:^(BOOL finished) {
-        self.mapView.zoomEnabled = YES;
-        self.mapView.scrollEnabled = YES;
-        self.mapView.userInteractionEnabled = YES;
-        self.darkMapOverlayView.hidden = YES;
-        
-        self.mapViewController.updateShoutsOnMapMove = YES;
-    }];
+    
+    //Start animations to stop displaying shout controller
+    [ImageUtilities popShoutControllerSegueAnimation:(ShoutViewController *)self.feedNavigationController.topViewController];
+    
+    [ImageUtilities stopDisplayShoutAnimationsTopContainer:self.topContainerView
+                                           bottomContainer:self.bottomContainerView
+                                                   mapView:self.mapView
+                                         createShoutButton:self.createShoutButton
+                                                moreButton:self.moreButton
+                                        darkMapOverlayView:self.darkMapOverlayView
+                                         mapViewController:self.mapViewController];
 }
 
 - (void)shoutSelectionComingFromFeed:(Shout *)shout
@@ -338,11 +301,6 @@
     } else {
         NSLog(@"Could not send device info");
     }
-}
-
-- (void)endShoutSelectionModeInMapViewController
-{
-    [self.mapViewController endShoutSelectionModeInMapViewController];
 }
 
 - (void)animateMapWhenZoomOnShout:(Shout *)shout

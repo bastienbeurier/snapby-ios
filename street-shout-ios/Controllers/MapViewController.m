@@ -129,8 +129,6 @@
 
 - (void)endShoutSelectionModeInMapViewController
 {
-    [self.mapVCdelegate dismissShoutViewControllerIfNeeded];
-    
     NSArray *selectedAnnotations = self.mapView.selectedAnnotations;
     for (id annotationView in selectedAnnotations) {
         [self.mapView deselectAnnotation:annotationView animated:NO];
