@@ -85,7 +85,7 @@
             }
             else {
                 [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"reset_password_sent_success_message", @"Strings", @"comment") withTitle:nil];
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController popViewControllerAnimated:YES];
             }
             resetButton.enabled = YES;
         };
