@@ -36,7 +36,7 @@
     user.identifier = [[prefs objectForKey:USER_ID_PREF] integerValue];
     user.email = [prefs objectForKey:USER_EMAIL_PREF];
     user.username = [prefs objectForKey:USERNAME_PREF];
-    user.isBlackListed = [[prefs objectForKey:USER_ID_PREF] boolValue];
+    user.isBlackListed = [[prefs objectForKey:USER_BLACKLISTED] boolValue];
     
     if (user.identifier && user.email && user.username) {
         return user;
