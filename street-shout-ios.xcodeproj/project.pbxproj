@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B04A83D18893C220049E640 /* DisplayShoutSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B04A83C18893C220049E640 /* DisplayShoutSegue.m */; };
+		0B04A83E18893C220049E640 /* DisplayShoutSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B04A83C18893C220049E640 /* DisplayShoutSegue.m */; };
 		0B07B9DF17E6FF8300DA26EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F72F1795C66500F37227 /* main.m */; };
 		0B07B9E017E6FF8300DA26EE /* NavigationAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7331795C66500F37227 /* NavigationAppDelegate.m */; };
 		0B07B9E117E6FF8300DA26EE /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* NavigationViewController.m */; };
@@ -346,6 +348,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B04A83B18893C220049E640 /* DisplayShoutSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayShoutSegue.h; sourceTree = "<group>"; };
+		0B04A83C18893C220049E640 /* DisplayShoutSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayShoutSegue.m; sourceTree = "<group>"; };
 		0B07B9CA17E6FEFB00DA26EE /* street-shout-ios-dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "street-shout-ios-dev-Info.plist"; sourceTree = "<group>"; };
 		0B07B9CC17E6FEFB00DA26EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0B07B9CE17E6FEFB00DA26EE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -782,6 +786,8 @@
 				0BF3312D180362C200E5C59B /* ShoutTableViewCell.m */,
 				0B3B0A4B17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.h */,
 				0B3B0A4C17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */,
+				0B04A83B18893C220049E640 /* DisplayShoutSegue.h */,
+				0B04A83C18893C220049E640 /* DisplayShoutSegue.m */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -1346,6 +1352,7 @@
 				0BF63F691885E9B7002B1254 /* MBProgressHUD.m in Sources */,
 				0B07B9E817E6FF8300DA26EE /* AFURLConnectionOperation.m in Sources */,
 				0B07B9E917E6FF8300DA26EE /* AFXMLRequestOperation.m in Sources */,
+				0B04A83D18893C220049E640 /* DisplayShoutSegue.m in Sources */,
 				0B07B9EA17E6FF8300DA26EE /* UIImageView+AFNetworking.m in Sources */,
 				0B07B9EB17E6FF8300DA26EE /* AFStreetShoutAPIClient.m in Sources */,
 				0B59735A1880649B00E27402 /* DeviceUtilities.m in Sources */,
@@ -1417,6 +1424,7 @@
 				0BF63F6A1885E9B7002B1254 /* MBProgressHUD.m in Sources */,
 				0B0CD4D518362C1600EB3752 /* AFURLConnectionOperation.m in Sources */,
 				0B0CD4D618362C1600EB3752 /* AFXMLRequestOperation.m in Sources */,
+				0B04A83E18893C220049E640 /* DisplayShoutSegue.m in Sources */,
 				0B0CD4D718362C1600EB3752 /* UIImageView+AFNetworking.m in Sources */,
 				0B0CD4D818362C1600EB3752 /* AFStreetShoutAPIClient.m in Sources */,
 				0B59735B1880649B00E27402 /* DeviceUtilities.m in Sources */,

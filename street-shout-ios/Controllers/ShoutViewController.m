@@ -30,8 +30,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *shoutUsername;
 @property (weak, nonatomic) IBOutlet UILabel *shoutContent;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
-@property (weak, nonatomic) IBOutlet UIButton *backButton;
-@property (weak, nonatomic) IBOutlet UIButton *shoutZoomButton;
 @property (weak, nonatomic) IBOutlet UILabel *shoutAgeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shoutAgeUnitLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shoutDistanceLabel;
@@ -123,13 +121,13 @@
     [self.shoutVCDelegate displayShoutImage:self.shout];
 }
 
-- (IBAction)backButtonClicked:(id)sender {
-    [self.shoutVCDelegate endShoutSelectionModeInMapViewController];
-}
+//- (IBAction)backButtonClicked:(id)sender {
+//    [self.shoutVCDelegate endShoutSelectionModeInMapViewController];
+//}
 
-- (IBAction)shoutZoomButtonClicked:(id)sender {
-    [self.shoutVCDelegate animateMapWhenZoomOnShout:self.shout];
-}
+//- (IBAction)shoutZoomButtonClicked:(id)sender {
+//    [self.shoutVCDelegate animateMapWhenZoomOnShout:self.shout];
+//}
 
 - (IBAction)flagButtonClicked:(id)sender {
     if (![SessionUtilities isSignedIn]){
