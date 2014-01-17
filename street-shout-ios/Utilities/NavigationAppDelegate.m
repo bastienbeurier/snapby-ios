@@ -61,10 +61,10 @@
     }
     
     // Check if the user has not been logged out
-    if ([SessionUtilities isSignedIn]){
+    if ([SessionUtilities isSignedIn]) {
         
         // Check if he logged in with facebook
-        if([SessionUtilities isFBConnected]){
+        if([SessionUtilities isFBConnected]) {
             
             // In this case, there should be facebook token
             if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
@@ -80,7 +80,7 @@
                 // If there's no cached session, we delete everything and go normally to welcome
                 [SessionUtilities wipeOffCredentials];
             }
-        } else{
+        } else {
             [self skipWelcomeController];
         }
     }
@@ -209,7 +209,6 @@
                     [GeneralUtilities showMessage:alertText withTitle:alertTitle];
                 }
             }];
-            [MBProgressHUD showHUDAddedTo:self.window animated:YES];
         }
         else{
             [self skipWelcomeController];
