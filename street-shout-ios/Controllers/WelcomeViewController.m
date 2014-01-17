@@ -12,6 +12,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "NavigationAppDelegate.h"
 #import "GeneralUtilities.h"
+#import "MBProgressHUD.h"
 
 
 @interface WelcomeViewController ()
@@ -23,7 +24,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *facebookSecondLabel;
 @property (weak, nonatomic) IBOutlet UILabel *signupFirstLabel;
 @property (weak, nonatomic) IBOutlet UILabel *signupSecondLabel;
-
+@property (weak, nonatomic) IBOutlet UIButton *signinButton;
+@property (weak, nonatomic) IBOutlet UILabel *signinLabel;
 
 @end
 
@@ -64,6 +66,7 @@
     [super viewWillAppear:animated];
 }
 
+
 - (IBAction)facebookButtonStartedClicking:(id)sender {
     self.facebookFirstLabel.textColor = [UIColor grayColor];
     self.facebookSecondLabel.textColor = [UIColor grayColor];
@@ -79,6 +82,9 @@
     // Prevent double clicking
     UIButton *facebookButton = (UIButton *) sender;
     facebookButton.enabled = NO;
+    [UIView animateWithDuration:0.1 animations:^{
+        [self setButtonsAndLabelsAlphaTo:0];}
+     ];
     
     // We should not have any token or open session here
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded
@@ -93,20 +99,24 @@
         if (![GeneralUtilities connected]) {
             [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
         } else {
-        // Open a session showing the user the login UI
-        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"email"]
-                                           allowLoginUI:YES
-                                      completionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {
-             
-             // Retrieve the app delegate
-             NavigationAppDelegate* navigationAppDelegate = [UIApplication sharedApplication].delegate;
-             // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
-             [navigationAppDelegate sessionStateChanged:session state:state error:error];
-         }];
+            // Display loading
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            
+            // Open a session showing the user the login UI
+            [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"email"]
+                                               allowLoginUI:YES
+                                          completionHandler:
+             ^(FBSession *session, FBSessionState state, NSError *error) {
+                 
+                 // Retrieve the app delegate
+                 NavigationAppDelegate* navigationAppDelegate = [UIApplication sharedApplication].delegate;
+                 [navigationAppDelegate sessionStateChanged:session state:state error:error];
+             }];
+            return;
         }
-        facebookButton.enabled = YES;
     }
+    facebookButton.enabled = YES;
+    [self setButtonsAndLabelsAlphaTo:1];
 }
 
 - (IBAction)facebookButtonCancelledClicking:(id)sender {
@@ -141,6 +151,19 @@
     [self performSegueWithIdentifier:@"Signin Push Segue" sender:nil];
 }
 
+- (void)setButtonsAndLabelsAlphaTo:(float)alpha{
+    if (alpha<0||alpha>1){
+        return;
+    }
+    self.facebookButtonView.alpha = alpha;
+    self.facebookFirstLabel.alpha = alpha;
+    self.facebookSecondLabel.alpha = alpha;
+    self.signupButtonView.alpha = alpha;
+    self.signupFirstLabel.alpha = alpha;
+    self.signupSecondLabel.alpha = alpha;
+    self.signinButton.alpha = alpha;
+    self.signinLabel.alpha = alpha;
+}
 
 
 @end

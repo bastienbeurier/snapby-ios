@@ -12,6 +12,7 @@
 #define USER_ID @"id"
 #define USER_EMAIL @"email"
 #define USERNAME @"username"
+#define BLACKLISTED @"black_listed"
 
 @implementation User
 
@@ -21,6 +22,7 @@
     user.identifier = [[rawUser objectForKey:USER_ID] integerValue];
     user.email = [rawUser objectForKey:USER_EMAIL];
     user.username = [rawUser objectForKey:USERNAME];
+    user.isBlackListed = [[rawUser objectForKey:BLACKLISTED] boolValue];
     
     return user;
 }

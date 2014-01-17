@@ -16,5 +16,6 @@
 @property (nonatomic) NSUInteger identifier;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *username;
+@property (nonatomic) BOOL isBlackListed;
 
 @end

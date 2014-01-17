@@ -1253,6 +1253,8 @@
                         <outlet property="facebookButtonView" destination="hGa-Kz-pwK" id="E2W-bs-6za"/>
                         <outlet property="facebookFirstLabel" destination="iqF-lG-j5w" id="KE8-PX-7HD"/>
                         <outlet property="facebookSecondLabel" destination="7Ns-Wx-Cog" id="Zth-S4-dpb"/>
+                        <outlet property="signinButton" destination="miH-iR-RP7" id="MfZ-jz-PkF"/>
+                        <outlet property="signinLabel" destination="SN1-6u-Np7" id="Lsk-eO-YUR"/>
                         <outlet property="signupButtonView" destination="7Jd-Fd-kDT" id="gqC-BW-4WR"/>
                         <outlet property="signupFirstLabel" destination="fiU-id-dF6" id="SlG-XK-9dQ"/>
                         <outlet property="signupSecondLabel" destination="1yf-nc-Za2" id="xIq-Kf-ykv"/>
@@ -1427,7 +1429,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="InE-sI-u17"/>
         <segue reference="ySR-z5-IUO"/>
+        <segue reference="WWO-rE-4Oh"/>
     </inferredMetricsTieBreakers>
 </document>

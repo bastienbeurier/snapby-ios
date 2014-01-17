@@ -187,6 +187,12 @@
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] putPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        // Update user info in phone
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSDictionary *rawUser = [result valueForKeyPath:@"user"];
+        User *user = [User rawUserToInstance:rawUser];
+        [SessionUtilities updateCurrentUserInfoInPhone:user];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
     }];

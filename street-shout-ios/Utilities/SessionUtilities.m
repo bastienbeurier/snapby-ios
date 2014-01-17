@@ -18,10 +18,12 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     NSNumber *userId = [NSNumber numberWithInt:currentUser.identifier];
-    
+    NSNumber *isBlackListed = [NSNumber numberWithBool:currentUser.isBlackListed];
+
     [prefs setObject:userId forKey:USER_ID_PREF];
     [prefs setObject:currentUser.email forKey:USER_EMAIL_PREF];
     [prefs setObject:currentUser.username forKey:USERNAME_PREF];
+    [prefs setObject:isBlackListed forKey:USER_BLACKLISTED];
     
     [prefs synchronize];
 }
@@ -34,6 +36,7 @@
     user.identifier = [[prefs objectForKey:USER_ID_PREF] integerValue];
     user.email = [prefs objectForKey:USER_EMAIL_PREF];
     user.username = [prefs objectForKey:USERNAME_PREF];
+    user.isBlackListed = [[prefs objectForKey:USER_BLACKLISTED] boolValue];
     
     if (user.identifier && user.email && user.username) {
         return user;

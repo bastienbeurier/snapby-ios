@@ -61,10 +61,10 @@
     }
     
     // Check if the user has not been logged out
-    if ([SessionUtilities isSignedIn]){
+    if ([SessionUtilities isSignedIn]) {
         
         // Check if he logged in with facebook
-        if([SessionUtilities isFBConnected]){
+        if([SessionUtilities isFBConnected]) {
             
             // In this case, there should be facebook token
             if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
@@ -80,7 +80,7 @@
                 // If there's no cached session, we delete everything and go normally to welcome
                 [SessionUtilities wipeOffCredentials];
             }
-        } else{
+        } else {
             [self skipWelcomeController];
         }
     }
@@ -187,10 +187,10 @@
     __block NSString *alertText, *alertTitle;
     
     // If the session was opened successfully
-    if (!error && state == FBSessionStateOpen){
+    if (!error && state == FBSessionStateOpen) {
         
         // In case there is no server token yet
-        if(![SessionUtilities isSignedIn]){
+        if(![SessionUtilities isSignedIn]) {
             
             // Request information about the user
             [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -209,14 +209,12 @@
                     [GeneralUtilities showMessage:alertText withTitle:alertTitle];
                 }
             }];
-            [MBProgressHUD showHUDAddedTo:self.window animated:YES];
-        }
-        else{
+        } else {
             [self skipWelcomeController];
         }
         return;
     }
-    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
+    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed) {
         // If the session is closed
         NSLog(@"Session closed");
     }
@@ -224,10 +222,10 @@
     // Handle errors
     // see https://developers.facebook.com/docs/ios/errors for improvement
 
-    if (error){
+    if (error) {
         NSLog(@"Error");
         // If the error requires people using an app to make an action outside of the app in order to recover
-        if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
+        if ([FBErrorUtility shouldNotifyUserForError:error] == YES) {
             alertTitle = @"Something went wrong";
             alertText = [FBErrorUtility userMessageForError:error];
             [GeneralUtilities showMessage:alertText withTitle:alertTitle];
@@ -238,7 +236,7 @@
                 NSLog(@"User cancelled login");
                 
                 // Handle session closures that happen outside of the app
-            } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession){
+            } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
                 alertTitle = @"Session Error";
                 alertText = @"Your current session is no longer valid. Please log in again.";
                 [GeneralUtilities showMessage:alertText withTitle:alertTitle];
@@ -292,7 +290,7 @@
     };
 
     typedef void (^FailureBlock)(NSDictionary *);
-    FailureBlock failureBlock = ^(NSDictionary * errors){
+    FailureBlock failureBlock = ^(NSDictionary * errors) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.window animated:YES];
             
