@@ -31,6 +31,9 @@
     //Nav Bar
     [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:@"ok" title:@"Sign in" sizeBig:YES inViewController:self];
     
+    //Status bar style
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
     //Textview border
     [ImageUtilities drawBottomBorderForView:self.emailTextView withColor:[UIColor lightGrayColor]];
     [ImageUtilities drawBottomBorderForView:self.passwordTextView withColor:[UIColor lightGrayColor]];

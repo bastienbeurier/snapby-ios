@@ -26,9 +26,10 @@
 
 - (MKUserLocation *)getMyLocation;
 
-- (void)endShoutSelectionModeInMapViewController;
-
 - (void)animateMapWhenZoomOnShout:(Shout *)shout;
+
+//Hack to remove the selection highligh from the cell during the back animation
+- (void)redisplayFeed;
 
 @property (strong, nonatomic) UIView *view;
 

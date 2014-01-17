@@ -28,10 +28,13 @@
 @property (nonatomic, weak) FeedTVC *feedTVC;
 @property (nonatomic, weak) MapViewController *mapViewController;
 @property (weak, nonatomic) IBOutlet UIView *bottomContainerView;
+@property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
+@property (strong, nonatomic) UIView *darkMapOverlayView;
+@property (weak, nonatomic) MKMapView *mapView;
 
 @end
 
@@ -41,9 +44,6 @@
 {
     //Status bar style  
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
-    [ImageUtilities addInnerShadowToView:self.bottomContainerView];
-    
     //Buttons round corner
     NSUInteger buttonHeight = self.createShoutButton.bounds.size.height;
     self.createShoutButton.layer.cornerRadius = buttonHeight/2;
@@ -52,9 +52,20 @@
     [super viewDidLoad];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewDidLayoutSubviews
 {
-    [self updateUserInfo];
+    self.darkMapOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.topContainerView.frame.size.width, self.topContainerView.frame.size.height)];
+    self.darkMapOverlayView.backgroundColor = [UIColor blackColor];
+    self.darkMapOverlayView.alpha = 0.5;
+    [self.topContainerView addSubview:self.darkMapOverlayView];
+    self.darkMapOverlayView.hidden = YES;
+    
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(darkMapOverlayTapped:)];
+    [self.darkMapOverlayView addGestureRecognizer:singleFingerTap];
+    
+    self.mapView = self.mapViewController.mapView;
+    
+    [super viewDidLayoutSubviews];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -67,11 +78,26 @@
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
+    [self refreshShouts];
+    
     [super viewWillAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [self updateUserInfo];
+    
+    [super viewDidDisappear:animated];
+}
+
+//Hack to remove the selection highligh from the cell during the back animation
+- (void)redisplayFeed
+{
+    self.feedTVC.shouts = self.feedTVC.shouts;
+}
+
+- (void)refreshShouts
+{
+    [self pullShoutsInZone:[LocationUtilities getMapBounds:self.mapViewController.mapView]];
 }
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds
@@ -120,18 +146,45 @@
     if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
         ((ShoutViewController *)[self.feedNavigationController topViewController]).shout = shout;
     } else {
+        self.mapViewController.savedMapLocation = self.mapViewController.mapView.centerCoordinate;
+        
+        self.mapViewController.updateShoutsOnMapMove = NO;
+        
+        //Start animations to display shout controller
         [self.feedTVC performSegueWithIdentifier:@"Show Shout" sender:shout];
+        
+        [ImageUtilities displayShoutAnimationsTopContainer:self.topContainerView
+                                           bottomContainer:self.bottomContainerView
+                                                   mapView:self.mapView
+                                         createShoutButton:self.createShoutButton
+                                                moreButton:self.moreButton
+                                        darkMapOverlayView:self.darkMapOverlayView
+                                         mapViewController:self.mapViewController];
     }
+}
+
+- (void)darkMapOverlayTapped:(UITapGestureRecognizer *)recognizer {
+    [self.mapViewController endShoutSelectionModeInMapViewController];
+    
+    self.mapViewController.preventShoutsReload = YES;
+    [self.mapViewController animateMapToLat:self.mapViewController.savedMapLocation.latitude lng:self.mapViewController.savedMapLocation.longitude];
+    
+    
+    //Start animations to stop displaying shout controller
+    [ImageUtilities popShoutControllerSegueAnimation:(ShoutViewController *)self.feedNavigationController.topViewController];
+    
+    [ImageUtilities stopDisplayShoutAnimationsTopContainer:self.topContainerView
+                                           bottomContainer:self.bottomContainerView
+                                                   mapView:self.mapView
+                                         createShoutButton:self.createShoutButton
+                                                moreButton:self.moreButton
+                                        darkMapOverlayView:self.darkMapOverlayView
+                                         mapViewController:self.mapViewController];
 }
 
 - (void)shoutSelectionComingFromFeed:(Shout *)shout
 {
     [self.mapViewController startShoutSelectionModeInMapViewController:shout];
-}
-
-- (void)refreshShouts
-{
-    [self.mapViewController refreshShoutsFromMapViewController];
 }
 
 - (void)onShoutCreated:(Shout *)shout
@@ -248,11 +301,6 @@
     } else {
         NSLog(@"Could not send device info");
     }
-}
-
-- (void)endShoutSelectionModeInMapViewController
-{
-    [self.mapViewController endShoutSelectionModeInMapViewController];
 }
 
 - (void)animateMapWhenZoomOnShout:(Shout *)shout

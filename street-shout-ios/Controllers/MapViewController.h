@@ -17,16 +17,18 @@
 @property (weak, nonatomic) id <MapViewControllerDelegate> mapVCdelegate;
 @property (nonatomic, strong) NSArray *shouts;
 @property (strong, nonatomic) NSMutableDictionary *displayedShouts;
-@property (nonatomic) BOOL preventShoutDeselection;
+@property (nonatomic) BOOL updateShoutsOnMapMove;
+@property (nonatomic) BOOL preventShoutsReload;
+@property (nonatomic) CLLocationCoordinate2D savedMapLocation;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 - (void)displayShouts:(NSArray *)shouts;
 
 - (void)animateMapWhenShoutSelected:(Shout *)shout;
 
-- (void)startShoutSelectionModeInMapViewController:(Shout *)shout;
+- (void) animateMapToLat:(float)lat lng:(float)lng;
 
-- (void)refreshShoutsFromMapViewController;
+- (void)startShoutSelectionModeInMapViewController:(Shout *)shout;
 
 - (void)endShoutSelectionModeInMapViewController;
 
@@ -41,5 +43,7 @@
 - (void)showShoutViewControllerIfNeeded:(Shout *)shout;
 
 - (void)dismissShoutViewControllerIfNeeded;
+
+- (void)refreshShouts;
 
 @end
