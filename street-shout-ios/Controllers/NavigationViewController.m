@@ -90,6 +90,12 @@
     [super viewDidDisappear:animated];
 }
 
+//Hack to remove the selection highligh from the cell during the back animation
+- (void)redisplayFeed
+{
+    self.feedTVC.shouts = self.feedTVC.shouts;
+}
+
 - (void)refreshShouts
 {
     [self pullShoutsInZone:[LocationUtilities getMapBounds:self.mapViewController.mapView]];

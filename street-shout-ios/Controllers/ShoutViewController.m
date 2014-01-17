@@ -58,6 +58,9 @@
     self.shoutImageView.clipsToBounds = YES;
     self.shoutImageDropShadowView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
     
+    ////Hack to remove the selection highligh from the cell during the back animation
+    [self.shoutVCDelegate redisplayFeed];
+    
     [super viewWillAppear:animated];
 }
 
