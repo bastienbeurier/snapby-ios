@@ -117,7 +117,7 @@
     
     NSRange matchRange = [emailRegex rangeOfFirstMatchInString:email options:0 range:NSMakeRange(0, [email length])];
     
-    return matchRange.length == [email length];
+    return [email length] != 0 && matchRange.length == [email length];
 }
 
 + (BOOL)validUsername:(NSString *)username
