@@ -680,34 +680,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDB-7V-Pk9">
-                                <rect key="frame" x="0.0" y="50" width="320" height="320"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="X3h-Ql-WRj"/>
-                                    <constraint firstAttribute="height" constant="320" id="be6-6i-h9W"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="320" id="cMb-Ga-USD"/>
-                                    <constraint firstAttribute="width" constant="320" id="uRl-k1-LWX"/>
-                                </constraints>
-                            </imageView>
-                            <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-Is-qMB">
-                                <rect key="frame" x="0.0" y="50" width="320" height="320"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="MkU-vE-8Hy"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="320" id="NyY-cx-AAI"/>
-                                    <constraint firstAttribute="height" constant="320" id="ggj-M6-Z5B"/>
-                                    <constraint firstAttribute="width" constant="320" id="wnU-0P-9VO"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="R8D-Ri-EkC" appends="YES" id="ZWD-oI-Q2i"/>
-                                    <outletCollection property="gestureRecognizers" destination="R8D-Ri-EkC" appends="YES" id="8R0-lf-fbx"/>
-                                </connections>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51d-6f-uR3">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="im6-8f-CdH"/>
                                 </constraints>
@@ -723,14 +699,55 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="304" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb" customClass="ShoutLabel">
-                                <rect key="frame" x="8" y="108" width="304" height="205"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
-                                <string key="text">This is a shout content with 140 characters to account for the space ne. This is a shout content with 140 characters to account for the space ne.</string>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ylw-Jt-KHm">
+                                <rect key="frame" x="0.0" y="50" width="320" height="468"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDB-7V-Pk9">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="320" id="hsv-qr-OsD"/>
+                                            <constraint firstAttribute="height" constant="320" id="uta-FA-EyG"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-Is-qMB">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="320" id="CQZ-LB-FBG"/>
+                                            <constraint firstAttribute="height" constant="320" id="dBu-3c-neE"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="320" id="oFR-Hz-Kud"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="y1c-Mb-1ry"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb" customClass="ShoutLabel">
+                                        <rect key="frame" x="10" y="58" width="300" height="205"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                                        <string key="text">This is a shout content with 140 characters to account for the space ne. This is a shout content with 140 characters to account for the space ne.</string>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="MhG-Is-qMB" secondAttribute="bottom" constant="200" id="81e-hX-kXc"/>
+                                    <constraint firstItem="MhG-Is-qMB" firstAttribute="top" secondItem="Ylw-Jt-KHm" secondAttribute="top" id="8t8-A6-SHF"/>
+                                    <constraint firstItem="MhG-Is-qMB" firstAttribute="leading" secondItem="Ylw-Jt-KHm" secondAttribute="leading" id="J92-FG-KeI"/>
+                                    <constraint firstAttribute="trailing" secondItem="cRS-g9-DDb" secondAttribute="trailing" constant="10" id="Nsk-lF-OlX"/>
+                                    <constraint firstItem="mDB-7V-Pk9" firstAttribute="leading" secondItem="Ylw-Jt-KHm" secondAttribute="leading" id="QT3-Eg-v2D"/>
+                                    <constraint firstItem="mDB-7V-Pk9" firstAttribute="top" secondItem="Ylw-Jt-KHm" secondAttribute="top" id="Rnf-o3-fCA"/>
+                                    <constraint firstAttribute="trailing" secondItem="mDB-7V-Pk9" secondAttribute="trailing" id="Tzo-E1-nMp"/>
+                                    <constraint firstItem="mDB-7V-Pk9" firstAttribute="leading" secondItem="Ylw-Jt-KHm" secondAttribute="leading" id="XNl-wN-Em2"/>
+                                    <constraint firstAttribute="bottom" secondItem="mDB-7V-Pk9" secondAttribute="bottom" constant="200" id="hdN-NF-gTw"/>
+                                    <constraint firstItem="MhG-Is-qMB" firstAttribute="centerX" secondItem="cRS-g9-DDb" secondAttribute="centerX" id="q5b-1b-pW1"/>
+                                    <constraint firstAttribute="trailing" secondItem="MhG-Is-qMB" secondAttribute="trailing" id="qwf-4Y-NnS"/>
+                                    <constraint firstItem="MhG-Is-qMB" firstAttribute="centerY" secondItem="cRS-g9-DDb" secondAttribute="centerY" id="rug-DK-XPi"/>
+                                    <constraint firstItem="mDB-7V-Pk9" firstAttribute="top" secondItem="Ylw-Jt-KHm" secondAttribute="top" id="uKc-W4-F7Y"/>
+                                    <constraint firstItem="cRS-g9-DDb" firstAttribute="leading" secondItem="Ylw-Jt-KHm" secondAttribute="leading" constant="10" id="vNU-oD-piR"/>
+                                    <constraint firstAttribute="trailing" secondItem="mDB-7V-Pk9" secondAttribute="trailing" id="vWS-VK-lAk"/>
+                                </constraints>
+                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PkE-VR-UNJ">
                                 <rect key="frame" x="107" y="518" width="106" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -776,7 +793,7 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="r11-PZ-JQP" firstAttribute="centerY" secondItem="hPB-zM-m3y" secondAttribute="centerY" id="2Zr-eR-cYY"/>
                                     <constraint firstAttribute="height" constant="50" id="7QO-oY-dyz"/>
@@ -802,24 +819,22 @@
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="mDB-7V-Pk9" firstAttribute="centerY" secondItem="MhG-Is-qMB" secondAttribute="centerY" id="09x-g4-nRB"/>
-                            <constraint firstItem="MhG-Is-qMB" firstAttribute="centerY" secondItem="cRS-g9-DDb" secondAttribute="centerY" id="4Cf-DW-h15"/>
-                            <constraint firstItem="MhG-Is-qMB" firstAttribute="centerX" secondItem="cRS-g9-DDb" secondAttribute="centerX" id="75F-4J-08P"/>
+                            <constraint firstItem="Ylw-Jt-KHm" firstAttribute="top" secondItem="pJN-FK-GhT" secondAttribute="bottom" id="3Cm-UF-AiM"/>
                             <constraint firstItem="Uoe-yw-iU6" firstAttribute="leading" secondItem="PkE-VR-UNJ" secondAttribute="trailing" constant="1" id="7Or-F0-hdR"/>
+                            <constraint firstAttribute="trailing" secondItem="Ylw-Jt-KHm" secondAttribute="trailing" id="8P8-xB-CtM"/>
                             <constraint firstItem="PkE-VR-UNJ" firstAttribute="leading" secondItem="SlI-Ci-wds" secondAttribute="trailing" constant="1" id="9HH-X1-9Zl"/>
-                            <constraint firstItem="mDB-7V-Pk9" firstAttribute="centerX" secondItem="MhG-Is-qMB" secondAttribute="centerX" id="A8O-sD-wvQ"/>
                             <constraint firstItem="pJN-FK-GhT" firstAttribute="leading" secondItem="LzH-fg-hOp" secondAttribute="leading" id="Mf7-zb-dSV"/>
                             <constraint firstAttribute="trailing" secondItem="51d-6f-uR3" secondAttribute="trailing" id="RTD-xZ-nCK"/>
                             <constraint firstItem="pJN-FK-GhT" firstAttribute="top" secondItem="O9f-bp-CmH" secondAttribute="bottom" id="S29-PK-By0"/>
                             <constraint firstAttribute="trailing" secondItem="Uoe-yw-iU6" secondAttribute="trailing" id="U2b-mS-Njs"/>
-                            <constraint firstAttribute="centerX" secondItem="MhG-Is-qMB" secondAttribute="centerX" id="WLc-Hh-LcN"/>
                             <constraint firstItem="Azd-BI-MqV" firstAttribute="top" secondItem="51d-6f-uR3" secondAttribute="bottom" id="aEj-Wv-UOB"/>
+                            <constraint firstItem="Ylw-Jt-KHm" firstAttribute="leading" secondItem="LzH-fg-hOp" secondAttribute="leading" id="dD7-aR-WSu"/>
                             <constraint firstItem="Azd-BI-MqV" firstAttribute="top" secondItem="PkE-VR-UNJ" secondAttribute="bottom" id="eBe-GS-v7O"/>
                             <constraint firstAttribute="trailing" secondItem="pJN-FK-GhT" secondAttribute="trailing" id="klN-Ui-bMK"/>
                             <constraint firstItem="Azd-BI-MqV" firstAttribute="top" secondItem="Uoe-yw-iU6" secondAttribute="bottom" id="puS-BU-N1c"/>
                             <constraint firstItem="Azd-BI-MqV" firstAttribute="top" secondItem="SlI-Ci-wds" secondAttribute="bottom" id="qmU-cU-EoB"/>
                             <constraint firstItem="51d-6f-uR3" firstAttribute="leading" secondItem="LzH-fg-hOp" secondAttribute="leading" id="tho-ux-MeB"/>
-                            <constraint firstItem="MhG-Is-qMB" firstAttribute="top" secondItem="O9f-bp-CmH" secondAttribute="bottom" constant="50" id="v6t-U1-gYe"/>
+                            <constraint firstItem="Uoe-yw-iU6" firstAttribute="top" secondItem="Ylw-Jt-KHm" secondAttribute="bottom" id="uMP-v4-6Ah"/>
                             <constraint firstItem="SlI-Ci-wds" firstAttribute="leading" secondItem="LzH-fg-hOp" secondAttribute="leading" id="z7Y-HV-JGf"/>
                         </constraints>
                     </view>
@@ -844,6 +859,24 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1412" y="403"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="fxJ-sn-Xyx">
+            <objects>
+                <viewController id="XJN-rR-Aa3" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0hr-Sz-0sh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Oi7-me-M1K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LoJ-aw-IUq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k09-04-Mo8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1825" y="549"/>
         </scene>
         <!--Display Shout Image View Controller-->
         <scene sceneID="3ZE-wi-WnM">

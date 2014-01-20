@@ -121,14 +121,6 @@
     }
 }
 
-- (IBAction)shoutImageClicked:(UITapGestureRecognizer *)sender {    
-    [self.shoutVCDelegate displayShoutImage:self.shout];
-}
-
-//- (IBAction)backButtonClicked:(id)sender {
-//    [self.shoutVCDelegate endShoutSelectionModeInMapViewController];
-//}
-
 //- (IBAction)shoutZoomButtonClicked:(id)sender {
 //    [self.shoutVCDelegate animateMapWhenZoomOnShout:self.shout];
 //}
