@@ -186,6 +186,22 @@
     [view.layer addSublayer:bottomBorder];
 }
 
++ (void)drawTopBorderForView:(UIView *)view withColor:(UIColor *)color
+{
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, 0.0f, view.frame.size.width, 1.0f);
+    bottomBorder.backgroundColor = color.CGColor;
+    [view.layer addSublayer:bottomBorder];
+}
+
++ (void)drawRightBorderForView:(UIView *)view withColor:(UIColor *)color
+{
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(view.frame.size.width - 1.0f, 0.0f, 1.0f, view.frame.size.height);
+    bottomBorder.backgroundColor = color.CGColor;
+    [view.layer addSublayer:bottomBorder];
+}
+
 + (void)drawCustomNavBarWithLeftItem:(NSString *)leftItem rightItem:(NSString *)rightItem title:(NSString *)title sizeBig:(BOOL)sizeBig inViewController:(UIViewController *)viewController
 {
     //Constants

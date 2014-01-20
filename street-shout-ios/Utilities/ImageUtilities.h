@@ -29,6 +29,10 @@
 
 + (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color;
 
++ (void)drawTopBorderForView:(UIView *)view withColor:(UIColor *)color;
+
++ (void)drawRightBorderForView:(UIView *)view withColor:(UIColor *)color;
+
 + (void)drawCustomNavBarWithLeftItem:(NSString *)leftItem rightItem:(NSString *)rightItem title:(NSString *)title sizeBig:(BOOL)sizeBig inViewController:(UIViewController *)viewController;
 
 + (void)displayShoutAnimationsTopContainer:(UIView *)topContainerView

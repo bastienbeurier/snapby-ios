@@ -31,10 +31,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *shoutContent;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (weak, nonatomic) IBOutlet UILabel *shoutAgeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *shoutAgeUnitLabel;
-@property (weak, nonatomic) IBOutlet UILabel *shoutDistanceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *shoutDistanceUnitLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageDropShadowView;
+@property (weak, nonatomic) IBOutlet UIButton *commentButton;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (weak, nonatomic) IBOutlet UIButton *moreShoutOptionsButton;
+@property (weak, nonatomic) IBOutlet UIView *bottomBarView;
 
 
 @end
@@ -43,14 +44,39 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
     [self updateUI];
+    
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     ////Hack to remove the selection highligh from the cell during the back animation
     [self.shoutVCDelegate redisplayFeed];
+    
+    //Shout content round corners
+    self.shoutContent.layer.cornerRadius = 5;
+    
+    //Button image
+    self.shareButton.imageView.contentMode = UIViewContentModeCenter;
+    self.moreShoutOptionsButton.imageView.contentMode = UIViewContentModeCenter;
+    self.commentButton.imageView.contentMode = UIViewContentModeCenter;
+    
+    //Add bottom bar borders
+    CALayer *topBorder = [CALayer layer];
+    topBorder.frame = CGRectMake(0.0f, 0.0f, self.bottomBarView.frame.size.width, 0.5f);
+    topBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.bottomBarView.layer addSublayer:topBorder];
+    
+    CALayer *firstInterBorder = [CALayer layer];
+    firstInterBorder.frame = CGRectMake(107.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
+    firstInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.bottomBarView.layer addSublayer:firstInterBorder];
+    
+    CALayer *secondInterBorder = [CALayer layer];
+    secondInterBorder.frame = CGRectMake(213.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
+    secondInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.bottomBarView.layer addSublayer:secondInterBorder];
     
     [super viewWillAppear:animated];
 }
@@ -65,7 +91,7 @@
 {
     if (self.shout) {
         if (self.shout.image) {
-            self.shoutImageDropShadowView.image = [UIImage imageNamed:@"shout-image-place-holder"];
+            self.shoutImageDropShadowView.image = [UIImage imageNamed:@"shout-image-place-holder-square"];
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             
@@ -76,36 +102,21 @@
             [self.shoutImageDropShadowView setHidden:YES];
         }
         
-        self.shoutUsername.text = [NSString stringWithFormat:@"by %@", self.shout.username];
+        self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.username];
 
         self.shoutContent.text = self.shout.description;
         
-        NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToStrings:[TimeUtilities getShoutAge:self.shout.created]];
+        NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToShortStrings:[TimeUtilities getShoutAge:self.shout.created]];
         
-        self.shoutAgeLabel.text = [shoutAgeStrings firstObject];
-        
-        if (shoutAgeStrings.count > 1) {
-            self.shoutAgeUnitLabel.text = [NSString stringWithFormat:@"%@ %@", [shoutAgeStrings objectAtIndex:1], NSLocalizedStringFromTable (@"ago", @"Strings", @"comment")];
-        } else {
-            //The space instead of blank is a hack for the view to stay in place (helps in autolayout)
-            self.shoutAgeUnitLabel.text = @" ";
-        }
+        self.shoutAgeLabel.text = [NSString stringWithFormat:@"%@%@", [shoutAgeStrings firstObject], [shoutAgeStrings objectAtIndex:1]];
         
         MKUserLocation *myLocation = [self.shoutVCDelegate getMyLocation];
         
         if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
             NSArray *shoutDistanceStrings = [LocationUtilities formattedDistanceLat1:myLocation.coordinate.latitude lng1:myLocation.coordinate.longitude lat2:self.shout.lat lng2:self.shout.lng];
-            self.shoutDistanceLabel.text = [shoutDistanceStrings firstObject];
-            
-            if (shoutDistanceStrings.count > 1) {
-                self.shoutDistanceUnitLabel.text = [NSString stringWithFormat:@"%@ %@", [shoutDistanceStrings objectAtIndex:1], NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
-            } else {
-                //The space instead of blank is a hack for the view to stay in place (helps in autolayout)
-                self.shoutDistanceUnitLabel.text = @" ";
-            }
+            self.shoutAgeLabel.text = [NSString stringWithFormat:@" %@ | %@%@", self.shoutAgeLabel.text, [shoutDistanceStrings firstObject], [shoutDistanceStrings objectAtIndex:1]];
         } else {
-            self.shoutDistanceLabel.text = @"";
-            self.shoutDistanceUnitLabel.text = @"";
+            self.shoutAgeLabel.text = [NSString stringWithFormat:@" %@ | ?", self.shoutAgeLabel.text];
         }
     }
 }

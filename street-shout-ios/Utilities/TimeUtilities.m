@@ -51,4 +51,26 @@
     }
 }
 
++ (NSArray *)shoutAgeToShortStrings:(NSTimeInterval)age
+{
+    if (age > 0) {
+        NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
+        if (hours > 1) {
+            NSArray *result = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], @"h", nil];
+            if (age > kShoutDuration) {
+                return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"expired", @"Strings", @"comment"), nil, nil];
+            }
+            return result;
+        } else if (hours == 1) {
+            return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], @"h", nil];
+        } else {
+            NSUInteger minutes = ((NSUInteger)age) / ONE_MINUTE;
+            return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", minutes], @"min", nil];
+        }
+        
+    } else {
+        return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], @"min", nil];
+    }
+}
+
 @end
