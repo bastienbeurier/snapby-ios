@@ -14,7 +14,7 @@
 #import "TimeUtilities.h"
 #import "LocationUtilities.h"
 
-#define NO_COMMENT_TAG @"No Comment"
+#define NO_COMMENT_TAG @"No comment"
 #define LOADING_TAG @"Loading"
 #define NO_CONNECTION_TAG @"No connection"
 
@@ -44,20 +44,20 @@
         self.activityView= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     }
     
-    self.activityView.center = self.commentsTableView.center;
+    self.activityView.center = CGPointMake(160, 50);
     
     [self.activityView startAnimating];
     
     [self.commentsTableView addSubview:self.activityView];
     
-    self.comments = @[@"Loading"];
+    self.comments = @[LOADING_TAG];
     
     [AFStreetShoutAPIClient getCommentsForShout:self.shout success:^(NSArray *comments) {
         [self.activityView stopAnimating];
         self.comments = comments;
     } failure: ^{
         [self.activityView stopAnimating];
-        self.comments = @[@"No connection"];
+        self.comments = @[NO_CONNECTION_TAG];
     }];
 
     [super viewDidLoad];
@@ -66,7 +66,7 @@
 - (void)setComments:(NSArray *)comments
 {
     if ([comments count] == 0) {
-        comments = @[NO_COMMENT_TAG];
+        _comments = @[NO_COMMENT_TAG];
     } else if ([comments[0] isKindOfClass:[NSString class]] && [comments[0] isEqualToString:LOADING_TAG]) {
         _comments = @[];
     } else if ([comments[0] isKindOfClass:[NSString class]] && [comments[0] isEqualToString:NO_CONNECTION_TAG]) {
@@ -113,7 +113,7 @@
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",comment.commenterUsername];
         cell.descriptionLabel.text = comment.description;
         
-        NSArray *commentAgeStrings = [TimeUtilities shoutAgeToShortStrings:[TimeUtilities getShoutAge:comment.created]];
+        NSArray *commentAgeStrings = [TimeUtilities ageToShortStrings:[TimeUtilities getShoutAge:comment.created]];
         
         cell.stampLabel.text = [NSString stringWithFormat:@"%@%@", [commentAgeStrings firstObject], [commentAgeStrings objectAtIndex:1]];
         
@@ -135,30 +135,36 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"CommentsTableViewCell";
-    
-    CommentsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:cellIdentifier owner:self options:nil];
-        cell = [nib objectAtIndex:0];
+    if ([self noCommentsInArray:self.comments]) {
+        return 54;
+    } else if ([self errorRetrievingComments:self.comments]) {
+        return 54;
+    } else {
+        static NSString *cellIdentifier = @"CommentsTableViewCell";
+        
+        CommentsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:cellIdentifier owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+        }
+        
+        Comment *comment = (Comment *)self.comments[indexPath.row];
+        
+        cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",comment.commenterUsername];
+        cell.descriptionLabel.text = comment.description;
+        
+        cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+        
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        
+        CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        
+        height += 1.0f;
+        
+        return height;
     }
-    
-    Comment *comment = (Comment *)self.comments[indexPath.row];
-    
-    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",comment.commenterUsername];
-    cell.descriptionLabel.text = comment.description;
-    
-    cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-    
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
-    
-    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    
-    height += 1.0f;
-    
-    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath

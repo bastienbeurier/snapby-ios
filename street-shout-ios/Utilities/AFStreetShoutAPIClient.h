@@ -47,5 +47,7 @@
 
 + (void)getCommentsForShout:(Shout *)shout success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
 
++ (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount))successBlock failure:(void(^)())failureBlock;
+
 @end
 

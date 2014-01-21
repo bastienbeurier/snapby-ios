@@ -36,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreShoutOptionsButton;
 @property (weak, nonatomic) IBOutlet UIView *bottomBarView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIImageView *commentsCountIcon;
+@property (weak, nonatomic) IBOutlet UIButton *commentsCountLabelButton;
 
 
 @end
@@ -44,6 +46,12 @@
 
 - (void)viewDidLoad
 {
+    [AFStreetShoutAPIClient getShoutMetaData:self.shout success:^(NSInteger commentCount) {
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", commentCount] forState:UIControlStateNormal];
+        self.commentsCountLabelButton.hidden = NO;
+        self.commentsCountIcon.hidden = NO;
+    } failure:nil];
+    
     [self updateUI];
     
     [super viewDidLoad];
@@ -101,7 +109,7 @@
 
         self.shoutContent.text = self.shout.description;
         
-        NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToShortStrings:[TimeUtilities getShoutAge:self.shout.created]];
+        NSArray *shoutAgeStrings = [TimeUtilities ageToShortStrings:[TimeUtilities getShoutAge:self.shout.created]];
         
         self.shoutAgeLabel.text = [NSString stringWithFormat:@"%@%@", [shoutAgeStrings firstObject], [shoutAgeStrings objectAtIndex:1]];
         
@@ -175,7 +183,8 @@
 {
     NSString * segueName = segue.identifier;
     
-    if ([segueName isEqualToString: @"Comments Push Segue"]) {
+    if ([segueName isEqualToString: @"Comments Push Segue From Bar Button"] ||
+        [segueName isEqualToString: @"Comments Push Segue From Count Label"]) {
         ((CommentsViewController *) [segue destinationViewController]).shout = self.shout;
     }
 }

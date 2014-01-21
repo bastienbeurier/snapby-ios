@@ -374,7 +374,6 @@
 }
 
 + (void)getCommentsForShout:(Shout *)shout success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
-
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"comments.json"];
     
@@ -398,6 +397,32 @@
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         
         failureBlock();
+    }];
+}
+
++ (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount))successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"/get_shout_meta_data.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:1];
+    
+    [parameters setObject:[NSNumber numberWithInt:shout.identifier] forKey:@"shout_id"];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        
+        NSInteger commentCount = [[result objectForKey:@"comment_count"] integerValue];
+        
+        successBlock(commentCount);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        if (failureBlock) {
+            failureBlock();
+        }
     }];
 }
 

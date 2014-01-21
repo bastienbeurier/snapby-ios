@@ -26,7 +26,7 @@
 {
     Shout *shout = [[Shout alloc] init];
     shout.identifier = [[rawShout objectForKey:SHOUT_ID] integerValue];
-    shout.userId = [[rawShout objectForKey:USER_ID] integerValue];;
+    shout.userId = [[rawShout objectForKey:USER_ID] integerValue];
     shout.lat = [[rawShout objectForKey:SHOUT_LAT] doubleValue];
     shout.lng = [[rawShout objectForKey:SHOUT_LNG] doubleValue];
     shout.description = [rawShout objectForKey:SHOUT_DESCRIPTION];

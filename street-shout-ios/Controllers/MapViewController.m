@@ -85,7 +85,7 @@
     }
 }
 
-- (void)endShoutSelectionModeInMapViewController
+- (void)deselectAnnotationsOnMap
 {
     NSArray *selectedAnnotations = self.mapView.selectedAnnotations;
     for (id annotationView in selectedAnnotations) {

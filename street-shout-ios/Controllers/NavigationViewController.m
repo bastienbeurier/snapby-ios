@@ -177,6 +177,7 @@
     if ([segueName isEqualToString: @"Shout Push Segue"]) {
         ((ShoutViewController *) [segue destinationViewController]).shout = (Shout *)sender;
         ((ShoutViewController *) [segue destinationViewController]).shoutVCDelegate = self;
+        [self.mapViewController deselectAnnotationsOnMap];
     }
 }
 

@@ -23,7 +23,7 @@
 
 - (void) animateMapToLat:(float)lat lng:(float)lng;
 
-- (void)endShoutSelectionModeInMapViewController;
+- (void)deselectAnnotationsOnMap;
 
 - (void)animateMapWhenZoomOnShout:(Shout *)shout;
 

@@ -707,7 +707,7 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="y1c-Mb-1ry"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb" customClass="ShoutLabel">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb" customClass="ShoutLabel">
                                         <rect key="frame" x="10" y="58" width="300" height="205"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
                                         <string key="text">This is a shout content with 140 characters to account for the space ne. This is a shout content with 140 characters to account for the space ne.</string>
@@ -715,13 +715,33 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shout-comment-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="jcN-ts-CR1">
+                                        <rect key="frame" x="10" y="328" width="25" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="Cfz-nZ-RFI"/>
+                                            <constraint firstAttribute="height" constant="27" id="s4U-qW-kmb"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QH2-SR-hgQ">
+                                        <rect key="frame" x="35" y="325" width="100" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                        <state key="normal" title="                        ">
+                                            <color key="titleColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="XJN-rR-Aa3" kind="push" identifier="Comments Push Segue From Count Label" id="hyM-N0-NFO"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="cRS-g9-DDb" firstAttribute="centerX" secondItem="MhG-Is-qMB" secondAttribute="centerX" id="2Nn-hq-t6i"/>
-                                    <constraint firstItem="cRS-g9-DDb" firstAttribute="leading" secondItem="Ylw-Jt-KHm" secondAttribute="leading" constant="10" id="9zM-Nd-NHs"/>
-                                    <constraint firstAttribute="trailing" secondItem="cRS-g9-DDb" secondAttribute="trailing" constant="10" id="Egd-l5-2LR"/>
                                     <constraint firstItem="MhG-Is-qMB" firstAttribute="leading" secondItem="Ylw-Jt-KHm" secondAttribute="leading" id="PYP-e4-I6X"/>
+                                    <constraint firstItem="jcN-ts-CR1" firstAttribute="centerY" secondItem="QH2-SR-hgQ" secondAttribute="centerY" id="QUJ-Ue-5Py"/>
                                     <constraint firstAttribute="trailing" secondItem="MhG-Is-qMB" secondAttribute="trailing" id="RIS-RQ-FDG"/>
+                                    <constraint firstItem="QH2-SR-hgQ" firstAttribute="leading" secondItem="jcN-ts-CR1" secondAttribute="trailing" id="RYt-u8-a1W"/>
                                     <constraint firstAttribute="trailing" secondItem="mDB-7V-Pk9" secondAttribute="trailing" id="Z42-8a-qne"/>
                                     <constraint firstItem="cRS-g9-DDb" firstAttribute="centerY" secondItem="MhG-Is-qMB" secondAttribute="centerY" id="bUa-S8-Tvm"/>
                                     <constraint firstItem="mDB-7V-Pk9" firstAttribute="leading" secondItem="Ylw-Jt-KHm" secondAttribute="leading" id="bj5-Ht-xUx"/>
@@ -729,6 +749,8 @@
                                     <constraint firstItem="MhG-Is-qMB" firstAttribute="top" secondItem="Ylw-Jt-KHm" secondAttribute="top" id="haB-3P-ccq"/>
                                     <constraint firstItem="mDB-7V-Pk9" firstAttribute="top" secondItem="Ylw-Jt-KHm" secondAttribute="top" id="k1D-ET-eFf"/>
                                     <constraint firstAttribute="bottom" secondItem="MhG-Is-qMB" secondAttribute="bottom" constant="150" id="ke7-gK-4Ag"/>
+                                    <constraint firstItem="jcN-ts-CR1" firstAttribute="leading" secondItem="Ylw-Jt-KHm" secondAttribute="leading" constant="10" id="mT1-wy-BIk"/>
+                                    <constraint firstItem="jcN-ts-CR1" firstAttribute="top" secondItem="MhG-Is-qMB" secondAttribute="bottom" constant="8" id="utw-SS-nAd"/>
                                 </constraints>
                             </scrollView>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SlI-Ci-wds">
@@ -742,7 +764,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="XJN-rR-Aa3" kind="push" identifier="Comments Push Segue" id="fbw-tr-rR7"/>
+                                    <segue destination="XJN-rR-Aa3" kind="push" identifier="Comments Push Segue From Bar Button" id="fbw-tr-rR7"/>
                                 </connections>
                             </button>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PkE-VR-UNJ">
@@ -764,20 +786,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="@bastien" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPB-zM-m3y">
-                                        <rect key="frame" x="10" y="15" width="64" height="21"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
+                                        <rect key="frame" x="10" y="15" width="59" height="20"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                                         <color key="textColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55m | 55mi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r11-PZ-JQP">
-                                        <rect key="frame" x="220" y="15" width="75" height="21"/>
+                                        <rect key="frame" x="225" y="15" width="70" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shout-time-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="hoP-w0-NUr">
-                                        <rect key="frame" x="206" y="18" width="14" height="14"/>
+                                        <rect key="frame" x="211" y="18" width="14" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="GLb-56-B3e"/>
@@ -856,6 +878,8 @@
                     <connections>
                         <outlet property="bottomBarView" destination="51d-6f-uR3" id="EP0-eg-Brp"/>
                         <outlet property="commentButton" destination="SlI-Ci-wds" id="0Fl-HJ-AtX"/>
+                        <outlet property="commentsCountIcon" destination="jcN-ts-CR1" id="oLS-Fu-V9p"/>
+                        <outlet property="commentsCountLabelButton" destination="QH2-SR-hgQ" id="lYB-9P-yer"/>
                         <outlet property="mapView" destination="MKd-0C-E3k" id="uKe-dg-5Eg"/>
                         <outlet property="moreShoutOptionsButton" destination="Uoe-yw-iU6" id="ACX-mK-zha"/>
                         <outlet property="shareButton" destination="PkE-VR-UNJ" id="UZM-nR-eRr"/>
@@ -892,14 +916,14 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" restorationIdentifier="No Comment" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="No Shout" textLabel="zUM-WK-uLv" rowHeight="60" style="IBUITableViewCellStyleDefault" id="3Pv-jA-cgb">
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" restorationIdentifier="No comment" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="No comment" textLabel="zUM-WK-uLv" rowHeight="60" style="IBUITableViewCellStyleDefault" id="3Pv-jA-cgb">
                                         <rect key="frame" x="0.0" y="22" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Pv-jA-cgb" id="vyQ-gi-88H">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="No comments..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zUM-WK-uLv">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="No comments yet..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zUM-WK-uLv">
                                                     <rect key="frame" x="15" y="0.0" width="290" height="60"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1481,7 +1505,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jeb-yC-wvX"/>
         <segue reference="ySR-z5-IUO"/>
+        <segue reference="jeb-yC-wvX"/>
+        <segue reference="hyM-N0-NFO"/>
     </inferredMetricsTieBreakers>
 </document>

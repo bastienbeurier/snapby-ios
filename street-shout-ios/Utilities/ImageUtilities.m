@@ -223,7 +223,7 @@
     if ([rightItem isEqualToString:@"ok"]) {
         UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
         okButton.frame = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin , buttonTopMargin, buttonSize, buttonSize);
-        [okButton addTarget:viewController action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [okButton addTarget:viewController action:@selector(okButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         
         UIImage *okImage = [UIImage imageNamed:@"ok-item-button.png"];
         [okButton setBackgroundImage:okImage forState:UIControlStateNormal];
