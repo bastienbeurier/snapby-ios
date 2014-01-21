@@ -13,6 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stampLabel;
-@property (weak, nonatomic) IBOutlet UIView *separatorView;
 
 @end

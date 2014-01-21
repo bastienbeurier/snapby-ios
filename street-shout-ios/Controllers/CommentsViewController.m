@@ -11,6 +11,8 @@
 #import "Comment.h"
 #import "ImageUtilities.h"
 #import "AFStreetShoutAPIClient.h"
+#import "TimeUtilities.h"
+#import "LocationUtilities.h"
 
 #define NO_COMMENT_TAG @"No Comment"
 #define LOADING_TAG @"Loading"
@@ -111,24 +113,23 @@
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",comment.commenterUsername];
         cell.descriptionLabel.text = comment.description;
         
-        cell.separatorView.frame = CGRectMake(cell.separatorView.frame.origin.x, cell.separatorView.frame.origin.y, cell.separatorView.frame.size.width, 0.3);
+        NSArray *commentAgeStrings = [TimeUtilities shoutAgeToShortStrings:[TimeUtilities getShoutAge:comment.created]];
+        
+        cell.stampLabel.text = [NSString stringWithFormat:@"%@%@", [commentAgeStrings firstObject], [commentAgeStrings objectAtIndex:1]];
+        
+        if (comment.lat !=0 && comment.lng !=0 ) {
+            NSArray *distanceStrings = [LocationUtilities formattedDistanceLat1:comment.lat lng1:comment.lng lat2:self.shout.lat lng2:self.shout.lng];
+            cell.stampLabel.text = [NSString stringWithFormat:@" %@ | %@%@", cell.stampLabel.text, [distanceStrings firstObject], [distanceStrings objectAtIndex:1]];
+        }
+        
+        //separator
+        if (indexPath.row != 0) {
+            UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 0.3)];
+            seperator.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1];
+            [cell.contentView addSubview:seperator];
+        }
         
         return cell;
-        
-        //TODO implement time and distance
-        
-//        cell.shoutContentLabel.text = shout.description;
-//        cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.username];
-//        
-//        NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToStrings:[TimeUtilities getShoutAge:shout.created]];
-//        
-//        cell.shoutAgeLabel.text = [shoutAgeStrings firstObject];
-//        
-//        if (shoutAgeStrings.count > 1) {
-//            cell.shoutAgeUnitLabel.text = [shoutAgeStrings objectAtIndex:1];
-//        } else {
-//            cell.shoutAgeUnitLabel.text = @"";
-//        }
     }
 }
 

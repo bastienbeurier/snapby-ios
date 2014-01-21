@@ -380,8 +380,6 @@
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
-    NSLog(@"WHAT IS THE SHOUT ID %d", shout.identifier);
-    
     [parameters setObject:[NSNumber numberWithInt:shout.identifier] forKey:@"shout_id"];
     
     // Enrich with token
@@ -390,8 +388,6 @@
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
-        NSLog(@"THIS IS THE RESULT: %@", JSON);
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
