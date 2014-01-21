@@ -11,7 +11,6 @@
 #import "LocationUtilities.h"
 #import "Shout.h"
 #import "FeedTVC.h"
-#import "DisplayShoutImageViewController.h"
 #import "AFStreetShoutAPIClient.h"
 #import "Constants.h"
 #import "Reachability.h"
@@ -33,7 +32,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
-@property (strong, nonatomic) UIView *darkMapOverlayView;
 @property (weak, nonatomic) MKMapView *mapView;
 
 @end
@@ -44,28 +42,15 @@
 {
     //Status bar style  
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
     //Buttons round corner
     NSUInteger buttonHeight = self.createShoutButton.bounds.size.height;
     self.createShoutButton.layer.cornerRadius = buttonHeight/2;
     self.moreButton.layer.cornerRadius = buttonHeight/2;
     
-    [super viewDidLoad];
-}
-
-- (void)viewDidLayoutSubviews
-{
-    self.darkMapOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.topContainerView.frame.size.width, self.topContainerView.frame.size.height)];
-    self.darkMapOverlayView.backgroundColor = [UIColor blackColor];
-    self.darkMapOverlayView.alpha = 0.5;
-    [self.topContainerView addSubview:self.darkMapOverlayView];
-    self.darkMapOverlayView.hidden = YES;
-    
-    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(darkMapOverlayTapped:)];
-    [self.darkMapOverlayView addGestureRecognizer:singleFingerTap];
-    
     self.mapView = self.mapViewController.mapView;
     
-    [super viewDidLayoutSubviews];
+    [super viewDidLoad];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -80,7 +65,7 @@
     
     [self refreshShouts];
     
-    [super viewWillAppear:animated];
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -127,13 +112,13 @@
     }];
 }
 
-- (void)handleShoutRedirection:(Shout *)shout
-{
-    NSMutableArray *newShouts = [NSMutableArray arrayWithObjects:shout, nil];
-    [self manuallyUpdateShoutsToShow:newShouts];
-    
-    [self.mapViewController startShoutSelectionModeInMapViewController:shout];
-}
+//TODO: review notification implemention
+//- (void)handleShoutRedirection:(Shout *)shout
+//{
+//    NSMutableArray *newShouts = [NSMutableArray arrayWithObjects:shout, nil];
+//    [self manuallyUpdateShoutsToShow:newShouts];
+//    
+//}
 
 - (void)manuallyUpdateShoutsToShow:(NSArray *)newShouts
 {
@@ -141,71 +126,26 @@
     self.feedTVC.shouts = newShouts;
 }
 
-- (void)showShoutViewControllerIfNeeded:(Shout *)shout
+- (void)showShoutViewController:(Shout *)shout
 {
-    if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
-        ((ShoutViewController *)[self.feedNavigationController topViewController]).shout = shout;
-    } else {
-        self.mapViewController.savedMapLocation = self.mapViewController.mapView.centerCoordinate;
-        
-        self.mapViewController.updateShoutsOnMapMove = NO;
-        
-        //Start animations to display shout controller
-        [self.feedTVC performSegueWithIdentifier:@"Show Shout" sender:shout];
-        
-        [ImageUtilities displayShoutAnimationsTopContainer:self.topContainerView
-                                           bottomContainer:self.bottomContainerView
-                                                   mapView:self.mapView
-                                         createShoutButton:self.createShoutButton
-                                                moreButton:self.moreButton
-                                        darkMapOverlayView:self.darkMapOverlayView
-                                         mapViewController:self.mapViewController];
-    }
-}
-
-- (void)darkMapOverlayTapped:(UITapGestureRecognizer *)recognizer {
-    [self.mapViewController endShoutSelectionModeInMapViewController];
-    
-    self.mapViewController.preventShoutsReload = YES;
-    [self.mapViewController animateMapToLat:self.mapViewController.savedMapLocation.latitude lng:self.mapViewController.savedMapLocation.longitude];
-    
-    
-    //Start animations to stop displaying shout controller
-    [ImageUtilities popShoutControllerSegueAnimation:(ShoutViewController *)self.feedNavigationController.topViewController];
-    
-    [ImageUtilities stopDisplayShoutAnimationsTopContainer:self.topContainerView
-                                           bottomContainer:self.bottomContainerView
-                                                   mapView:self.mapView
-                                         createShoutButton:self.createShoutButton
-                                                moreButton:self.moreButton
-                                        darkMapOverlayView:self.darkMapOverlayView
-                                         mapViewController:self.mapViewController];
+    [self performSegueWithIdentifier:@"Shout Push Segue" sender:shout];
 }
 
 - (void)shoutSelectionComingFromFeed:(Shout *)shout
 {
-    [self.mapViewController startShoutSelectionModeInMapViewController:shout];
+    [self showShoutViewController:shout];
 }
 
 - (void)onShoutCreated:(Shout *)shout
 {
-    [self handleShoutRedirection:shout];
-    
-    [self.mapViewController animateMapWhenShoutSelected:shout];
+//    [self handleShoutRedirection:shout];
 }
 
 - (void)onShoutNotificationPressed:(Shout *)shout
 {
-    [self handleShoutRedirection:shout];
+//    [self handleShoutRedirection:shout];
     
-    [self.mapViewController animateMapWhenShoutSelected:shout];
-}
-
-- (void)dismissShoutViewControllerIfNeeded
-{
-    if ([[self.feedNavigationController topViewController] isKindOfClass:[ShoutViewController class]]) {
-        [self.feedNavigationController popViewControllerAnimated:YES];
-    }
+    //TODO: Animate map to the right spot
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -230,20 +170,14 @@
         ((CreateShoutViewController *)[segue destinationViewController]).createShoutVCDelegate = self;
     }
     
-    if ([segueName isEqualToString: @"Display Shout Image"]) {
-        Shout *imageShout = (Shout *)sender;
-        
-        ((DisplayShoutImageViewController *)[segue destinationViewController]).shout = imageShout;
-    }
-    
     if ([segueName isEqualToString: @"Settings Push Segue"]) {
         ((SettingsViewController *) [segue destinationViewController]).settingsViewControllerDelegate = self;
     }
-}
-
-- (void)displayShoutImage:(Shout *)imageShout
-{
-    [self performSegueWithIdentifier:@"Display Shout Image" sender:imageShout];
+    
+    if ([segueName isEqualToString: @"Shout Push Segue"]) {
+        ((ShoutViewController *) [segue destinationViewController]).shout = (Shout *)sender;
+        ((ShoutViewController *) [segue destinationViewController]).shoutVCDelegate = self;
+    }
 }
 
 - (IBAction)createShoutButtonClicked:(id)sender {

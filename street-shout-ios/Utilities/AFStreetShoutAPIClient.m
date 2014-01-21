@@ -373,4 +373,36 @@
     }];
 }
 
++ (void)getCommentsForShout:(Shout *)shout success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
+
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"comments.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    NSLog(@"WHAT IS THE SHOUT ID %d", shout.identifier);
+    
+    [parameters setObject:[NSNumber numberWithInt:shout.identifier] forKey:@"shout_id"];
+    
+    // Enrich with token
+    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        NSLog(@"THIS IS THE RESULT: %@", JSON);
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        
+        NSArray *rawComments = [result valueForKeyPath:@"comments"];
+        
+        successBlock([Comment rawCommentsToInstances:rawComments]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        failureBlock();
+    }];
+}
+
 @end

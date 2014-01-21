@@ -34,9 +34,6 @@
 {
     [super viewDidLoad];
     self.mapView.delegate = self;
-    self.updateShoutsOnMapMove = YES;
-    
-    self.preventShoutsReload = NO;
     
     [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude WithSpan:ZOOM_0 Animated:NO];
 }
@@ -69,21 +66,13 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    if (self.updateShoutsOnMapMove && !self.preventShoutsReload) {
-        [self.mapVCdelegate refreshShouts];
-    }
-    
-    self.preventShoutsReload = NO;
+
+    [self.mapVCdelegate refreshShouts];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    if ([view.annotation isKindOfClass:[MKUserLocation class]]) {
-        [self.mapVCdelegate dismissShoutViewControllerIfNeeded];
-        
-        return;
-    }
-    
+
     MKPointAnnotation *annotation = (MKPointAnnotation *)view.annotation;
     
     if ([annotation respondsToSelector:@selector(shout)]) {
@@ -92,38 +81,7 @@
         //Mixpanel tracking
         [TrackingUtilities trackDisplayShout:shout withSource:@"Map"];
         
-        [self setAnnotationView:view pinImageForShout:shout selected:YES];
-        view.centerOffset = CGPointMake(13,-13);
-        
-        [self updateUIWhenShoutSelected:shout];
-    }
-}
-
-- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
-{
-    if ([view.annotation isKindOfClass:[MKUserLocation class]]) {
-        return;
-    }
-    
-    [self setAnnotationView:view pinImageForShout:((MKPointAnnotation *)view.annotation).shout selected:NO];
-    view.centerOffset = CGPointMake(10,-10);
-}
-
-- (void)updateUIWhenShoutSelected:(Shout *)shout
-{
-    [self.mapVCdelegate showShoutViewControllerIfNeeded:shout];
-    
-    [self animateMapWhenShoutSelected:shout];
-}
-
-- (void)startShoutSelectionModeInMapViewController:(Shout *)shout
-{
-    NSString *shoutKey = [NSString stringWithFormat:@"%d", shout.identifier];
-    
-    MKPointAnnotation *shoutAnnotation = [self.displayedShouts objectForKey:shoutKey];
-    
-    if (shoutAnnotation) {
-        [self.mapView selectAnnotation:shoutAnnotation animated:NO];
+        [self.mapVCdelegate showShoutViewController:shout];
     }
 }
 
@@ -135,12 +93,7 @@
     }
 }
 
-- (void)animateMapWhenShoutSelected:(Shout *)shout
-{
-    [self animateMapToLat:shout.lat lng:shout.lng];
-}
-
-- (void) animateMapToLat:(float)lat lng:(float)lng
+- (void)animateMapToLat:(float)lat lng:(float)lng
 {
     CLLocationCoordinate2D shoutCoordinate;
     shoutCoordinate.latitude = lat;

@@ -15,8 +15,7 @@
 #import "ImageUtilities.h"
 #import "AFStreetShoutAPIClient.h"
 #import "SessionUtilities.h"
-
-#define SHOUT_IMAGE_SIZE 60
+#import "CommentsViewController.h"
 
 #define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
@@ -36,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreShoutOptionsButton;
 @property (weak, nonatomic) IBOutlet UIView *bottomBarView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 
 @end
@@ -51,16 +51,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    ////Hack to remove the selection highligh from the cell during the back animation
-    [self.shoutVCDelegate redisplayFeed];
-    
     //Shout content round corners
     self.shoutContent.layer.cornerRadius = 5;
     
-    //Button image
-    self.shareButton.imageView.contentMode = UIViewContentModeCenter;
-    self.moreShoutOptionsButton.imageView.contentMode = UIViewContentModeCenter;
-    self.commentButton.imageView.contentMode = UIViewContentModeCenter;
+    ////Hack to remove the selection highligh from the cell during the back animation
+    [self.shoutVCDelegate redisplayFeed];
     
     //Add bottom bar borders
     CALayer *topBorder = [CALayer layer];
@@ -124,56 +119,69 @@
 //- (IBAction)shoutZoomButtonClicked:(id)sender {
 //    [self.shoutVCDelegate animateMapWhenZoomOnShout:self.shout];
 //}
+//
+//- (IBAction)flagButtonClicked:(id)sender {
+//    if (![SessionUtilities isSignedIn]){
+//        [SessionUtilities redirectToSignIn];
+//        return;
+//    }
+//    
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
+// delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
+//    
+//    [actionSheet showInView:self.shoutVCDelegate.view];
+//}
 
-- (IBAction)flagButtonClicked:(id)sender {
-    if (![SessionUtilities isSignedIn]){
-        [SessionUtilities redirectToSignIn];
-        return;
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
+//    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
+//        //In this case, 401 means that the auth token is no valid.
+//        if ([SessionUtilities invalidTokenResponse:operation]) {
+//            [SessionUtilities redirectToSignIn];
+//        }
+//    };
+//    
+//    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+//    if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
+//        
+//        NSString *motive = nil;
+//        
+//        switch (buttonIndex) {
+//            case 0:
+//                motive = @"abuse";
+//                break;
+//            case 1:
+//                motive = @"spam";
+//                break;
+//            case 2:
+//                motive = @"privacy";
+//                break;
+//            case 3:
+//                motive = @"inaccurate";
+//                break;
+//            case 4:
+//                motive = @"other";
+//                break;
+//        }
+//        
+//        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
+//        
+//        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
+//    }
+//}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString * segueName = segue.identifier;
+    
+    if ([segueName isEqualToString: @"Comments Push Segue"]) {
+        ((CommentsViewController *) [segue destinationViewController]).shout = self.shout;
     }
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
- delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
-    
-    [actionSheet showInView:self.shoutVCDelegate.view];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
-    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
-        //In this case, 401 means that the auth token is no valid.
-        if ([SessionUtilities invalidTokenResponse:operation]) {
-            [SessionUtilities redirectToSignIn];
-        }
-    };
-    
-    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
-        
-        NSString *motive = nil;
-        
-        switch (buttonIndex) {
-            case 0:
-                motive = @"abuse";
-                break;
-            case 1:
-                motive = @"spam";
-                break;
-            case 2:
-                motive = @"privacy";
-                break;
-            case 3:
-                motive = @"inaccurate";
-                break;
-            case 4:
-                motive = @"other";
-                break;
-        }
-        
-        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
-        
-        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
-    }
+- (IBAction)shareButtonPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

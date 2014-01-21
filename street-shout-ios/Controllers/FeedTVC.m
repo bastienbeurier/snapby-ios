@@ -170,35 +170,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{    
     Shout *shout = self.shouts[indexPath.row];
     [self.feedTVCdelegate shoutSelectionComingFromFeed:shout];
     
     //Mixpanel tracking
     [TrackingUtilities trackDisplayShout:shout withSource:@"Feed"];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([sender isKindOfClass:[UITableViewCell class]]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        if (indexPath) {
-            if ([segue.identifier isEqualToString:@"Show Shout"]) {
-                if ([segue.destinationViewController respondsToSelector:@selector(setShout:)]) {
-                    Shout *shout = self.shouts[indexPath.row];
-                    [segue.destinationViewController performSelector:@selector(setShout:) withObject:shout];
-                    ((ShoutViewController *)segue.destinationViewController).shoutVCDelegate = (NavigationViewController *)self.feedTVCdelegate;
-                }
-            }
-        }
-    } else if ([sender isKindOfClass:[Shout class]]) {
-        if ([segue.identifier isEqualToString:@"Show Shout"]) {
-            if ([segue.destinationViewController respondsToSelector:@selector(setShout:)]) {
-                [segue.destinationViewController performSelector:@selector(setShout:) withObject:sender];
-                ((ShoutViewController *)segue.destinationViewController).shoutVCDelegate = (NavigationViewController *)self.feedTVCdelegate;
-            }
-        }
-    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
