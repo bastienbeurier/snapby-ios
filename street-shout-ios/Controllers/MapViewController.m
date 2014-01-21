@@ -103,20 +103,6 @@
 
 }
 
-- (void)animateMapWhenZoomOnShout:(Shout *)shout
-{
-    //Change variable name
-    NSUInteger newZoomDistance = kDistanceWhenShoutZoomed;
-    NSUInteger currentZoomDistance = [LocationUtilities getMaxDistanceOnMap:self.mapView];
-    
-    //TODO: check the times 2 for the zoomDistance
-    if (newZoomDistance != 0 && 2 * newZoomDistance < currentZoomDistance) {
-        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:newZoomDistance Animated:YES];
-    } else {
-        [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng Animated:YES];
-    }
-}
-
 - (void)displayShouts:(NSArray *)shouts
 {
     NSMutableDictionary *newDisplayedShouts = [[NSMutableDictionary alloc] init];
@@ -159,26 +145,17 @@
 
 - (void)updateAnnotation:(MKPointAnnotation *)shoutAnnotation pinAccordingToShoutInfo:(Shout *)shout
 {
-    NSUInteger selectedShoutId = ((MKPointAnnotation *)[self.mapView.selectedAnnotations firstObject]).shout.identifier;
+    MKAnnotationView *annotationView = [self.mapView viewForAnnotation:shoutAnnotation];
     
-    //Otherwise, the selected shout icon image gets replaced by the deselected icon when new shouts load
-    if (shout.identifier != selectedShoutId) {
-        MKAnnotationView *annotationView = [self.mapView viewForAnnotation:shoutAnnotation];
-        [self setAnnotationView:annotationView pinImageForShout:shout selected:NO];
-    }
+    NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:(Shout *)shout];
+    
+    annotationView.image = [UIImage imageNamed:annotationPinImage];
+    annotationView.centerOffset = CGPointMake(10,-10);
 }
 
 - (void)updateAnnotation:(MKPointAnnotation *)shoutAnnotation shoutInfo:(Shout *)shout
 {
     shoutAnnotation.shout = shout;
-}
-
-- (void)setAnnotationView:(MKAnnotationView *)annotationView pinImageForShout:(Shout *)shout selected:(BOOL)selected
-{
-    NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:(Shout *)shout selected:(BOOL)selected];
-    
-    annotationView.image = [UIImage imageNamed:annotationPinImage];
-    annotationView.centerOffset = CGPointMake(10,-10);
 }
 
 - (NSMutableDictionary *)displayedShouts
@@ -219,8 +196,8 @@
         }
         
         CGRect endFrame = annView.frame;
-        annView.frame = CGRectOffset(endFrame, 0, -500);
-        [UIView animateWithDuration:0.5
+        annView.frame = CGRectMake(endFrame.origin.x + endFrame.size.width/2, endFrame.origin.y + endFrame.size.height, 0, 0);
+        [UIView animateWithDuration:0.3
                          animations:^{ annView.frame = endFrame; }];
     }
 }

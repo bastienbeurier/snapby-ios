@@ -12,7 +12,7 @@
 
 @protocol ShoutVCDelegate;
 
-@interface ShoutViewController : UIViewController <UIActionSheetDelegate>
+@interface ShoutViewController : UIViewController <UIActionSheetDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) Shout *shout;
 
@@ -23,8 +23,6 @@
 @protocol ShoutVCDelegate
 
 - (MKUserLocation *)getMyLocation;
-
-- (void)animateMapWhenZoomOnShout:(Shout *)shout;
 
 - (void)redisplayFeed;
 

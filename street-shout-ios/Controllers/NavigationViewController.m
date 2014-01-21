@@ -238,11 +238,6 @@
     }
 }
 
-- (void)animateMapWhenZoomOnShout:(Shout *)shout
-{
-    [self.mapViewController animateMapWhenZoomOnShout:shout];
-}
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView == self.obsoleteAPIAlertView) {

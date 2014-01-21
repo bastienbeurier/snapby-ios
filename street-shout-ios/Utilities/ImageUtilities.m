@@ -249,8 +249,7 @@
         UIFont *customFont = [UIFont fontWithName:@"Avenir Heavy" size:20];
         NSString *text = title;
         
-        CGSize labelSize = [text sizeWithFont:customFont constrainedToSize:CGSizeMake(380, 20) lineBreakMode:NSLineBreakByTruncatingTail];
-        
+        CGSize labelSize = [text sizeWithAttributes:@{NSFontAttributeName:customFont}];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(viewController.view.frame.size.width/2 - labelSize.width/2, titleTopMargin, labelSize.width, labelSize.height)];
         label.text = text;
         label.font = customFont;

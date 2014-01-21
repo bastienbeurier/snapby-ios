@@ -25,8 +25,6 @@
 
 - (void)deselectAnnotationsOnMap;
 
-- (void)animateMapWhenZoomOnShout:(Shout *)shout;
-
 @end
 
 @protocol MapViewControllerDelegate

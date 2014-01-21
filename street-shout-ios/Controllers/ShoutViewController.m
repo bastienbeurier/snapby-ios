@@ -46,11 +46,10 @@
 
 - (void)viewDidLoad
 {
-    [AFStreetShoutAPIClient getShoutMetaData:self.shout success:^(NSInteger commentCount) {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", commentCount] forState:UIControlStateNormal];
-        self.commentsCountLabelButton.hidden = NO;
-        self.commentsCountIcon.hidden = NO;
-    } failure:nil];
+    self.mapView.delegate = self;
+    
+    ////Hack to remove the selection highligh from the cell during the back animation
+    [self.shoutVCDelegate redisplayFeed];
     
     [self updateUI];
     
@@ -61,9 +60,6 @@
 {
     //Shout content round corners
     self.shoutContent.layer.cornerRadius = 5;
-    
-    ////Hack to remove the selection highligh from the cell during the back animation
-    [self.shoutVCDelegate redisplayFeed];
     
     //Add bottom bar borders
     CALayer *topBorder = [CALayer layer];
@@ -84,14 +80,25 @@
     [super viewWillAppear:animated];
 }
 
-- (void)setShout:(Shout *)shout
-{
-    _shout = shout;
-    [self updateUI];
-}
-
 - (void)updateUI
 {
+    [AFStreetShoutAPIClient getShoutMetaData:self.shout success:^(NSInteger commentCount) {
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", commentCount] forState:UIControlStateNormal];
+        self.commentsCountLabelButton.hidden = NO;
+        self.commentsCountIcon.hidden = NO;
+    } failure:nil];
+    
+    //Move map to shout
+    [LocationUtilities animateMap:self.mapView ToLatitude:self.shout.lat Longitude:self.shout.lng WithDistance:kDistanceWhenShoutZoomed Animated:NO];
+    
+    //Put annotation for shout
+    CLLocationCoordinate2D annotationCoordinate;
+    annotationCoordinate.latitude = self.shout.lat;
+    annotationCoordinate.longitude = self.shout.lng;
+    MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
+    shoutAnnotation.coordinate = annotationCoordinate;
+    [self.mapView addAnnotation:shoutAnnotation];
+    
     if (self.shout) {
         if (self.shout.image) {
             self.shoutImageDropShadowView.image = [UIImage imageNamed:@"shout-image-place-holder-square"];
@@ -124,10 +131,6 @@
     }
 }
 
-//- (IBAction)shoutZoomButtonClicked:(id)sender {
-//    [self.shoutVCDelegate animateMapWhenZoomOnShout:self.shout];
-//}
-//
 //- (IBAction)flagButtonClicked:(id)sender {
 //    if (![SessionUtilities isSignedIn]){
 //        [SessionUtilities redirectToSignIn];
@@ -191,6 +194,21 @@
 
 - (IBAction)shareButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
+{
+    for (MKAnnotationView *annView in annotationViews)
+    {
+        MKPointAnnotation *annotation = (MKPointAnnotation *)annView.annotation;
+        
+        MKAnnotationView *annotationView = [self.mapView viewForAnnotation:annotation];
+        
+        NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:self.shout];
+        
+        annotationView.image = [UIImage imageNamed:annotationPinImage];
+        annotationView.centerOffset = CGPointMake(10,-10);
+    }
 }
 
 @end
