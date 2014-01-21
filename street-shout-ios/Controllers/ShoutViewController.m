@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *commentsCountIcon;
 @property (weak, nonatomic) IBOutlet UIButton *commentsCountLabelButton;
+@property (weak, nonatomic) IBOutlet UIButton *dismissShoutButton;
 
 
 @end
@@ -50,6 +51,10 @@
     
     ////Hack to remove the selection highligh from the cell during the back animation
     [self.shoutVCDelegate redisplayFeed];
+    
+    //Buttons round corner
+    NSUInteger buttonHeight = self.dismissShoutButton.bounds.size.height;
+    self.dismissShoutButton.layer.cornerRadius = buttonHeight/2;
     
     [self updateUI];
     
@@ -191,23 +196,28 @@
         ((CommentsViewController *) [segue destinationViewController]).shout = self.shout;
     }
 }
+- (IBAction)dissmissShoutClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (IBAction)shareButtonPressed:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
 {
     for (MKAnnotationView *annView in annotationViews)
     {
-        MKPointAnnotation *annotation = (MKPointAnnotation *)annView.annotation;
-        
-        MKAnnotationView *annotationView = [self.mapView viewForAnnotation:annotation];
-        
-        NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:self.shout];
-        
-        annotationView.image = [UIImage imageNamed:annotationPinImage];
-        annotationView.centerOffset = CGPointMake(10,-10);
+        if (![annView.annotation isKindOfClass:[MKUserLocation class]]) {
+            MKPointAnnotation *annotation = (MKPointAnnotation *)annView.annotation;
+            
+            MKAnnotationView *annotationView = [self.mapView viewForAnnotation:annotation];
+            
+            NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:self.shout];
+            
+            annotationView.image = [UIImage imageNamed:annotationPinImage];
+            annotationView.centerOffset = CGPointMake(10,-10);
+        }
     }
 }
 
