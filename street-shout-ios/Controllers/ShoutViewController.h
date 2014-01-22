@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "Shout.h"
 #import <MapKit/MapKit.h>
+#import "CommentsViewController.h"
 
 @protocol ShoutVCDelegate;
 
-@interface ShoutViewController : UIViewController <UIActionSheetDelegate, MKMapViewDelegate>
+@interface ShoutViewController : UIViewController <UIActionSheetDelegate, MKMapViewDelegate, CommentsVCDelegate>
 
 @property (strong, nonatomic) Shout *shout;
 
@@ -21,8 +22,6 @@
 @end
 
 @protocol ShoutVCDelegate
-
-- (MKUserLocation *)getMyLocation;
 
 - (void)redisplayFeed;
 

@@ -23,4 +23,6 @@
 
 + (NSUInteger)getMaxDistanceOnMap:(MKMapView *)mapView;
 
++ (BOOL)userLocationValid:(MKUserLocation *)userLocation;
+
 @end

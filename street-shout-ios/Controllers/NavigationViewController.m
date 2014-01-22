@@ -194,8 +194,7 @@
     if ([GeneralUtilities connected]) {
         MKUserLocation *myLocation = [self getMyLocation];
         
-        if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0 &&
-            myLocation.coordinate.longitude != -180 && myLocation.coordinate.latitude != -180) {
+        if (myLocation && [LocationUtilities userLocationValid:myLocation]) {
             [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
             return;
         } else {

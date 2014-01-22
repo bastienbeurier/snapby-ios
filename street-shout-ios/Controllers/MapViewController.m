@@ -55,7 +55,7 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    if (self.hasZoomedAtStartUp == NO && userLocation.coordinate.latitude != 0 && userLocation.coordinate.latitude != -180 && userLocation.coordinate.longitude != 0 && userLocation.coordinate.longitude != -180) {
+    if (self.hasZoomedAtStartUp == NO && [LocationUtilities userLocationValid:userLocation]) {
         [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:kDistanceAtStartup Animated:YES];
         self.hasZoomedAtStartUp = YES;
     }

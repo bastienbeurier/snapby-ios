@@ -15,7 +15,6 @@
 #import "ImageUtilities.h"
 #import "AFStreetShoutAPIClient.h"
 #import "SessionUtilities.h"
-#import "CommentsViewController.h"
 
 #define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
@@ -125,7 +124,7 @@
         
         self.shoutAgeLabel.text = [NSString stringWithFormat:@"%@%@", [shoutAgeStrings firstObject], [shoutAgeStrings objectAtIndex:1]];
         
-        MKUserLocation *myLocation = [self.shoutVCDelegate getMyLocation];
+        MKUserLocation *myLocation = self.mapView.userLocation;
         
         if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
             NSArray *shoutDistanceStrings = [LocationUtilities formattedDistanceLat1:myLocation.coordinate.latitude lng1:myLocation.coordinate.longitude lat2:self.shout.lat lng2:self.shout.lng];
@@ -194,6 +193,8 @@
     if ([segueName isEqualToString: @"Comments Push Segue From Bar Button"] ||
         [segueName isEqualToString: @"Comments Push Segue From Count Label"]) {
         ((CommentsViewController *) [segue destinationViewController]).shout = self.shout;
+        ((CommentsViewController *) [segue destinationViewController]).userLocation = self.mapView.userLocation;
+        ((CommentsViewController *) [segue destinationViewController]).commentsVCdelegate = self;
     }
 }
 - (IBAction)dissmissShoutClicked:(id)sender {
@@ -219,6 +220,13 @@
             annotationView.centerOffset = CGPointMake(10,-10);
         }
     }
+}
+
+- (void)updateCommentsCount:(NSInteger)count
+{
+    [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", count] forState:UIControlStateNormal];
+    self.commentsCountLabelButton.hidden = NO;
+    self.commentsCountIcon.hidden = NO;
 }
 
 @end
