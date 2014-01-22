@@ -37,7 +37,8 @@
 "100yd" = "100yd";
 "1mi" = "1mi";
 "10mi" = "10mi";
-"meters" = "meters";
+"meters" = "mtrs";
+"meter" = "mtr";
 "miles" = "miles";
 "add_image_action_sheet_title" = "Add image";
 "camera" = "Camera";

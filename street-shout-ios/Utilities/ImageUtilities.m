@@ -186,6 +186,22 @@
     [view.layer addSublayer:bottomBorder];
 }
 
++ (void)drawTopBorderForView:(UIView *)view withColor:(UIColor *)color
+{
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, 0.0f, view.frame.size.width, 1.0f);
+    bottomBorder.backgroundColor = color.CGColor;
+    [view.layer addSublayer:bottomBorder];
+}
+
++ (void)drawRightBorderForView:(UIView *)view withColor:(UIColor *)color
+{
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(view.frame.size.width - 1.0f, 0.0f, 1.0f, view.frame.size.height);
+    bottomBorder.backgroundColor = color.CGColor;
+    [view.layer addSublayer:bottomBorder];
+}
+
 + (void)drawCustomNavBarWithLeftItem:(NSString *)leftItem rightItem:(NSString *)rightItem title:(NSString *)title sizeBig:(BOOL)sizeBig inViewController:(UIViewController *)viewController
 {
     //Constants
@@ -207,7 +223,7 @@
     if ([rightItem isEqualToString:@"ok"]) {
         UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
         okButton.frame = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin , buttonTopMargin, buttonSize, buttonSize);
-        [okButton addTarget:viewController action:@selector(okButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [okButton addTarget:viewController action:@selector(okButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         
         UIImage *okImage = [UIImage imageNamed:@"ok-item-button.png"];
         [okButton setBackgroundImage:okImage forState:UIControlStateNormal];
@@ -233,8 +249,7 @@
         UIFont *customFont = [UIFont fontWithName:@"Avenir Heavy" size:20];
         NSString *text = title;
         
-        CGSize labelSize = [text sizeWithFont:customFont constrainedToSize:CGSizeMake(380, 20) lineBreakMode:NSLineBreakByTruncatingTail];
-        
+        CGSize labelSize = [text sizeWithAttributes:@{NSFontAttributeName:customFont}];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(viewController.view.frame.size.width/2 - labelSize.width/2, titleTopMargin, labelSize.width, labelSize.height)];
         label.text = text;
         label.font = customFont;
@@ -243,99 +258,6 @@
         
         [customNavBar addSubview:label];
     }
-}
-
-+ (void)displayShoutAnimationsTopContainer:(UIView *)topContainerView
-                               bottomContainer:(UIView *)bottomContainerView
-                                       mapView:(MKMapView *)mapView
-                             createShoutButton:(UIView *)createShoutButton
-                                    moreButton:(UIView *)moreButton
-                            darkMapOverlayView:(UIView *)darkMapOverlayView
-                             mapViewController:(MapViewController *)mapViewController
-{
-    mapView.zoomEnabled = NO;
-    mapView.scrollEnabled = NO;
-    mapView.userInteractionEnabled = NO;
-    darkMapOverlayView.hidden = NO;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        float showShoutAnimationHeightDelta = topContainerView.frame.size.height - DISPLAY_SHOUT_MAP_SIZE;
-        
-        topContainerView.frame = CGRectMake(topContainerView.frame.origin.x,
-                                            topContainerView.frame.origin.y,
-                                            topContainerView.frame.size.width,
-                                            topContainerView.frame.size.height - showShoutAnimationHeightDelta);
-        
-        mapView.frame = CGRectMake(mapView.frame.origin.x,
-                                   mapView.frame.origin.y,
-                                   mapView.frame.size.width,
-                                   mapView.frame.size.width - showShoutAnimationHeightDelta);
-        
-        bottomContainerView.frame = CGRectMake(bottomContainerView.frame.origin.x,
-                                               bottomContainerView.frame.origin.y - showShoutAnimationHeightDelta,
-                                               bottomContainerView.frame.size.width,
-                                               bottomContainerView.frame.size.height + showShoutAnimationHeightDelta);
-        darkMapOverlayView.alpha = 0.5;
-        createShoutButton.alpha = 0;
-        moreButton.alpha = 0;
-    } completion:^(BOOL finished) {
-        createShoutButton.hidden = YES;
-        moreButton.hidden = YES;
-    }];
-}
-
-+ (void)stopDisplayShoutAnimationsTopContainer:(UIView *)topContainerView
-                               bottomContainer:(UIView *)bottomContainerView
-                                       mapView:(MKMapView *)mapView
-                             createShoutButton:(UIView *)createShoutButton
-                                    moreButton:(UIView *)moreButton
-                            darkMapOverlayView:(UIView *)darkMapOverlayView
-                             mapViewController:(MapViewController *)mapViewController
-{
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenHeight = screenRect.size.height;
-    
-    createShoutButton.hidden = NO;
-    moreButton.hidden = NO;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        topContainerView.frame = CGRectMake(topContainerView.frame.origin.x,
-                                            topContainerView.frame.origin.y,
-                                            topContainerView.frame.size.width,
-                                            screenHeight - INITIAL_FEED_SIZE);
-        
-        mapView.frame = CGRectMake(mapView.frame.origin.x,
-                                   mapView.frame.origin.y,
-                                   mapView.frame.size.width,
-                                   screenHeight - INITIAL_FEED_SIZE);
-        
-        bottomContainerView.frame = CGRectMake(bottomContainerView.frame.origin.x,
-                                               screenHeight - INITIAL_FEED_SIZE,
-                                               bottomContainerView.frame.size.width,
-                                               INITIAL_FEED_SIZE);
-        
-        createShoutButton.alpha = 1;
-        moreButton.alpha = 1;
-        darkMapOverlayView.alpha = 0;
-    } completion:^(BOOL finished) {
-        mapView.zoomEnabled = YES;
-        mapView.scrollEnabled = YES;
-        mapView.userInteractionEnabled = YES;
-        darkMapOverlayView.hidden = YES;
-        
-        mapViewController.updateShoutsOnMapMove = YES;
-    }];
-}
-
-+ (void)popShoutControllerSegueAnimation:(ShoutViewController *)shoutController
-{
-    CATransition* transition = [CATransition animation];
-    
-    transition.duration = 0.3;
-    transition.type = kCATransitionFade;
-    
-    [shoutController.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    [shoutController.navigationController popViewControllerAnimated:NO];
 }
 
 @end

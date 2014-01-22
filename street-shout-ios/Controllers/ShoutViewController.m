@@ -15,8 +15,7 @@
 #import "ImageUtilities.h"
 #import "AFStreetShoutAPIClient.h"
 #import "SessionUtilities.h"
-
-#define SHOUT_IMAGE_SIZE 60
+#import "CommentsViewController.h"
 
 #define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
@@ -31,10 +30,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *shoutContent;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (weak, nonatomic) IBOutlet UILabel *shoutAgeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *shoutAgeUnitLabel;
-@property (weak, nonatomic) IBOutlet UILabel *shoutDistanceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *shoutDistanceUnitLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageDropShadowView;
+@property (weak, nonatomic) IBOutlet UIButton *commentButton;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (weak, nonatomic) IBOutlet UIButton *moreShoutOptionsButton;
+@property (weak, nonatomic) IBOutlet UIView *bottomBarView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIImageView *commentsCountIcon;
+@property (weak, nonatomic) IBOutlet UIButton *commentsCountLabelButton;
+@property (weak, nonatomic) IBOutlet UIButton *dismissShoutButton;
 
 
 @end
@@ -43,36 +47,66 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    [self updateUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.view.backgroundColor = [GeneralUtilities getShoutAgeColor:self.shout];
-    
-    //Round shout image
-    self.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
-    self.shoutImageView.clipsToBounds = YES;
-    self.shoutImageDropShadowView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+    self.mapView.delegate = self;
     
     ////Hack to remove the selection highligh from the cell during the back animation
     [self.shoutVCDelegate redisplayFeed];
     
-    [super viewWillAppear:animated];
+    //Buttons round corner
+    NSUInteger buttonHeight = self.dismissShoutButton.bounds.size.height;
+    self.dismissShoutButton.layer.cornerRadius = buttonHeight/2;
+    
+    [self updateUI];
+    
+    [super viewDidLoad];
 }
 
-- (void)setShout:(Shout *)shout
+- (void)viewWillAppear:(BOOL)animated
 {
-    _shout = shout;
-    [self updateUI];
+    //Shout content round corners
+    self.shoutContent.layer.cornerRadius = 5;
+    
+    //Add bottom bar borders
+    CALayer *topBorder = [CALayer layer];
+    topBorder.frame = CGRectMake(0.0f, 0.0f, self.bottomBarView.frame.size.width, 0.5f);
+    topBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.bottomBarView.layer addSublayer:topBorder];
+    
+    CALayer *firstInterBorder = [CALayer layer];
+    firstInterBorder.frame = CGRectMake(107.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
+    firstInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.bottomBarView.layer addSublayer:firstInterBorder];
+    
+    CALayer *secondInterBorder = [CALayer layer];
+    secondInterBorder.frame = CGRectMake(213.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
+    secondInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.bottomBarView.layer addSublayer:secondInterBorder];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)updateUI
 {
+    [AFStreetShoutAPIClient getShoutMetaData:self.shout success:^(NSInteger commentCount) {
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", commentCount] forState:UIControlStateNormal];
+        self.commentsCountLabelButton.hidden = NO;
+        self.commentsCountIcon.hidden = NO;
+    } failure:nil];
+    
+    //Move map to shout
+    [LocationUtilities animateMap:self.mapView ToLatitude:self.shout.lat Longitude:self.shout.lng WithDistance:kDistanceWhenShoutZoomed Animated:NO];
+    
+    //Put annotation for shout
+    CLLocationCoordinate2D annotationCoordinate;
+    annotationCoordinate.latitude = self.shout.lat;
+    annotationCoordinate.longitude = self.shout.lng;
+    MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
+    shoutAnnotation.coordinate = annotationCoordinate;
+    [self.mapView addAnnotation:shoutAnnotation];
+    
     if (self.shout) {
         if (self.shout.image) {
-            self.shoutImageDropShadowView.image = [UIImage imageNamed:@"shout-image-place-holder"];
+            self.shoutImageDropShadowView.image = [UIImage imageNamed:@"shout-image-place-holder-square"];
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             
@@ -83,100 +117,107 @@
             [self.shoutImageDropShadowView setHidden:YES];
         }
         
-        self.shoutUsername.text = [NSString stringWithFormat:@"by %@", self.shout.username];
+        self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.username];
 
         self.shoutContent.text = self.shout.description;
         
-        NSArray *shoutAgeStrings = [TimeUtilities shoutAgeToStrings:[TimeUtilities getShoutAge:self.shout.created]];
+        NSArray *shoutAgeStrings = [TimeUtilities ageToShortStrings:[TimeUtilities getShoutAge:self.shout.created]];
         
-        self.shoutAgeLabel.text = [shoutAgeStrings firstObject];
-        
-        if (shoutAgeStrings.count > 1) {
-            self.shoutAgeUnitLabel.text = [NSString stringWithFormat:@"%@ %@", [shoutAgeStrings objectAtIndex:1], NSLocalizedStringFromTable (@"ago", @"Strings", @"comment")];
-        } else {
-            //The space instead of blank is a hack for the view to stay in place (helps in autolayout)
-            self.shoutAgeUnitLabel.text = @" ";
-        }
+        self.shoutAgeLabel.text = [NSString stringWithFormat:@"%@%@", [shoutAgeStrings firstObject], [shoutAgeStrings objectAtIndex:1]];
         
         MKUserLocation *myLocation = [self.shoutVCDelegate getMyLocation];
         
         if (myLocation && myLocation.coordinate.longitude != 0 && myLocation.coordinate.latitude != 0) {
             NSArray *shoutDistanceStrings = [LocationUtilities formattedDistanceLat1:myLocation.coordinate.latitude lng1:myLocation.coordinate.longitude lat2:self.shout.lat lng2:self.shout.lng];
-            self.shoutDistanceLabel.text = [shoutDistanceStrings firstObject];
-            
-            if (shoutDistanceStrings.count > 1) {
-                self.shoutDistanceUnitLabel.text = [NSString stringWithFormat:@"%@ %@", [shoutDistanceStrings objectAtIndex:1], NSLocalizedStringFromTable (@"away", @"Strings", @"comment")];
-            } else {
-                //The space instead of blank is a hack for the view to stay in place (helps in autolayout)
-                self.shoutDistanceUnitLabel.text = @" ";
-            }
+            self.shoutAgeLabel.text = [NSString stringWithFormat:@" %@ | %@%@", self.shoutAgeLabel.text, [shoutDistanceStrings firstObject], [shoutDistanceStrings objectAtIndex:1]];
         } else {
-            self.shoutDistanceLabel.text = @"";
-            self.shoutDistanceUnitLabel.text = @"";
+            self.shoutAgeLabel.text = [NSString stringWithFormat:@" %@ | ?", self.shoutAgeLabel.text];
         }
     }
 }
 
-- (IBAction)shoutImageClicked:(UITapGestureRecognizer *)sender {    
-    [self.shoutVCDelegate displayShoutImage:self.shout];
-}
-
-//- (IBAction)backButtonClicked:(id)sender {
-//    [self.shoutVCDelegate endShoutSelectionModeInMapViewController];
+//- (IBAction)flagButtonClicked:(id)sender {
+//    if (![SessionUtilities isSignedIn]){
+//        [SessionUtilities redirectToSignIn];
+//        return;
+//    }
+//    
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
+// delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
+//    
+//    [actionSheet showInView:self.shoutVCDelegate.view];
 //}
 
-//- (IBAction)shoutZoomButtonClicked:(id)sender {
-//    [self.shoutVCDelegate animateMapWhenZoomOnShout:self.shout];
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
+//    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
+//        //In this case, 401 means that the auth token is no valid.
+//        if ([SessionUtilities invalidTokenResponse:operation]) {
+//            [SessionUtilities redirectToSignIn];
+//        }
+//    };
+//    
+//    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+//    if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
+//        
+//        NSString *motive = nil;
+//        
+//        switch (buttonIndex) {
+//            case 0:
+//                motive = @"abuse";
+//                break;
+//            case 1:
+//                motive = @"spam";
+//                break;
+//            case 2:
+//                motive = @"privacy";
+//                break;
+//            case 3:
+//                motive = @"inaccurate";
+//                break;
+//            case 4:
+//                motive = @"other";
+//                break;
+//        }
+//        
+//        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
+//        
+//        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
+//    }
 //}
 
-- (IBAction)flagButtonClicked:(id)sender {
-    if (![SessionUtilities isSignedIn]){
-        [SessionUtilities redirectToSignIn];
-        return;
-    }
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
- delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
-    
-    [actionSheet showInView:self.shoutVCDelegate.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
-    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
-        //In this case, 401 means that the auth token is no valid.
-        if ([SessionUtilities invalidTokenResponse:operation]) {
-            [SessionUtilities redirectToSignIn];
-        }
-    };
+    NSString * segueName = segue.identifier;
     
-    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
-        
-        NSString *motive = nil;
-        
-        switch (buttonIndex) {
-            case 0:
-                motive = @"abuse";
-                break;
-            case 1:
-                motive = @"spam";
-                break;
-            case 2:
-                motive = @"privacy";
-                break;
-            case 3:
-                motive = @"inaccurate";
-                break;
-            case 4:
-                motive = @"other";
-                break;
+    if ([segueName isEqualToString: @"Comments Push Segue From Bar Button"] ||
+        [segueName isEqualToString: @"Comments Push Segue From Count Label"]) {
+        ((CommentsViewController *) [segue destinationViewController]).shout = self.shout;
+    }
+}
+- (IBAction)dissmissShoutClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)shareButtonPressed:(id)sender {
+    
+}
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
+{
+    for (MKAnnotationView *annView in annotationViews)
+    {
+        if (![annView.annotation isKindOfClass:[MKUserLocation class]]) {
+            MKPointAnnotation *annotation = (MKPointAnnotation *)annView.annotation;
+            
+            MKAnnotationView *annotationView = [self.mapView viewForAnnotation:annotation];
+            
+            NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:self.shout];
+            
+            annotationView.image = [UIImage imageNamed:annotationPinImage];
+            annotationView.centerOffset = CGPointMake(10,-10);
         }
-        
-        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
-        
-        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
     }
 }
 

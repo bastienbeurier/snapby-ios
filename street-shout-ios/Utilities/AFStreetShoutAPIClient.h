@@ -9,6 +9,7 @@
 #import "AFHTTPClient.h"
 #import "Shout.h"
 #import "User.h"
+#import "Comment.h"
 
 @interface AFStreetShoutAPIClient : AFHTTPClient
 
@@ -43,6 +44,10 @@
 + (void)signInOrUpWithFacebookWithParameters: (id)params success:(void(^)(User *user, NSString *authToken, BOOL isSignup))successBlock failure:(void(^)())failureBlock;
 
 + (void)sendResetPasswordInstructionsToEmail: (NSString *) email success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)getCommentsForShout:(Shout *)shout success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
+
++ (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount))successBlock failure:(void(^)())failureBlock;
 
 @end
 

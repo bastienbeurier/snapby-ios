@@ -53,28 +53,16 @@
     return !(networkStatus == NotReachable);
 }
 
-+ (NSString *)getAnnotationPinImageForShout:(Shout *)shout selected:(BOOL)selected
++ (NSString *)getAnnotationPinImageForShout:(Shout *)shout
 {
     NSTimeInterval shoutAge = [TimeUtilities getShoutAge:shout.created];
     
     if (shoutAge < kShoutDuration / kShoutDurationHours) {
-        if (selected) {
-            return [NSString stringWithFormat:@"shout-marker-%d-selected", 3];
-        } else {
-            return [NSString stringWithFormat:@"shout-marker-%d-deselected", 3];
-        }
+        return [NSString stringWithFormat:@"shout-marker-%d-deselected", 3];
     } else if (shoutAge < 3 * (kShoutDuration / kShoutDurationHours)) {
-        if (selected) {
-            return [NSString stringWithFormat:@"shout-marker-%d-selected", 2];
-        } else {
-            return [NSString stringWithFormat:@"shout-marker-%d-deselected", 2];
-        }
+        return [NSString stringWithFormat:@"shout-marker-%d-deselected", 2];
     } else {
-        if (selected) {
-            return [NSString stringWithFormat:@"shout-marker-%d-selected", 1];
-        } else {
-            return [NSString stringWithFormat:@"shout-marker-%d-deselected", 1];
-        }
+        return [NSString stringWithFormat:@"shout-marker-%d-deselected", 1];
     }
 }
 

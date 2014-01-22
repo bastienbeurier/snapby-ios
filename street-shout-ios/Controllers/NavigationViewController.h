@@ -12,6 +12,7 @@
 #import "CreateShoutViewController.h"
 #import "ShoutViewController.h"
 #import "SettingsViewController.h"
+#import "CommentsViewController.h"
 
 @interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, SettingsViewControllerDelegate, UIAlertViewDelegate>
 

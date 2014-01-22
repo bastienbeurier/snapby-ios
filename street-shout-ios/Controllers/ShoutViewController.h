@@ -12,7 +12,7 @@
 
 @protocol ShoutVCDelegate;
 
-@interface ShoutViewController : UIViewController <UIActionSheetDelegate>
+@interface ShoutViewController : UIViewController <UIActionSheetDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) Shout *shout;
 
@@ -22,13 +22,8 @@
 
 @protocol ShoutVCDelegate
 
-- (void)displayShoutImage:(Shout *)shout;
-
 - (MKUserLocation *)getMyLocation;
 
-- (void)animateMapWhenZoomOnShout:(Shout *)shout;
-
-//Hack to remove the selection highligh from the cell during the back animation
 - (void)redisplayFeed;
 
 @property (strong, nonatomic) UIView *view;

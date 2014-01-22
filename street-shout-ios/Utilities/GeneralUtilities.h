@@ -20,7 +20,7 @@
 
 + (BOOL)connected;
 
-+ (NSString *)getAnnotationPinImageForShout:(Shout *)shout selected:(BOOL)selected;
++ (NSString *)getAnnotationPinImageForShout:(Shout *)shout;
 
 + (UIColor *)getShoutAgeColor:(Shout *)shout;
 

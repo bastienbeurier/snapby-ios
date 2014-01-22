@@ -23,7 +23,7 @@
     return -[shoutDate timeIntervalSinceNow];
 }
 
-+ (NSArray *)shoutAgeToStrings:(NSTimeInterval)age
++ (NSArray *)ageToStrings:(NSTimeInterval)age
 {
     if (age > 0) {
         NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
@@ -42,12 +42,31 @@
             } else if (minutes == 1) {
                 return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", minutes], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
             } else {
-                return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"now", @"Strings", @"comment"), nil, nil];
+                return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
             }
         }
         
     } else {
-        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"now", @"Strings", @"comment"), nil, nil];
+        return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
+    }
+}
+
++ (NSArray *)ageToShortStrings:(NSTimeInterval)age
+{
+    if (age > 0) {
+        NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
+        if (hours > 1) {
+            NSArray *result = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], @"h", nil];
+            return result;
+        } else if (hours == 1) {
+            return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], @"h", nil];
+        } else {
+            NSUInteger minutes = ((NSUInteger)age) / ONE_MINUTE;
+            return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", minutes], @"min", nil];
+        }
+        
+    } else {
+        return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], @"min", nil];
     }
 }
 

@@ -78,10 +78,11 @@
     NSUInteger distanceMiles = round(distance * YRD_TO_MILES);
     
     if (distanceYd < 100) {
-        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment"), nil];
+        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) distanceYd];
+        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"y", @"Strings", @"comment"), nil];
     } else if (distanceMiles < 1) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distanceYd / 100.0) * 100];
-        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"yrd", @"Strings", @"comment"), nil];
+        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"y", @"Strings", @"comment"), nil];
     } else if (distanceMiles < 10) {
         NSString *str = [NSString stringWithFormat:@"%d", distanceMiles];
         return [[NSArray alloc] initWithObjects:str, @"mi", nil];
@@ -89,17 +90,18 @@
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distanceMiles / 10.0) * 10];
         return [[NSArray alloc] initWithObjects:str, @"mi", nil];
     } else {
-        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment"), nil];
+        return [[NSArray alloc] initWithObjects:@"+100", @"mi", nil];
     }
 }
 
 + (NSArray *)formattedDistanceInMeters:(NSUInteger)distance
 {
     if (distance < 100) {
-        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"nearby", @"Strings", @"comment"), nil];
+        NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) distance];
+        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"m", @"Strings", @"comment"), nil];
     } else if (distance < 1000) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 100.0) * 100];
-        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"meters", @"Strings", @"comment"), nil];
+        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"m", @"Strings", @"comment"), nil];
     } else if (distance < 10000) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 1000.0)];
         return [[NSArray alloc] initWithObjects:str, @"km", nil];
@@ -107,7 +109,7 @@
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distance / 10000.0) * 10];
         return [[NSArray alloc] initWithObjects:str, @"km", nil];
     } else {
-        return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"far_away", @"Strings", @"comment"), nil];
+        return [[NSArray alloc] initWithObjects:@"+100", @"km", nil];
     }
 }
 
