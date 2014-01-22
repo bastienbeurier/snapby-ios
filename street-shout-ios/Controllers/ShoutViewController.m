@@ -99,7 +99,7 @@
     } failure:nil];
     
     //Move map to shout
-    [LocationUtilities animateMap:self.mapView ToLatitude:self.shout.lat Longitude:self.shout.lng WithDistance:kDistanceWhenShoutZoomed Animated:NO];
+    [LocationUtilities animateMap:self.mapView ToLatitude:self.shout.lat Longitude:self.shout.lng WithDistance:kDistanceWhenDisplayShout Animated:NO];
     
     //Put annotation for shout
     CLLocationCoordinate2D annotationCoordinate;

@@ -81,7 +81,7 @@
         //Mixpanel tracking
         [TrackingUtilities trackDisplayShout:shout withSource:@"Map"];
         
-        [self.mapVCdelegate showShoutViewController:shout];
+        [self.mapVCdelegate shoutSelectionComingFromMap:shout];
     }
 }
 

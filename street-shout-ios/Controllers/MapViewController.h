@@ -31,7 +31,7 @@
 
 - (void)pullShoutsInZone:(NSArray *)mapBounds;
 
-- (void)showShoutViewController:(Shout *)shout;
+- (void)shoutSelectionComingFromMap:(Shout *)shout;
 
 - (void)refreshShouts;
 
