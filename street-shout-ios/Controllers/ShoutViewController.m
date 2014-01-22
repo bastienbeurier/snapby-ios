@@ -15,6 +15,7 @@
 #import "ImageUtilities.h"
 #import "AFStreetShoutAPIClient.h"
 #import "SessionUtilities.h"
+#import "LikesViewController.h"
 
 #define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
@@ -37,8 +38,12 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *commentsCountIcon;
 @property (weak, nonatomic) IBOutlet UIButton *commentsCountLabelButton;
+@property (weak, nonatomic) IBOutlet UIButton *likesCountButton;
+@property (weak, nonatomic) IBOutlet UIImageView *likesCountIcon;
 @property (weak, nonatomic) IBOutlet UIButton *dismissShoutButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@property (strong, nonatomic) NSMutableArray *likerIds;
 
 
 @end
@@ -48,6 +53,8 @@
 - (void)viewDidLoad
 {
     self.mapView.delegate = self;
+    
+    self.likerIds = [[NSMutableArray alloc] initWithArray:@[]];
     
     ////Hack to remove the selection highligh from the cell during the back animation
     [self.shoutVCDelegate redisplayFeed];
@@ -78,24 +85,49 @@
     [self.bottomBarView.layer addSublayer:topBorder];
     
     CALayer *firstInterBorder = [CALayer layer];
-    firstInterBorder.frame = CGRectMake(107.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
+    firstInterBorder.frame = CGRectMake(80.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
     firstInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
     [self.bottomBarView.layer addSublayer:firstInterBorder];
     
     CALayer *secondInterBorder = [CALayer layer];
-    secondInterBorder.frame = CGRectMake(213.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
+    secondInterBorder.frame = CGRectMake(160.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
     secondInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
     [self.bottomBarView.layer addSublayer:secondInterBorder];
+    
+    CALayer *thirdInterBorder = [CALayer layer];
+    thirdInterBorder.frame = CGRectMake(240.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
+    thirdInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.bottomBarView.layer addSublayer:thirdInterBorder];
+    
+    //Bug coming back from comments
+    if (self.likeButton.enabled == NO) {
+        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon-selected"];
+    }
     
     [super viewWillAppear:animated];
 }
 
 - (void)updateUI
 {
-    [AFStreetShoutAPIClient getShoutMetaData:self.shout success:^(NSInteger commentCount) {
+    //Get comment count and liker ids
+    [AFStreetShoutAPIClient getShoutMetaData:self.shout success:^(NSInteger commentCount, NSMutableArray *likerIds) {
         [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", commentCount] forState:UIControlStateNormal];
         self.commentsCountLabelButton.hidden = NO;
         self.commentsCountIcon.hidden = NO;
+        
+        //Store them for later
+        self.likerIds = likerIds;
+        
+        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
+        self.likesCountButton.hidden = NO;
+        self.likesCountIcon.hidden = NO;
+        
+        //Check if current user liked this shout
+        for (NSNumber *likerId in self.likerIds) {
+            if ([likerId integerValue] == [SessionUtilities getCurrentUser].identifier) {
+                [self updateUIOnShoutLiked:YES];
+            }
+        }
     } failure:nil];
     
     //Move map to shout
@@ -109,6 +141,7 @@
     shoutAnnotation.coordinate = annotationCoordinate;
     [self.mapView addAnnotation:shoutAnnotation];
     
+    //Fill with shout info
     if (self.shout) {
         if (self.shout.image) {
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
@@ -201,6 +234,11 @@
         ((CommentsViewController *) [segue destinationViewController]).userLocation = self.mapView.userLocation;
         ((CommentsViewController *) [segue destinationViewController]).commentsVCdelegate = self;
     }
+    
+    if ([segueName isEqualToString: @"Likes Push Segue From Count Label"]) {
+        ((LikesViewController *) [segue destinationViewController]).shout = self.shout;
+        ((LikesViewController *) [segue destinationViewController]).userLocation = self.mapView.userLocation;
+    }
 }
 - (IBAction)dissmissShoutClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -222,6 +260,7 @@
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
+//Hack to make the annotations appear
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
 {
     for (MKAnnotationView *annView in annotationViews)
@@ -244,6 +283,42 @@
     [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", count] forState:UIControlStateNormal];
     self.commentsCountLabelButton.hidden = NO;
     self.commentsCountIcon.hidden = NO;
+}
+
+- (IBAction)createLikeButtonClicked:(id)sender {
+    double lat = 0;
+    double lng = 0;
+    
+    MKUserLocation *userLocation = self.mapView.userLocation;
+    
+    if ([LocationUtilities userLocationValid:userLocation]) {
+        lat = userLocation.coordinate.latitude;
+        lng = userLocation.coordinate.longitude;
+    }
+    
+    //Create the like
+    [AFStreetShoutAPIClient createLikeforShout:self.shout lat:lat lng:lng success:nil failure:^{
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"like_failed_message", @"Strings", @"comment") withTitle:nil];
+        [self updateUIOnShoutLiked:NO];
+        [self.likerIds removeObjectAtIndex:0];
+    }];
+    
+    //Update the UI
+    [self.likerIds insertObject:[NSNumber numberWithInt:[SessionUtilities getCurrentUser].identifier] atIndex:0];
+    [self updateUIOnShoutLiked:YES];
+}
+
+- (void)updateUIOnShoutLiked:(BOOL)liked
+{
+    if (liked) {
+        self.likeButton.enabled = NO;
+        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon-selected"];
+    } else {
+        self.likeButton.enabled = NO;
+        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon"];
+    }
+    
+    [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
 }
 
 @end

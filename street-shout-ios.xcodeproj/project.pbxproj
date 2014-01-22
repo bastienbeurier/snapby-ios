@@ -264,6 +264,22 @@
 		0B71A32D18881B31009F68C0 /* cancel-item-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A32A18881B31009F68C0 /* cancel-item-button@2x~iphone.png */; };
 		0B71A32E18881B31009F68C0 /* cancel-item-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A32B18881B31009F68C0 /* cancel-item-button.png */; };
 		0B71A32F18881B31009F68C0 /* cancel-item-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A32B18881B31009F68C0 /* cancel-item-button.png */; };
+		0B7286F918901DC300FB4CC4 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7286F818901DC300FB4CC4 /* Like.m */; };
+		0B7286FA18901DC300FB4CC4 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7286F818901DC300FB4CC4 /* Like.m */; };
+		0B7286FD1890203A00FB4CC4 /* LikesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7286FC1890203A00FB4CC4 /* LikesViewController.m */; };
+		0B7286FE1890203A00FB4CC4 /* LikesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7286FC1890203A00FB4CC4 /* LikesViewController.m */; };
+		0B7287001890230900FB4CC4 /* LikesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B7286FF1890230900FB4CC4 /* LikesTableViewCell.xib */; };
+		0B7287011890230900FB4CC4 /* LikesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B7286FF1890230900FB4CC4 /* LikesTableViewCell.xib */; };
+		0B728704189023AF00FB4CC4 /* LikesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B728703189023AF00FB4CC4 /* LikesTableViewCell.m */; };
+		0B728705189023AF00FB4CC4 /* LikesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B728703189023AF00FB4CC4 /* LikesTableViewCell.m */; };
+		0B72870A18903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870618903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png */; };
+		0B72870B18903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870618903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png */; };
+		0B72870C18903B3600FB4CC4 /* shout-like-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870718903B3600FB4CC4 /* shout-like-icon.png */; };
+		0B72870D18903B3600FB4CC4 /* shout-like-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870718903B3600FB4CC4 /* shout-like-icon.png */; };
+		0B72870E18903B3600FB4CC4 /* shout-like-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870818903B3600FB4CC4 /* shout-like-icon@2x~iphone.png */; };
+		0B72870F18903B3600FB4CC4 /* shout-like-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870818903B3600FB4CC4 /* shout-like-icon@2x~iphone.png */; };
+		0B72871018903B3600FB4CC4 /* shout-like-icon-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870918903B3600FB4CC4 /* shout-like-icon-selected.png */; };
+		0B72871118903B3600FB4CC4 /* shout-like-icon-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870918903B3600FB4CC4 /* shout-like-icon-selected.png */; };
 		0B7C47C8188D7EC900D308A9 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7C47C7188D7EC900D308A9 /* Comment.m */; };
 		0B7C47C9188D7EC900D308A9 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7C47C7188D7EC900D308A9 /* Comment.m */; };
 		0B7C47CC188D828000D308A9 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7C47CB188D828000D308A9 /* CommentsViewController.m */; };
@@ -498,6 +514,17 @@
 		0B71A32118881A8C009F68C0 /* ok-item-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ok-item-button@2x~iphone.png"; sourceTree = "<group>"; };
 		0B71A32A18881B31009F68C0 /* cancel-item-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cancel-item-button@2x~iphone.png"; sourceTree = "<group>"; };
 		0B71A32B18881B31009F68C0 /* cancel-item-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cancel-item-button.png"; sourceTree = "<group>"; };
+		0B7286F718901DC300FB4CC4 /* Like.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Like.h; path = Models/Like.h; sourceTree = "<group>"; };
+		0B7286F818901DC300FB4CC4 /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Like.m; path = Models/Like.m; sourceTree = "<group>"; };
+		0B7286FB1890203A00FB4CC4 /* LikesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LikesViewController.h; path = Controllers/LikesViewController.h; sourceTree = "<group>"; };
+		0B7286FC1890203A00FB4CC4 /* LikesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LikesViewController.m; path = Controllers/LikesViewController.m; sourceTree = "<group>"; };
+		0B7286FF1890230900FB4CC4 /* LikesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LikesTableViewCell.xib; sourceTree = "<group>"; };
+		0B728702189023AF00FB4CC4 /* LikesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LikesTableViewCell.h; path = Custom/LikesTableViewCell.h; sourceTree = "<group>"; };
+		0B728703189023AF00FB4CC4 /* LikesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LikesTableViewCell.m; path = Custom/LikesTableViewCell.m; sourceTree = "<group>"; };
+		0B72870618903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-like-icon-selected@2x~iphone.png"; sourceTree = "<group>"; };
+		0B72870718903B3600FB4CC4 /* shout-like-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-like-icon.png"; sourceTree = "<group>"; };
+		0B72870818903B3600FB4CC4 /* shout-like-icon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-like-icon@2x~iphone.png"; sourceTree = "<group>"; };
+		0B72870918903B3600FB4CC4 /* shout-like-icon-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-like-icon-selected.png"; sourceTree = "<group>"; };
 		0B7BA61217AB254400F8F67D /* SettingPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingPickerViewController.h; path = Controllers/SettingPickerViewController.h; sourceTree = "<group>"; };
 		0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingPickerViewController.m; path = Controllers/SettingPickerViewController.m; sourceTree = "<group>"; };
 		0B7C47C6188D7EC900D308A9 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = Models/Comment.h; sourceTree = "<group>"; };
@@ -681,6 +708,10 @@
 		0B0602E917FF0A3B00EA69F0 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				0B72870618903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png */,
+				0B72870718903B3600FB4CC4 /* shout-like-icon.png */,
+				0B72870818903B3600FB4CC4 /* shout-like-icon@2x~iphone.png */,
+				0B72870918903B3600FB4CC4 /* shout-like-icon-selected.png */,
 				0B9CBBF0188F0D0700C596DF /* shout-cancel-icon.png */,
 				0B9CBBF1188F0D0700C596DF /* shout-cancel-icon@2x~iphone.png */,
 				0B9CBBD8188F09B000C596DF /* shout-more-icon.png */,
@@ -811,6 +842,8 @@
 				0B3B0A4C17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */,
 				0B7C47D1188D8A4500D308A9 /* CommentsTableViewCell.h */,
 				0B7C47D2188D8A4500D308A9 /* CommentsTableViewCell.m */,
+				0B728702189023AF00FB4CC4 /* LikesTableViewCell.h */,
+				0B728703189023AF00FB4CC4 /* LikesTableViewCell.m */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -883,6 +916,8 @@
 				3CEB380818882E1A00ADC994 /* ForgotPasswordViewController.m */,
 				0B7C47CA188D828000D308A9 /* CommentsViewController.h */,
 				0B7C47CB188D828000D308A9 /* CommentsViewController.m */,
+				0B7286FB1890203A00FB4CC4 /* LikesViewController.h */,
+				0B7286FC1890203A00FB4CC4 /* LikesViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -896,6 +931,8 @@
 				0BB44FBA187DAF0500AE4A64 /* User.m */,
 				0B7C47C6188D7EC900D308A9 /* Comment.h */,
 				0B7C47C7188D7EC900D308A9 /* Comment.m */,
+				0B7286F718901DC300FB4CC4 /* Like.h */,
+				0B7286F818901DC300FB4CC4 /* Like.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1101,6 +1138,7 @@
 				0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */,
 				0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */,
 				0B7C47CE188D88AC00D308A9 /* CommentsTableViewCell.xib */,
+				0B7286FF1890230900FB4CC4 /* LikesTableViewCell.xib */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -1198,6 +1236,7 @@
 				0B9CBBDE188F09B000C596DF /* shout-more-icon.png in Resources */,
 				0B9CBBE6188F09B000C596DF /* shout-share-icon@2x~iphone.png in Resources */,
 				0B57F9501885452700FC23BF /* username-icon@2x~iphone.png in Resources */,
+				0B72870C18903B3600FB4CC4 /* shout-like-icon.png in Resources */,
 				0B1A87BE1805DB1B00548BE2 /* shout-app-icon-114.png in Resources */,
 				0B1BB80A1833B57F0057FC04 /* flag-button.png in Resources */,
 				0B9CBBE2188F09B000C596DF /* shout-comment-icon.png in Resources */,
@@ -1230,12 +1269,14 @@
 				0B57F94C1885452700FC23BF /* password-icon.png in Resources */,
 				0B57F99A1885A99700FC23BF /* Welcome-568h@2x~iphone.png in Resources */,
 				0B57F9541885452700FC23BF /* email-icon@2x~iphone.png in Resources */,
+				0B72871018903B3600FB4CC4 /* shout-like-icon-selected.png in Resources */,
 				0B71A31C188801BF009F68C0 /* my-location-button.png in Resources */,
 				0B07BA2317E6FF8300DA26EE /* MainStoryboard_iPhone.storyboard in Resources */,
 				0B4CD1351819B42C000A8A20 /* question-mark-button@2x~iphone.png in Resources */,
 				0B97D107181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png in Resources */,
 				0BF63F4F1885E969002B1254 /* MPDismissKeyboard@2x.png in Resources */,
 				0B9CBBE4188F09B000C596DF /* shout-more-icon@2x~iphone.png in Resources */,
+				0B7287001890230900FB4CC4 /* LikesTableViewCell.xib in Resources */,
 				0B71A32218881A8C009F68C0 /* ok-item-button.png in Resources */,
 				0B4BDC1A181AE74C00782A0C /* zoom_plus_button@2x~iphone.png in Resources */,
 				0B07BA2517E6FF8300DA26EE /* Strings.strings in Resources */,
@@ -1263,10 +1304,12 @@
 				0B97D0F7181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png in Resources */,
 				0B57F94A1885452700FC23BF /* email-icon.png in Resources */,
 				0B71A30E1887F4FA009F68C0 /* more-button@2x~iphone.png in Resources */,
+				0B72870E18903B3600FB4CC4 /* shout-like-icon@2x~iphone.png in Resources */,
 				0B57F9941885A99700FC23BF /* Welcome~iphone 2.png in Resources */,
 				0B1A87B81805DB1B00548BE2 /* shout-app-icon-58.png in Resources */,
 				0B4BDC141819B88200782A0C /* nav_settigns_button@2x~iphone.png in Resources */,
 				0BF63F4B1885E969002B1254 /* MPCheckmark@2x.png in Resources */,
+				0B72870A18903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png in Resources */,
 				0B1A87BC1805DB1B00548BE2 /* shout-app-icon-100.png in Resources */,
 				0BFEAB661803241B009B5D12 /* ShoutTableViewCell.xib in Resources */,
 			);
@@ -1291,6 +1334,7 @@
 				0B9CBBDF188F09B000C596DF /* shout-more-icon.png in Resources */,
 				0B9CBBE7188F09B000C596DF /* shout-share-icon@2x~iphone.png in Resources */,
 				0B57F9511885452700FC23BF /* username-icon@2x~iphone.png in Resources */,
+				0B72870D18903B3600FB4CC4 /* shout-like-icon.png in Resources */,
 				0B0CD51A18362C1600EB3752 /* shout-image-place-holder@2x~iphone.png in Resources */,
 				0B0CD51C18362C1600EB3752 /* flag-button.png in Resources */,
 				0B9CBBE3188F09B000C596DF /* shout-comment-icon.png in Resources */,
@@ -1323,12 +1367,14 @@
 				0B0CD52D18362C1600EB3752 /* zoom_minus_button@2x~iphone.png in Resources */,
 				0B57F94D1885452700FC23BF /* password-icon.png in Resources */,
 				0B57F99B1885A99700FC23BF /* Welcome-568h@2x~iphone.png in Resources */,
+				0B72871118903B3600FB4CC4 /* shout-like-icon-selected.png in Resources */,
 				0B71A31D188801BF009F68C0 /* my-location-button.png in Resources */,
 				0B57F9551885452700FC23BF /* email-icon@2x~iphone.png in Resources */,
 				0B0CD52F18362C1600EB3752 /* shout-app-icon-120.png in Resources */,
 				0B0CD53018362C1600EB3752 /* question-mark-button@2x~iphone.png in Resources */,
 				0B0CD53118362C1600EB3752 /* shout-marker-3-deselected@2x~iphone.png in Resources */,
 				0B9CBBE5188F09B000C596DF /* shout-more-icon@2x~iphone.png in Resources */,
+				0B7287011890230900FB4CC4 /* LikesTableViewCell.xib in Resources */,
 				0B71A32318881A8C009F68C0 /* ok-item-button.png in Resources */,
 				0BF63F501885E969002B1254 /* MPDismissKeyboard@2x.png in Resources */,
 				0B0CD53218362C1600EB3752 /* zoom_plus_button@2x~iphone.png in Resources */,
@@ -1356,10 +1402,12 @@
 				0B0CD54118362C1600EB3752 /* shout-marker-1-deselected@2x~iphone.png in Resources */,
 				0B57F94B1885452700FC23BF /* email-icon.png in Resources */,
 				0B71A30F1887F4FA009F68C0 /* more-button@2x~iphone.png in Resources */,
+				0B72870F18903B3600FB4CC4 /* shout-like-icon@2x~iphone.png in Resources */,
 				0B57F9951885A99700FC23BF /* Welcome~iphone 2.png in Resources */,
 				0B0CD54218362C1600EB3752 /* shout-zoom-button@2x~iphone.png in Resources */,
 				0B0CD54318362C1600EB3752 /* shout-app-icon-60.png in Resources */,
 				0BF63F4C1885E969002B1254 /* MPCheckmark@2x.png in Resources */,
+				0B72870B18903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png in Resources */,
 				0B0CD54418362C1600EB3752 /* nav_settigns_button@2x~iphone.png in Resources */,
 				0B0CD54518362C1600EB3752 /* shout-app-icon-100.png in Resources */,
 			);
@@ -1405,8 +1453,10 @@
 				0B7C47CC188D828000D308A9 /* CommentsViewController.m in Sources */,
 				0B07B9F417E6FF8300DA26EE /* CreateShoutViewController.m in Sources */,
 				0B07B9F517E6FF8300DA26EE /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */,
+				0B728704189023AF00FB4CC4 /* LikesTableViewCell.m in Sources */,
 				0B07B9F717E6FF8300DA26EE /* SettingPickerViewController.m in Sources */,
 				0B07B9F817E6FF8300DA26EE /* RefineShoutLocationViewController.m in Sources */,
+				0B7286FD1890203A00FB4CC4 /* LikesViewController.m in Sources */,
 				0B7C47D3188D8A4500D308A9 /* CommentsTableViewCell.m in Sources */,
 				0B07B9F917E6FF8300DA26EE /* AmazonTVMClient.m in Sources */,
 				0B07B9FA17E6FF8300DA26EE /* AmazonKeyChainWrapper.m in Sources */,
@@ -1418,6 +1468,7 @@
 				0B07B9FE17E6FF8300DA26EE /* GetTokenResponseHandler.m in Sources */,
 				0B07B9FF17E6FF8300DA26EE /* JSONUtilities.m in Sources */,
 				0BF63F5F1885E969002B1254 /* NSData+MPBase64.m in Sources */,
+				0B7286F918901DC300FB4CC4 /* Like.m in Sources */,
 				0B07BA0017E6FF8300DA26EE /* RegisterDeviceRequest.m in Sources */,
 				0B07BA0117E6FF8300DA26EE /* Request.m in Sources */,
 				0BF3312F180362C200E5C59B /* ShoutTableViewCell.m in Sources */,
@@ -1478,8 +1529,10 @@
 				0B7C47CD188D828000D308A9 /* CommentsViewController.m in Sources */,
 				0B0CD4E118362C1600EB3752 /* CreateShoutViewController.m in Sources */,
 				0B0CD4E218362C1600EB3752 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */,
+				0B728705189023AF00FB4CC4 /* LikesTableViewCell.m in Sources */,
 				0B0CD4E318362C1600EB3752 /* SettingPickerViewController.m in Sources */,
 				0B0CD4E418362C1600EB3752 /* RefineShoutLocationViewController.m in Sources */,
+				0B7286FE1890203A00FB4CC4 /* LikesViewController.m in Sources */,
 				0B7C47D4188D8A4500D308A9 /* CommentsTableViewCell.m in Sources */,
 				0B0CD4E518362C1600EB3752 /* AmazonTVMClient.m in Sources */,
 				0B0CD4E618362C1600EB3752 /* AmazonKeyChainWrapper.m in Sources */,
@@ -1491,6 +1544,7 @@
 				0B0CD4EA18362C1600EB3752 /* GetTokenResponseHandler.m in Sources */,
 				0B0CD4EB18362C1600EB3752 /* JSONUtilities.m in Sources */,
 				0BF63F601885E969002B1254 /* NSData+MPBase64.m in Sources */,
+				0B7286FA18901DC300FB4CC4 /* Like.m in Sources */,
 				0B0CD4EC18362C1600EB3752 /* RegisterDeviceRequest.m in Sources */,
 				0B0CD4ED18362C1600EB3752 /* Request.m in Sources */,
 				0B0CD4EE18362C1600EB3752 /* ShoutTableViewCell.m in Sources */,

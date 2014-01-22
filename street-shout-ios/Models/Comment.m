@@ -23,7 +23,7 @@
 {
     Comment *comment = [[Comment alloc] init];
     
-    comment.shouterId = [[rawComment objectForKey:SHOUT_ID] integerValue];
+    comment.shoutId = [[rawComment objectForKey:SHOUT_ID] integerValue];
     comment.shouterId = [[rawComment objectForKey:SHOUTER_ID] integerValue];
     comment.commenterId = [[rawComment objectForKey:COMMENTER_ID] integerValue];
     comment.commenterUsername = [rawComment objectForKey:COMMENTER_USERNAME];

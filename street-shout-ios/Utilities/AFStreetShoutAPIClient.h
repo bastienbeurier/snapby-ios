@@ -10,6 +10,7 @@
 #import "Shout.h"
 #import "User.h"
 #import "Comment.h"
+#import "Like.h"
 
 @interface AFStreetShoutAPIClient : AFHTTPClient
 
@@ -49,7 +50,11 @@
 
 + (void)getCommentsForShout:(Shout *)shout success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
 
-+ (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount))successBlock failure:(void(^)())failureBlock;
++ (void)createLikeforShout:(Shout *)shout lat:(double)lat lng:(double)lng success:(void(^)(NSUInteger))successBlock failure:(void(^)())failureBlock;
+
++ (void)getLikesForShout:(Shout *)shout success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
+
++ (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount, NSMutableArray *likerIds))successBlock failure:(void(^)())failureBlock;
 
 @end
 
