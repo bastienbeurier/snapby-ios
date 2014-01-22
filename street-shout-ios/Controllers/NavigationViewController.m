@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
 @property (weak, nonatomic) MKMapView *mapView;
+@property (strong, nonatomic) Shout *redirectToShout;
 
 @end
 
@@ -65,7 +66,17 @@
     
     [self refreshShouts];
     
-    [super viewWillDisappear:animated];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (self.redirectToShout) {
+        [self showShoutViewController:self.redirectToShout];
+        self.redirectToShout = nil;
+    }
+    
+    [super viewDidAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -112,18 +123,14 @@
     }];
 }
 
-//TODO: review notification implemention
-//- (void)handleShoutRedirection:(Shout *)shout
-//{
-//    NSMutableArray *newShouts = [NSMutableArray arrayWithObjects:shout, nil];
-//    [self manuallyUpdateShoutsToShow:newShouts];
-//    
-//}
-
-- (void)manuallyUpdateShoutsToShow:(NSArray *)newShouts
+- (void)shoutSelectionComingFromFeed:(Shout *)shout
 {
-    self.mapViewController.shouts = newShouts;
-    self.feedTVC.shouts = newShouts;
+    [self showShoutViewController:shout];
+}
+
+- (void)shoutSelectionComingFromMap:(Shout *)shout
+{
+    [self showShoutViewController:shout];
 }
 
 - (void)showShoutViewController:(Shout *)shout
@@ -131,21 +138,20 @@
     [self performSegueWithIdentifier:@"Shout Push Segue" sender:shout];
 }
 
-- (void)shoutSelectionComingFromFeed:(Shout *)shout
-{
-    [self showShoutViewController:shout];
-}
-
 - (void)onShoutCreated:(Shout *)shout
 {
-//    [self handleShoutRedirection:shout];
+    [self handleShoutRedirection:shout];
 }
 
 - (void)onShoutNotificationPressed:(Shout *)shout
 {
-//    [self handleShoutRedirection:shout];
-    
-    //TODO: Animate map to the right spot
+    [self handleShoutRedirection:shout];
+}
+
+- (void)handleShoutRedirection:(Shout *)shout
+{
+    self.redirectToShout = shout;
+    [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:kDistanceWhenRedirectedFromCreateShout Animated:NO];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

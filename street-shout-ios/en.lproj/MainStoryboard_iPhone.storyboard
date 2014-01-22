@@ -762,7 +762,7 @@
                                 <rect key="frame" x="0.0" y="130" width="320" height="388"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDB-7V-Pk9">
+                                    <imageView contentMode="scaleToFill" image="shout-image-place-holder-square.png" translatesAutoresizingMaskIntoConstraints="NO" id="mDB-7V-Pk9">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -781,10 +781,9 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="y1c-Mb-1ry"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="289" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb" customClass="ShoutLabel">
-                                        <rect key="frame" x="16" y="58" width="289" height="205"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" text="This is a new shout" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="210" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb">
+                                        <rect key="frame" x="55" y="143" width="210" height="35"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
-                                        <string key="text">This is a shout content with 140 characters to account for the space ne. This is a shout content with 140 characters to account for the space ne.</string>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -902,6 +901,7 @@
                         <outlet property="dismissShoutButton" destination="LSv-Ta-kFc" id="duf-xx-ua2"/>
                         <outlet property="mapView" destination="MKd-0C-E3k" id="uKe-dg-5Eg"/>
                         <outlet property="moreShoutOptionsButton" destination="Uoe-yw-iU6" id="ACX-mK-zha"/>
+                        <outlet property="scrollView" destination="Ylw-Jt-KHm" id="Gxh-af-CeM"/>
                         <outlet property="shareButton" destination="PkE-VR-UNJ" id="UZM-nR-eRr"/>
                         <outlet property="shoutAgeLabel" destination="r11-PZ-JQP" id="lw3-GZ-Gz3"/>
                         <outlet property="shoutContent" destination="cRS-g9-DDb" id="3jY-IM-we6"/>
@@ -1561,6 +1561,7 @@
         <image name="shout-cancel-icon.png" width="74" height="74"/>
         <image name="shout-comment-icon.png" width="49" height="49"/>
         <image name="shout-distance-icon.png" width="30" height="35"/>
+        <image name="shout-image-place-holder-square.png" width="250" height="250"/>
         <image name="shout-more-icon.png" width="49" height="49"/>
         <image name="shout-share-icon.png" width="49" height="49"/>
         <image name="shout-time-icon.png" width="35" height="35"/>

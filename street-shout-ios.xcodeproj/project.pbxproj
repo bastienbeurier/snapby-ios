@@ -202,8 +202,6 @@
 		0B4BDC1A181AE74C00782A0C /* zoom_plus_button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4BDC16181AE74C00782A0C /* zoom_plus_button@2x~iphone.png */; };
 		0B4BDC1E181AF0AF00782A0C /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDC1C181AF0AF00782A0C /* MKMapView+ZoomLevel.m */; };
 		0B4CD1351819B42C000A8A20 /* question-mark-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CD1331819B42C000A8A20 /* question-mark-button@2x~iphone.png */; };
-		0B4ECD28188D418F00ABE10B /* ShoutLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4ECD27188D418F00ABE10B /* ShoutLabel.m */; };
-		0B4ECD29188D418F00ABE10B /* ShoutLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4ECD27188D418F00ABE10B /* ShoutLabel.m */; };
 		0B4ECD35188D54E500ABE10B /* shout-distance-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4ECD33188D54E500ABE10B /* shout-distance-icon@2x~iphone.png */; };
 		0B4ECD36188D54E500ABE10B /* shout-distance-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4ECD33188D54E500ABE10B /* shout-distance-icon@2x~iphone.png */; };
 		0B4ECD37188D54E500ABE10B /* shout-time-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4ECD34188D54E500ABE10B /* shout-time-icon@2x~iphone.png */; };
@@ -451,8 +449,6 @@
 		0B4BDC1B181AF0AF00782A0C /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		0B4BDC1C181AF0AF00782A0C /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		0B4CD1331819B42C000A8A20 /* question-mark-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "question-mark-button@2x~iphone.png"; sourceTree = "<group>"; };
-		0B4ECD26188D418F00ABE10B /* ShoutLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShoutLabel.h; path = Custom/ShoutLabel.h; sourceTree = "<group>"; };
-		0B4ECD27188D418F00ABE10B /* ShoutLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShoutLabel.m; path = Custom/ShoutLabel.m; sourceTree = "<group>"; };
 		0B4ECD33188D54E500ABE10B /* shout-distance-icon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-distance-icon@2x~iphone.png"; sourceTree = "<group>"; };
 		0B4ECD34188D54E500ABE10B /* shout-time-icon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-time-icon@2x~iphone.png"; sourceTree = "<group>"; };
 		0B57F9441885452700FC23BF /* email-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "email-icon.png"; sourceTree = "<group>"; };
@@ -813,8 +809,6 @@
 				0BF3312D180362C200E5C59B /* ShoutTableViewCell.m */,
 				0B3B0A4B17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.h */,
 				0B3B0A4C17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */,
-				0B4ECD26188D418F00ABE10B /* ShoutLabel.h */,
-				0B4ECD27188D418F00ABE10B /* ShoutLabel.m */,
 				0B7C47D1188D8A4500D308A9 /* CommentsTableViewCell.h */,
 				0B7C47D2188D8A4500D308A9 /* CommentsTableViewCell.m */,
 			);
@@ -1397,7 +1391,6 @@
 				0B07B9EA17E6FF8300DA26EE /* UIImageView+AFNetworking.m in Sources */,
 				0B07B9EB17E6FF8300DA26EE /* AFStreetShoutAPIClient.m in Sources */,
 				0B59735A1880649B00E27402 /* DeviceUtilities.m in Sources */,
-				0B4ECD28188D418F00ABE10B /* ShoutLabel.m in Sources */,
 				0B7C47C8188D7EC900D308A9 /* Comment.m in Sources */,
 				0B07B9EC17E6FF8300DA26EE /* Shout.m in Sources */,
 				0B07B9ED17E6FF8300DA26EE /* MapRequestHandler.m in Sources */,
@@ -1471,7 +1464,6 @@
 				0B0CD4D718362C1600EB3752 /* UIImageView+AFNetworking.m in Sources */,
 				0B0CD4D818362C1600EB3752 /* AFStreetShoutAPIClient.m in Sources */,
 				0B59735B1880649B00E27402 /* DeviceUtilities.m in Sources */,
-				0B4ECD29188D418F00ABE10B /* ShoutLabel.m in Sources */,
 				0B7C47C9188D7EC900D308A9 /* Comment.m in Sources */,
 				0B0CD4D918362C1600EB3752 /* Shout.m in Sources */,
 				0B0CD4DA18362C1600EB3752 /* MapRequestHandler.m in Sources */,

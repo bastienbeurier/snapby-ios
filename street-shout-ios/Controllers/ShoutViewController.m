@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *commentsCountIcon;
 @property (weak, nonatomic) IBOutlet UIButton *commentsCountLabelButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissShoutButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 
 @end
@@ -56,6 +57,11 @@
     self.dismissShoutButton.layer.cornerRadius = buttonHeight/2;
     
     [self updateUI];
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    if (screenRect.size.height == 568.0f) {
+        self.scrollView.scrollEnabled = NO;
+    }
     
     [super viewDidLoad];
 }
@@ -93,7 +99,7 @@
     } failure:nil];
     
     //Move map to shout
-    [LocationUtilities animateMap:self.mapView ToLatitude:self.shout.lat Longitude:self.shout.lng WithDistance:kDistanceWhenShoutZoomed Animated:NO];
+    [LocationUtilities animateMap:self.mapView ToLatitude:self.shout.lat Longitude:self.shout.lng WithDistance:kDistanceWhenDisplayShout Animated:NO];
     
     //Put annotation for shout
     CLLocationCoordinate2D annotationCoordinate;
@@ -105,7 +111,6 @@
     
     if (self.shout) {
         if (self.shout.image) {
-            self.shoutImageDropShadowView.image = [UIImage imageNamed:@"shout-image-place-holder-square"];
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             
@@ -113,7 +118,7 @@
             [self.shoutImageDropShadowView setHidden:NO];
         } else {
             [self.shoutImageView setHidden:YES];
-            [self.shoutImageDropShadowView setHidden:YES];
+            [self.shoutImageDropShadowView setHidden:NO];
         }
         
         self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.username];
