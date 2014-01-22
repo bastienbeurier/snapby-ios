@@ -798,9 +798,9 @@
                                         </constraints>
                                     </imageView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QH2-SR-hgQ">
-                                        <rect key="frame" x="35" y="325" width="100" height="32"/>
+                                        <rect key="frame" x="35" y="325" width="88" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <state key="normal" title="                        ">
                                             <color key="titleColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -970,17 +970,63 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1if-Br-ABU">
+                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7M5-EF-Fyc">
+                                        <rect key="frame" x="10" y="10" width="220" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wjW-X6-9Q2">
+                                        <rect key="frame" x="240" y="10" width="70" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="8AS-aY-eu2"/>
+                                            <constraint firstAttribute="height" constant="30" id="MSx-Ao-Iu4"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                        <state key="normal" title="Send">
+                                            <color key="titleColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addCommentButtonPressed:" destination="XJN-rR-Aa3" eventType="touchUpInside" id="zfW-iK-UuH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="wjW-X6-9Q2" firstAttribute="leading" secondItem="7M5-EF-Fyc" secondAttribute="trailing" constant="10" id="35Z-M6-MCI"/>
+                                    <constraint firstItem="wjW-X6-9Q2" firstAttribute="top" secondItem="1if-Br-ABU" secondAttribute="top" constant="10" id="DuZ-Lb-Mjr"/>
+                                    <constraint firstAttribute="trailing" secondItem="wjW-X6-9Q2" secondAttribute="trailing" constant="10" id="GqS-pM-VdM"/>
+                                    <constraint firstAttribute="height" constant="50" id="dST-7s-gqg"/>
+                                    <constraint firstItem="7M5-EF-Fyc" firstAttribute="leading" secondItem="1if-Br-ABU" secondAttribute="leading" constant="10" id="jJV-6I-fR4"/>
+                                    <constraint firstAttribute="bottom" secondItem="wjW-X6-9Q2" secondAttribute="bottom" constant="10" id="mOk-Ss-Uai"/>
+                                    <constraint firstItem="wjW-X6-9Q2" firstAttribute="leading" secondItem="7M5-EF-Fyc" secondAttribute="trailing" constant="10" id="rty-TS-MOe"/>
+                                    <constraint firstItem="7M5-EF-Fyc" firstAttribute="top" secondItem="1if-Br-ABU" secondAttribute="top" constant="10" id="vpj-Rr-Pxd"/>
+                                    <constraint firstAttribute="bottom" secondItem="7M5-EF-Fyc" secondAttribute="bottom" constant="10" id="yXf-26-0yc"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Oi7-me-M1K" firstAttribute="top" secondItem="kSY-zJ-pcU" secondAttribute="bottom" id="8YC-ar-G6s"/>
                             <constraint firstItem="kSY-zJ-pcU" firstAttribute="leading" secondItem="LoJ-aw-IUq" secondAttribute="leading" id="QAy-gm-qlt"/>
                             <constraint firstAttribute="trailing" secondItem="kSY-zJ-pcU" secondAttribute="trailing" id="SBZ-ck-dTT"/>
+                            <constraint firstItem="Oi7-me-M1K" firstAttribute="top" secondItem="1if-Br-ABU" secondAttribute="bottom" id="V1S-9n-2ag"/>
+                            <constraint firstAttribute="trailing" secondItem="1if-Br-ABU" secondAttribute="trailing" id="g4O-pX-jQd"/>
+                            <constraint firstItem="1if-Br-ABU" firstAttribute="leading" secondItem="LoJ-aw-IUq" secondAttribute="leading" id="tal-VC-Wen"/>
                             <constraint firstItem="kSY-zJ-pcU" firstAttribute="top" secondItem="LoJ-aw-IUq" secondAttribute="top" constant="80" id="x03-xU-fve"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="I2M-I6-3EU"/>
                     <connections>
+                        <outlet property="addCommentButton" destination="wjW-X6-9Q2" id="BQR-0v-OIf"/>
+                        <outlet property="addCommentContainerView" destination="1if-Br-ABU" id="cdH-fr-Tis"/>
+                        <outlet property="addCommentTextField" destination="7M5-EF-Fyc" id="I59-gl-izW"/>
                         <outlet property="commentsTableView" destination="kSY-zJ-pcU" id="1Kh-eW-0MA"/>
                     </connections>
                 </viewController>

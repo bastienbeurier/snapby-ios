@@ -56,8 +56,7 @@
 {
     MKUserLocation *mapUserLocation = self.mapView.userLocation;
     
-    if (mapUserLocation && mapUserLocation.coordinate.longitude != 0 && mapUserLocation.coordinate.latitude != 0 &&
-        mapUserLocation.coordinate.longitude != -180 && mapUserLocation.coordinate.latitude != -180) {
+    if (mapUserLocation && [LocationUtilities userLocationValid:mapUserLocation]) {
         self.myLocation = mapUserLocation.location;
     }
     

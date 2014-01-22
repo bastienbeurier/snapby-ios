@@ -8,10 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "Shout.h"
+#import <MapKit/MapKit.h>
+
+@protocol CommentsVCDelegate;
 
 @interface CommentsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *comments;
 @property (nonatomic, strong) Shout *shout;
+@property (nonatomic, strong) MKUserLocation *userLocation;
+@property (weak, nonatomic) id <CommentsVCDelegate> commentsVCdelegate;
+
+@end
+
+@protocol CommentsVCDelegate
+
+- (void)updateCommentsCount:(NSInteger)count;
 
 @end

@@ -13,6 +13,7 @@
 #import "AFStreetShoutAPIClient.h"
 #import "TimeUtilities.h"
 #import "LocationUtilities.h"
+#import "GeneralUtilities.h"
 
 #define NO_COMMENT_TAG @"No comment"
 #define LOADING_TAG @"Loading"
@@ -22,6 +23,9 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *commentsTableView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
+@property (weak, nonatomic) IBOutlet UITextField *addCommentTextField;
+@property (weak, nonatomic) IBOutlet UIButton *addCommentButton;
+@property (weak, nonatomic) IBOutlet UIView *addCommentContainerView;
 
 @end
 
@@ -43,6 +47,7 @@
         self.activityView= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     }
     
+    //Fill Table View
     self.activityView.center = CGPointMake(160, 50);
     
     [self.activityView startAnimating];
@@ -58,7 +63,19 @@
         [self.activityView stopAnimating];
         self.comments = @[NO_CONNECTION_TAG];
     }];
-
+    
+    //Comment roud button and border
+    NSUInteger buttonCorner = 5;
+    self.addCommentButton.layer.cornerRadius = buttonCorner;
+    [[self.addCommentButton layer] setBorderWidth:1.0f];
+    [[self.addCommentButton layer] setBorderColor:[ImageUtilities getShoutBlue].CGColor];
+    
+    // observe keyboard show notifications to resize the text view appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
     [super viewDidLoad];
 }
 
@@ -77,9 +94,24 @@
     [self.commentsTableView reloadData];
 }
 
+- (NSInteger)commentCount
+{
+    if ([self.comments count] == 0 || [self.comments count] > 1 || [self.comments[0] isKindOfClass:[Comment class]]) {
+        return [self.comments count];
+    } else {
+        //We don't know the comment count (loading or server error)
+        return -1;
+    }
+}
 
 - (void)backButtonClicked
 {
+    NSInteger commentCount = [self commentCount];
+    
+    if (commentCount > -1) {
+        [self.commentsVCdelegate updateCommentsCount:commentCount];
+    }
+    
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
@@ -179,6 +211,64 @@
 - (BOOL)errorRetrievingComments:(NSArray *)comments
 {
     return [comments count] == 1 && [comments[0] isKindOfClass:[NSString class]] && [comments[0] isEqualToString:NO_CONNECTION_TAG];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    /*
+     Reduce the size of the text view so that it's not obscured by the keyboard.
+     Animate the resize so that it's in sync with the appearance of the keyboard.
+     */
+    
+    NSDictionary *userInfo = [notification userInfo];
+    
+    // Get the origin of the keyboard when it's displayed.
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    // Get the top of the keyboard as the y coordinate of its origin in self's view's
+    // coordinate system. The bottom of the text view's frame should align with the top
+    // of the keyboard's final position.
+    //
+    CGRect keyboardRect = [aValue CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    CGFloat keyboardTop = keyboardRect.origin.y;
+    CGRect newTextViewFrame = self.addCommentContainerView.bounds;
+    newTextViewFrame.origin.y = keyboardTop - self.addCommentContainerView.frame.size.height;
+    
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    
+    self.addCommentContainerView.frame = newTextViewFrame;
+    
+    [UIView commitAnimations];
+}
+
+- (IBAction)addCommentButtonPressed:(id)sender {
+    ((UIButton *)sender).enabled = NO;
+    NSString *commentDescription = self.addCommentTextField.text;
+    
+    double lat = 0;
+    double lng = 0;
+    
+    if ([LocationUtilities userLocationValid:self.userLocation]) {
+        lat = self.userLocation.coordinate.latitude;
+        lng = self.userLocation.coordinate.longitude;
+    }
+    
+    [AFStreetShoutAPIClient createComment:commentDescription forShout:self.shout lat:lat lng:lng success:^(NSArray *comments) {
+        self.comments = comments;
+        ((UIButton *)sender).enabled = YES;
+    }failure:^{
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"comment_failed_message", @"Strings", @"comment") withTitle:nil];
+        ((UIButton *)sender).enabled = YES;
+    }];
 }
 
 @end
