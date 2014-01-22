@@ -12,7 +12,7 @@
 
 @protocol CommentsVCDelegate;
 
-@interface CommentsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface CommentsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) NSArray *comments;
 @property (nonatomic, strong) Shout *shout;

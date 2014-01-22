@@ -36,6 +36,8 @@
     self.commentsTableView.delegate = self;
     self.commentsTableView.dataSource = self;
     
+    self.addCommentTextField.delegate = self;
+    
     //Custom nav bar
     //Nav Bar
     [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:nil title:@"Comments" sizeBig:YES inViewController:self];
@@ -74,6 +76,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
                                                object:nil];
     
     [super viewDidLoad];
@@ -250,8 +256,34 @@
     [UIView commitAnimations];
 }
 
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    NSDictionary *userInfo = [notification userInfo];
+    
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+    CGRect newTextViewFrame = self.addCommentContainerView.bounds;
+    newTextViewFrame.origin.y = self.view.frame.size.height - newTextViewFrame.size.height;
+    
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    
+    self.addCommentContainerView.frame = newTextViewFrame;
+    
+    [UIView commitAnimations];
+}
+
 - (IBAction)addCommentButtonPressed:(id)sender {
+    [self.addCommentTextField resignFirstResponder];
+    
     ((UIButton *)sender).enabled = NO;
+    self.addCommentTextField.enabled = NO;
     NSString *commentDescription = self.addCommentTextField.text;
     
     double lat = 0;
@@ -263,12 +295,22 @@
     }
     
     [AFStreetShoutAPIClient createComment:commentDescription forShout:self.shout lat:lat lng:lng success:^(NSArray *comments) {
+        self.addCommentTextField.text = @"";
         self.comments = comments;
         ((UIButton *)sender).enabled = YES;
+        self.addCommentTextField.enabled = YES;
     }failure:^{
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"comment_failed_message", @"Strings", @"comment") withTitle:nil];
         ((UIButton *)sender).enabled = YES;
+        self.addCommentTextField.enabled = YES;
     }];
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField;
+{
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end
