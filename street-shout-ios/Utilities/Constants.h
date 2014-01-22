@@ -46,6 +46,7 @@ static NSString * const kDevTestFlightAppToken = @"71154ced-9c90-4a19-9715-c74a2
 static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5"; //Street Shout
 //static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347" //Shout
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
+static NSString * const kProdShoutBaseURLString = @"http://streetshout.co/";
 
 //Shout duration in seconds
 static const NSUInteger kShoutDuration = 4 * 60 * 60;
