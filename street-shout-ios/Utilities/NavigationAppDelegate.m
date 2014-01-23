@@ -22,6 +22,10 @@
 #import "WelcomeViewController.h"
 #import "GeneralUtilities.h"
 #import "MBProgressHUD.h"
+#import "SigninViewController.h"
+#import "SignupViewController.h"
+#import "ForgotPasswordViewController.h"
+#import "LikesViewController.h"
 
 @implementation NavigationAppDelegate
 
@@ -56,8 +60,9 @@
     
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     
+    //Notification received when app closed
     if(remoteNotif) {
-        [self application:application handlePushNotification:remoteNotif];
+        [self setRedirectionToNotificationShout:remoteNotif];
     }
     
     // Check if the user has not been logged out
@@ -140,25 +145,59 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
+    //Notification received when app is opened
     [self application:application handlePushNotification:notification];
 }
 
 - (void)application:(UIApplication *)application handlePushNotification:(NSDictionary *)notification
 {
     if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
-        NSDictionary *extra = [notification objectForKey:@"extra"];
-        NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
-        
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         
         if ([[navController topViewController] isKindOfClass:[NavigationViewController class]]) {
             NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
             
-            [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecute:^(Shout *shout) {
-                [navigationViewController onShoutNotificationPressed:shout];
-            }];
+            NSDictionary *extra = [notification objectForKey:@"extra"];
+            NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
+            
+            [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecuteSuccess:^(Shout *shout){
+                [navigationViewController onShoutNotificationPressedWhileAppInNavigationVC:shout];
+            } failure:nil];
+        } else if ([[navController topViewController] isKindOfClass:[ShoutViewController class]] ||
+            [[navController topViewController] isKindOfClass:[SettingsViewController class]] ||
+            [[navController topViewController] isKindOfClass:[CreateShoutViewController class]]) {
+            
+            [self setRedirectionToNotificationShout:notification];
+            [navController popViewControllerAnimated:NO];
+            
+        } else if ([[navController topViewController] isKindOfClass:[CommentsViewController class]] ||
+                   [[navController topViewController] isKindOfClass:[LikesViewController class]] ||
+                   [[navController topViewController] isKindOfClass:[RefineShoutLocationViewController class]]) {
+            
+            [self setRedirectionToNotificationShout:notification];
+            [navController popViewControllerAnimated:NO];
+            [navController popViewControllerAnimated:NO];
+            
+        } else if ([[navController topViewController] isKindOfClass:[SigninViewController class]] ||
+                   [[navController topViewController] isKindOfClass:[SignupViewController class]] ||
+                   [[navController topViewController] isKindOfClass:[WelcomeViewController class]] ||
+                   [[navController topViewController] isKindOfClass:[ForgotPasswordViewController class]]) {
+            
+            [self setRedirectionToNotificationShout:notification];
         }
+
     }
+}
+
+- (void)setRedirectionToNotificationShout:(NSDictionary *)notification
+{
+    NSDictionary *extra = [notification objectForKey:@"extra"];
+    NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
+
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    [prefs setObject:[NSNumber numberWithInt:shoutId] forKey:NOTIFICATION_SHOUT_ID_PREF];
+    [prefs synchronize];
 }
 
 // Code from http://oleb.net/blog/2009/09/managing-the-network-activity-indicator/

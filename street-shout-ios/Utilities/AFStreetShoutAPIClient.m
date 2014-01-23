@@ -98,7 +98,7 @@
 }
 
 // Display shout from notification
-+ (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock
++ (void)getShoutInfo:(NSUInteger)shoutId AndExecuteSuccess:(void(^)(Shout *shout))successBlock failure:(void(^)())failureBlock
 {
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"shouts/%d", shoutId]];
     
@@ -113,7 +113,10 @@
         successBlock([Shout rawShoutToInstance:rawShout]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        NSLog(@"ERROR!!!");
+        
+        if (failureBlock) {
+            failureBlock();
+        }
     }];
 }
 

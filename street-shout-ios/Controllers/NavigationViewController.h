@@ -16,6 +16,6 @@
 
 @interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, UIAlertViewDelegate>
 
-- (void)onShoutNotificationPressed:(Shout *)shout;
+- (void)onShoutNotificationPressedWhileAppInNavigationVC:(Shout *)shout;
 
 @end

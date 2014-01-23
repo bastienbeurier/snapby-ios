@@ -17,8 +17,6 @@
 #import "MKMapView+ZoomLevel.h"
 #import "TrackingUtilities.h"
 
-#define ZOOM_0 180
-
 @interface MapViewController () <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *myLocationButton;
@@ -35,7 +33,7 @@
     [super viewDidLoad];
     self.mapView.delegate = self;
     
-    [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude WithSpan:ZOOM_0 Animated:NO];
+    [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude Animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -56,7 +54,7 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     if (self.hasZoomedAtStartUp == NO && [LocationUtilities userLocationValid:userLocation]) {
-        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:kDistanceAtStartup Animated:YES];
+        [LocationUtilities animateMap:self.mapView ToLatitude:userLocation.coordinate.latitude Longitude:userLocation.coordinate.longitude WithDistance:kDistanceAtStartup Animated:NO];
         self.hasZoomedAtStartUp = YES;
     }
 

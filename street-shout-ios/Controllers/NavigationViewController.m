@@ -18,6 +18,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ImageUtilities.h"
 #import "SessionUtilities.h"
+#import "MBProgressHUD.h"
 
 #define SHOUT_BUTTON_SIZE 72.0
 
@@ -71,9 +72,26 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    //Redirect to recentrly created shout
     if (self.redirectToShout) {
-        [self showShoutViewController:self.redirectToShout];
+        [self handleShoutRedirection:self.redirectToShout];
         self.redirectToShout = nil;
+    }
+    
+    //Redirect to notification shout
+     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSNumber *notificationShoutId = [prefs objectForKey:NOTIFICATION_SHOUT_ID_PREF];
+    [prefs removeObjectForKey:NOTIFICATION_SHOUT_ID_PREF];
+    
+    if (notificationShoutId) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        [AFStreetShoutAPIClient getShoutInfo:[notificationShoutId integerValue] AndExecuteSuccess:^(Shout *shout) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self handleShoutRedirection:shout];
+        } failure:^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
     }
     
     [super viewDidAppear:animated];
@@ -133,6 +151,11 @@
     [self showShoutViewController:shout];
 }
 
+- (void)onShoutNotificationPressedWhileAppInNavigationVC:(Shout *)shout
+{
+    [self handleShoutRedirection:shout];
+}
+
 - (void)showShoutViewController:(Shout *)shout
 {
     [self performSegueWithIdentifier:@"Shout Push Segue" sender:shout];
@@ -140,17 +163,14 @@
 
 - (void)onShoutCreated:(Shout *)shout
 {
-    [self handleShoutRedirection:shout];
-}
-
-- (void)onShoutNotificationPressed:(Shout *)shout
-{
-    [self handleShoutRedirection:shout];
+    //Don't show shout controller immidiately (as for notification handling), otherwise segues get mixed up.
+    self.redirectToShout = shout;
 }
 
 - (void)handleShoutRedirection:(Shout *)shout
 {
-    self.redirectToShout = shout;
+    [self showShoutViewController:shout];
+    
     [LocationUtilities animateMap:self.mapView ToLatitude:shout.lat Longitude:shout.lng WithDistance:kDistanceWhenRedirectedFromCreateShout Animated:NO];
 }
 

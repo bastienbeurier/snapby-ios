@@ -28,7 +28,7 @@
          AndExecuteSuccess:(void(^)(Shout *))successBlock
                    Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
 
-+ (void)getShoutInfo:(NSUInteger)shoutId AndExecute:(void(^)(Shout *shout))successBlock;
++ (void)getShoutInfo:(NSUInteger)shoutId AndExecuteSuccess:(void(^)(Shout *shout))successBlock failure:(void(^)())failureBlock;
 
 + (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
 

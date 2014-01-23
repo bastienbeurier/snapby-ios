@@ -28,6 +28,7 @@
 #define USER_CONNECT_PREF @"FB connect preference"
 #define USER_AUTH_TOKEN_PREF @"User authentication token preference"
 #define USER_BLACKLISTED @"Is user blacklisted?"
+#define NOTIFICATION_SHOUT_ID_PREF @"Notification shout identifier"
 
 @interface Constants : NSObject
 
