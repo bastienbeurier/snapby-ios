@@ -160,15 +160,8 @@
 + (void)updateUserInfoWithLat:(double)lat Lng:(double)lng;
 {
     NSString *uaDeviceToken = [GeneralUtilities getUADeviceToken];
-    NSNumber *notificationRadius = [[NSUserDefaults standardUserDefaults] objectForKey:NOTIFICATION_RADIUS_PREF];
-    
-    if (!notificationRadius) {
-        notificationRadius = [NSNumber numberWithInt:kDefaultNotificationRadiusIndex];
-    }
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
-    
-    [parameters setObject:notificationRadius forKey:@"notification_radius"];
     
     if (lat != 0 && lng != 0) {
         [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];

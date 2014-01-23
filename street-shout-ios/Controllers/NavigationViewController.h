@@ -14,7 +14,7 @@
 #import "SettingsViewController.h"
 #import "CommentsViewController.h"
 
-@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, SettingsViewControllerDelegate, UIAlertViewDelegate>
+@interface NavigationViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, UIAlertViewDelegate>
 
 - (void)onShoutNotificationPressed:(Shout *)shout;
 

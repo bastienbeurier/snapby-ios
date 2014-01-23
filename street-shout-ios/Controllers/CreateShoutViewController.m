@@ -82,9 +82,6 @@
     self.mapView.layer.cornerRadius = 15;
     self.shoutImageView.layer.cornerRadius = 15;
     
-    //Drop shadows
-    [ImageUtilities addDropShadowToView:self.removeShoutImage];
-    
     self.descriptionViewShadowingView.clipsToBounds = NO;
     
     [self.descriptionViewShadowingView.layer setShadowColor:[UIColor blackColor].CGColor];
@@ -94,15 +91,8 @@
     
     self.descriptionView.clipsToBounds = YES;
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
-    //Nav bar
-    UIBarButtonItem *shoutButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Shout!"
-                                    style:UIBarButtonItemStyleBordered
-                                    target:self
-                                    action:@selector(createShoutClicked)];
-    self.navigationItem.rightBarButtonItem = shoutButton;
+    //Nav Bar
+    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:@"ok" title:@"Shout" sizeBig:YES inViewController:self];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -123,8 +113,8 @@
     return NO;
 }
 
-- (void)createShoutClicked {
-    
+- (void)okButtonClicked
+{
     if (![SessionUtilities isSignedIn]){
         [SessionUtilities redirectToSignIn];
         return;
@@ -133,7 +123,7 @@
     [self.descriptionView resignFirstResponder];
     
     BOOL error = NO; NSString *title; NSString *message;
-
+    
     if (self.blackListed) {
         title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
         message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
@@ -360,6 +350,11 @@
 - (void)showMapInCreateShoutViewController
 {
     [self.mapView setHidden:NO];
+}
+
+- (void)backButtonClicked
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

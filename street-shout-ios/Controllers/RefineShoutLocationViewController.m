@@ -33,23 +33,10 @@
     //Round corners
     [self.mapView.layer setCornerRadius:MAP_CORNER_RADIUS];
     
-    
-    //Drop shadows
-    [ImageUtilities addDropShadowToView:self.refreshMapButton];
-    
     [self updateMyLocation];
     
-    //Navigation bar
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    self.navigationItem.hidesBackButton = YES;
-    
-    //Add done button to nav bar
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Done"
-                                    style:UIBarButtonItemStyleBordered
-                                    target:self
-                                    action:@selector(doneButtonClicked)];
-    self.navigationItem.rightBarButtonItem = doneButton;
+    //Nav Bar
+    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:nil title:@"Your location" sizeBig:YES inViewController:self];
 }
 
 - (void)updateMyLocation
@@ -80,7 +67,8 @@
     [self updateMyLocation];
 }
 
-- (void) doneButtonClicked {
+- (void)backButtonClicked
+{
     [self.refineShoutLocationVCDelegate showMapInCreateShoutViewController];
     [self.navigationController popViewControllerAnimated:YES];
 }

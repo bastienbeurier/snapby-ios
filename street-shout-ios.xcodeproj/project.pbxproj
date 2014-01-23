@@ -30,7 +30,6 @@
 		0B07B9F317E6FF8300DA26EE /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A32179F36AC0026EE12 /* Constants.m */; };
 		0B07B9F417E6FF8300DA26EE /* CreateShoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */; };
 		0B07B9F517E6FF8300DA26EE /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A4C17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */; };
-		0B07B9F717E6FF8300DA26EE /* SettingPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */; };
 		0B07B9F817E6FF8300DA26EE /* RefineShoutLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBED65E17BAA87F00C7880D /* RefineShoutLocationViewController.m */; };
 		0B07B9F917E6FF8300DA26EE /* AmazonTVMClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472617BBE8B200369A14 /* AmazonTVMClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0B07B9FA17E6FF8300DA26EE /* AmazonKeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472817BBE8B200369A14 /* AmazonKeyChainWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -95,7 +94,6 @@
 		0B0CD4E018362C1600EB3752 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A32179F36AC0026EE12 /* Constants.m */; };
 		0B0CD4E118362C1600EB3752 /* CreateShoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */; };
 		0B0CD4E218362C1600EB3752 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A4C17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */; };
-		0B0CD4E318362C1600EB3752 /* SettingPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */; };
 		0B0CD4E418362C1600EB3752 /* RefineShoutLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBED65E17BAA87F00C7880D /* RefineShoutLocationViewController.m */; };
 		0B0CD4E518362C1600EB3752 /* AmazonTVMClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472617BBE8B200369A14 /* AmazonTVMClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0B0CD4E618362C1600EB3752 /* AmazonKeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472817BBE8B200369A14 /* AmazonKeyChainWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -525,8 +523,6 @@
 		0B72870718903B3600FB4CC4 /* shout-like-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-like-icon.png"; sourceTree = "<group>"; };
 		0B72870818903B3600FB4CC4 /* shout-like-icon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-like-icon@2x~iphone.png"; sourceTree = "<group>"; };
 		0B72870918903B3600FB4CC4 /* shout-like-icon-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shout-like-icon-selected.png"; sourceTree = "<group>"; };
-		0B7BA61217AB254400F8F67D /* SettingPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingPickerViewController.h; path = Controllers/SettingPickerViewController.h; sourceTree = "<group>"; };
-		0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingPickerViewController.m; path = Controllers/SettingPickerViewController.m; sourceTree = "<group>"; };
 		0B7C47C6188D7EC900D308A9 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = Models/Comment.h; sourceTree = "<group>"; };
 		0B7C47C7188D7EC900D308A9 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = Models/Comment.m; sourceTree = "<group>"; };
 		0B7C47CA188D828000D308A9 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentsViewController.h; path = Controllers/CommentsViewController.h; sourceTree = "<group>"; };
@@ -900,8 +896,6 @@
 				0B3B0A2A179F1EFE0026EE12 /* ShoutViewController.m */,
 				0B3B0A4417A0AA830026EE12 /* CreateShoutViewController.h */,
 				0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */,
-				0B7BA61217AB254400F8F67D /* SettingPickerViewController.h */,
-				0B7BA61317AB254400F8F67D /* SettingPickerViewController.m */,
 				0BBED65D17BAA87E00C7880D /* RefineShoutLocationViewController.h */,
 				0BBED65E17BAA87F00C7880D /* RefineShoutLocationViewController.m */,
 				0BCA5F3818095063003A8637 /* SettingsViewController.h */,
@@ -1454,7 +1448,6 @@
 				0B07B9F417E6FF8300DA26EE /* CreateShoutViewController.m in Sources */,
 				0B07B9F517E6FF8300DA26EE /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */,
 				0B728704189023AF00FB4CC4 /* LikesTableViewCell.m in Sources */,
-				0B07B9F717E6FF8300DA26EE /* SettingPickerViewController.m in Sources */,
 				0B07B9F817E6FF8300DA26EE /* RefineShoutLocationViewController.m in Sources */,
 				0B7286FD1890203A00FB4CC4 /* LikesViewController.m in Sources */,
 				0B7C47D3188D8A4500D308A9 /* CommentsTableViewCell.m in Sources */,
@@ -1530,7 +1523,6 @@
 				0B0CD4E118362C1600EB3752 /* CreateShoutViewController.m in Sources */,
 				0B0CD4E218362C1600EB3752 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */,
 				0B728705189023AF00FB4CC4 /* LikesTableViewCell.m in Sources */,
-				0B0CD4E318362C1600EB3752 /* SettingPickerViewController.m in Sources */,
 				0B0CD4E418362C1600EB3752 /* RefineShoutLocationViewController.m in Sources */,
 				0B7286FE1890203A00FB4CC4 /* LikesViewController.m in Sources */,
 				0B7C47D4188D8A4500D308A9 /* CommentsTableViewCell.m in Sources */,

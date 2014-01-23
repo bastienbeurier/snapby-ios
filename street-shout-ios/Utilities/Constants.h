@@ -20,7 +20,6 @@
 
 #define UA_DEVICE_TOKEN_PROD_PREF @"UA Device Token Production"
 #define UA_DEVICE_TOKEN_DEV_PREF @"UA Device Token Development"
-#define NOTIFICATION_RADIUS_PREF @"Notification Radius"
 #define DISTANCE_UNIT_PREF @"Distance Unit"
 #define USER_NAME_PREF @"Username preference"
 #define USER_EMAIL_PREF @"User model email preference"
@@ -57,8 +56,6 @@ static const NSUInteger kMaxUsernameLength = 20;
 static const NSUInteger kMaxShoutDescriptionLength = 140;
 static const NSUInteger kShoutRadius = 300;
 static const NSUInteger kShoutImageSize = 400;
-
-static const NSUInteger kDefaultNotificationRadiusIndex = 3;
 
 static const NSUInteger kDistanceWhenRedirectedFromCreateShout = 250;
 static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;
