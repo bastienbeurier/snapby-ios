@@ -125,7 +125,7 @@
             [SessionUtilities securelySaveCurrentUserToken:authToken];
             
             //Mixpanel identification and tracking
-            [TrackingUtilities identifyWithMixpanel:user];
+            [TrackingUtilities identifyWithMixpanel:user isSigningUp:YES];
             [TrackingUtilities trackSignUpWithSource:@"Email"];
             
             [self performSegueWithIdentifier:@"Navigation Push Segue From Signup" sender:nil];

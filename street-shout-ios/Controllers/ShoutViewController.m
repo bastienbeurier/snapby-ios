@@ -44,6 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (strong, nonatomic) NSMutableArray *likerIds;
+@property (nonatomic) BOOL likeButtonActive;
 
 
 @end
@@ -52,6 +53,8 @@
 
 - (void)viewDidLoad
 {
+    self.likeButtonActive = YES;
+    
     self.mapView.delegate = self;
     
     self.likerIds = [[NSMutableArray alloc] initWithArray:@[]];
@@ -100,8 +103,8 @@
     [self.bottomBarView.layer addSublayer:thirdInterBorder];
     
     //Bug coming back from comments
-    if (self.likeButton.enabled == NO) {
-        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon-selected"];
+    if (self.likeButtonActive == NO) {
+        [self updateUIOnShoutLiked:YES];
     }
     
     [super viewWillAppear:animated];
@@ -111,23 +114,28 @@
 {
     //Get comment count and liker ids
     [AFStreetShoutAPIClient getShoutMetaData:self.shout success:^(NSInteger commentCount, NSMutableArray *likerIds) {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", commentCount] forState:UIControlStateNormal];
+        [self updateCommentCount:commentCount];
         self.commentsCountLabelButton.hidden = NO;
         self.commentsCountIcon.hidden = NO;
         
         //Store them for later
         self.likerIds = likerIds;
         
-        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
+        [self updateLikeCount:[self.likerIds count]];
         self.likesCountButton.hidden = NO;
         self.likesCountIcon.hidden = NO;
+        
+        
+        BOOL currentUserLikedShout = NO;
         
         //Check if current user liked this shout
         for (NSNumber *likerId in self.likerIds) {
             if ([likerId integerValue] == [SessionUtilities getCurrentUser].identifier) {
-                [self updateUIOnShoutLiked:YES];
+                currentUserLikedShout = YES;
             }
         }
+        
+        [self updateUIOnShoutLiked:currentUserLikedShout];
     } failure:nil];
     
     //Move map to shout
@@ -286,6 +294,15 @@
 }
 
 - (IBAction)createLikeButtonClicked:(id)sender {
+    //Prevent from making the button color lighter if using de enabled property of UIButton
+    if (self.likeButtonActive == NO) {
+        return;
+    }
+    
+    //Update the UI
+    [self.likerIds insertObject:[NSNumber numberWithInt:[SessionUtilities getCurrentUser].identifier] atIndex:0];
+    [self updateUIOnShoutLiked:YES];
+    
     double lat = 0;
     double lng = 0;
     
@@ -302,23 +319,40 @@
         [self updateUIOnShoutLiked:NO];
         [self.likerIds removeObjectAtIndex:0];
     }];
-    
-    //Update the UI
-    [self.likerIds insertObject:[NSNumber numberWithInt:[SessionUtilities getCurrentUser].identifier] atIndex:0];
-    [self updateUIOnShoutLiked:YES];
 }
 
 - (void)updateUIOnShoutLiked:(BOOL)liked
 {
+    self.likeButton.enabled = YES;
+    
     if (liked) {
-        self.likeButton.enabled = NO;
-        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon-selected"];
+        self.likeButtonActive = NO;
+        [self.likeButton setImage:[UIImage imageNamed:@"shout-like-icon-selected"] forState:UIControlStateNormal];
     } else {
-        self.likeButton.enabled = NO;
-        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon"];
+        self.likeButtonActive = YES;
+        [self.likeButton setImage:[UIImage imageNamed:@"shout-like-icon"] forState:UIControlStateNormal];
     }
     
-    [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
+    [self updateLikeCount:[self.likerIds count]];
+}
+
+- (void)updateLikeCount:(NSUInteger)count
+{
+    if (count < 2) {
+        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d like", [self.likerIds count]] forState:UIControlStateNormal];
+    } else {
+        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
+    }
+}
+
+- (void)updateCommentCount:(NSUInteger)count
+{
+    if (count < 2) {
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comment", count] forState:UIControlStateNormal];
+    } else {
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", count] forState:UIControlStateNormal];
+    }
+    
 }
 
 @end

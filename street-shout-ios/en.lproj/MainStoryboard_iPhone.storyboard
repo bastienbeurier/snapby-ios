@@ -606,7 +606,7 @@
                                             <segue destination="XJN-rR-Aa3" kind="push" identifier="Comments Push Segue From Bar Button" id="fbw-tr-rR7"/>
                                         </connections>
                                     </button>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo8-d1-gKN">
+                                    <button contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo8-d1-gKN">
                                         <rect key="frame" x="0.0" y="0.0" width="79" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
@@ -960,7 +960,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" restorationIdentifier="No like" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="No comment" textLabel="aaT-AR-Ei9" rowHeight="60" style="IBUITableViewCellStyleDefault" id="rcV-CH-sJ8">
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" restorationIdentifier="No like" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="No like" textLabel="aaT-AR-Ei9" rowHeight="60" style="IBUITableViewCellStyleDefault" id="rcV-CH-sJ8">
                                         <rect key="frame" x="0.0" y="22" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rcV-CH-sJ8" id="k9C-Ic-hOH">
