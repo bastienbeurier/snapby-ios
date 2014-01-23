@@ -434,7 +434,60 @@
     }];
 }
 
-+ (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount))successBlock failure:(void(^)())failureBlock
++ (void)createLikeforShout:(Shout *)shout lat:(double)lat lng:(double)lng success:(void(^)(NSUInteger))successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"likes.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    [parameters setObject:[NSNumber numberWithInt:shout.identifier] forKey:@"shout_id"];
+    
+    if (lat != 0 && lng != 0) {
+        [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
+        [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
+    }
+    
+    // Enrich with token
+    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        failureBlock();
+    }];
+}
+
++ (void)getLikesForShout:(Shout *)shout success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"likes.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    [parameters setObject:[NSNumber numberWithInt:shout.identifier] forKey:@"shout_id"];
+    
+    // Enrich with token
+    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        
+        NSArray *rawLikes = [result valueForKeyPath:@"likes"];
+        
+        successBlock([Like rawLikesToInstances:rawLikes]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        failureBlock();
+    }];
+}
+
++ (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount, NSMutableArray *likerIds))successBlock failure:(void(^)())failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"/get_shout_meta_data.json"];
     
@@ -450,7 +503,9 @@
         
         NSInteger commentCount = [[result objectForKey:@"comment_count"] integerValue];
         
-        successBlock(commentCount);
+        NSMutableArray *likerIds = [Like rawLikerIdsToNumbers:[result objectForKey:@"liker_ids"]];
+        
+        successBlock(commentCount, likerIds);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
         

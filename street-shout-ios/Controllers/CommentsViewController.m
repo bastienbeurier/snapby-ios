@@ -38,7 +38,6 @@
     
     self.addCommentTextField.delegate = self;
     
-    //Custom nav bar
     //Nav Bar
     [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:nil title:@"Comments" sizeBig:YES inViewController:self];
     
@@ -66,7 +65,7 @@
         self.comments = @[NO_CONNECTION_TAG];
     }];
     
-    //Comment roud button and border
+    //Comment round button and border
     NSUInteger buttonCorner = 5;
     self.addCommentButton.layer.cornerRadius = buttonCorner;
     [[self.addCommentButton layer] setBorderWidth:1.0f];
@@ -128,12 +127,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([self noCommentsInArray:self.comments]) {
-        static NSString *CellIdentifier = NO_COMMENT_TAG;
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        static NSString *cellIdentifier = NO_COMMENT_TAG;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         return cell;
     } else if ([self errorRetrievingComments:self.comments]) {
-        static NSString *CellIdentifier = NO_CONNECTION_TAG;
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        static NSString *cellIdentifier = NO_CONNECTION_TAG;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         return cell;
     } else {
         static NSString *cellIdentifier = @"CommentsTableViewCell";
