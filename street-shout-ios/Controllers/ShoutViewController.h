@@ -25,6 +25,4 @@
 
 - (void)redisplayFeed;
 
-@property (strong, nonatomic) UIView *view;
-
 @end

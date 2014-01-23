@@ -577,6 +577,9 @@
                                         <state key="normal" image="shout-more-icon.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="moreShoutOptionButtonPressed:" destination="qtI-Lc-vOJ" eventType="touchUpInside" id="x1U-Hs-Uoe"/>
+                                        </connections>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PkE-VR-UNJ">
                                         <rect key="frame" x="160" y="0.0" width="79" height="50"/>

@@ -17,6 +17,8 @@
 #import "SessionUtilities.h"
 #import "LikesViewController.h"
 
+#define MORE_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"report_shout", @"Strings", @"comment")
+#define MORE_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"navigate_to_shout", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_3 NSLocalizedStringFromTable (@"privacy_content", @"Strings", @"comment")
@@ -45,6 +47,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (strong, nonatomic) NSMutableArray *likerIds;
 @property (nonatomic) BOOL likeButtonActive;
+@property (strong, nonatomic) UIActionSheet *flagActionSheet;
+@property (strong, nonatomic) UIActionSheet *moreActionSheet;
 
 
 @end
@@ -181,56 +185,82 @@
     }
 }
 
-//- (IBAction)flagButtonClicked:(id)sender {
-//    if (![SessionUtilities isSignedIn]){
-//        [SessionUtilities redirectToSignIn];
-//        return;
-//    }
-//    
-//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
-// delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
-//    
-//    [actionSheet showInView:self.shoutVCDelegate.view];
-//}
+- (IBAction)moreShoutOptionButtonPressed:(id)sender {
+    
+    
+    self.moreActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:MORE_ACTION_SHEET_OPTION_1, MORE_ACTION_SHEET_OPTION_2, nil];
+    
+    [self.moreActionSheet showInView:self.view];
+}
 
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
-//    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
-//        //In this case, 401 means that the auth token is no valid.
-//        if ([SessionUtilities invalidTokenResponse:operation]) {
-//            [SessionUtilities redirectToSignIn];
-//        }
-//    };
-//    
-//    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-//    if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
-//        
-//        NSString *motive = nil;
-//        
-//        switch (buttonIndex) {
-//            case 0:
-//                motive = @"abuse";
-//                break;
-//            case 1:
-//                motive = @"spam";
-//                break;
-//            case 2:
-//                motive = @"privacy";
-//                break;
-//            case 3:
-//                motive = @"inaccurate";
-//                break;
-//            case 4:
-//                motive = @"other";
-//                break;
-//        }
-//        
-//        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
-//        
-//        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
-//    }
-//}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
+        return;
+    }
+    
+    if (actionSheet == self.moreActionSheet) {
+        if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_1]) {
+            self.flagActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
+                                                               delegate:self
+                                                      cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
+                                                 destructiveButtonTitle:nil
+                                                      otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
+            [self.flagActionSheet showInView:self.view];
+        }
+        
+        if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_2]) {
+            Class mapItemClass = [MKMapItem class];
+            if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)]) {
+                // Create an MKMapItem to pass to the Maps app
+                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(self.shout.lat, self.shout.lng);
+                MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
+                                                               addressDictionary:nil];
+                MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+                [mapItem setName:@"Shout"];
+                // Pass the map item to the Maps app
+                [mapItem openInMapsWithLaunchOptions:nil];
+            }
+        }
+    } else if (actionSheet == self.flagActionSheet) {
+        typedef void (^FailureBlock)(AFHTTPRequestOperation *);
+        FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
+            //In this case, 401 means that the auth token is no valid.
+            if ([SessionUtilities invalidTokenResponse:operation]) {
+                [SessionUtilities redirectToSignIn];
+            }
+        };
+        
+        NSString *motive = nil;
+        
+        switch (buttonIndex) {
+            case 0:
+                motive = @"abuse";
+                break;
+            case 1:
+                motive = @"spam";
+                break;
+            case 2:
+                motive = @"privacy";
+                break;
+            case 3:
+                motive = @"inaccurate";
+                break;
+            case 4:
+                motive = @"other";
+                break;
+        }
+        
+        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
+        
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
+    }
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
