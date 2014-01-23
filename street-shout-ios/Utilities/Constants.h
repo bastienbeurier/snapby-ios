@@ -33,25 +33,22 @@
 
 @end
 
-
 // API Version
 static NSString * const kApiVersion = @"2";
 
 //Development
 static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
-static NSString * const kDevTestFlightAppToken = @"71154ced-9c90-4a19-9715-c74a2f8e57ee";
+static NSString * const kDevTestFlightAppToken = @"c4904202-ba89-449a-bc2f-f53e231f1319";
 
 //Production
-static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5"; //Street Shout
-//static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347" //Shout
+static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347";
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
-static NSString * const kProdShoutBaseURLString = @"http://streetshout.co/";
+static NSString * const kProdShoutBaseURLString = @"http://shouthereandnow.com/";
 
 //Shout duration in seconds
 static const NSUInteger kShoutDuration = 4 * 60 * 60;
 static const NSUInteger kShoutDurationHours = 4;
 static const NSUInteger kShoutMaxLength = 140;
-static const NSUInteger kCreateShoutDistance = 1000;
 static const NSUInteger kMaxUsernameLength = 20;
 static const NSUInteger kMaxShoutDescriptionLength = 140;
 static const NSUInteger kShoutRadius = 300;

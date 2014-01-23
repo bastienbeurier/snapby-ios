@@ -4,30 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Shout Beta.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>Shout copy.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
-		</dict>
-		<key>street-shout-ios copy.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>street-shout-ios-dev.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>street-shout-ios.xcscheme</key>
+		<key>Shatte.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>Shout.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -58,6 +43,11 @@
 			<true/>
 		</dict>
 		<key>0B65F71F1795C66500F37227</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0BCBC600189160DB00933715</key>
 		<dict>
 			<key>primary</key>
 			<true/>

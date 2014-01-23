@@ -315,6 +315,188 @@
 		0BB44FBB187DAF0500AE4A64 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FBA187DAF0500AE4A64 /* User.m */; };
 		0BB44FBC187DAF0500AE4A64 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FBA187DAF0500AE4A64 /* User.m */; };
 		0BCA5F3B18095063003A8637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCA5F3918095063003A8637 /* SettingsViewController.m */; };
+		0BCBC602189160DB00933715 /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
+		0BCBC603189160DB00933715 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FBA187DAF0500AE4A64 /* User.m */; };
+		0BCBC604189160DB00933715 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F72F1795C66500F37227 /* main.m */; };
+		0BCBC605189160DB00933715 /* Mixpanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F231885E969002B1254 /* Mixpanel.m */; };
+		0BCBC606189160DB00933715 /* NavigationAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7331795C66500F37227 /* NavigationAppDelegate.m */; };
+		0BCBC607189160DB00933715 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* NavigationViewController.m */; };
+		0BCBC608189160DB00933715 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6EF17970ABB00312BFD /* AFHTTPClient.m */; };
+		0BCBC609189160DB00933715 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F117970ABB00312BFD /* AFHTTPRequestOperation.m */; };
+		0BCBC60A189160DB00933715 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F317970ABB00312BFD /* AFImageRequestOperation.m */; };
+		0BCBC60B189160DB00933715 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F517970ABB00312BFD /* AFJSONRequestOperation.m */; };
+		0BCBC60C189160DB00933715 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6F717970ABB00312BFD /* AFNetworkActivityIndicatorManager.m */; };
+		0BCBC60D189160DB00933715 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6FA17970ABB00312BFD /* AFPropertyListRequestOperation.m */; };
+		0BCBC60E189160DB00933715 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCA5F3918095063003A8637 /* SettingsViewController.m */; };
+		0BCBC60F189160DB00933715 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F681885E9B7002B1254 /* MBProgressHUD.m */; };
+		0BCBC610189160DB00933715 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6FC17970ABB00312BFD /* AFURLConnectionOperation.m */; };
+		0BCBC611189160DB00933715 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A6FE17970ABB00312BFD /* AFXMLRequestOperation.m */; };
+		0BCBC612189160DB00933715 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A70017970ABB00312BFD /* UIImageView+AFNetworking.m */; };
+		0BCBC613189160DB00933715 /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */; };
+		0BCBC614189160DB00933715 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5973591880649B00E27402 /* DeviceUtilities.m */; };
+		0BCBC615189160DB00933715 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7C47C7188D7EC900D308A9 /* Comment.m */; };
+		0BCBC616189160DB00933715 /* Shout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71C17971AF300312BFD /* Shout.m */; };
+		0BCBC617189160DB00933715 /* MapRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71F17971B1D00312BFD /* MapRequestHandler.m */; };
+		0BCBC618189160DB00933715 /* MPSurveyQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F361885E969002B1254 /* MPSurveyQuestionViewController.m */; };
+		0BCBC619189160DB00933715 /* LocationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A72217975E5C00312BFD /* LocationUtilities.m */; };
+		0BCBC61A189160DB00933715 /* FeedTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B89CB981799DEB500C9BD18 /* FeedTVC.m */; };
+		0BCBC61B189160DB00933715 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B435696179DA1D9009CC8E9 /* MapViewController.m */; };
+		0BCBC61C189160DB00933715 /* ShoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2A179F1EFE0026EE12 /* ShoutViewController.m */; };
+		0BCBC61D189160DB00933715 /* TimeUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2D179F302B0026EE12 /* TimeUtilities.m */; };
+		0BCBC61E189160DB00933715 /* TrackingUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63ED81885E50C002B1254 /* TrackingUtilities.m */; };
+		0BCBC61F189160DB00933715 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A32179F36AC0026EE12 /* Constants.m */; };
+		0BCBC620189160DB00933715 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7C47CB188D828000D308A9 /* CommentsViewController.m */; };
+		0BCBC621189160DB00933715 /* CreateShoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */; };
+		0BCBC622189160DB00933715 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B0A4C17A310430026EE12 /* MKPointAnnotation+ShoutPointAnnotation.m */; };
+		0BCBC623189160DB00933715 /* LikesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B728703189023AF00FB4CC4 /* LikesTableViewCell.m */; };
+		0BCBC624189160DB00933715 /* RefineShoutLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBED65E17BAA87F00C7880D /* RefineShoutLocationViewController.m */; };
+		0BCBC625189160DB00933715 /* LikesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7286FC1890203A00FB4CC4 /* LikesViewController.m */; };
+		0BCBC626189160DB00933715 /* CommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7C47D2188D8A4500D308A9 /* CommentsTableViewCell.m */; };
+		0BCBC627189160DB00933715 /* AmazonTVMClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472617BBE8B200369A14 /* AmazonTVMClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC628189160DB00933715 /* AmazonKeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472817BBE8B200369A14 /* AmazonKeyChainWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC629189160DB00933715 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472A17BBE8B200369A14 /* Crypto.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC62A189160DB00933715 /* UIImage+MPImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F3C1885E969002B1254 /* UIImage+MPImageEffects.m */; };
+		0BCBC62B189160DB00933715 /* MPSurveyQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F341885E969002B1254 /* MPSurveyQuestion.m */; };
+		0BCBC62C189160DB00933715 /* GetTokenRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472C17BBE8B200369A14 /* GetTokenRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC62D189160DB00933715 /* GetTokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB472E17BBE8B200369A14 /* GetTokenResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC62E189160DB00933715 /* GetTokenResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB473017BBE8B200369A14 /* GetTokenResponseHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC62F189160DB00933715 /* JSONUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB473217BBE8B200369A14 /* JSONUtilities.m */; };
+		0BCBC630189160DB00933715 /* NSData+MPBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F381885E969002B1254 /* NSData+MPBase64.m */; };
+		0BCBC631189160DB00933715 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7286F818901DC300FB4CC4 /* Like.m */; };
+		0BCBC632189160DB00933715 /* RegisterDeviceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB473417BBE8B200369A14 /* RegisterDeviceRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC633189160DB00933715 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB473617BBE8B200369A14 /* Request.m */; };
+		0BCBC634189160DB00933715 /* ShoutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF3312D180362C200E5C59B /* ShoutTableViewCell.m */; };
+		0BCBC635189160DB00933715 /* RequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB473817BBE8B200369A14 /* RequestDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC636189160DB00933715 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB473A17BBE8B200369A14 /* Response.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC637189160DB00933715 /* ResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB473C17BBE8B200369A14 /* ResponseHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0BCBC638189160DB00933715 /* AsyncImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB475317BC2F4C00369A14 /* AsyncImageUploader.m */; };
+		0BCBC639189160DB00933715 /* AmazonClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB475617BC2F5D00369A14 /* AmazonClientManager.m */; };
+		0BCBC63A189160DB00933715 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597355187FF41500E27402 /* WelcomeViewController.m */; };
+		0BCBC63B189160DB00933715 /* GeneralUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB475B17BC3FEA00369A14 /* GeneralUtilities.m */; };
+		0BCBC63C189160DB00933715 /* MPSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F2F1885E969002B1254 /* MPSurvey.m */; };
+		0BCBC63D189160DB00933715 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BDC1C181AF0AF00782A0C /* MKMapView+ZoomLevel.m */; };
+		0BCBC63E189160DB00933715 /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B597351187FF40600E27402 /* SigninViewController.m */; };
+		0BCBC63F189160DB00933715 /* MPSurveyNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F321885E969002B1254 /* MPSurveyNavigationController.m */; };
+		0BCBC640189160DB00933715 /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE2D85417E89BE300AD700D /* ImageUtilities.m */; };
+		0BCBC641189160DB00933715 /* UIImage+MPAverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F3A1885E969002B1254 /* UIImage+MPAverageColor.m */; };
+		0BCBC642189160DB00933715 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB380818882E1A00ADC994 /* ForgotPasswordViewController.m */; };
+		0BCBC643189160DB00933715 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FB6187D746000AE4A64 /* SignupViewController.m */; };
+		0BCBC644189160DB00933715 /* UIView+MPSnapshotImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F3E1885E969002B1254 /* UIView+MPSnapshotImage.m */; };
+		0BCBC645189160DB00933715 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10B08E17EC528500507381 /* Reachability.m */; };
+		0BCBC647189160DB00933715 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B57FAC61885DFDF00FC23BF /* Accelerate.framework */; };
+		0BCBC648189160DB00933715 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B57FAC31885DF8A00FC23BF /* AdSupport.framework */; };
+		0BCBC649189160DB00933715 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BF3312918034AAE00E5C59B /* QuartzCore.framework */; };
+		0BCBC64A189160DB00933715 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B10B08817E9C2DF00507381 /* AssetsLibrary.framework */; };
+		0BCBC64B189160DB00933715 /* libUAirship-2.0.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB9AF1B17E34A3B004D0E2F /* libUAirship-2.0.2.a */; };
+		0BCBC64C189160DB00933715 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B363B4917BEC71800C3104A /* AudioToolbox.framework */; };
+		0BCBC64D189160DB00933715 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B363B4717BEC70F00C3104A /* MessageUI.framework */; };
+		0BCBC64E189160DB00933715 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B363B4517BEC70200C3104A /* CoreTelephony.framework */; };
+		0BCBC64F189160DB00933715 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B363B4317BEC6F900C3104A /* libsqlite3.dylib */; };
+		0BCBC650189160DB00933715 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3B0A4217A0828A0026EE12 /* libz.dylib */; };
+		0BCBC651189160DB00933715 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B42A7241797613B00312BFD /* CoreLocation.framework */; };
+		0BCBC652189160DB00933715 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B42A7191797146B00312BFD /* MobileCoreServices.framework */; };
+		0BCBC653189160DB00933715 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9D3DBE1886E0C500A3CACF /* FacebookSDK.framework */; };
+		0BCBC654189160DB00933715 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B42A7171797143400312BFD /* SystemConfiguration.framework */; };
+		0BCBC655189160DB00933715 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B42A70C17970C0E00312BFD /* Security.framework */; };
+		0BCBC656189160DB00933715 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B42A70A17970C0600312BFD /* CFNetwork.framework */; };
+		0BCBC657189160DB00933715 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7491795CA7900F37227 /* MapKit.framework */; };
+		0BCBC658189160DB00933715 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7231795C66500F37227 /* UIKit.framework */; };
+		0BCBC659189160DB00933715 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7251795C66500F37227 /* Foundation.framework */; };
+		0BCBC65A189160DB00933715 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7271795C66500F37227 /* CoreGraphics.framework */; };
+		0BCBC65B189160DB00933715 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3B0A3B17A082350026EE12 /* libTestFlight.a */; };
+		0BCBC65C189160DB00933715 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDB474A17BBF8AD00369A14 /* AWSRuntime.framework */; };
+		0BCBC65D189160DB00933715 /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDB475817BC365700369A14 /* AWSS3.framework */; };
+		0BCBC65F189160DB00933715 /* MPLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F2C1885E969002B1254 /* MPLogo.png */; };
+		0BCBC660189160DB00933715 /* shout-app-icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87A91805DB1B00548BE2 /* shout-app-icon-58.png */; };
+		0BCBC661189160DB00933715 /* MPArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F261885E969002B1254 /* MPArrowRight.png */; };
+		0BCBC662189160DB00933715 /* more-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A316188801BF009F68C0 /* more-button.png */; };
+		0BCBC663189160DB00933715 /* shout-marker-3-deselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F0181EA88900CE08A3 /* shout-marker-3-deselected.png */; };
+		0BCBC664189160DB00933715 /* shout-marker-2-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0ED181EA88900CE08A3 /* shout-marker-2-deselected@2x~iphone.png */; };
+		0BCBC665189160DB00933715 /* create-shout-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A315188801BF009F68C0 /* create-shout-button.png */; };
+		0BCBC666189160DB00933715 /* back-item-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A31F18881A8C009F68C0 /* back-item-button.png */; };
+		0BCBC667189160DB00933715 /* back-item-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A32018881A8C009F68C0 /* back-item-button@2x~iphone.png */; };
+		0BCBC668189160DB00933715 /* shout-app-icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87CE1805DBD500548BE2 /* shout-app-icon-50.png */; };
+		0BCBC669189160DB00933715 /* shout-time-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4ECD34188D54E500ABE10B /* shout-time-icon@2x~iphone.png */; };
+		0BCBC66A189160DB00933715 /* MPArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F251885E969002B1254 /* MPArrowLeft@2x.png */; };
+		0BCBC66B189160DB00933715 /* shout-more-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B9CBBD8188F09B000C596DF /* shout-more-icon.png */; };
+		0BCBC66C189160DB00933715 /* shout-share-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B9CBBDC188F09B000C596DF /* shout-share-icon@2x~iphone.png */; };
+		0BCBC66D189160DB00933715 /* username-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9471885452700FC23BF /* username-icon@2x~iphone.png */; };
+		0BCBC66E189160DB00933715 /* shout-like-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870718903B3600FB4CC4 /* shout-like-icon.png */; };
+		0BCBC66F189160DB00933715 /* shout-image-place-holder@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A879E1805AEFE00548BE2 /* shout-image-place-holder@2x~iphone.png */; };
+		0BCBC670189160DB00933715 /* flag-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1BB8061833B57F0057FC04 /* flag-button.png */; };
+		0BCBC671189160DB00933715 /* shout-comment-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B9CBBDA188F09B000C596DF /* shout-comment-icon.png */; };
+		0BCBC672189160DB00933715 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F72C1795C66500F37227 /* InfoPlist.strings */; };
+		0BCBC673189160DB00933715 /* password-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9481885452700FC23BF /* password-icon@2x~iphone.png */; };
+		0BCBC674189160DB00933715 /* flag-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1BB8051833B57F0057FC04 /* flag-button@2x~iphone.png */; };
+		0BCBC675189160DB00933715 /* shout-app-icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87AA1805DB1B00548BE2 /* shout-app-icon-76.png */; };
+		0BCBC676189160DB00933715 /* shout-app-icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87B11805DB1B00548BE2 /* shout-app-icon-80.png */; };
+		0BCBC677189160DB00933715 /* shout-cancel-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B9CBBF0188F0D0700C596DF /* shout-cancel-icon.png */; };
+		0BCBC678189160DB00933715 /* MPArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F241885E969002B1254 /* MPArrowLeft.png */; };
+		0BCBC679189160DB00933715 /* shout-cancel-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B9CBBF1188F0D0700C596DF /* shout-cancel-icon@2x~iphone.png */; };
+		0BCBC67A189160DB00933715 /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F98C1885A99700FC23BF /* Default~iphone.png */; };
+		0BCBC67B189160DB00933715 /* shout-app-icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87B21805DB1B00548BE2 /* shout-app-icon-144.png */; };
+		0BCBC67C189160DB00933715 /* shout-comment-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B9CBBDD188F09B000C596DF /* shout-comment-icon@2x~iphone.png */; };
+		0BCBC67D189160DB00933715 /* shout-app-icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87CB1805DB9700548BE2 /* shout-app-icon-72.png */; };
+		0BCBC67E189160DB00933715 /* shout-distance-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4ECD33188D54E500ABE10B /* shout-distance-icon@2x~iphone.png */; };
+		0BCBC67F189160DB00933715 /* Default@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9911885A99700FC23BF /* Default@2x~iphone.png */; };
+		0BCBC680189160DB00933715 /* MPArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F271885E969002B1254 /* MPArrowRight@2x.png */; };
+		0BCBC681189160DB00933715 /* ShoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */; };
+		0BCBC682189160DB00933715 /* shout-app-icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87B01805DB1B00548BE2 /* shout-app-icon-57.png */; };
+		0BCBC683189160DB00933715 /* shout-image-place-holder-square@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87A11805CB5800548BE2 /* shout-image-place-holder-square@2x~iphone.png */; };
+		0BCBC684189160DB00933715 /* dezoom-max-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF331601804805100E5C59B /* dezoom-max-button@2x~iphone.png */; };
+		0BCBC685189160DB00933715 /* shout-app-icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87A71805DB1B00548BE2 /* shout-app-icon-29.png */; };
+		0BCBC686189160DB00933715 /* shout-marker-2-deselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0EC181EA88900CE08A3 /* shout-marker-2-deselected.png */; };
+		0BCBC687189160DB00933715 /* CommentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B7C47CE188D88AC00D308A9 /* CommentsTableViewCell.xib */; };
+		0BCBC688189160DB00933715 /* MPLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F2D1885E969002B1254 /* MPLogo@2x.png */; };
+		0BCBC689189160DB00933715 /* shout-marker-1-deselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0E8181EA88900CE08A3 /* shout-marker-1-deselected.png */; };
+		0BCBC68A189160DB00933715 /* shout-app-icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87A81805DB1B00548BE2 /* shout-app-icon-152.png */; };
+		0BCBC68B189160DB00933715 /* MPSurvey.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F301885E969002B1254 /* MPSurvey.storyboard */; };
+		0BCBC68C189160DB00933715 /* zoom_minus_button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4BDC15181AE74C00782A0C /* zoom_minus_button@2x~iphone.png */; };
+		0BCBC68D189160DB00933715 /* password-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9451885452700FC23BF /* password-icon.png */; };
+		0BCBC68E189160DB00933715 /* Welcome-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9901885A99700FC23BF /* Welcome-568h@2x~iphone.png */; };
+		0BCBC68F189160DB00933715 /* shout-like-icon-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870918903B3600FB4CC4 /* shout-like-icon-selected.png */; };
+		0BCBC690189160DB00933715 /* my-location-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A317188801BF009F68C0 /* my-location-button.png */; };
+		0BCBC691189160DB00933715 /* email-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9491885452700FC23BF /* email-icon@2x~iphone.png */; };
+		0BCBC692189160DB00933715 /* shout-app-icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87AD1805DB1B00548BE2 /* shout-app-icon-120.png */; };
+		0BCBC693189160DB00933715 /* question-mark-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4CD1331819B42C000A8A20 /* question-mark-button@2x~iphone.png */; };
+		0BCBC694189160DB00933715 /* shout-marker-3-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0F1181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png */; };
+		0BCBC695189160DB00933715 /* shout-more-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B9CBBDB188F09B000C596DF /* shout-more-icon@2x~iphone.png */; };
+		0BCBC696189160DB00933715 /* LikesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B7286FF1890230900FB4CC4 /* LikesTableViewCell.xib */; };
+		0BCBC697189160DB00933715 /* ok-item-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A31E18881A8C009F68C0 /* ok-item-button.png */; };
+		0BCBC698189160DB00933715 /* MPDismissKeyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F2B1885E969002B1254 /* MPDismissKeyboard@2x.png */; };
+		0BCBC699189160DB00933715 /* zoom_plus_button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4BDC16181AE74C00782A0C /* zoom_plus_button@2x~iphone.png */; };
+		0BCBC69A189160DB00933715 /* my-location-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A3121887FAA1009F68C0 /* my-location-button@2x~iphone.png */; };
+		0BCBC69B189160DB00933715 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */; };
+		0BCBC69C189160DB00933715 /* back-arrow-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF33191180569FD00E5C59B /* back-arrow-button@2x~iphone.png */; };
+		0BCBC69D189160DB00933715 /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2F179F35520026EE12 /* Strings.strings */; };
+		0BCBC69E189160DB00933715 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3C17A082350026EE12 /* README.md */; };
+		0BCBC69F189160DB00933715 /* MPCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F281885E969002B1254 /* MPCheckmark.png */; };
+		0BCBC6A0189160DB00933715 /* ok-item-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A32118881A8C009F68C0 /* ok-item-button@2x~iphone.png */; };
+		0BCBC6A1189160DB00933715 /* Welcome@2x~iphone 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F98E1885A99700FC23BF /* Welcome@2x~iphone 2.png */; };
+		0BCBC6A2189160DB00933715 /* MPDismissKeyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F2A1885E969002B1254 /* MPDismissKeyboard.png */; };
+		0BCBC6A3189160DB00933715 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3D17A082350026EE12 /* release_notes.md */; };
+		0BCBC6A4189160DB00933715 /* create-shout-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A30D1887F4FA009F68C0 /* create-shout-button@2x~iphone.png */; };
+		0BCBC6A5189160DB00933715 /* cancel-item-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A32B18881B31009F68C0 /* cancel-item-button.png */; };
+		0BCBC6A6189160DB00933715 /* refresh-map-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF72BB0180B46DD002F5FC8 /* refresh-map-button@2x~iphone.png */; };
+		0BCBC6A7189160DB00933715 /* shout-app-icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87AF1805DB1B00548BE2 /* shout-app-icon-40.png */; };
+		0BCBC6A8189160DB00933715 /* shout-share-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B9CBBD9188F09B000C596DF /* shout-share-icon.png */; };
+		0BCBC6A9189160DB00933715 /* username-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9461885452700FC23BF /* username-icon.png */; };
+		0BCBC6AA189160DB00933715 /* shout-app-icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87AC1805DB1B00548BE2 /* shout-app-icon-114.png */; };
+		0BCBC6AB189160DB00933715 /* cancel-item-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A32A18881B31009F68C0 /* cancel-item-button@2x~iphone.png */; };
+		0BCBC6AC189160DB00933715 /* remove-photo-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B0D7AB6180B043500CA3DCE /* remove-photo-button@2x~iphone.png */; };
+		0BCBC6AD189160DB00933715 /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F98F1885A99700FC23BF /* Default-568h@2x~iphone.png */; };
+		0BCBC6AE189160DB00933715 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B363B4F17BEC97100C3104A /* AirshipConfig.plist */; };
+		0BCBC6AF189160DB00933715 /* shout-marker-1-deselected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B97D0E9181EA88900CE08A3 /* shout-marker-1-deselected@2x~iphone.png */; };
+		0BCBC6B0189160DB00933715 /* email-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9441885452700FC23BF /* email-icon.png */; };
+		0BCBC6B1189160DB00933715 /* more-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A30C1887F4FA009F68C0 /* more-button@2x~iphone.png */; };
+		0BCBC6B2189160DB00933715 /* shout-like-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870818903B3600FB4CC4 /* shout-like-icon@2x~iphone.png */; };
+		0BCBC6B3189160DB00933715 /* Welcome~iphone 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F98D1885A99700FC23BF /* Welcome~iphone 2.png */; };
+		0BCBC6B4189160DB00933715 /* shout-zoom-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF33190180569FD00E5C59B /* shout-zoom-button@2x~iphone.png */; };
+		0BCBC6B5189160DB00933715 /* shout-app-icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87AE1805DB1B00548BE2 /* shout-app-icon-60.png */; };
+		0BCBC6B6189160DB00933715 /* MPCheckmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F291885E969002B1254 /* MPCheckmark@2x.png */; };
+		0BCBC6B7189160DB00933715 /* shout-like-icon-selected@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B72870618903B3600FB4CC4 /* shout-like-icon-selected@2x~iphone.png */; };
+		0BCBC6B8189160DB00933715 /* nav_settigns_button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B4BDC121819B88200782A0C /* nav_settigns_button@2x~iphone.png */; };
+		0BCBC6B9189160DB00933715 /* shout-app-icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B1A87AB1805DB1B00548BE2 /* shout-app-icon-100.png */; };
 		0BE2D85617E89BE300AD700D /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE2D85417E89BE300AD700D /* ImageUtilities.m */; };
 		0BF3312B18034ABA00E5C59B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BF3312918034AAE00E5C59B /* QuartzCore.framework */; };
 		0BF3312F180362C200E5C59B /* ShoutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF3312D180362C200E5C59B /* ShoutTableViewCell.m */; };
@@ -556,6 +738,7 @@
 		0BBED65E17BAA87F00C7880D /* RefineShoutLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RefineShoutLocationViewController.m; path = Controllers/RefineShoutLocationViewController.m; sourceTree = "<group>"; };
 		0BCA5F3818095063003A8637 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Controllers/SettingsViewController.h; sourceTree = "<group>"; };
 		0BCA5F3918095063003A8637 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Controllers/SettingsViewController.m; sourceTree = "<group>"; };
+		0BCBC6BD189160DB00933715 /* Shout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BDB472517BBE8B200369A14 /* AmazonTVMClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmazonTVMClient.h; path = AWS/TVM/AmazonTVMClient.h; sourceTree = "<group>"; };
 		0BDB472617BBE8B200369A14 /* AmazonTVMClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AmazonTVMClient.m; path = AWS/TVM/AmazonTVMClient.m; sourceTree = "<group>"; };
 		0BDB472717BBE8B200369A14 /* AmazonKeyChainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmazonKeyChainWrapper.h; path = AWS/TVM/AmazonKeyChainWrapper.h; sourceTree = "<group>"; };
@@ -695,6 +878,36 @@
 				0B0CD50F18362C1600EB3752 /* libTestFlight.a in Frameworks */,
 				0B0CD51018362C1600EB3752 /* AWSRuntime.framework in Frameworks */,
 				0B0CD51118362C1600EB3752 /* AWSS3.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BCBC646189160DB00933715 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BCBC647189160DB00933715 /* Accelerate.framework in Frameworks */,
+				0BCBC648189160DB00933715 /* AdSupport.framework in Frameworks */,
+				0BCBC649189160DB00933715 /* QuartzCore.framework in Frameworks */,
+				0BCBC64A189160DB00933715 /* AssetsLibrary.framework in Frameworks */,
+				0BCBC64B189160DB00933715 /* libUAirship-2.0.2.a in Frameworks */,
+				0BCBC64C189160DB00933715 /* AudioToolbox.framework in Frameworks */,
+				0BCBC64D189160DB00933715 /* MessageUI.framework in Frameworks */,
+				0BCBC64E189160DB00933715 /* CoreTelephony.framework in Frameworks */,
+				0BCBC64F189160DB00933715 /* libsqlite3.dylib in Frameworks */,
+				0BCBC650189160DB00933715 /* libz.dylib in Frameworks */,
+				0BCBC651189160DB00933715 /* CoreLocation.framework in Frameworks */,
+				0BCBC652189160DB00933715 /* MobileCoreServices.framework in Frameworks */,
+				0BCBC653189160DB00933715 /* FacebookSDK.framework in Frameworks */,
+				0BCBC654189160DB00933715 /* SystemConfiguration.framework in Frameworks */,
+				0BCBC655189160DB00933715 /* Security.framework in Frameworks */,
+				0BCBC656189160DB00933715 /* CFNetwork.framework in Frameworks */,
+				0BCBC657189160DB00933715 /* MapKit.framework in Frameworks */,
+				0BCBC658189160DB00933715 /* UIKit.framework in Frameworks */,
+				0BCBC659189160DB00933715 /* Foundation.framework in Frameworks */,
+				0BCBC65A189160DB00933715 /* CoreGraphics.framework in Frameworks */,
+				0BCBC65B189160DB00933715 /* libTestFlight.a in Frameworks */,
+				0BCBC65C189160DB00933715 /* AWSRuntime.framework in Frameworks */,
+				0BCBC65D189160DB00933715 /* AWSS3.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -975,6 +1188,7 @@
 			children = (
 				0B07BA2C17E6FF8300DA26EE /* Shatte.app */,
 				0B0CD54918362C1600EB3752 /* Street Shout.app */,
+				0BCBC6BD189160DB00933715 /* Shout.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1174,6 +1388,23 @@
 			productReference = 0B0CD54918362C1600EB3752 /* Street Shout.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0BCBC600189160DB00933715 /* Shout */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0BCBC6BA189160DB00933715 /* Build configuration list for PBXNativeTarget "Shout" */;
+			buildPhases = (
+				0BCBC601189160DB00933715 /* Sources */,
+				0BCBC646189160DB00933715 /* Frameworks */,
+				0BCBC65E189160DB00933715 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Shout;
+			productName = "street-shout-ios";
+			productReference = 0BCBC6BD189160DB00933715 /* Shout.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1188,6 +1419,9 @@
 						DevelopmentTeam = 9688VHJV6U;
 					};
 					0B0CD4C918362C1600EB3752 = {
+						DevelopmentTeam = 9688VHJV6U;
+					};
+					0BCBC600189160DB00933715 = {
 						DevelopmentTeam = 9688VHJV6U;
 					};
 				};
@@ -1206,6 +1440,7 @@
 			targets = (
 				0B07B9DD17E6FF8300DA26EE /* Shatte */,
 				0B0CD4C918362C1600EB3752 /* Street Shout */,
+				0BCBC600189160DB00933715 /* Shout */,
 			);
 		};
 /* End PBXProject section */
@@ -1407,6 +1642,104 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0BCBC65E189160DB00933715 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BCBC65F189160DB00933715 /* MPLogo.png in Resources */,
+				0BCBC660189160DB00933715 /* shout-app-icon-58.png in Resources */,
+				0BCBC661189160DB00933715 /* MPArrowRight.png in Resources */,
+				0BCBC662189160DB00933715 /* more-button.png in Resources */,
+				0BCBC663189160DB00933715 /* shout-marker-3-deselected.png in Resources */,
+				0BCBC664189160DB00933715 /* shout-marker-2-deselected@2x~iphone.png in Resources */,
+				0BCBC665189160DB00933715 /* create-shout-button.png in Resources */,
+				0BCBC666189160DB00933715 /* back-item-button.png in Resources */,
+				0BCBC667189160DB00933715 /* back-item-button@2x~iphone.png in Resources */,
+				0BCBC668189160DB00933715 /* shout-app-icon-50.png in Resources */,
+				0BCBC669189160DB00933715 /* shout-time-icon@2x~iphone.png in Resources */,
+				0BCBC66A189160DB00933715 /* MPArrowLeft@2x.png in Resources */,
+				0BCBC66B189160DB00933715 /* shout-more-icon.png in Resources */,
+				0BCBC66C189160DB00933715 /* shout-share-icon@2x~iphone.png in Resources */,
+				0BCBC66D189160DB00933715 /* username-icon@2x~iphone.png in Resources */,
+				0BCBC66E189160DB00933715 /* shout-like-icon.png in Resources */,
+				0BCBC66F189160DB00933715 /* shout-image-place-holder@2x~iphone.png in Resources */,
+				0BCBC670189160DB00933715 /* flag-button.png in Resources */,
+				0BCBC671189160DB00933715 /* shout-comment-icon.png in Resources */,
+				0BCBC672189160DB00933715 /* InfoPlist.strings in Resources */,
+				0BCBC673189160DB00933715 /* password-icon@2x~iphone.png in Resources */,
+				0BCBC674189160DB00933715 /* flag-button@2x~iphone.png in Resources */,
+				0BCBC675189160DB00933715 /* shout-app-icon-76.png in Resources */,
+				0BCBC676189160DB00933715 /* shout-app-icon-80.png in Resources */,
+				0BCBC677189160DB00933715 /* shout-cancel-icon.png in Resources */,
+				0BCBC678189160DB00933715 /* MPArrowLeft.png in Resources */,
+				0BCBC679189160DB00933715 /* shout-cancel-icon@2x~iphone.png in Resources */,
+				0BCBC67A189160DB00933715 /* Default~iphone.png in Resources */,
+				0BCBC67B189160DB00933715 /* shout-app-icon-144.png in Resources */,
+				0BCBC67C189160DB00933715 /* shout-comment-icon@2x~iphone.png in Resources */,
+				0BCBC67D189160DB00933715 /* shout-app-icon-72.png in Resources */,
+				0BCBC67E189160DB00933715 /* shout-distance-icon@2x~iphone.png in Resources */,
+				0BCBC67F189160DB00933715 /* Default@2x~iphone.png in Resources */,
+				0BCBC680189160DB00933715 /* MPArrowRight@2x.png in Resources */,
+				0BCBC681189160DB00933715 /* ShoutTableViewCell.xib in Resources */,
+				0BCBC682189160DB00933715 /* shout-app-icon-57.png in Resources */,
+				0BCBC683189160DB00933715 /* shout-image-place-holder-square@2x~iphone.png in Resources */,
+				0BCBC684189160DB00933715 /* dezoom-max-button@2x~iphone.png in Resources */,
+				0BCBC685189160DB00933715 /* shout-app-icon-29.png in Resources */,
+				0BCBC686189160DB00933715 /* shout-marker-2-deselected.png in Resources */,
+				0BCBC687189160DB00933715 /* CommentsTableViewCell.xib in Resources */,
+				0BCBC688189160DB00933715 /* MPLogo@2x.png in Resources */,
+				0BCBC689189160DB00933715 /* shout-marker-1-deselected.png in Resources */,
+				0BCBC68A189160DB00933715 /* shout-app-icon-152.png in Resources */,
+				0BCBC68B189160DB00933715 /* MPSurvey.storyboard in Resources */,
+				0BCBC68C189160DB00933715 /* zoom_minus_button@2x~iphone.png in Resources */,
+				0BCBC68D189160DB00933715 /* password-icon.png in Resources */,
+				0BCBC68E189160DB00933715 /* Welcome-568h@2x~iphone.png in Resources */,
+				0BCBC68F189160DB00933715 /* shout-like-icon-selected.png in Resources */,
+				0BCBC690189160DB00933715 /* my-location-button.png in Resources */,
+				0BCBC691189160DB00933715 /* email-icon@2x~iphone.png in Resources */,
+				0BCBC692189160DB00933715 /* shout-app-icon-120.png in Resources */,
+				0BCBC693189160DB00933715 /* question-mark-button@2x~iphone.png in Resources */,
+				0BCBC694189160DB00933715 /* shout-marker-3-deselected@2x~iphone.png in Resources */,
+				0BCBC695189160DB00933715 /* shout-more-icon@2x~iphone.png in Resources */,
+				0BCBC696189160DB00933715 /* LikesTableViewCell.xib in Resources */,
+				0BCBC697189160DB00933715 /* ok-item-button.png in Resources */,
+				0BCBC698189160DB00933715 /* MPDismissKeyboard@2x.png in Resources */,
+				0BCBC699189160DB00933715 /* zoom_plus_button@2x~iphone.png in Resources */,
+				0BCBC69A189160DB00933715 /* my-location-button@2x~iphone.png in Resources */,
+				0BCBC69B189160DB00933715 /* MainStoryboard_iPhone.storyboard in Resources */,
+				0BCBC69C189160DB00933715 /* back-arrow-button@2x~iphone.png in Resources */,
+				0BCBC69D189160DB00933715 /* Strings.strings in Resources */,
+				0BCBC69E189160DB00933715 /* README.md in Resources */,
+				0BCBC69F189160DB00933715 /* MPCheckmark.png in Resources */,
+				0BCBC6A0189160DB00933715 /* ok-item-button@2x~iphone.png in Resources */,
+				0BCBC6A1189160DB00933715 /* Welcome@2x~iphone 2.png in Resources */,
+				0BCBC6A2189160DB00933715 /* MPDismissKeyboard.png in Resources */,
+				0BCBC6A3189160DB00933715 /* release_notes.md in Resources */,
+				0BCBC6A4189160DB00933715 /* create-shout-button@2x~iphone.png in Resources */,
+				0BCBC6A5189160DB00933715 /* cancel-item-button.png in Resources */,
+				0BCBC6A6189160DB00933715 /* refresh-map-button@2x~iphone.png in Resources */,
+				0BCBC6A7189160DB00933715 /* shout-app-icon-40.png in Resources */,
+				0BCBC6A8189160DB00933715 /* shout-share-icon.png in Resources */,
+				0BCBC6A9189160DB00933715 /* username-icon.png in Resources */,
+				0BCBC6AA189160DB00933715 /* shout-app-icon-114.png in Resources */,
+				0BCBC6AB189160DB00933715 /* cancel-item-button@2x~iphone.png in Resources */,
+				0BCBC6AC189160DB00933715 /* remove-photo-button@2x~iphone.png in Resources */,
+				0BCBC6AD189160DB00933715 /* Default-568h@2x~iphone.png in Resources */,
+				0BCBC6AE189160DB00933715 /* AirshipConfig.plist in Resources */,
+				0BCBC6AF189160DB00933715 /* shout-marker-1-deselected@2x~iphone.png in Resources */,
+				0BCBC6B0189160DB00933715 /* email-icon.png in Resources */,
+				0BCBC6B1189160DB00933715 /* more-button@2x~iphone.png in Resources */,
+				0BCBC6B2189160DB00933715 /* shout-like-icon@2x~iphone.png in Resources */,
+				0BCBC6B3189160DB00933715 /* Welcome~iphone 2.png in Resources */,
+				0BCBC6B4189160DB00933715 /* shout-zoom-button@2x~iphone.png in Resources */,
+				0BCBC6B5189160DB00933715 /* shout-app-icon-60.png in Resources */,
+				0BCBC6B6189160DB00933715 /* MPCheckmark@2x.png in Resources */,
+				0BCBC6B7189160DB00933715 /* shout-like-icon-selected@2x~iphone.png in Resources */,
+				0BCBC6B8189160DB00933715 /* nav_settigns_button@2x~iphone.png in Resources */,
+				0BCBC6B9189160DB00933715 /* shout-app-icon-100.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1560,6 +1893,81 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0BCBC601189160DB00933715 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BCBC602189160DB00933715 /* SessionUtilities.m in Sources */,
+				0BCBC603189160DB00933715 /* User.m in Sources */,
+				0BCBC604189160DB00933715 /* main.m in Sources */,
+				0BCBC605189160DB00933715 /* Mixpanel.m in Sources */,
+				0BCBC606189160DB00933715 /* NavigationAppDelegate.m in Sources */,
+				0BCBC607189160DB00933715 /* NavigationViewController.m in Sources */,
+				0BCBC608189160DB00933715 /* AFHTTPClient.m in Sources */,
+				0BCBC609189160DB00933715 /* AFHTTPRequestOperation.m in Sources */,
+				0BCBC60A189160DB00933715 /* AFImageRequestOperation.m in Sources */,
+				0BCBC60B189160DB00933715 /* AFJSONRequestOperation.m in Sources */,
+				0BCBC60C189160DB00933715 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				0BCBC60D189160DB00933715 /* AFPropertyListRequestOperation.m in Sources */,
+				0BCBC60E189160DB00933715 /* SettingsViewController.m in Sources */,
+				0BCBC60F189160DB00933715 /* MBProgressHUD.m in Sources */,
+				0BCBC610189160DB00933715 /* AFURLConnectionOperation.m in Sources */,
+				0BCBC611189160DB00933715 /* AFXMLRequestOperation.m in Sources */,
+				0BCBC612189160DB00933715 /* UIImageView+AFNetworking.m in Sources */,
+				0BCBC613189160DB00933715 /* AFStreetShoutAPIClient.m in Sources */,
+				0BCBC614189160DB00933715 /* DeviceUtilities.m in Sources */,
+				0BCBC615189160DB00933715 /* Comment.m in Sources */,
+				0BCBC616189160DB00933715 /* Shout.m in Sources */,
+				0BCBC617189160DB00933715 /* MapRequestHandler.m in Sources */,
+				0BCBC618189160DB00933715 /* MPSurveyQuestionViewController.m in Sources */,
+				0BCBC619189160DB00933715 /* LocationUtilities.m in Sources */,
+				0BCBC61A189160DB00933715 /* FeedTVC.m in Sources */,
+				0BCBC61B189160DB00933715 /* MapViewController.m in Sources */,
+				0BCBC61C189160DB00933715 /* ShoutViewController.m in Sources */,
+				0BCBC61D189160DB00933715 /* TimeUtilities.m in Sources */,
+				0BCBC61E189160DB00933715 /* TrackingUtilities.m in Sources */,
+				0BCBC61F189160DB00933715 /* Constants.m in Sources */,
+				0BCBC620189160DB00933715 /* CommentsViewController.m in Sources */,
+				0BCBC621189160DB00933715 /* CreateShoutViewController.m in Sources */,
+				0BCBC622189160DB00933715 /* MKPointAnnotation+ShoutPointAnnotation.m in Sources */,
+				0BCBC623189160DB00933715 /* LikesTableViewCell.m in Sources */,
+				0BCBC624189160DB00933715 /* RefineShoutLocationViewController.m in Sources */,
+				0BCBC625189160DB00933715 /* LikesViewController.m in Sources */,
+				0BCBC626189160DB00933715 /* CommentsTableViewCell.m in Sources */,
+				0BCBC627189160DB00933715 /* AmazonTVMClient.m in Sources */,
+				0BCBC628189160DB00933715 /* AmazonKeyChainWrapper.m in Sources */,
+				0BCBC629189160DB00933715 /* Crypto.m in Sources */,
+				0BCBC62A189160DB00933715 /* UIImage+MPImageEffects.m in Sources */,
+				0BCBC62B189160DB00933715 /* MPSurveyQuestion.m in Sources */,
+				0BCBC62C189160DB00933715 /* GetTokenRequest.m in Sources */,
+				0BCBC62D189160DB00933715 /* GetTokenResponse.m in Sources */,
+				0BCBC62E189160DB00933715 /* GetTokenResponseHandler.m in Sources */,
+				0BCBC62F189160DB00933715 /* JSONUtilities.m in Sources */,
+				0BCBC630189160DB00933715 /* NSData+MPBase64.m in Sources */,
+				0BCBC631189160DB00933715 /* Like.m in Sources */,
+				0BCBC632189160DB00933715 /* RegisterDeviceRequest.m in Sources */,
+				0BCBC633189160DB00933715 /* Request.m in Sources */,
+				0BCBC634189160DB00933715 /* ShoutTableViewCell.m in Sources */,
+				0BCBC635189160DB00933715 /* RequestDelegate.m in Sources */,
+				0BCBC636189160DB00933715 /* Response.m in Sources */,
+				0BCBC637189160DB00933715 /* ResponseHandler.m in Sources */,
+				0BCBC638189160DB00933715 /* AsyncImageUploader.m in Sources */,
+				0BCBC639189160DB00933715 /* AmazonClientManager.m in Sources */,
+				0BCBC63A189160DB00933715 /* WelcomeViewController.m in Sources */,
+				0BCBC63B189160DB00933715 /* GeneralUtilities.m in Sources */,
+				0BCBC63C189160DB00933715 /* MPSurvey.m in Sources */,
+				0BCBC63D189160DB00933715 /* MKMapView+ZoomLevel.m in Sources */,
+				0BCBC63E189160DB00933715 /* SigninViewController.m in Sources */,
+				0BCBC63F189160DB00933715 /* MPSurveyNavigationController.m in Sources */,
+				0BCBC640189160DB00933715 /* ImageUtilities.m in Sources */,
+				0BCBC641189160DB00933715 /* UIImage+MPAverageColor.m in Sources */,
+				0BCBC642189160DB00933715 /* ForgotPasswordViewController.m in Sources */,
+				0BCBC643189160DB00933715 /* SignupViewController.m in Sources */,
+				0BCBC644189160DB00933715 /* UIView+MPSnapshotImage.m in Sources */,
+				0BCBC645189160DB00933715 /* Reachability.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -1593,7 +2001,7 @@
 		0B07BA2A17E6FF8300DA26EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1617,8 +2025,8 @@
 					"\"$(SRCROOT)/Airship\"",
 				);
 				PRODUCT_NAME = Shatte;
-				PROVISIONING_PROFILE = "8425E6AA-4534-484C-92DC-1AD607B108A6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8425E6AA-4534-484C-92DC-1AD607B108A6";
+				PROVISIONING_PROFILE = "D61477C3-8782-4182-9F54-148308F8D89C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D61477C3-8782-4182-9F54-148308F8D89C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = NO;
@@ -1628,8 +2036,8 @@
 		0B07BA2B17E6FF8300DA26EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -1648,8 +2056,8 @@
 					"\"$(SRCROOT)/Airship\"",
 				);
 				PRODUCT_NAME = Shatte;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A9A0A225-4FA8-49ED-A9FC-26B27A63D34C";
+				PROVISIONING_PROFILE = "0048418C-A555-49C6-BCEC-89EC1801618E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0048418C-A555-49C6-BCEC-89EC1801618E";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = NO;
@@ -1694,7 +2102,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bastien Beurier (63863BWF5M)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -1713,8 +2121,8 @@
 					"\"$(SRCROOT)/Airship\"",
 				);
 				PRODUCT_NAME = "Street Shout";
-				PROVISIONING_PROFILE = "8425E6AA-4534-484C-92DC-1AD607B108A6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E32CE1FB-4929-4090-ACD7-AF4FFE9D7B32";
+				PROVISIONING_PROFILE = "9FF0E011-0465-48C0-AF2F-CE32B0903EB4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9FF0E011-0465-48C0-AF2F-CE32B0903EB4";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = YES;
@@ -1733,7 +2141,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bastien Beurier (63863BWF5M)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1765,7 +2174,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1776,6 +2186,71 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0BCBC6BB189160DB00933715 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PRODUCTION=\"$(inProduction)\"",
+					"DEBUG=1",
+				);
+				HEADER_SEARCH_PATHS = "./Airship/**";
+				INFOPLIST_FILE = "$(SRCROOT)/street-shout-ios/street-shout-ios-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK1.2.6\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Airship\"",
+				);
+				PRODUCT_NAME = Shout;
+				PROVISIONING_PROFILE = "A9A0A225-4FA8-49ED-A9FC-26B27A63D34C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A9A0A225-4FA8-49ED-A9FC-26B27A63D34C";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+				inProduction = YES;
+			};
+			name = Debug;
+		};
+		0BCBC6BC189160DB00933715 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "PRODUCTION=\"$(inProduction)\"";
+				HEADER_SEARCH_PATHS = "./Airship/**";
+				INFOPLIST_FILE = "$(SRCROOT)/street-shout-ios/street-shout-ios-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK1.2.6\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Airship\"",
+				);
+				PRODUCT_NAME = Shout;
+				PROVISIONING_PROFILE = "F2018C3C-AE1B-413D-9124-07F028E73D05";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F2018C3C-AE1B-413D-9124-07F028E73D05";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+				inProduction = YES;
 			};
 			name = Release;
 		};
@@ -1805,6 +2280,15 @@
 			buildConfigurations = (
 				0B65F7441795C66500F37227 /* Debug */,
 				0B65F7451795C66500F37227 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0BCBC6BA189160DB00933715 /* Build configuration list for PBXNativeTarget "Shout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0BCBC6BB189160DB00933715 /* Debug */,
+				0BCBC6BC189160DB00933715 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
