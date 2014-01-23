@@ -60,7 +60,7 @@
 "invalid_sign_in_message" = "Your email or password is incorrect.";
 "invalid_email_alert_text" = "Please enter a valid email.";
 "password_length_alert_text" = "Your password should contain at least 6 characters.";
-"invalid_username_alert_text" = "Please enter a valid username (letters, numbers or ._%+-)";
+"invalid_username_alert_text" = "Please enter a valid username (letters, numbers or ._+-)";
 "username_length_alert_text" = "Your username should contain between 6 and 20 characters.";
 "passwords_matching_alert_text" = "Passwords don't match.";
 "email_already_taken_message" = "Email already taken.";
