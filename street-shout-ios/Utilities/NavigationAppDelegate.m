@@ -280,9 +280,11 @@
             [SessionUtilities securelySaveCurrentUserToken:authToken];
             
             //Mixpanel tracking
-            [TrackingUtilities identifyWithMixpanel:user];
             if (isSignup) {
+                [TrackingUtilities identifyWithMixpanel:user isSigningUp:YES];
                 [TrackingUtilities trackSignUpWithSource:@"Facebook"];
+            } else {
+                [TrackingUtilities identifyWithMixpanel:user isSigningUp:NO];
             }
         
             [self skipWelcomeController];

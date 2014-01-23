@@ -17,6 +17,8 @@
 #import "SessionUtilities.h"
 #import "LikesViewController.h"
 
+#define MORE_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"report_shout", @"Strings", @"comment")
+#define MORE_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"navigate_to_shout", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_3 NSLocalizedStringFromTable (@"privacy_content", @"Strings", @"comment")
@@ -44,6 +46,9 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (strong, nonatomic) NSMutableArray *likerIds;
+@property (nonatomic) BOOL likeButtonActive;
+@property (strong, nonatomic) UIActionSheet *flagActionSheet;
+@property (strong, nonatomic) UIActionSheet *moreActionSheet;
 
 
 @end
@@ -52,6 +57,8 @@
 
 - (void)viewDidLoad
 {
+    self.likeButtonActive = YES;
+    
     self.mapView.delegate = self;
     
     self.likerIds = [[NSMutableArray alloc] initWithArray:@[]];
@@ -100,8 +107,8 @@
     [self.bottomBarView.layer addSublayer:thirdInterBorder];
     
     //Bug coming back from comments
-    if (self.likeButton.enabled == NO) {
-        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon-selected"];
+    if (self.likeButtonActive == NO) {
+        [self updateUIOnShoutLiked:YES];
     }
     
     [super viewWillAppear:animated];
@@ -111,23 +118,28 @@
 {
     //Get comment count and liker ids
     [AFStreetShoutAPIClient getShoutMetaData:self.shout success:^(NSInteger commentCount, NSMutableArray *likerIds) {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", commentCount] forState:UIControlStateNormal];
+        [self updateCommentCount:commentCount];
         self.commentsCountLabelButton.hidden = NO;
         self.commentsCountIcon.hidden = NO;
         
         //Store them for later
         self.likerIds = likerIds;
         
-        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
+        [self updateLikeCount:[self.likerIds count]];
         self.likesCountButton.hidden = NO;
         self.likesCountIcon.hidden = NO;
+        
+        
+        BOOL currentUserLikedShout = NO;
         
         //Check if current user liked this shout
         for (NSNumber *likerId in self.likerIds) {
             if ([likerId integerValue] == [SessionUtilities getCurrentUser].identifier) {
-                [self updateUIOnShoutLiked:YES];
+                currentUserLikedShout = YES;
             }
         }
+        
+        [self updateUIOnShoutLiked:currentUserLikedShout];
     } failure:nil];
     
     //Move map to shout
@@ -173,56 +185,82 @@
     }
 }
 
-//- (IBAction)flagButtonClicked:(id)sender {
-//    if (![SessionUtilities isSignedIn]){
-//        [SessionUtilities redirectToSignIn];
-//        return;
-//    }
-//    
-//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
-// delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
-//    
-//    [actionSheet showInView:self.shoutVCDelegate.view];
-//}
+- (IBAction)moreShoutOptionButtonPressed:(id)sender {
+    
+    
+    self.moreActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:MORE_ACTION_SHEET_OPTION_1, MORE_ACTION_SHEET_OPTION_2, nil];
+    
+    [self.moreActionSheet showInView:self.view];
+}
 
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
-//    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
-//        //In this case, 401 means that the auth token is no valid.
-//        if ([SessionUtilities invalidTokenResponse:operation]) {
-//            [SessionUtilities redirectToSignIn];
-//        }
-//    };
-//    
-//    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-//    if (![buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
-//        
-//        NSString *motive = nil;
-//        
-//        switch (buttonIndex) {
-//            case 0:
-//                motive = @"abuse";
-//                break;
-//            case 1:
-//                motive = @"spam";
-//                break;
-//            case 2:
-//                motive = @"privacy";
-//                break;
-//            case 3:
-//                motive = @"inaccurate";
-//                break;
-//            case 4:
-//                motive = @"other";
-//                break;
-//        }
-//        
-//        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
-//        
-//        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
-//    }
-//}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([buttonTitle isEqualToString:FLAG_ACTION_SHEET_CANCEL]) {
+        return;
+    }
+    
+    if (actionSheet == self.moreActionSheet) {
+        if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_1]) {
+            self.flagActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
+                                                               delegate:self
+                                                      cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
+                                                 destructiveButtonTitle:nil
+                                                      otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
+            [self.flagActionSheet showInView:self.view];
+        }
+        
+        if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_2]) {
+            Class mapItemClass = [MKMapItem class];
+            if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)]) {
+                // Create an MKMapItem to pass to the Maps app
+                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(self.shout.lat, self.shout.lng);
+                MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
+                                                               addressDictionary:nil];
+                MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+                [mapItem setName:@"Shout"];
+                // Pass the map item to the Maps app
+                [mapItem openInMapsWithLaunchOptions:nil];
+            }
+        }
+    } else if (actionSheet == self.flagActionSheet) {
+        typedef void (^FailureBlock)(AFHTTPRequestOperation *);
+        FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
+            //In this case, 401 means that the auth token is no valid.
+            if ([SessionUtilities invalidTokenResponse:operation]) {
+                [SessionUtilities redirectToSignIn];
+            }
+        };
+        
+        NSString *motive = nil;
+        
+        switch (buttonIndex) {
+            case 0:
+                motive = @"abuse";
+                break;
+            case 1:
+                motive = @"spam";
+                break;
+            case 2:
+                motive = @"privacy";
+                break;
+            case 3:
+                motive = @"inaccurate";
+                break;
+            case 4:
+                motive = @"other";
+                break;
+        }
+        
+        [AFStreetShoutAPIClient reportShout:self.shout.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
+        
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
+    }
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -286,6 +324,15 @@
 }
 
 - (IBAction)createLikeButtonClicked:(id)sender {
+    //Prevent from making the button color lighter if using de enabled property of UIButton
+    if (self.likeButtonActive == NO) {
+        return;
+    }
+    
+    //Update the UI
+    [self.likerIds insertObject:[NSNumber numberWithInt:[SessionUtilities getCurrentUser].identifier] atIndex:0];
+    [self updateUIOnShoutLiked:YES];
+    
     double lat = 0;
     double lng = 0;
     
@@ -302,23 +349,40 @@
         [self updateUIOnShoutLiked:NO];
         [self.likerIds removeObjectAtIndex:0];
     }];
-    
-    //Update the UI
-    [self.likerIds insertObject:[NSNumber numberWithInt:[SessionUtilities getCurrentUser].identifier] atIndex:0];
-    [self updateUIOnShoutLiked:YES];
 }
 
 - (void)updateUIOnShoutLiked:(BOOL)liked
 {
+    self.likeButton.enabled = YES;
+    
     if (liked) {
-        self.likeButton.enabled = NO;
-        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon-selected"];
+        self.likeButtonActive = NO;
+        [self.likeButton setImage:[UIImage imageNamed:@"shout-like-icon-selected"] forState:UIControlStateNormal];
     } else {
-        self.likeButton.enabled = NO;
-        self.likeButton.imageView.image = [UIImage imageNamed:@"shout-like-icon"];
+        self.likeButtonActive = YES;
+        [self.likeButton setImage:[UIImage imageNamed:@"shout-like-icon"] forState:UIControlStateNormal];
     }
     
-    [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
+    [self updateLikeCount:[self.likerIds count]];
+}
+
+- (void)updateLikeCount:(NSUInteger)count
+{
+    if (count < 2) {
+        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d like", [self.likerIds count]] forState:UIControlStateNormal];
+    } else {
+        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
+    }
+}
+
+- (void)updateCommentCount:(NSUInteger)count
+{
+    if (count < 2) {
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comment", count] forState:UIControlStateNormal];
+    } else {
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", count] forState:UIControlStateNormal];
+    }
+    
 }
 
 @end

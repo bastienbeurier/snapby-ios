@@ -7,22 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SettingPickerViewController.h"
 
-@protocol SettingsViewControllerDelegate;
-
-@interface SettingsViewController : UIViewController <SettingPickerViewControllerDelegate>
-
-@property (weak, nonatomic) id <SettingsViewControllerDelegate> settingsViewControllerDelegate;
-
-- (void)updateUserInfo;
-
-@end
-
-@protocol SettingsViewControllerDelegate
-
-- (void)updateUserInfo;
-
-- (void)refreshShouts;
+@interface SettingsViewController : UIViewController
 
 @end

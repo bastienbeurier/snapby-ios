@@ -176,10 +176,6 @@
         ((CreateShoutViewController *)[segue destinationViewController]).createShoutVCDelegate = self;
     }
     
-    if ([segueName isEqualToString: @"Settings Push Segue"]) {
-        ((SettingsViewController *) [segue destinationViewController]).settingsViewControllerDelegate = self;
-    }
-    
     if ([segueName isEqualToString: @"Shout Push Segue"]) {
         ((ShoutViewController *) [segue destinationViewController]).shout = (Shout *)sender;
         ((ShoutViewController *) [segue destinationViewController]).shoutVCDelegate = self;

@@ -107,7 +107,7 @@
             [SessionUtilities securelySaveCurrentUserToken:authToken];
             
             //Mixpanel identification
-            [TrackingUtilities identifyWithMixpanel:user];
+            [TrackingUtilities identifyWithMixpanel:user isSigningUp:NO];
             
             [self performSegueWithIdentifier:@"Navigation Push Segue From Signin" sender:nil];
         });
