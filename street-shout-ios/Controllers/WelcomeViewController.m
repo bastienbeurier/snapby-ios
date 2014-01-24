@@ -35,10 +35,10 @@
 {
     
     //Set background image
-    NSString *filename = @"Welcome.png";
+    NSString *filename = @"Default.png";
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     if (screenRect.size.height == 568.0f) {
-        filename = [filename stringByReplacingOccurrencesOfString:@".png" withString:@"-568h.png"];
+        filename = @"Default-568h.png";
     }
     self.welcomeImageView.image = [UIImage imageNamed:filename];
     
