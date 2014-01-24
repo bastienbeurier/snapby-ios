@@ -13,6 +13,7 @@
 #define USER_EMAIL @"email"
 #define USERNAME @"username"
 #define BLACKLISTED @"black_listed"
+#define PROFILE_PICTURE @"profile_picture"
 
 @implementation User
 
@@ -23,6 +24,7 @@
     user.email = [rawUser objectForKey:USER_EMAIL];
     user.username = [rawUser objectForKey:USERNAME];
     user.isBlackListed = [[rawUser objectForKey:BLACKLISTED] boolValue];
+    user.profilePicture = [rawUser objectForKey:PROFILE_PICTURE];
     
     return user;
 }

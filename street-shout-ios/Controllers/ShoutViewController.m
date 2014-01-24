@@ -285,7 +285,7 @@
 // Share to FB, sms, email.. using UIActivityViewController
 - (IBAction)shareButtonPressed:(id)sender {
     NSString *shareString = @"Hey, check this Shout before it's too late!\n";
-    UIImage *shareImage = [UIImage imageNamed:@"shout-app-icon-100.png"];
+    UIImage *shareImage = [UIImage imageNamed:@"shout-app-icon-58.png"];
     // todoBT logo
     NSURL *shareUrl = [NSURL URLWithString:[[kProdShoutBaseURLString stringByAppendingString:@"shouts/"]stringByAppendingString:[NSString stringWithFormat:@"%d",self.shout.identifier]]];
     
@@ -311,7 +311,7 @@
             NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:self.shout];
             
             annotationView.image = [UIImage imageNamed:annotationPinImage];
-            annotationView.centerOffset = CGPointMake(10,-10);
+            annotationView.centerOffset = CGPointMake(kShoutAnnotationOffsetX,kShoutAnnotationOffsetY);
         }
     }
 }

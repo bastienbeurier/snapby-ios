@@ -29,6 +29,7 @@
 #define USER_AUTH_TOKEN_PREF @"User authentication token preference"
 #define USER_BLACKLISTED @"Is user blacklisted?"
 #define NOTIFICATION_SHOUT_ID_PREF @"Notification shout identifier"
+#define PROFILE_PICTURE_PREF @"Profile picture preference"
 
 @interface Constants : NSObject
 
@@ -68,6 +69,10 @@ static const NSUInteger kMapInitialSpan = 180;
 //Design
 static const double kDropShadowX = 2.0;
 static const double kDropShadowY = 2.0;
+
+//Shout annotation
+static const double kShoutAnnotationOffsetX = 0;
+static const double kShoutAnnotationOffsetY = 0;
 
 //Mixpanel token
 static NSString * const kProdMixPanelToken = @"24dc482a232028564063bd3dd7e84e93";
