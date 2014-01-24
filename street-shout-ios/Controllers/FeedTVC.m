@@ -119,13 +119,15 @@
         Shout *shout = (Shout *)self.shouts[indexPath.row];
         
         if (shout.image) {
-            cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder"];
+            cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder-square-small"];
             
             NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
             [cell.shoutImageView setImageWithURL:url placeholderImage:nil];
             
             cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
             cell.shoutImageView.clipsToBounds = YES;
+            cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+            cell.imageViewDropShadow.clipsToBounds = YES;
             
             cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
             

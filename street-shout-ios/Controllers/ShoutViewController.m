@@ -164,9 +164,12 @@
             
             [self.shoutImageView setHidden:NO];
             [self.shoutImageDropShadowView setHidden:NO];
+            self.shoutContent.backgroundColor = [UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.25];
         } else {
             [self.shoutImageView setHidden:YES];
             [self.shoutImageDropShadowView setHidden:NO];
+            //Make background darker if no photo
+            self.shoutContent.backgroundColor = [UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.5];
         }
         
         self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.username];

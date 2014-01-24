@@ -731,7 +731,7 @@
                                 <rect key="frame" x="0.0" y="130" width="320" height="388"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <imageView contentMode="scaleToFill" image="shout-image-place-holder-square.png" translatesAutoresizingMaskIntoConstraints="NO" id="mDB-7V-Pk9">
+                                    <imageView alpha="0.49999999999999961" contentMode="scaleToFill" image="shout-image-place-holder-square.png" translatesAutoresizingMaskIntoConstraints="NO" id="mDB-7V-Pk9">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -1576,10 +1576,10 @@
         <image name="shout-bar-more-icon.png" width="49" height="49"/>
         <image name="shout-bar-share-icon.png" width="49" height="49"/>
         <image name="shout-cancel-icon.png" width="74" height="74"/>
-        <image name="shout-comment-icon.png" width="49" height="49"/>
+        <image name="shout-comment-icon.png" width="25" height="25"/>
         <image name="shout-distance-icon.png" width="30" height="35"/>
         <image name="shout-image-place-holder-square.png" width="250" height="250"/>
-        <image name="shout-like-icon.png" width="49" height="49"/>
+        <image name="shout-like-icon.png" width="25" height="25"/>
         <image name="shout-time-icon.png" width="35" height="35"/>
         <image name="username-icon.png" width="44" height="50"/>
     </resources>
