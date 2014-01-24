@@ -42,9 +42,6 @@
 
 - (void)viewDidLoad
 {
-    //Status bar style  
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
     //Buttons round corner
     NSUInteger buttonHeight = self.createShoutButton.bounds.size.height;
     self.createShoutButton.layer.cornerRadius = buttonHeight/2;
@@ -57,6 +54,9 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    //Status bar style
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
     // Check if API obsolete
     [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
         [self createObsoleteAPIAlertView];

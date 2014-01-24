@@ -25,9 +25,6 @@
     //Nav Bar
     [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:@"ok" title:@"Reset password" sizeBig:YES inViewController:self];
     
-    //Status bar style
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
     //Textview border
     [ImageUtilities drawBottomBorderForView:self.emailTextView withColor:[UIColor lightGrayColor]];
     
