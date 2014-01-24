@@ -17,5 +17,6 @@
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic) BOOL isBlackListed;
+@property (nonatomic, strong) NSString *profilePicture;
 
 @end

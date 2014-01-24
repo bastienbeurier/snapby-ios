@@ -324,6 +324,8 @@
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
     
+    NSLog(@"PRINT FB PARAMS: %@", params);
+    
     [parameters setObject:[params objectForKey:@"email"] forKey:@"email"];
     [parameters setObject:[params objectForKey:@"id"] forKey:@"facebook_id"];
     [parameters setObject:[params objectForKey:@"name"] forKey:@"facebook_name"];
@@ -508,6 +510,40 @@
         if (failureBlock) {
             failureBlock();
         }
+    }];
+}
+
++ (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock
+{
+    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"modify_user_credentials.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    [parameters setObject:username forKey:@"username"];
+    
+    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    
+    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
+    [[AFStreetShoutAPIClient sharedClient] patchPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+        NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
+        
+        if (errors) {
+            failureBlock(errors);
+        } else {
+            NSDictionary *result = [JSON valueForKeyPath:@"result"];
+            
+            NSDictionary *rawUser = [result valueForKeyPath:@"user"];
+            User *user = [User rawUserToInstance:rawUser];
+            
+            if (successBlock) {
+                successBlock(user);
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        failureBlock(nil);
     }];
 }
 

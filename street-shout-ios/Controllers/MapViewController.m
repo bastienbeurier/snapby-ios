@@ -148,7 +148,7 @@
     NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForShout:(Shout *)shout];
     
     annotationView.image = [UIImage imageNamed:annotationPinImage];
-    annotationView.centerOffset = CGPointMake(10,-10);
+    annotationView.centerOffset = CGPointMake(kShoutAnnotationOffsetX, kShoutAnnotationOffsetY);
 }
 
 - (void)updateAnnotation:(MKPointAnnotation *)shoutAnnotation shoutInfo:(Shout *)shout
