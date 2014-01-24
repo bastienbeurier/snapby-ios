@@ -34,9 +34,6 @@
     //Nav Bar
     [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:nil title:@"Comments" sizeBig:YES inViewController:self];
     
-    //Status bar style
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
     if (!self.activityView) {
         self.activityView= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     }

@@ -224,12 +224,12 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OTR-fb-maE">
                                 <rect key="frame" x="260" y="20" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="BxJ-3H-gOl"/>
                                     <constraint firstAttribute="width" constant="50" id="DZS-zS-1YW"/>
                                 </constraints>
-                                <state key="normal" image="create-shout-button.png">
+                                <state key="normal" image="create-shout-icon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -601,14 +601,30 @@
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <button contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo8-d1-gKN">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="cSb-pT-Gyw"/>
+                                            <constraint firstAttribute="height" constant="50" id="qwW-KG-Rxs"/>
+                                        </constraints>
+                                        <state key="normal" image="shout-bar-like-icon.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="createLikeButtonClicked:" destination="qtI-Lc-vOJ" eventType="touchUpInside" id="dZK-II-foa"/>
+                                        </connections>
+                                    </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uoe-yw-iU6">
                                         <rect key="frame" x="240" y="0.0" width="80" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="53y-Tg-nSq"/>
                                             <constraint firstAttribute="width" constant="80" id="QXb-ZW-TFT"/>
                                         </constraints>
-                                        <state key="normal" image="shout-more-icon.png">
+                                        <state key="normal" image="shout-bar-more-icon.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -616,13 +632,14 @@
                                         </connections>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PkE-VR-UNJ">
-                                        <rect key="frame" x="160" y="0.0" width="79" height="50"/>
+                                        <rect key="frame" x="160" y="0.0" width="80" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="79" id="9xi-Nd-mBy"/>
+                                            <constraint firstAttribute="width" constant="80" id="9xi-Nd-mBy"/>
                                             <constraint firstAttribute="height" constant="50" id="bgO-hC-mIT"/>
                                         </constraints>
-                                        <state key="normal" image="shout-share-icon.png">
+                                        <state key="normal" image="shout-bar-share-icon.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -630,40 +647,27 @@
                                         </connections>
                                     </button>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SlI-Ci-wds">
-                                        <rect key="frame" x="80" y="0.0" width="79" height="50"/>
+                                        <rect key="frame" x="80" y="0.0" width="80" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ENv-Pu-Ebt"/>
-                                            <constraint firstAttribute="width" constant="79" id="apo-G5-IkK"/>
+                                            <constraint firstAttribute="width" constant="80" id="apo-G5-IkK"/>
                                         </constraints>
-                                        <state key="normal" image="shout-comment-icon.png">
+                                        <state key="normal" image="shout-bar-comment-icon.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <segue destination="XJN-rR-Aa3" kind="push" identifier="Comments Push Segue From Bar Button" id="fbw-tr-rR7"/>
                                         </connections>
                                     </button>
-                                    <button contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo8-d1-gKN">
-                                        <rect key="frame" x="0.0" y="0.0" width="79" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="79" id="cSb-pT-Gyw"/>
-                                            <constraint firstAttribute="height" constant="50" id="qwW-KG-Rxs"/>
-                                        </constraints>
-                                        <state key="normal" image="shout-like-icon.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="createLikeButtonClicked:" destination="qtI-Lc-vOJ" eventType="touchUpInside" id="dZK-II-foa"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="PkE-VR-UNJ" firstAttribute="leading" secondItem="SlI-Ci-wds" secondAttribute="trailing" constant="1" id="5BH-a4-BmH"/>
+                                    <constraint firstItem="PkE-VR-UNJ" firstAttribute="leading" secondItem="SlI-Ci-wds" secondAttribute="trailing" id="5BH-a4-BmH"/>
                                     <constraint firstAttribute="bottom" secondItem="Uoe-yw-iU6" secondAttribute="bottom" id="5Jk-UD-Kqc"/>
                                     <constraint firstAttribute="bottom" secondItem="fo8-d1-gKN" secondAttribute="bottom" id="IAI-ua-jZv"/>
                                     <constraint firstItem="Uoe-yw-iU6" firstAttribute="top" secondItem="51d-6f-uR3" secondAttribute="top" id="NeB-1f-Nfr"/>
-                                    <constraint firstItem="SlI-Ci-wds" firstAttribute="leading" secondItem="fo8-d1-gKN" secondAttribute="trailing" constant="1" id="Q9s-Fu-Ul5"/>
+                                    <constraint firstItem="SlI-Ci-wds" firstAttribute="leading" secondItem="fo8-d1-gKN" secondAttribute="trailing" id="Q9s-Fu-Ul5"/>
                                     <constraint firstItem="fo8-d1-gKN" firstAttribute="top" secondItem="51d-6f-uR3" secondAttribute="top" id="VgS-Ws-e5z"/>
                                     <constraint firstItem="SlI-Ci-wds" firstAttribute="centerY" secondItem="fo8-d1-gKN" secondAttribute="centerY" id="WKB-yL-urP"/>
                                     <constraint firstAttribute="trailing" secondItem="Uoe-yw-iU6" secondAttribute="trailing" id="br4-Wb-EH8"/>
@@ -1560,20 +1564,22 @@
         </scene>
     </scenes>
     <resources>
-        <image name="create-shout-button.png" width="74" height="74"/>
+        <image name="create-shout-icon.png" width="74" height="74"/>
         <image name="email-icon.png" width="50" height="36"/>
         <image name="more-button.png" width="74" height="74"/>
         <image name="my-location-button.png" width="74" height="74"/>
         <image name="password-icon.png" width="43" height="50"/>
         <image name="refresh-map-button.png" width="75" height="75"/>
         <image name="remove-photo-button.png" width="37" height="37"/>
+        <image name="shout-bar-comment-icon.png" width="49" height="49"/>
+        <image name="shout-bar-like-icon.png" width="49" height="48"/>
+        <image name="shout-bar-more-icon.png" width="49" height="49"/>
+        <image name="shout-bar-share-icon.png" width="49" height="49"/>
         <image name="shout-cancel-icon.png" width="74" height="74"/>
         <image name="shout-comment-icon.png" width="49" height="49"/>
         <image name="shout-distance-icon.png" width="30" height="35"/>
         <image name="shout-image-place-holder-square.png" width="250" height="250"/>
         <image name="shout-like-icon.png" width="49" height="49"/>
-        <image name="shout-more-icon.png" width="49" height="49"/>
-        <image name="shout-share-icon.png" width="49" height="49"/>
         <image name="shout-time-icon.png" width="35" height="35"/>
         <image name="username-icon.png" width="44" height="50"/>
     </resources>

@@ -14,6 +14,9 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>app-icon-dev-80</string>
+				<string>app-icon-dev-58</string>
+				<string>app-icon-dev-120</string>
 				<string>shout-app-icon-dev-80</string>
 				<string>shout-app-icon-dev-58</string>
 				<string>shout-app-icon-dev-120</string>
@@ -55,6 +58,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<false/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackOpaque</string>
 	<key>UISupportedInterfaceOrientations</key>

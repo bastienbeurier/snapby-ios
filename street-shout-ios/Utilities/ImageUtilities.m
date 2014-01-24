@@ -204,6 +204,9 @@
 
 + (void)drawCustomNavBarWithLeftItem:(NSString *)leftItem rightItem:(NSString *)rightItem title:(NSString *)title sizeBig:(BOOL)sizeBig inViewController:(UIViewController *)viewController
 {
+    //Status bar color
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     //Constants
     NSUInteger barHeight = sizeBig ? 80 : 60;
     NSUInteger buttonSize = 45;
@@ -213,10 +216,11 @@
     
     //Create bar view
     UIView *customNavBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewController.view.frame.size.width, barHeight)];
-    CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, customNavBar.frame.size.height - 0.5f, customNavBar.frame.size.width, 0.5f);
-    bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [customNavBar.layer addSublayer:bottomBorder];
+//    CALayer *bottomBorder = [CALayer layer];
+//    bottomBorder.frame = CGRectMake(0.0f, customNavBar.frame.size.height - 0.5f, customNavBar.frame.size.width, 0.5f);
+//    bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+//    [customNavBar.layer addSublayer:bottomBorder];
+    customNavBar.backgroundColor = [ImageUtilities getShoutBlue];
     [viewController.view addSubview:customNavBar];
     
     //Add ok button
@@ -254,7 +258,7 @@
         label.text = text;
         label.font = customFont;
         label.numberOfLines = 1;
-        label.textColor = [UIColor lightGrayColor];
+        label.textColor = [UIColor whiteColor];
         
         [customNavBar addSubview:label];
     }

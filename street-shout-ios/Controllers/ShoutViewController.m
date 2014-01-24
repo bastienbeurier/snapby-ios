@@ -63,7 +63,7 @@
     
     self.likerIds = [[NSMutableArray alloc] initWithArray:@[]];
     
-    ////Hack to remove the selection highligh from the cell during the back animation
+    //Hack to remove the selection highligh from the cell during the back animation
     [self.shoutVCDelegate redisplayFeed];
     
     //Buttons round corner
@@ -82,28 +82,31 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    //Status bar style
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
     //Shout content round corners
     self.shoutContent.layer.cornerRadius = 5;
     
     //Add bottom bar borders
     CALayer *topBorder = [CALayer layer];
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.bottomBarView.frame.size.width, 0.5f);
-    topBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    topBorder.backgroundColor = [UIColor whiteColor].CGColor;
     [self.bottomBarView.layer addSublayer:topBorder];
     
     CALayer *firstInterBorder = [CALayer layer];
     firstInterBorder.frame = CGRectMake(80.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
-    firstInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    firstInterBorder.backgroundColor = [UIColor whiteColor].CGColor;
     [self.bottomBarView.layer addSublayer:firstInterBorder];
     
     CALayer *secondInterBorder = [CALayer layer];
     secondInterBorder.frame = CGRectMake(160.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
-    secondInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    secondInterBorder.backgroundColor = [UIColor whiteColor].CGColor;
     [self.bottomBarView.layer addSublayer:secondInterBorder];
     
     CALayer *thirdInterBorder = [CALayer layer];
     thirdInterBorder.frame = CGRectMake(240.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
-    thirdInterBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    thirdInterBorder.backgroundColor = [UIColor whiteColor].CGColor;
     [self.bottomBarView.layer addSublayer:thirdInterBorder];
     
     //Bug coming back from comments
@@ -285,7 +288,7 @@
 // Share to FB, sms, email.. using UIActivityViewController
 - (IBAction)shareButtonPressed:(id)sender {
     NSString *shareString = @"Hey, check this Shout before it's too late!\n";
-    UIImage *shareImage = [UIImage imageNamed:@"shout-app-icon-58.png"];
+    UIImage *shareImage = [UIImage imageNamed:@"app-icon-58.png"];
     // todoBT logo
     NSURL *shareUrl = [NSURL URLWithString:[[kProdShoutBaseURLString stringByAppendingString:@"shouts/"]stringByAppendingString:[NSString stringWithFormat:@"%d",self.shout.identifier]]];
     
@@ -346,8 +349,8 @@
     //Create the like
     [AFStreetShoutAPIClient createLikeforShout:self.shout lat:lat lng:lng success:nil failure:^{
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"like_failed_message", @"Strings", @"comment") withTitle:nil];
-        [self updateUIOnShoutLiked:NO];
         [self.likerIds removeObjectAtIndex:0];
+        [self updateUIOnShoutLiked:NO];
     }];
 }
 
@@ -357,10 +360,10 @@
     
     if (liked) {
         self.likeButtonActive = NO;
-        [self.likeButton setImage:[UIImage imageNamed:@"shout-like-icon-selected"] forState:UIControlStateNormal];
+        [self.likeButton setImage:[UIImage imageNamed:@"shout-bar-like-icon-liked"] forState:UIControlStateNormal];
     } else {
         self.likeButtonActive = YES;
-        [self.likeButton setImage:[UIImage imageNamed:@"shout-like-icon"] forState:UIControlStateNormal];
+        [self.likeButton setImage:[UIImage imageNamed:@"shout-bar-like-icon"] forState:UIControlStateNormal];
     }
     
     [self updateLikeCount:[self.likerIds count]];
