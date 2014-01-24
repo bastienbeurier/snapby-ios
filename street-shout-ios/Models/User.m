@@ -26,6 +26,10 @@
     user.isBlackListed = [[rawUser objectForKey:BLACKLISTED] boolValue];
     user.profilePicture = [rawUser objectForKey:PROFILE_PICTURE];
     
+    if (user.profilePicture == (id)[NSNull null]) {
+        user.profilePicture = nil;
+    }
+    
     return user;
 }
 
