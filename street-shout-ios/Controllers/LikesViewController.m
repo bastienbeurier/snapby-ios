@@ -32,7 +32,7 @@
     self.likesTableView.dataSource = self;
     
     //Nav Bar
-    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:nil title:@"Comments" sizeBig:YES inViewController:self];
+    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:nil title:@"Likes" sizeBig:YES inViewController:self];
     
     if (!self.activityView) {
         self.activityView= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
