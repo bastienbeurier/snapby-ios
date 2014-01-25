@@ -43,7 +43,7 @@ static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-
 static NSString * const kDevTestFlightAppToken = @"c4904202-ba89-449a-bc2f-f53e231f1319";
 
 //Production
-static NSString * const kProdTestFlightAppToken = @"6439e169-aaac-47f0-a879-206a8c7b6347";
+static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5";
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 static NSString * const kProdShoutBaseURLString = @"http://shouthereandnow.com/";
 

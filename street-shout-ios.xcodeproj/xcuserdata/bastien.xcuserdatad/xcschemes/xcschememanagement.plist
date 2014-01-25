@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Street Shout.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -43,6 +48,11 @@
 			<true/>
 		</dict>
 		<key>0B65F71F1795C66500F37227</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0BC30FDE1894444400917C3C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
