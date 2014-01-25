@@ -290,14 +290,14 @@
 
 // Share to FB, sms, email.. using UIActivityViewController
 - (IBAction)shareButtonPressed:(id)sender {
-    NSString *shareString = @"Hey, check this Shout before it's too late!\n";
+    NSString *shareString = @"Hey, check this shout before it's too late!\n";
     //UIImage *shareImage = [UIImage imageNamed:@"app-icon-58.png"];
     NSURL *shareUrl = [NSURL URLWithString:[[kProdShoutBaseURLString stringByAppendingString:@"shouts/"]stringByAppendingString:[NSString stringWithFormat:@"%d",self.shout.identifier]]];
     
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, nil];
     
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-    [activityViewController setValue:@"One brand new Shout you should see!" forKey:@"subject"];
+    [activityViewController setValue:@"Sharing a shout with you." forKey:@"subject"];
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
     [self presentViewController:activityViewController animated:YES completion:nil];
