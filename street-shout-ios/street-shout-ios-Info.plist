@@ -14,6 +14,9 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>app-icon-80</string>
+				<string>app-icon-58</string>
+				<string>app-icon-dev-80</string>
 				<string>app-icon -80</string>
 				<string>app-icon -58</string>
 				<string>app-icon-120</string>
