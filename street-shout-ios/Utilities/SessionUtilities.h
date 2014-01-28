@@ -18,7 +18,7 @@
 
 + (void)setFBConnectedPref:(BOOL)isFBConnected;
 
-+ (BOOL) isFBConnected;
++ (BOOL)isFBConnected;
 
 + (void)securelySaveCurrentUserToken:(NSString *)authToken;
 

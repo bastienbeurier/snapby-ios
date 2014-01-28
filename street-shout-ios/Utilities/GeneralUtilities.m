@@ -135,6 +135,11 @@
 
 + (void)enrichParamsWithGeneralUserAndDeviceInfo:(NSMutableDictionary *)parameters;
 {
+    NSString *uaDeviceToken = [GeneralUtilities getUADeviceToken];
+    if (uaDeviceToken) {
+        [parameters setObject:uaDeviceToken forKey:@"push_token"];
+    }
+    
     NSString *deviceModel = [DeviceUtilities platformString];
     NSString *osVersion = [[UIDevice currentDevice] systemVersion];
     NSString *osType = @"ios";

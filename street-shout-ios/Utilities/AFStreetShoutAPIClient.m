@@ -62,6 +62,8 @@
     if ([SessionUtilities isSignedIn]){
         [parameters setObject:[SessionUtilities getCurrentUserToken] forKey:@"auth_token"];
     }
+    
+    //TODO: else redirect to signin
 }
 
 
@@ -162,17 +164,13 @@
 
 + (void)updateUserInfoWithLat:(double)lat Lng:(double)lng;
 {
-    NSString *uaDeviceToken = [GeneralUtilities getUADeviceToken];
+    
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
     if (lat != 0 && lng != 0) {
         [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
         [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
-    }
-    
-    if (uaDeviceToken) {
-        [parameters setObject:uaDeviceToken forKey:@"push_token"];
     }
     
     [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
