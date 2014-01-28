@@ -79,8 +79,7 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if ([JSON valueForKeyPath:@"errors"]){
                 [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"email_not_in_database_message", @"Strings", @"comment") withTitle:nil];
-            }
-            else {
+            } else {
                 [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"reset_password_sent_success_message", @"Strings", @"comment") withTitle:nil];
                 [self.navigationController popViewControllerAnimated:YES];
             }

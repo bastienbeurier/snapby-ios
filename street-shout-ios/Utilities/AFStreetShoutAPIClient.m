@@ -164,8 +164,6 @@
 
 + (void)updateUserInfoWithLat:(double)lat Lng:(double)lng;
 {
-    
-    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
     if (lat != 0 && lng != 0) {
@@ -291,8 +289,6 @@
         
         NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
         
-        NSLog(@"SERVER ERRORS: %@", errors);
-        
         if (errors) {
             failureBlock(errors);
         } else {
@@ -320,14 +316,14 @@
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/facebook_create_or_update.json"];
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
-    
-    NSLog(@"PRINT FB PARAMS: %@", params);
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
     [parameters setObject:[params objectForKey:@"email"] forKey:@"email"];
     [parameters setObject:[params objectForKey:@"id"] forKey:@"facebook_id"];
     [parameters setObject:[params objectForKey:@"name"] forKey:@"facebook_name"];
     [parameters setObject:[params objectForKey:@"username"] forKey:@"username"];
+    
+    [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {

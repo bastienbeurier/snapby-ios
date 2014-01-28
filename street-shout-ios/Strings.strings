@@ -70,9 +70,9 @@
 "fb_sign_in_error_title" = "Facebook sign-in failure";
 "reset_password_sent_success_message" = "An email with reset password instructions has just been sent.";
 "Try_again_message" = "Please try again.";
-"email_not_in_database_message" = "Your email does not correspond to any existing user";
-"comment_failed_message" = "Your comment could not be sent, please try again";
-"like_failed_message" = "Your like could not be sent, please try again";
+"email_not_in_database_message" = "Your email does not correspond to any existing user.";
+"comment_failed_message" = "Your comment could not be sent, please try again.";
+"like_failed_message" = "Your like could not be sent, please try again.";
 "report_shout" = "Report this shout";
 "navigate_to_shout" = "Directions to shout";
 
