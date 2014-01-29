@@ -55,10 +55,7 @@
 {
     if (age > 0) {
         NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
-        if (hours > 1) {
-            NSArray *result = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], @"h", nil];
-            return result;
-        } else if (hours == 1) {
+        if (hours >= 1) {
             return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], @"h", nil];
         } else {
             NSUInteger minutes = ((NSUInteger)age) / ONE_MINUTE;
