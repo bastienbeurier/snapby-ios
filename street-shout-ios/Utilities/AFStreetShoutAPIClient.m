@@ -57,13 +57,15 @@
 }
 
 // Enrich parameters with token
-+ (void) enrichParametersWithToken:(NSMutableDictionary *) parameters
++ (BOOL) enrichParametersWithToken:(NSMutableDictionary *) parameters
 {
     if ([SessionUtilities isSignedIn]){
         [parameters setObject:[SessionUtilities getCurrentUserToken] forKey:@"auth_token"];
+        return true;
+    } else {
+        [SessionUtilities redirectToSignIn];
+        return false;
     }
-    
-    //TODO: else redirect to signin
 }
 
 
@@ -128,7 +130,9 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
     // Enrich with token
-    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
     
     [parameters setObject:username forKey:@"username"];
     [parameters setObject:description forKey:@"description"];
@@ -172,7 +176,10 @@
     }
     
     [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
-    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
     
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingFormat:@"users/%d.json", [SessionUtilities getCurrentUser].identifier];
     
@@ -194,7 +201,9 @@
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
     
-    [AFStreetShoutAPIClient enrichParametersWithToken: parameters];
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
     
     [parameters setObject:[NSNumber numberWithInt:shoutId] forKey:@"shout_id"];
     [parameters setObject:motive forKey:@"motive"];
@@ -374,7 +383,9 @@
     [parameters setObject:[NSNumber numberWithInt:shout.identifier] forKey:@"shout_id"];
     
     // Enrich with token
-    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -408,7 +419,9 @@
     }
     
     // Enrich with token
-    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -440,7 +453,9 @@
     }
     
     // Enrich with token
-    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -461,7 +476,9 @@
     [parameters setObject:[NSNumber numberWithInt:shout.identifier] forKey:@"shout_id"];
     
     // Enrich with token
-    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -515,7 +532,9 @@
     
     [parameters setObject:username forKey:@"username"];
     
-    [AFStreetShoutAPIClient enrichParametersWithToken:parameters];
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
     
     [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     [[AFStreetShoutAPIClient sharedClient] patchPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
