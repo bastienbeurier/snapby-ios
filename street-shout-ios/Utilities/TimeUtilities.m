@@ -23,42 +23,11 @@
     return -[shoutDate timeIntervalSinceNow];
 }
 
-+ (NSArray *)ageToStrings:(NSTimeInterval)age
-{
-    if (age > 0) {
-        NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
-        if (hours > 1) {
-            NSArray *result = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], NSLocalizedStringFromTable (@"hours", @"Strings", @"comment"), nil];
-            if (age > kShoutDuration) {
-                return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"expired", @"Strings", @"comment"), nil, nil];
-            }
-            return result;
-        } else if (hours == 1) {
-            return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], NSLocalizedStringFromTable (@"hour", @"Strings", @"comment"), nil];
-        } else {
-            NSUInteger minutes = ((NSUInteger)age) / ONE_MINUTE;
-            if (minutes > 1) {
-                return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", minutes], NSLocalizedStringFromTable (@"minutes", @"Strings", @"comment"), nil];
-            } else if (minutes == 1) {
-                return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", minutes], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
-            } else {
-                return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
-            }
-        }
-        
-    } else {
-        return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
-    }
-}
-
 + (NSArray *)ageToShortStrings:(NSTimeInterval)age
 {
     if (age > 0) {
         NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
-        if (hours > 1) {
-            NSArray *result = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], @"h", nil];
-            return result;
-        } else if (hours == 1) {
+        if (hours >= 1) {
             return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", hours], @"h", nil];
         } else {
             NSUInteger minutes = ((NSUInteger)age) / ONE_MINUTE;
