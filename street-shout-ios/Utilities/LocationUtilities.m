@@ -79,10 +79,10 @@
     
     if (distanceYd < 100) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) distanceYd];
-        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"y", @"Strings", @"comment"), nil];
+        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"yd", @"Strings", @"comment"), nil];
     } else if (distanceMiles < 1) {
         NSString *str = [NSString stringWithFormat:@"%d", (NSUInteger) round(distanceYd / 100.0) * 100];
-        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"y", @"Strings", @"comment"), nil];
+        return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"yd", @"Strings", @"comment"), nil];
     } else if (distanceMiles < 10) {
         NSString *str = [NSString stringWithFormat:@"%d", distanceMiles];
         return [[NSArray alloc] initWithObjects:str, @"mi", nil];
