@@ -111,7 +111,7 @@
     NSInteger commentCount = [self commentCount];
     
     if (commentCount > -1) {
-        [self.commentsVCdelegate updateCommentsCount:commentCount];
+        [self.commentsVCdelegate updateCommentCount:commentCount];
     }
     
     [[self navigationController] popViewControllerAnimated:YES];

@@ -23,6 +23,6 @@
 
 @protocol CommentsVCDelegate
 
-- (void)updateCommentsCount:(NSInteger)count;
+- (void)updateCommentCount:(NSInteger)count;
 
 @end

@@ -23,7 +23,7 @@
     
     [mixpanel identify:[NSString stringWithFormat:@"%d", user.identifier]];
     
-    [mixpanel.people set:@{@"First name": user.username, @"Email": user.email}];
+    [mixpanel.people set:@{@"Username": user.username, @"Email": user.email}];
 }
 
 + (void)trackCreateShoutImage:(BOOL)image textLength:(NSUInteger)length

@@ -321,13 +321,6 @@
     }
 }
 
-- (void)updateCommentsCount:(NSInteger)count
-{
-    [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", count] forState:UIControlStateNormal];
-    self.commentsCountLabelButton.hidden = NO;
-    self.commentsCountIcon.hidden = NO;
-}
-
 - (IBAction)createLikeButtonClicked:(id)sender {
     //Prevent from making the button color lighter if using de enabled property of UIButton
     if (self.likeButtonActive == NO) {
@@ -380,7 +373,7 @@
     }
 }
 
-- (void)updateCommentCount:(NSUInteger)count
+- (void)updateCommentCount:(NSInteger)count
 {
     if (count < 2) {
         [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comment", count] forState:UIControlStateNormal];

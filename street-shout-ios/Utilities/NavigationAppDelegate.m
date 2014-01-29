@@ -215,6 +215,9 @@
 // Jump directly to Navigation View Controller
 -(void)skipWelcomeController
 {
+    //Mixpanel identification
+    [TrackingUtilities identifyWithMixpanel:[SessionUtilities getCurrentUser] isSigningUp:NO];
+    
     WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
     [welcomeViewController performSegueWithIdentifier:@"Navigation Push Segue From Welcome" sender:nil];
 }
