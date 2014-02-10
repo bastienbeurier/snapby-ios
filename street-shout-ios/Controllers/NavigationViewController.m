@@ -19,6 +19,7 @@
 #import "ImageUtilities.h"
 #import "SessionUtilities.h"
 #import "MBProgressHUD.h"
+#import "TrackingUtilities.h"
 
 #define SHOUT_BUTTON_SIZE 72.0
 
@@ -88,6 +89,10 @@
         
         [AFStreetShoutAPIClient getShoutInfo:[notificationShoutId integerValue] AndExecuteSuccess:^(Shout *shout) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            //Mixpanel tracking
+            [TrackingUtilities trackDisplayShout:shout withSource:@"Notification"];
+            
             [self handleShoutRedirection:shout];
         } failure:^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
