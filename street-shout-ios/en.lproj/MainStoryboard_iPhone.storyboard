@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ulg-pG-c5t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ulg-pG-c5t">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Settings View Controller-->
@@ -1147,98 +1147,110 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose a username (public)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eqA-so-ySk">
-                                <rect key="frame" x="60" y="130" width="240" height="30"/>
+                            <view tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71L-RX-IqX">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm your password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWd-ag-qda">
+                                        <rect key="frame" x="60" y="280" width="240" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                    </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bo0-Hr-IYD">
+                                        <rect key="frame" x="22" y="233" width="20" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="9hW-f0-Rkv"/>
+                                            <constraint firstAttribute="width" constant="20" id="qpU-BZ-AfN"/>
+                                        </constraints>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BIJ-eo-9sp">
+                                        <rect key="frame" x="60" y="181" width="240" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="29" id="qno-9t-3wp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Gm-Xg-5zI">
+                                        <rect key="frame" x="60" y="230" width="240" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="6KN-R3-P5F"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="VVm-IH-vn4"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose a username (public)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eqA-so-ySk">
+                                        <rect key="frame" x="60" y="130" width="240" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="ss4-vh-cb9"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                    </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="F7a-6d-N68">
+                                        <rect key="frame" x="20" y="186" width="23" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="lnD-pJ-uNt"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="username-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="rqJ-YS-UoR">
+                                        <rect key="frame" x="21" y="134" width="22" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="23" id="XoV-eZ-LsB"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="WmS-gE-eGQ">
+                                        <rect key="frame" x="22" y="283" width="20" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="KZw-t6-Sw0"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="gNF-Ie-kAG"/>
+                                    <constraint firstItem="Bo0-Hr-IYD" firstAttribute="trailing" secondItem="WmS-gE-eGQ" secondAttribute="trailing" id="5Qb-Cs-fdK"/>
+                                    <constraint firstItem="Bo0-Hr-IYD" firstAttribute="leading" secondItem="WmS-gE-eGQ" secondAttribute="leading" id="EyF-5u-jXE"/>
+                                    <constraint firstItem="eqA-so-ySk" firstAttribute="leading" secondItem="BIJ-eo-9sp" secondAttribute="leading" id="G5t-gP-e6S"/>
+                                    <constraint firstItem="F7a-6d-N68" firstAttribute="top" secondItem="rqJ-YS-UoR" secondAttribute="bottom" constant="29" id="LHi-cw-vZK"/>
+                                    <constraint firstItem="4Gm-Xg-5zI" firstAttribute="top" secondItem="BIJ-eo-9sp" secondAttribute="bottom" constant="20" id="Lhm-21-0ea"/>
+                                    <constraint firstItem="eqA-so-ySk" firstAttribute="leading" secondItem="rqJ-YS-UoR" secondAttribute="trailing" constant="17" id="O0G-fI-n90"/>
+                                    <constraint firstItem="eqA-so-ySk" firstAttribute="top" secondItem="71L-RX-IqX" secondAttribute="top" constant="130" id="P9D-pe-iuc"/>
+                                    <constraint firstItem="4Gm-Xg-5zI" firstAttribute="leading" secondItem="Bo0-Hr-IYD" secondAttribute="trailing" constant="18" id="Tf7-Cx-y2t"/>
+                                    <constraint firstItem="BWd-ag-qda" firstAttribute="top" secondItem="4Gm-Xg-5zI" secondAttribute="bottom" constant="20" id="VGz-ZP-2f5"/>
+                                    <constraint firstItem="rqJ-YS-UoR" firstAttribute="leading" secondItem="71L-RX-IqX" secondAttribute="leading" constant="21" id="Wfu-tF-oa8"/>
+                                    <constraint firstItem="BWd-ag-qda" firstAttribute="centerY" secondItem="WmS-gE-eGQ" secondAttribute="centerY" id="Ww4-SE-6H6"/>
+                                    <constraint firstItem="rqJ-YS-UoR" firstAttribute="centerY" secondItem="eqA-so-ySk" secondAttribute="centerY" id="X4h-PB-sO0"/>
+                                    <constraint firstItem="BIJ-eo-9sp" firstAttribute="top" secondItem="eqA-so-ySk" secondAttribute="bottom" constant="20" id="Xri-rJ-6yw"/>
+                                    <constraint firstItem="4Gm-Xg-5zI" firstAttribute="leading" secondItem="BWd-ag-qda" secondAttribute="leading" id="Yfr-4j-rGm"/>
+                                    <constraint firstItem="BIJ-eo-9sp" firstAttribute="trailing" secondItem="4Gm-Xg-5zI" secondAttribute="trailing" id="Z8h-rY-dKV"/>
+                                    <constraint firstItem="BIJ-eo-9sp" firstAttribute="leading" secondItem="4Gm-Xg-5zI" secondAttribute="leading" id="aaC-cM-HFi"/>
+                                    <constraint firstItem="WmS-gE-eGQ" firstAttribute="top" secondItem="Bo0-Hr-IYD" secondAttribute="bottom" constant="26" id="dLL-De-SpT"/>
+                                    <constraint firstItem="4Gm-Xg-5zI" firstAttribute="centerY" secondItem="Bo0-Hr-IYD" secondAttribute="centerY" id="fCr-a7-f5Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="eqA-so-ySk" secondAttribute="trailing" constant="20" symbolic="YES" id="kJo-sc-OE7"/>
+                                    <constraint firstItem="BIJ-eo-9sp" firstAttribute="trailing" secondItem="eqA-so-ySk" secondAttribute="trailing" id="npC-qS-yvl"/>
+                                    <constraint firstItem="4Gm-Xg-5zI" firstAttribute="trailing" secondItem="BWd-ag-qda" secondAttribute="trailing" id="p87-mH-3fD"/>
+                                    <constraint firstItem="rqJ-YS-UoR" firstAttribute="trailing" secondItem="F7a-6d-N68" secondAttribute="trailing" id="ucb-9U-qAC"/>
+                                    <constraint firstItem="F7a-6d-N68" firstAttribute="leading" secondItem="71L-RX-IqX" secondAttribute="leading" constant="20" symbolic="YES" id="wJl-a8-eiU"/>
+                                    <constraint firstItem="Bo0-Hr-IYD" firstAttribute="centerX" secondItem="rqJ-YS-UoR" secondAttribute="centerX" id="xfW-hH-jY5"/>
+                                    <constraint firstItem="Bo0-Hr-IYD" firstAttribute="top" secondItem="F7a-6d-N68" secondAttribute="bottom" constant="30" id="xmm-YC-Z79"/>
                                 </constraints>
-                                <color key="textColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BIJ-eo-9sp">
-                                <rect key="frame" x="60" y="180" width="240" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="yTa-Vv-tFQ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Gm-Xg-5zI">
-                                <rect key="frame" x="60" y="230" width="240" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="wRM-nH-2iS"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm your password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWd-ag-qda">
-                                <rect key="frame" x="60" y="280" width="240" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="cPt-ci-Mbf"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
-                            </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="F7a-6d-N68">
-                                <rect key="frame" x="20" y="186" width="23" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="17" id="Ak1-Lp-xFA"/>
-                                    <constraint firstAttribute="width" constant="23" id="PV5-b4-eHm"/>
-                                </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="username-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="rqJ-YS-UoR">
-                                <rect key="frame" x="21" y="134" width="22" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="22" id="15I-DB-MAl"/>
-                                    <constraint firstAttribute="height" constant="23" id="9Pf-WF-0pb"/>
-                                </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bo0-Hr-IYD">
-                                <rect key="frame" x="22" y="233" width="20" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="Rgn-m1-XnZ"/>
-                                    <constraint firstAttribute="width" constant="20" id="V7T-gB-Pqc"/>
-                                </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="WmS-gE-eGQ">
-                                <rect key="frame" x="22" y="283" width="20" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="u5b-Kv-ZZq"/>
-                                    <constraint firstAttribute="height" constant="24" id="uVS-6o-De4"/>
-                                </constraints>
-                            </imageView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="BIJ-eo-9sp" secondAttribute="trailing" constant="20" id="1Zf-j6-RpQ"/>
-                            <constraint firstItem="4Gm-Xg-5zI" firstAttribute="leading" secondItem="xEJ-56-rbb" secondAttribute="leading" constant="60" id="7FR-WV-Xjm"/>
-                            <constraint firstItem="WmS-gE-eGQ" firstAttribute="centerX" secondItem="Bo0-Hr-IYD" secondAttribute="centerX" id="AFT-7z-ume"/>
-                            <constraint firstItem="BIJ-eo-9sp" firstAttribute="top" secondItem="eqA-so-ySk" secondAttribute="bottom" constant="20" id="Ksl-ih-dgd"/>
-                            <constraint firstItem="rqJ-YS-UoR" firstAttribute="centerX" secondItem="F7a-6d-N68" secondAttribute="centerX" id="OhM-Iq-LPf"/>
-                            <constraint firstItem="rqJ-YS-UoR" firstAttribute="centerY" secondItem="eqA-so-ySk" secondAttribute="centerY" id="Qoj-8z-VcI"/>
-                            <constraint firstAttribute="trailing" secondItem="BWd-ag-qda" secondAttribute="trailing" constant="20" id="YM7-sJ-djx"/>
-                            <constraint firstAttribute="trailing" secondItem="4Gm-Xg-5zI" secondAttribute="trailing" constant="20" id="ai0-2d-OMg"/>
-                            <constraint firstItem="BWd-ag-qda" firstAttribute="top" secondItem="4Gm-Xg-5zI" secondAttribute="bottom" constant="20" id="cFK-lM-Pbf"/>
-                            <constraint firstAttribute="trailing" secondItem="eqA-so-ySk" secondAttribute="trailing" constant="20" id="dCu-Bc-p43"/>
-                            <constraint firstItem="F7a-6d-N68" firstAttribute="leading" secondItem="xEJ-56-rbb" secondAttribute="leading" constant="20" id="ePi-z2-JgI"/>
-                            <constraint firstItem="4Gm-Xg-5zI" firstAttribute="top" secondItem="BIJ-eo-9sp" secondAttribute="bottom" constant="20" id="hhx-Tk-610"/>
-                            <constraint firstItem="BIJ-eo-9sp" firstAttribute="leading" secondItem="xEJ-56-rbb" secondAttribute="leading" constant="60" id="hpk-9H-lan"/>
-                            <constraint firstItem="F7a-6d-N68" firstAttribute="centerY" secondItem="BIJ-eo-9sp" secondAttribute="centerY" id="iV8-h2-Vm4"/>
-                            <constraint firstItem="eqA-so-ySk" firstAttribute="leading" secondItem="xEJ-56-rbb" secondAttribute="leading" constant="60" id="kI0-Fh-N99"/>
-                            <constraint firstItem="WmS-gE-eGQ" firstAttribute="centerY" secondItem="BWd-ag-qda" secondAttribute="centerY" id="kSR-rx-Vd6"/>
-                            <constraint firstItem="4Gm-Xg-5zI" firstAttribute="centerY" secondItem="Bo0-Hr-IYD" secondAttribute="centerY" id="nop-8h-msv"/>
-                            <constraint firstItem="Bo0-Hr-IYD" firstAttribute="centerX" secondItem="F7a-6d-N68" secondAttribute="centerX" id="oae-Dm-vFj"/>
-                            <constraint firstItem="eqA-so-ySk" firstAttribute="top" secondItem="n1I-YB-Rhg" secondAttribute="bottom" constant="110" id="xXc-AS-jNJ"/>
-                            <constraint firstItem="BWd-ag-qda" firstAttribute="leading" secondItem="xEJ-56-rbb" secondAttribute="leading" constant="60" id="zJb-rz-p1V"/>
+                            <constraint firstItem="71L-RX-IqX" firstAttribute="top" secondItem="xEJ-56-rbb" secondAttribute="top" id="2QY-wj-qRu"/>
+                            <constraint firstItem="71L-RX-IqX" firstAttribute="leading" secondItem="xEJ-56-rbb" secondAttribute="leading" id="aYr-if-EEH"/>
+                            <constraint firstAttribute="bottom" secondItem="71L-RX-IqX" secondAttribute="bottom" id="mNr-bQ-Exx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JZ5-ev-ZSm"/>

@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextView;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextView;
 @property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextView;
+@property (nonatomic) CGSize keyboardSize;
 
 @end
 
@@ -51,7 +52,17 @@
     self.passwordTextView.delegate = self;
     self.confirmPasswordTextView.delegate = self;
     
+    // Register for keyboard notif
+    [self registerForKeyboardNotifications];
+    
     [super viewDidLoad];
+}
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -60,6 +71,41 @@
     [self.usernameTextView becomeFirstResponder];
     
     [super viewDidAppear:animated];
+}
+
+-(void) keyboardWasShown:(NSNotification *)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    self.keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self animateTextField:textField up:YES];
+}
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self animateTextField:textField up:NO];
+}
+
+
+- (void) animateTextField: (UITextField*) textField up: (BOOL) up
+{
+    int moveUpValue = textField.frame.origin.y+ textField.frame.size.height;
+    int animatedDistance = self.keyboardSize.height-(self.view.frame.size.height-moveUpValue-5);
+    
+    if(animatedDistance>0)
+    {
+        const float movementDuration = 0.3f;
+        int movement = (up ? -animatedDistance : animatedDistance);
+        [UIView beginAnimations: nil context: nil];
+        [UIView setAnimationBeginsFromCurrentState: YES];
+        [UIView setAnimationDuration: movementDuration];
+        [self.view viewWithTag:10].frame = CGRectOffset([self.view viewWithTag:10].frame, 0, movement);
+        [UIView commitAnimations];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField;
