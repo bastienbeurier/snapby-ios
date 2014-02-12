@@ -75,7 +75,7 @@
 }
 
 - (IBAction)feedbackClicked:(id)sender {
-    NSString *email = [NSString stringWithFormat:@"mailto:info@street-shout.com?subject=Feedback for Shout on iOS (v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    NSString *email = [NSString stringWithFormat:@"mailto:info@shouthereandnow.com?subject=Feedback for Shout on iOS (v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     
     email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
