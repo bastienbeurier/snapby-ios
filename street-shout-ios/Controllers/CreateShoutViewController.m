@@ -18,7 +18,6 @@
 #import "ImageUtilities.h"
 #import "NavigationAppDelegate.h"
 #import "SessionUtilities.h"
-#import "AFJSONRequestOperation.h"
 #import "TrackingUtilities.h"
 
 #define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
@@ -167,13 +166,13 @@
         });
     };
     
-    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
-    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
+    typedef void (^FailureBlock)(NSURLSessionDataTask *);
+    FailureBlock failureBlock = ^(NSURLSessionDataTask *task) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
             //In this case, 401 means that the auth token is no valid.
-            if ([SessionUtilities invalidTokenResponse:operation]) {
+            if ([SessionUtilities invalidTokenResponse:task]) {
                 [SessionUtilities redirectToSignIn];
             } else {
                 NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
@@ -194,7 +193,6 @@
         
         if (self.capturedImage && self.shoutImageUrl) {
             createShoutSuccessBlock = ^{
-                [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
                 [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                        Lng:self.shoutLocation.coordinate.longitude
                                                   Username:currentUser.username
@@ -213,7 +211,6 @@
             imageUploader.uploadImageSuccessBlock = createShoutSuccessBlock;
             imageUploader.uploadImageFailureBlock = createShoutFailureBlock;
             NSOperationQueue *operationQueue = [NSOperationQueue new];
-            [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
             [operationQueue addOperation:imageUploader];
         } else {
             [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude

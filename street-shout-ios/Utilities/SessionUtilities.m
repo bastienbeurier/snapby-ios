@@ -115,9 +115,9 @@
 }
 
 // Check if this is an invalid token response
-+ (BOOL)invalidTokenResponse:(AFHTTPRequestOperation *)operation
++ (BOOL)invalidTokenResponse:(NSURLSessionDataTask *)task
 {
-    return operation && [operation.response statusCode] == 401;
+    return task && [(NSHTTPURLResponse *) task.response statusCode] == 401;
 }
 
 @end

@@ -11,7 +11,6 @@
 #import "MBProgressHUD.h"
 #import "AFStreetShoutAPIClient.h"
 #import "User.h"
-#import "AFJSONRequestOperation.h"
 #import "SessionUtilities.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageUtilities.h"

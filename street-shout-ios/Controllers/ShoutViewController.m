@@ -234,10 +234,10 @@
             }
         }
     } else if (actionSheet == self.flagActionSheet) {
-        typedef void (^FailureBlock)(AFHTTPRequestOperation *);
-        FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation) {
+        typedef void (^FailureBlock)(NSURLSessionDataTask *);
+        FailureBlock failureBlock = ^(NSURLSessionDataTask *task) {
             //In this case, 401 means that the auth token is no valid.
-            if ([SessionUtilities invalidTokenResponse:operation]) {
+            if ([SessionUtilities invalidTokenResponse:task]) {
                 [SessionUtilities redirectToSignIn];
             }
         };

@@ -11,7 +11,6 @@
 #import "MBProgressHUD.h"
 #import "AFStreetShoutAPIClient.h"
 #import "User.h"
-#import "AFJSONRequestOperation.h"
 #import "SessionUtilities.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageUtilities.h"
@@ -110,15 +109,15 @@
         });
     };
     
-    typedef void (^FailureBlock)(AFHTTPRequestOperation *);
-    FailureBlock failureBlock = ^(AFHTTPRequestOperation *operation){
+    typedef void (^FailureBlock)(NSURLSessionDataTask *);
+    FailureBlock failureBlock = ^(NSURLSessionDataTask *task){
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
             NSString *title = nil;
             NSString *message = nil;
             //In this case, 401 means email/password combination doesn't match
-            if ([operation.response statusCode] == 401) {
+            if ([SessionUtilities invalidTokenResponse:task]) {
                 message = NSLocalizedStringFromTable (@"invalid_sign_in_message", @"Strings", @"comment");
             } else {
                 title = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
@@ -133,7 +132,7 @@
         [AFStreetShoutAPIClient signinWithEmail:self.emailTextView.text
                                        password:self.passwordTextView.text
                                         success:(void(^)(User *user, NSString *auth_token))successBlock
-                                        failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock];
+                                        failure:(void(^)(NSURLSessionDataTask *task))failureBlock];
     });
 }
 
