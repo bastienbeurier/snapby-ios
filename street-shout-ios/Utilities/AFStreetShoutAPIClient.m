@@ -7,7 +7,6 @@
 //
 
 #import "AFStreetShoutAPIClient.h"
-#import "AFJSONRequestOperation.h"
 #import "GeneralUtilities.h"
 #import "Constants.h"
 #import "NavigationAppDelegate.h"
@@ -47,11 +46,11 @@
     if (!self) {
         return nil;
     }
-    
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    
-    // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-	[self setDefaultHeader:@"Accept" value:@"application/json"];
+//    
+//    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+//    
+//    // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
+//	[self setDefaultHeader:@"Accept" value:@"application/json"];
     
     return self;
 }
@@ -85,18 +84,12 @@
     
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"bound_box_shouts.json"];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    
-    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
-        
         NSArray *rawShouts = [result valueForKeyPath:@"shouts"];
-        
         successBlock([Shout rawShoutsToInstances:rawShouts]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         failureBlock();
     }];
 }
@@ -106,17 +99,14 @@
 {
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"shouts/%d", shoutId]];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:nil success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
         NSDictionary *rawShout = [result valueForKeyPath:@"shout"];
         
         successBlock([Shout rawShoutToInstance:rawShout]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         if (failureBlock) {
             failureBlock();
@@ -125,7 +115,7 @@
 }
 
 // Shout creation
-+ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)username Description:(NSString *)description Image:(NSString *)imageUrl UserId:(NSUInteger)userId AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock
++ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)username Description:(NSString *)description Image:(NSString *)imageUrl UserId:(NSUInteger)userId AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
 {    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
@@ -146,18 +136,14 @@
     
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts.json"];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSString *rawShout = [result valueForKeyPath:@"shout"];
         
         successBlock([Shout rawShoutToInstance:rawShout]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
-        failureBlock(operation);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        failureBlock(task);
     }];
 }
 
@@ -183,21 +169,18 @@
     
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingFormat:@"users/%d.json", [SessionUtilities getCurrentUser].identifier];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] putPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] PUT:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         // Update user info in phone
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSDictionary *rawUser = [result valueForKeyPath:@"user"];
         User *user = [User rawUserToInstance:rawUser];
         [SessionUtilities updateCurrentUserInfoInPhone:user];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
     }];
 }
 
-+ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock
++ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
     
@@ -211,17 +194,13 @@
 
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"flags.json"];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         if (successBlock) {
             successBlock();
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (failureBlock) {
-            failureBlock(operation);
+            failureBlock(task);
         }
     }];
 }
@@ -231,23 +210,20 @@
 {
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"obsolete_api.json"];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
     NSDictionary *parameters = @{@"api_version": apiVersion};
-    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         if ([[result valueForKeyPath:@"obsolete"] isEqualToString: @"true"]) {
             obsoleteBlock();
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"checkAPIVersion: We should not pass in this block!!!!");
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
     }];
 }
 
 // Sign in
-+ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock
++ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSURLSessionDataTask *task))failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/sign_in.json"];
     
@@ -256,10 +232,7 @@
     [parameters setObject:email forKey:@"email"];
     [parameters setObject:password forKey:@"password"];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
         NSDictionary *rawUser = [result valueForKeyPath:@"user"];
@@ -270,11 +243,9 @@
         if (successBlock) {
             successBlock(user, authToken);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (failureBlock) {
-            failureBlock(operation);
+            failureBlock(task);
         }
     }];
 }
@@ -292,9 +263,7 @@
     
     [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
         
@@ -312,8 +281,7 @@
                 successBlock(user, authToken);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         NSLog(@"WRONG STATUS");
         failureBlock(nil);
@@ -334,9 +302,7 @@
     
     [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
@@ -349,8 +315,7 @@
         if (successBlock) {
                 successBlock(user, authToken, isSignup);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Failure in signInOrUpWithFacebook");
         failureBlock();
     }];
@@ -364,12 +329,9 @@
     
     [parameters setObject:email forKey:@"email"];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         successBlock(JSON);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         failureBlock();
     }];
 }
@@ -387,18 +349,14 @@
         return;
     }
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
         NSArray *rawComments = [result valueForKeyPath:@"comments"];
         
         successBlock([Comment rawCommentsToInstances:rawComments]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         failureBlock();
     }];
 }
@@ -423,17 +381,14 @@
         return;
     }
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
         NSArray *rawComments = [result valueForKeyPath:@"comments"];
         
         successBlock([Comment rawCommentsToInstances:rawComments]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         failureBlock();
     }];
@@ -457,11 +412,8 @@
         return;
     }
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         failureBlock();
     }];
@@ -480,17 +432,14 @@
         return;
     }
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
         NSArray *rawLikes = [result valueForKeyPath:@"likes"];
         
         successBlock([Like rawLikesToInstances:rawLikes]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         failureBlock();
     }];
@@ -504,10 +453,7 @@
     
     [parameters setObject:[NSNumber numberWithInt:shout.identifier] forKey:@"shout_id"];
     
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
         NSInteger commentCount = [[result objectForKey:@"comment_count"] integerValue];
@@ -515,9 +461,7 @@
         NSMutableArray *likerIds = [Like rawLikerIdsToNumbers:[result objectForKey:@"liker_ids"]];
         
         successBlock(commentCount, likerIds);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
-        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (failureBlock) {
             failureBlock();
         }
@@ -535,10 +479,8 @@
     if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
         return;
     }
-    
-    [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:YES];
-    [[AFStreetShoutAPIClient sharedClient] patchPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+
+    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
         
@@ -554,8 +496,7 @@
                 successBlock(user);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [(NavigationAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkActivityIndicatorVisible:NO];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         failureBlock(nil);
     }];
 }

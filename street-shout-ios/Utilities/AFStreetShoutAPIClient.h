@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Street Shout. All rights reserved.
 //
 
-#import "AFHTTPClient.h"
+#import "AFHTTPSessionManager.h"
 #import "Shout.h"
 #import "User.h"
 #import "Comment.h"
 #import "Like.h"
 
-@interface AFStreetShoutAPIClient : AFHTTPClient
+@interface AFStreetShoutAPIClient : AFHTTPSessionManager
 
 + (AFStreetShoutAPIClient *)sharedClient;
 
@@ -26,15 +26,15 @@
                      Image:(NSString *)imageUrl
                     UserId:(NSUInteger)userId
          AndExecuteSuccess:(void(^)(Shout *))successBlock
-                   Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
+                   Failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
 
 + (void)getShoutInfo:(NSUInteger)shoutId AndExecuteSuccess:(void(^)(Shout *shout))successBlock failure:(void(^)())failureBlock;
 
-+ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
++ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
 
 + (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())obsoleteBlock;
 
-+ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(AFHTTPRequestOperation *operation))failureBlock;
++ (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
 
 + (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
 

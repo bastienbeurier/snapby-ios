@@ -26,6 +26,7 @@
 #import "SignupViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "LikesViewController.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @implementation NavigationAppDelegate
 
@@ -54,6 +55,9 @@
         [Mixpanel sharedInstanceWithToken:kDevMixPanelToken];
         config.inProduction = NO;
     }
+    
+    // Manage the network activity indicator
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
     // Urban airship config
     [UAirship takeOff:config];
@@ -200,17 +204,6 @@
     [prefs synchronize];
 }
 
-// Code from http://oleb.net/blog/2009/09/managing-the-network-activity-indicator/
-- (void)setNetworkActivityIndicatorVisible:(BOOL)setVisible {
-    static NSInteger NumberOfCallsToSetVisible = 0;
-    if (setVisible)
-        NumberOfCallsToSetVisible++;
-    else
-        NumberOfCallsToSetVisible--;
-    
-    // Display the indicator as long as our static counter is > 0.
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:(NumberOfCallsToSetVisible > 0)];
-}
 
 // Jump directly to Navigation View Controller
 -(void)skipWelcomeController
