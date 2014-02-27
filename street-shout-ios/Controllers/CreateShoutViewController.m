@@ -20,38 +20,36 @@
 #import "SessionUtilities.h"
 #import "TrackingUtilities.h"
 
-#define ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"camera", @"Strings", @"comment")
-#define ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"photo_library", @"Strings", @"comment")
-#define ACTION_SHEET_CANCEL NSLocalizedStringFromTable (@"cancel", @"Strings", @"comment")
-
 @interface CreateShoutViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextView *descriptionView;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+////@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
-@property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
-@property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
+////@property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
+////@property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (strong, nonatomic) NSString *shoutImageName;
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
-@property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
 @property (weak, nonatomic) IBOutlet UIButton *refineLocationButton;
-@property (weak, nonatomic) IBOutlet UIView *descriptionViewShadowingView;
 @property(nonatomic,retain) ALAssetsLibrary *library;
-@property (weak, nonatomic) IBOutlet UIButton *removeShoutImage;
 @property (nonatomic) BOOL blackListed;
+@property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionView;
+
+
 @end
 
 @implementation CreateShoutViewController
 
 - (void)viewWillAppear:(BOOL)animated {
-    [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:NO];
     
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
-    shoutAnnotation.coordinate = self.shoutLocation.coordinate;
-    [self.mapView addAnnotation:shoutAnnotation];
+
+//    [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:NO];
+//    
+//    [self.mapView removeAnnotations:self.mapView.annotations];
+//    MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
+//    shoutAnnotation.coordinate = self.shoutLocation.coordinate;
+//    [self.mapView addAnnotation:shoutAnnotation];
     
     self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
 }
@@ -66,50 +64,71 @@
     [super viewDidLoad];
     
     self.blackListed = NO;
-
     self.descriptionView.delegate = self;
-    
-    self.library = [[ALAssetsLibrary alloc] init];
+    self.library = [ALAssetsLibrary new];
     
     //Round corners
-    NSUInteger buttonHeight = self.addPhotoButton.bounds.size.height;
-    self.shoutImageView.clipsToBounds = YES;
-    self.addPhotoButton.layer.cornerRadius = buttonHeight/2;
-    self.refineLocationButton.layer.cornerRadius = buttonHeight/2;
     self.descriptionView.layer.cornerRadius = 5;
-    self.descriptionViewShadowingView.layer.cornerRadius = 5;
-    self.mapView.layer.cornerRadius = 15;
-    self.shoutImageView.layer.cornerRadius = 15;
-    
-    self.descriptionViewShadowingView.clipsToBounds = NO;
-    
-    [self.descriptionViewShadowingView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.descriptionViewShadowingView.layer setShadowOpacity:0.25];
-    [self.descriptionViewShadowingView.layer setShadowRadius:3];
-    [self.descriptionViewShadowingView.layer setShadowOffset:CGSizeMake(0, 0)];
-    
     self.descriptionView.clipsToBounds = YES;
     
     //Nav Bar
-    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:@"ok" title:@"Shout" sizeBig:YES inViewController:self];
+    [ImageUtilities drawCustomNavBarWithLeftItem:@"cancel" rightItem:@"ok" title:@"Shout" sizeBig:YES inViewController:self];
+    
+    // Display a square camera
+    [self displaySquareCamera];
+    
+    // Set the cursor before a placeholder
+    self.descriptionView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
+    self.descriptionView.textColor = [UIColor lightGrayColor];
+    [self.descriptionView becomeFirstResponder];
+    // observe keyboard show notifications to resize the text view appropriately
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillShow:)
+//                                                 name:UIKeyboardWillShowNotification
+//                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillHide:)
+//                                                 name:UIKeyboardWillHideNotification
+//                                               object:nil];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
+    } else if ([textView.text isEqualToString:NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil)]) {
+        textView.text = @"";
+        textView.textColor = [UIColor whiteColor];
+        [GeneralUtilities adaptHeightTextView:textView];
+        return YES;
     } else {
+        // Update char count
         NSInteger charCount = [textView.text length] + [text length] - range.length;
         NSInteger remainingCharCount = kShoutMaxLength - charCount;
         self.charCount.text = [NSString stringWithFormat:@"%d", remainingCharCount];
-        return YES;
+        return (remainingCharCount >= 0);
     }
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)textViewDidChange:(UITextView *)textView {
+    [GeneralUtilities adaptHeightTextView:textView];
+}
+
+- (void)textViewDidChangeSelection:(UITextView *)textView
 {
-    [self.descriptionView becomeFirstResponder];
-    return NO;
+    if ([textView.text isEqualToString:NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil)]) {
+        textView.selectedRange = NSMakeRange(0, 0);
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
+        textView.textColor = [UIColor lightGrayColor];
+        [GeneralUtilities adaptHeightTextView:textView];
+        [self.view endEditing:YES];
+    }
 }
 
 - (void)okButtonClicked
@@ -119,7 +138,7 @@
         return;
     }
     
-    [self.descriptionView resignFirstResponder];
+    [self.view endEditing:YES];
     
     BOOL error = NO; NSString *title; NSString *message;
     
@@ -154,11 +173,7 @@
     typedef void (^SuccessBlock)(Shout *);
     SuccessBlock successBlock = ^(Shout *shout) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            //Mixpanel tracking
-            BOOL imagePresent = shout.image != nil;
-            NSUInteger textLength = [shout.description length];
-            [TrackingUtilities trackCreateShoutImage:imagePresent textLength:textLength];
+            [TrackingUtilities trackCreateShout];
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [self.navigationController popViewControllerAnimated:YES];
@@ -238,55 +253,6 @@
     }
 }
 
-- (IBAction)addPhotoButtonClicked:(id)sender {
-    [self letUserChoosePhoto];
-}
-
-- (IBAction)clearPhoto:(id)sender {
-    self.shoutImageView.image = nil;
-    self.capturedImage = nil;
-    [self.shoutImageView setHidden:YES];
-    [self.removeShoutImage setHidden:YES];
-}
-
-- (void)letUserChoosePhoto
-{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:ACTION_SHEET_CANCEL destructiveButtonTitle:nil otherButtonTitles:ACTION_SHEET_OPTION_1, ACTION_SHEET_OPTION_2, nil];
-    
-    [actionSheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
-    if ([buttonTitle isEqualToString:ACTION_SHEET_OPTION_1]) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-    } else if ([buttonTitle isEqualToString:ACTION_SHEET_OPTION_2]) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    } else if ([buttonTitle isEqualToString:ACTION_SHEET_CANCEL]) {
-        
-    }
-}
-
-- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
-{
-    if (self.shoutImageView.isAnimating) {
-        [self.shoutImageView stopAnimating];
-    }
-    
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePickerController.sourceType = sourceType;
-    imagePickerController.delegate = self;
-    
-    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-        imagePickerController.showsCameraControls = YES;
-    }
-    
-    self.imagePickerController = imagePickerController;
-    [self presentViewController:self.imagePickerController animated:YES completion:nil];
-}
 
 - (void)saveImageToFileSystem:(UIImage *)image
 {
@@ -301,27 +267,10 @@
                                    }];
 }
 
-- (void)finishAndUpdate
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    
-    if (self.capturedImage) {
-        [self.shoutImageView setImage:self.capturedImage];
-        [self.shoutImageView setHidden:NO];
-        [self.removeShoutImage setHidden:NO];
-    }
-    
-    self.imagePickerController = nil;
-}
-
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-        [self saveImageToFileSystem:image];
-    }
     
     if (image) {
         [self resizeAndSaveSelectedImageAndUpdate:image];
@@ -333,25 +282,75 @@
 - (void)resizeAndSaveSelectedImageAndUpdate:(UIImage *)image
 {
     self.capturedImage = [ImageUtilities cropBiggestCenteredSquareImageFromImage:image withSide:kShoutImageSize];
+    if (!self.capturedImage){
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"comment_failed_message", @"Strings", @"comment") withTitle:nil];
+        return;
+    }
+    
+    [self saveImageToFileSystem:self.capturedImage];
     self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
     self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
     
-    [self finishAndUpdate];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.shoutImageView setImage:self.capturedImage];
+    self.imagePickerController = nil;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (void)showMapInCreateShoutViewController
-{
-    [self.mapView setHidden:NO];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)backButtonClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void) displaySquareCamera
+{
+    UIImagePickerController *imagePickerController = [UIImagePickerController new];
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePickerController.delegate = self;
+    imagePickerController.showsCameraControls = YES;
+    [ImageUtilities addSquareBoundsToImagePicker:imagePickerController];
+    self.imagePickerController = imagePickerController;
+    [self presentViewController:self.imagePickerController animated:NO completion:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+//    NSDictionary *userInfo = [notification userInfo];
+//    
+//    // Get the origin of the keyboard when it's displayed.
+//    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    
+//    // Get the top of the keyboard as the y coordinate of its origin in self's view's
+//    // coordinate system. The bottom of the text view's frame should align with the top
+//    // of the keyboard's final position.
+//    //
+//    CGRect keyboardRect = [aValue CGRectValue];
+//    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+//    
+//    CGFloat keyboardTop = keyboardRect.origin.y;
+//    
+//    CGRect newTextViewFrame = self.addCommentContainerView.bounds;
+//    newTextViewFrame.origin.y = keyboardTop - self.addCommentContainerView.frame.size.height;
+//    
+//    // Get the duration of the animation.
+//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+//    NSTimeInterval animationDuration;
+//    [animationDurationValue getValue:&animationDuration];
+//    
+//    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:animationDuration];
+//    
+//    self.addCommentContainerView.frame = newTextViewFrame;
+//    
+//    [UIView commitAnimations];
+}
+
 
 @end

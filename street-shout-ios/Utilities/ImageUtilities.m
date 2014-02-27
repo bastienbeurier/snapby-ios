@@ -18,23 +18,31 @@
 @implementation ImageUtilities
 
 //Code from http://stackoverflow.com/questions/17712797/ios-custom-uiimagepickercontroller-camera-crop-to-square
-//TODO: check for iphone 5
 + (void)addSquareBoundsToImagePicker:(UIImagePickerController *)imagePickerController
 {
-    //Create camera overlay
     CGRect f = imagePickerController.view.bounds;
-    f.size.height -= imagePickerController.navigationBar.bounds.size.height;
-    CGFloat barHeight = (f.size.height - f.size.width) / 2;
-    UIGraphicsBeginImageContext(f.size);
-    [[UIColor colorWithWhite:0 alpha:.5] set];
-    UIRectFillUsingBlendMode(CGRectMake(0, 0, f.size.width, barHeight), kCGBlendModeNormal);
-    UIRectFillUsingBlendMode(CGRectMake(0, f.size.height - barHeight, f.size.width, barHeight), kCGBlendModeNormal);
+    
+    //TODO: make this more robust
+    if (f.size.height== 568.0f){
+        UIGraphicsBeginImageContext(f.size);
+        [[UIColor colorWithWhite:0 alpha:1] set];
+        UIRectFillUsingBlendMode(CGRectMake(0, 69, f.size.width, 53), kCGBlendModeNormal);
+        UIRectFillUsingBlendMode(CGRectMake(0, 69+426-53, f.size.width, 56),kCGBlendModeNormal);
+    } else {
+        f.size.height -= imagePickerController.navigationBar.bounds.size.height;
+        CGFloat barHeight = (f.size.height - f.size.width) / 2;
+        UIGraphicsBeginImageContext(f.size);
+        [[UIColor colorWithWhite:0 alpha:0] set];
+        UIRectFillUsingBlendMode(CGRectMake(0, 0, f.size.width, barHeight), kCGBlendModeNormal);
+        UIRectFillUsingBlendMode(CGRectMake(0, f.size.height - barHeight, f.size.width, barHeight), kCGBlendModeNormal);
+    }
+    
     UIImage *overlayImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     UIImageView *overlayIV = [[UIImageView alloc] initWithFrame:f];
     overlayIV.image = overlayImage;
-    [imagePickerController.cameraOverlayView addSubview:overlayIV];
+    [imagePickerController setCameraOverlayView:overlayIV];
 }
 
 + (UIImage *)cropImageToSquare:(UIImage *)image
@@ -236,13 +244,13 @@
     }
     
     //Add back Button
-    if ([leftItem isEqualToString:@"back"]) {
+    if ([leftItem isEqualToString:@"back"]||[leftItem isEqualToString:@"cancel"]) {
         
         UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
         backButton.frame = CGRectMake(buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
         [backButton addTarget:viewController action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         
-        UIImage *backImage = [UIImage imageNamed:@"back-item-button.png"];
+        UIImage *backImage = [leftItem isEqualToString:@"back"] ? [UIImage imageNamed:@"back-item-button.png"] : [UIImage imageNamed:@"cancel-item-button.png"];
         [backButton setBackgroundImage:backImage forState:UIControlStateNormal];
         
         [customNavBar addSubview:backButton];

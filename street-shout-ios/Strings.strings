@@ -75,6 +75,7 @@
 "like_failed_message" = "Your like could not be sent, please try again.";
 "report_shout" = "Report this shout";
 "navigate_to_shout" = "Directions to shout";
+"description_placeholder" = " What's happening here and now?";
 
 
  
