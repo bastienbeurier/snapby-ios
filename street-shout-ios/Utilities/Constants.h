@@ -61,6 +61,9 @@ static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;
 static const NSUInteger kDistanceWhenDisplayShout = 200;
 static const NSUInteger kDistanceAtStartup = 6000;
 
+// Size of UI elements
+static const NSUInteger kMaxShoutDescriptionWidth = 280;
+
 //Initialize map on Paris, with max zoom out
 static const double kMapInitialLatitude = 48.856541;
 static const double kMapInitialLongitude = 2.352401;
