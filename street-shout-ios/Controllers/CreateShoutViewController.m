@@ -19,6 +19,7 @@
 #import "NavigationAppDelegate.h"
 #import "SessionUtilities.h"
 #import "TrackingUtilities.h"
+#import "KeyboardUtilities.h"
 
 @interface CreateShoutViewController ()
 
@@ -35,13 +36,14 @@
 @property (nonatomic) BOOL blackListed;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
+@property (weak, nonatomic) IBOutlet UIView *topKeyboardView;
 
 
 @end
 
 @implementation CreateShoutViewController
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     
 
 //    [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:NO];
@@ -52,6 +54,11 @@
 //    [self.mapView addAnnotation:shoutAnnotation];
     
     self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
+    
+    // Set the cursor before a placeholder
+    self.descriptionView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
+    self.descriptionView.textColor = [UIColor lightGrayColor];
+    [self.descriptionView becomeFirstResponder];
 }
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
@@ -74,40 +81,36 @@
     //Nav Bar
     [ImageUtilities drawCustomNavBarWithLeftItem:@"cancel" rightItem:@"ok" title:@"Shout" sizeBig:YES inViewController:self];
     
+    // observe keyboard show notifications to resize the text view appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
     // Display a square camera
     [self displaySquareCamera];
-    
-    // Set the cursor before a placeholder
-    self.descriptionView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
-    self.descriptionView.textColor = [UIColor lightGrayColor];
-    [self.descriptionView becomeFirstResponder];
-    // observe keyboard show notifications to resize the text view appropriately
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWillShow:)
-//                                                 name:UIKeyboardWillShowNotification
-//                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWillHide:)
-//                                                 name:UIKeyboardWillHideNotification
-//                                               object:nil];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
-    } else if ([textView.text isEqualToString:NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil)]) {
+    }
+    if ([textView.text isEqualToString:NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil)]) {
         textView.text = @"";
         textView.textColor = [UIColor whiteColor];
         [GeneralUtilities adaptHeightTextView:textView];
-        return YES;
-    } else {
-        // Update char count
-        NSInteger charCount = [textView.text length] + [text length] - range.length;
-        NSInteger remainingCharCount = kShoutMaxLength - charCount;
-        self.charCount.text = [NSString stringWithFormat:@"%d", remainingCharCount];
-        return (remainingCharCount >= 0);
     }
+    
+    // Update char count
+    NSInteger charCount = [textView.text length] + [text length] - range.length;
+    NSInteger remainingCharCount = kShoutMaxLength - charCount;
+    self.charCount.text = [NSString stringWithFormat:@"%d", remainingCharCount];
+    return (remainingCharCount >= 0);
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -321,36 +324,11 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     
-//    NSDictionary *userInfo = [notification userInfo];
-//    
-//    // Get the origin of the keyboard when it's displayed.
-//    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    
-//    // Get the top of the keyboard as the y coordinate of its origin in self's view's
-//    // coordinate system. The bottom of the text view's frame should align with the top
-//    // of the keyboard's final position.
-//    //
-//    CGRect keyboardRect = [aValue CGRectValue];
-//    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
-//    
-//    CGFloat keyboardTop = keyboardRect.origin.y;
-//    
-//    CGRect newTextViewFrame = self.addCommentContainerView.bounds;
-//    newTextViewFrame.origin.y = keyboardTop - self.addCommentContainerView.frame.size.height;
-//    
-//    // Get the duration of the animation.
-//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-//    NSTimeInterval animationDuration;
-//    [animationDurationValue getValue:&animationDuration];
-//    
-//    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:animationDuration];
-//    
-//    self.addCommentContainerView.frame = newTextViewFrame;
-//    
-//    [UIView commitAnimations];
+    [KeyboardUtilities pushUpTopView:self.topKeyboardView whenKeyboardWillShowNotification:notification];
 }
 
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [KeyboardUtilities pushDownTopView:self.topKeyboardView whenKeyboardWillhideNotification:notification];
+}
 
 @end
