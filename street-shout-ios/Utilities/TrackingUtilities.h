@@ -15,7 +15,7 @@
 
 + (void)identifyWithMixpanel:(User *)user isSigningUp:(BOOL)isSigningUp;
 
-+ (void)trackCreateShoutImage:(BOOL)image textLength:(NSUInteger)length;
++ (void)trackCreateShout;
 
 + (void)trackAppOpened;
 

@@ -26,13 +26,11 @@
     [mixpanel.people set:@{@"Username": user.username, @"Email": user.email}];
 }
 
-+ (void)trackCreateShoutImage:(BOOL)image textLength:(NSUInteger)length
++ (void)trackCreateShout
 {
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
-    NSString *imageParam = image ? @"Yes" : @"No";
-        
-    [mixpanel track:@"Create shout" properties:@{@"Image": imageParam, @"Text length": [NSNumber numberWithInt:length]}];
+    [mixpanel track:@"Create shout"];
     
     [mixpanel.people increment:@"Create shout count" by:[NSNumber numberWithInt:1]];
 }
@@ -41,9 +39,9 @@
 {
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
-    NSString *signedInParam = [SessionUtilities isSignedIn] ? @"Yes" : @"No";
+//    NSString *signedInParam = [SessionUtilities isSignedIn] ? @"Yes" : @"No";
     
-    [mixpanel track:@"Open app" properties:@{@"Signed in": signedInParam}];
+//    [mixpanel track:@"Open app" properties:@{@"Signed in": signedInParam}];
     
     [mixpanel.people increment:@"Open app count" by:[NSNumber numberWithInt:1]];
 }
@@ -59,9 +57,9 @@
 {
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
-    NSString *imageParam = shout.image ? @"Yes" : @"No";
+//    NSString *imageParam = shout.image ? @"Yes" : @"No";
     
-    [mixpanel track:@"Display shout" properties:@{@"Source": source, @"Image": imageParam}];
+//    [mixpanel track:@"Display shout" properties:@{@"Source": source, @"Image": imageParam}];
     
     [mixpanel.people increment:@"Display shout count" by:[NSNumber numberWithInt:1]];
 }
