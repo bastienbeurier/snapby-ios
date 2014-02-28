@@ -20,6 +20,7 @@
 #import "SessionUtilities.h"
 #import "MBProgressHUD.h"
 #import "TrackingUtilities.h"
+#import "LocationUtilities.h"
 
 #define SHOUT_BUTTON_SIZE 72.0
 
@@ -65,8 +66,6 @@
     
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
-    
-    [self refreshShouts];
     
     [super viewWillAppear:animated];
 }
@@ -280,6 +279,11 @@
                                                  cancelButtonTitle:@"OK"
                                                  otherButtonTitles:nil];
     [self.obsoleteAPIAlertView show];
+}
+
+- (void)updateMapLocationtoLat:(double)lat lng:(double)lng
+{
+    [LocationUtilities animateMap:self.mapViewController.mapView ToLatitude:lat Longitude:lng WithDistance:kDistanceWhenMapDisplayShoutClicked Animated:YES];
 }
 
 @end

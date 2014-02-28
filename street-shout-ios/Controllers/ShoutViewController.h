@@ -25,4 +25,6 @@
 
 - (void)redisplayFeed;
 
+- (void)updateMapLocationtoLat:(double)lat lng:(double)lng;
+
 @end

@@ -35,7 +35,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 @property (weak, nonatomic) IBOutlet UIView *topKeyboardView;
-//@property (weak, nonatomic) IBOutlet CheckBox *anonymBox;
 
 
 @end

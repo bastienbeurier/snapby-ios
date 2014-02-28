@@ -88,6 +88,11 @@
     //Shout content round corners
     self.shoutContent.layer.cornerRadius = 5;
     
+    // Prepare one touch action on map
+    UITapGestureRecognizer *mapTouch = [[UITapGestureRecognizer alloc]
+                                        initWithTarget:self action:@selector(handleGesture:)];
+    [self.mapView addGestureRecognizer:mapTouch];
+    
     //Add bottom bar borders
     CALayer *topBorder = [CALayer layer];
     topBorder.frame = CGRectMake(0.0f, 0.0f, self.bottomBarView.frame.size.width, 0.5f);
@@ -381,6 +386,14 @@
         [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", count] forState:UIControlStateNormal];
     }
     
+}
+
+- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
+        return;
+    [self.shoutVCDelegate updateMapLocationtoLat:self.shout.lat lng:self.shout.lng];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

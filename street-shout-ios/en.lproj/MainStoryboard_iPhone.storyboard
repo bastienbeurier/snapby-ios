@@ -347,7 +347,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="erD-k1-NAf"/>
                     <connections>
-                        <outlet property="anonymBox" destination="DYJ-gm-5ei" id="MJP-xH-Gvb"/>
                         <outlet property="charCount" destination="hKA-nq-pbt" id="Fqi-fm-P6Q"/>
                         <outlet property="descriptionView" destination="6gF-na-Ube" id="p4P-0z-Sk0"/>
                         <outlet property="mapView" destination="i7h-Zw-zYH" id="j1q-Aw-61i"/>
@@ -493,7 +492,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MKd-0C-E3k">
+                            <mapView clipsSubviews="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MKd-0C-E3k">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <constraints>
