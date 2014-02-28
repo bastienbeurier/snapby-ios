@@ -31,6 +31,7 @@
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property(nonatomic,retain) ALAssetsLibrary *library;
 @property (nonatomic) BOOL blackListed;
+@property (nonatomic) BOOL isAnonymous;
 @property (nonatomic) BOOL firstOpening;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
@@ -225,37 +226,27 @@
         
         User *currentUser = [SessionUtilities getCurrentUser];
         
-        if (self.capturedImage && self.shoutImageUrl) {
-            createShoutSuccessBlock = ^{
-                [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
-                                                       Lng:self.shoutLocation.coordinate.longitude
-                                                  Username:currentUser.username
-                                               Description:self.descriptionView.text
-                                                     Image:self.shoutImageUrl
-                                                    UserId:currentUser.identifier
-                                         AndExecuteSuccess:successBlock
-                                                   Failure:failureBlock];
-            };
-            
-            createShoutFailureBlock = ^{
-                failureBlock(nil);
-            };
-            
-            AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
-            imageUploader.uploadImageSuccessBlock = createShoutSuccessBlock;
-            imageUploader.uploadImageFailureBlock = createShoutFailureBlock;
-            NSOperationQueue *operationQueue = [NSOperationQueue new];
-            [operationQueue addOperation:imageUploader];
-        } else {
+        createShoutSuccessBlock = ^{
             [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                    Lng:self.shoutLocation.coordinate.longitude
                                               Username:currentUser.username
                                            Description:self.descriptionView.text
-                                                 Image:nil
-                                              UserId:currentUser.identifier
+                                                 Image:self.shoutImageUrl
+                                                UserId:currentUser.identifier
+                                             Anonymous:self.isAnonymous
                                      AndExecuteSuccess:successBlock
                                                Failure:failureBlock];
-        }
+        };
+        
+        createShoutFailureBlock = ^{
+            failureBlock(nil);
+        };
+        
+        AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
+        imageUploader.uploadImageSuccessBlock = createShoutSuccessBlock;
+        imageUploader.uploadImageFailureBlock = createShoutFailureBlock;
+        NSOperationQueue *operationQueue = [NSOperationQueue new];
+        [operationQueue addOperation:imageUploader];
     });
 }
 
@@ -297,17 +288,15 @@
     if (image) {
         [self resizeAndSaveSelectedImageAndUpdate:image];
     } else {
-        NSLog(@"Failed to get image");
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"comment_failed_message", @"Strings", @"comment") withTitle:nil];
+        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
 - (void)resizeAndSaveSelectedImageAndUpdate:(UIImage *)image
 {
     self.capturedImage = [ImageUtilities cropBiggestCenteredSquareImageFromImage:image withSide:kShoutImageSize];
-    if (!self.capturedImage){
-        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"comment_failed_message", @"Strings", @"comment") withTitle:nil];
-        return;
-    }
     
     [self saveImageToFileSystem:self.capturedImage];
     self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];

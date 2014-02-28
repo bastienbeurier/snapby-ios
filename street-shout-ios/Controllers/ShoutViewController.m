@@ -177,7 +177,7 @@
             self.shoutContent.backgroundColor = [UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.5];
         }
         
-        self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.username];
+        self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.anonymous? @"Anonymous" : self.shout.username];
 
         self.shoutContent.text = self.shout.description;
         

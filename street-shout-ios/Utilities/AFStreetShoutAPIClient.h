@@ -25,6 +25,7 @@
                Description:(NSString *)description
                      Image:(NSString *)imageUrl
                     UserId:(NSUInteger)userId
+                 Anonymous:(BOOL)isAnonymous
          AndExecuteSuccess:(void(^)(Shout *))successBlock
                    Failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
 

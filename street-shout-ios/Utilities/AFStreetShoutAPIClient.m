@@ -110,7 +110,7 @@
 }
 
 // Shout creation
-+ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)username Description:(NSString *)description Image:(NSString *)imageUrl UserId:(NSUInteger)userId AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
++ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)username Description:(NSString *)description Image:(NSString *)imageUrl UserId:(NSUInteger)userId Anonymous:(BOOL)isAnonymous AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
 {    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
@@ -124,10 +124,8 @@
     [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
     [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
     [parameters setObject:[NSNumber numberWithInteger:userId] forKey:@"user_id"];
-    
-    if (imageUrl) {
-        [parameters setObject:imageUrl forKey:@"image"];
-    }
+    [parameters setObject:[NSNumber numberWithBool:isAnonymous] forKey:@"anonymous"];
+    [parameters setObject:imageUrl forKey:@"image"];
     
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts.json"];
     
