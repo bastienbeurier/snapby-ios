@@ -10,4 +10,7 @@
 
 @interface MICheckBox : UIButton
 
+@property (nonatomic,assign) BOOL isChecked;
+-(IBAction) checkBoxClicked;
+
 @end

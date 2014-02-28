@@ -10,22 +10,34 @@
 
 @implementation MICheckBox
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
+- (id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
         // Initialization code
+        
+        self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        
+        [self setImage:[UIImage imageNamed:@"checkbox_not_ticked.png"]
+              forState:UIControlStateNormal];
+        
+        [self addTarget:self action:
+         @selector(checkBoxClicked)
+       forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+-(IBAction) checkBoxClicked{
+    if(self.isChecked ==NO){
+        self.isChecked =YES;
+        [self setImage:[UIImage imageNamed:@"checkbox_ticked.png"]
+              forState:UIControlStateNormal];
+        
+    }else{
+        self.isChecked =NO;
+        [self setImage:[UIImage imageNamed:@"checkbox_not_ticked.png"]
+              forState:UIControlStateNormal];
+    }
 }
-*/
+
 
 @end

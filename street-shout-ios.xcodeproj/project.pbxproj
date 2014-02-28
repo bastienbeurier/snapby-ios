@@ -499,7 +499,6 @@
 		3C66B6C218BB9750006EF1A6 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B718BB9750006EF1A6 /* AFURLRequestSerialization.m */; };
 		3C66B6C318BB9750006EF1A6 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B918BB9750006EF1A6 /* AFURLResponseSerialization.m */; };
 		3C66B6C418BB9750006EF1A6 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6BB18BB9750006EF1A6 /* AFURLSessionManager.m */; };
-		3C6E0E0618C08E8000DBD1EF /* MICheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6E0E0518C08E8000DBD1EF /* MICheckBox.m */; };
 		3CA5F09618BF8F5B00C7677B /* KeyboardUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */; };
 		3CEB380918882E1A00ADC994 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB380818882E1A00ADC994 /* ForgotPasswordViewController.m */; };
 /* End PBXBuildFile section */
@@ -769,8 +768,6 @@
 		3C66B6B918BB9750006EF1A6 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		3C66B6BA18BB9750006EF1A6 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		3C66B6BB18BB9750006EF1A6 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		3C6E0E0418C08E8000DBD1EF /* MICheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MICheckBox.h; path = Utilities/MICheckBox.h; sourceTree = "<group>"; };
-		3C6E0E0518C08E8000DBD1EF /* MICheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MICheckBox.m; path = Utilities/MICheckBox.m; sourceTree = "<group>"; };
 		3CA5F09418BF8F5B00C7677B /* KeyboardUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyboardUtilities.h; path = Utilities/KeyboardUtilities.h; sourceTree = "<group>"; };
 		3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyboardUtilities.m; path = Utilities/KeyboardUtilities.m; sourceTree = "<group>"; };
 		3CEB380718882E1A00ADC994 /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgotPasswordViewController.h; path = Controllers/ForgotPasswordViewController.h; sourceTree = "<group>"; };
@@ -1086,8 +1083,6 @@
 				0BF63ED81885E50C002B1254 /* TrackingUtilities.m */,
 				3CA5F09418BF8F5B00C7677B /* KeyboardUtilities.h */,
 				3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */,
-				3C6E0E0418C08E8000DBD1EF /* MICheckBox.h */,
-				3C6E0E0518C08E8000DBD1EF /* MICheckBox.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1713,7 +1708,6 @@
 				3C66B6A018BB973D006EF1A6 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				3C66B6A318BB973D006EF1A6 /* UIButton+AFNetworking.m in Sources */,
 				0B7286FD1890203A00FB4CC4 /* LikesViewController.m in Sources */,
-				3C6E0E0618C08E8000DBD1EF /* MICheckBox.m in Sources */,
 				0B7C47D3188D8A4500D308A9 /* CommentsTableViewCell.m in Sources */,
 				0B07B9F917E6FF8300DA26EE /* AmazonTVMClient.m in Sources */,
 				0B07B9FA17E6FF8300DA26EE /* AmazonKeyChainWrapper.m in Sources */,
