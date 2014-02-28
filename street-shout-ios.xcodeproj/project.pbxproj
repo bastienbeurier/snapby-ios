@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B07B9DF17E6FF8300DA26EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F72F1795C66500F37227 /* main.m */; };
 		0B07B9E017E6FF8300DA26EE /* NavigationAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7331795C66500F37227 /* NavigationAppDelegate.m */; };
-		0B07B9E117E6FF8300DA26EE /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* NavigationViewController.m */; };
+		0B07B9E117E6FF8300DA26EE /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* ExploreViewController.m */; };
 		0B07B9EB17E6FF8300DA26EE /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */; };
 		0B07B9EC17E6FF8300DA26EE /* Shout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71C17971AF300312BFD /* Shout.m */; };
 		0B07B9ED17E6FF8300DA26EE /* MapRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71F17971B1D00312BFD /* MapRequestHandler.m */; };
@@ -159,7 +159,7 @@
 		0BC30FE21894444400917C3C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F72F1795C66500F37227 /* main.m */; };
 		0BC30FE31894444400917C3C /* Mixpanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F231885E969002B1254 /* Mixpanel.m */; };
 		0BC30FE41894444400917C3C /* NavigationAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7331795C66500F37227 /* NavigationAppDelegate.m */; };
-		0BC30FE51894444400917C3C /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* NavigationViewController.m */; };
+		0BC30FE51894444400917C3C /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* ExploreViewController.m */; };
 		0BC30FEC1894444400917C3C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCA5F3918095063003A8637 /* SettingsViewController.m */; };
 		0BC30FED1894444400917C3C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F681885E9B7002B1254 /* MBProgressHUD.m */; };
 		0BC30FF11894444400917C3C /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */; };
@@ -318,7 +318,7 @@
 		0BCBC604189160DB00933715 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F72F1795C66500F37227 /* main.m */; };
 		0BCBC605189160DB00933715 /* Mixpanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F231885E969002B1254 /* Mixpanel.m */; };
 		0BCBC606189160DB00933715 /* NavigationAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7331795C66500F37227 /* NavigationAppDelegate.m */; };
-		0BCBC607189160DB00933715 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* NavigationViewController.m */; };
+		0BCBC607189160DB00933715 /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* ExploreViewController.m */; };
 		0BCBC60E189160DB00933715 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCA5F3918095063003A8637 /* SettingsViewController.m */; };
 		0BCBC60F189160DB00933715 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F681885E9B7002B1254 /* MBProgressHUD.m */; };
 		0BCBC613189160DB00933715 /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */; };
@@ -499,6 +499,7 @@
 		3C66B6C218BB9750006EF1A6 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B718BB9750006EF1A6 /* AFURLRequestSerialization.m */; };
 		3C66B6C318BB9750006EF1A6 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B918BB9750006EF1A6 /* AFURLResponseSerialization.m */; };
 		3C66B6C418BB9750006EF1A6 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6BB18BB9750006EF1A6 /* AFURLSessionManager.m */; };
+		3C6E0E0618C08E8000DBD1EF /* MICheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6E0E0518C08E8000DBD1EF /* MICheckBox.m */; };
 		3CA5F09618BF8F5B00C7677B /* KeyboardUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */; };
 		3CEB380918882E1A00ADC994 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB380818882E1A00ADC994 /* ForgotPasswordViewController.m */; };
 /* End PBXBuildFile section */
@@ -601,8 +602,8 @@
 		0B65F7321795C66500F37227 /* NavigationAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NavigationAppDelegate.h; path = Utilities/NavigationAppDelegate.h; sourceTree = "<group>"; };
 		0B65F7331795C66500F37227 /* NavigationAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NavigationAppDelegate.m; path = Utilities/NavigationAppDelegate.m; sourceTree = "<group>"; };
 		0B65F73C1795C66500F37227 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		0B65F7411795C66500F37227 /* NavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NavigationViewController.h; path = Controllers/NavigationViewController.h; sourceTree = "<group>"; };
-		0B65F7421795C66500F37227 /* NavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NavigationViewController.m; path = Controllers/NavigationViewController.m; sourceTree = "<group>"; };
+		0B65F7411795C66500F37227 /* ExploreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExploreViewController.h; path = Controllers/ExploreViewController.h; sourceTree = "<group>"; };
+		0B65F7421795C66500F37227 /* ExploreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ExploreViewController.m; path = Controllers/ExploreViewController.m; sourceTree = "<group>"; };
 		0B65F7491795CA7900F37227 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0B71A30C1887F4FA009F68C0 /* more-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-button@2x~iphone.png"; sourceTree = "<group>"; };
 		0B71A3121887FAA1009F68C0 /* my-location-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my-location-button@2x~iphone.png"; sourceTree = "<group>"; };
@@ -768,6 +769,8 @@
 		3C66B6B918BB9750006EF1A6 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		3C66B6BA18BB9750006EF1A6 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		3C66B6BB18BB9750006EF1A6 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		3C6E0E0418C08E8000DBD1EF /* MICheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MICheckBox.h; path = Utilities/MICheckBox.h; sourceTree = "<group>"; };
+		3C6E0E0518C08E8000DBD1EF /* MICheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MICheckBox.m; path = Utilities/MICheckBox.m; sourceTree = "<group>"; };
 		3CA5F09418BF8F5B00C7677B /* KeyboardUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyboardUtilities.h; path = Utilities/KeyboardUtilities.h; sourceTree = "<group>"; };
 		3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyboardUtilities.m; path = Utilities/KeyboardUtilities.m; sourceTree = "<group>"; };
 		3CEB380718882E1A00ADC994 /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgotPasswordViewController.h; path = Controllers/ForgotPasswordViewController.h; sourceTree = "<group>"; };
@@ -1011,8 +1014,8 @@
 		0B42A70F17970C5E00312BFD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0B65F7411795C66500F37227 /* NavigationViewController.h */,
-				0B65F7421795C66500F37227 /* NavigationViewController.m */,
+				0B65F7411795C66500F37227 /* ExploreViewController.h */,
+				0B65F7421795C66500F37227 /* ExploreViewController.m */,
 				0B89CB971799DEB500C9BD18 /* FeedTVC.h */,
 				0B89CB981799DEB500C9BD18 /* FeedTVC.m */,
 				0B435695179DA1D9009CC8E9 /* MapViewController.h */,
@@ -1083,6 +1086,8 @@
 				0BF63ED81885E50C002B1254 /* TrackingUtilities.m */,
 				3CA5F09418BF8F5B00C7677B /* KeyboardUtilities.h */,
 				3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */,
+				3C6E0E0418C08E8000DBD1EF /* MICheckBox.h */,
+				3C6E0E0518C08E8000DBD1EF /* MICheckBox.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1677,7 +1682,7 @@
 				0B07B9DF17E6FF8300DA26EE /* main.m in Sources */,
 				0BF63F3F1885E969002B1254 /* Mixpanel.m in Sources */,
 				0B07B9E017E6FF8300DA26EE /* NavigationAppDelegate.m in Sources */,
-				0B07B9E117E6FF8300DA26EE /* NavigationViewController.m in Sources */,
+				0B07B9E117E6FF8300DA26EE /* ExploreViewController.m in Sources */,
 				3C66B6A118BB973D006EF1A6 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				3C66B6C218BB9750006EF1A6 /* AFURLRequestSerialization.m in Sources */,
 				0BCA5F3B18095063003A8637 /* SettingsViewController.m in Sources */,
@@ -1708,6 +1713,7 @@
 				3C66B6A018BB973D006EF1A6 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				3C66B6A318BB973D006EF1A6 /* UIButton+AFNetworking.m in Sources */,
 				0B7286FD1890203A00FB4CC4 /* LikesViewController.m in Sources */,
+				3C6E0E0618C08E8000DBD1EF /* MICheckBox.m in Sources */,
 				0B7C47D3188D8A4500D308A9 /* CommentsTableViewCell.m in Sources */,
 				0B07B9F917E6FF8300DA26EE /* AmazonTVMClient.m in Sources */,
 				0B07B9FA17E6FF8300DA26EE /* AmazonKeyChainWrapper.m in Sources */,
@@ -1759,7 +1765,7 @@
 				0BC30FE21894444400917C3C /* main.m in Sources */,
 				0BC30FE31894444400917C3C /* Mixpanel.m in Sources */,
 				0BC30FE41894444400917C3C /* NavigationAppDelegate.m in Sources */,
-				0BC30FE51894444400917C3C /* NavigationViewController.m in Sources */,
+				0BC30FE51894444400917C3C /* ExploreViewController.m in Sources */,
 				0BC30FEC1894444400917C3C /* SettingsViewController.m in Sources */,
 				0BC30FED1894444400917C3C /* MBProgressHUD.m in Sources */,
 				0BC30FF11894444400917C3C /* AFStreetShoutAPIClient.m in Sources */,
@@ -1825,7 +1831,7 @@
 				0BCBC604189160DB00933715 /* main.m in Sources */,
 				0BCBC605189160DB00933715 /* Mixpanel.m in Sources */,
 				0BCBC606189160DB00933715 /* NavigationAppDelegate.m in Sources */,
-				0BCBC607189160DB00933715 /* NavigationViewController.m in Sources */,
+				0BCBC607189160DB00933715 /* ExploreViewController.m in Sources */,
 				0BCBC60E189160DB00933715 /* SettingsViewController.m in Sources */,
 				0BCBC60F189160DB00933715 /* MBProgressHUD.m in Sources */,
 				0BCBC613189160DB00933715 /* AFStreetShoutAPIClient.m in Sources */,

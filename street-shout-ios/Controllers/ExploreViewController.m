@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Street Shout. All rights reserved.
 //
 
-#import "NavigationViewController.h"
+#import "ExploreViewController.h"
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
 #import "Shout.h"
@@ -23,7 +23,7 @@
 
 #define SHOUT_BUTTON_SIZE 72.0
 
-@interface NavigationViewController ()
+@interface ExploreViewController ()
 
 @property (nonatomic, weak) UINavigationController *feedNavigationController;
 @property (nonatomic, weak) FeedTVC *feedTVC;
@@ -39,7 +39,7 @@
 
 @end
 
-@implementation NavigationViewController
+@implementation ExploreViewController
 
 - (void)viewDidLoad
 {

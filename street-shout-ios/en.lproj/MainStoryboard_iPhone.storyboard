@@ -192,10 +192,10 @@
             </objects>
             <point key="canvasLocation" x="461" y="809"/>
         </scene>
-        <!--Navigation View Controller-->
+        <!--Explore View Controller-->
         <scene sceneID="5">
             <objects>
-                <viewController storyboardIdentifier="NavigationViewController" id="2" customClass="NavigationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NavigationViewController" id="2" customClass="ExploreViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9At-1p-99c"/>
                         <viewControllerLayoutGuide type="bottom" id="g04-xb-cCJ"/>
@@ -294,23 +294,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqd-M7-JXd">
-                                <rect key="frame" x="170" y="437" width="130" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="130" id="7CH-96-hnY"/>
-                                    <constraint firstAttribute="height" constant="40" id="E09-IB-DcF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
-                                <state key="normal" title="Refine location">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="refineLocationButtonClicked:" destination="vn8-un-4WF" eventType="touchUpInside" id="kom-th-eGc"/>
-                                </connections>
-                            </button>
                             <imageView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S4w-al-2Mc">
                                 <rect key="frame" x="0.0" y="80" width="320" height="316"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -321,7 +304,7 @@
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6gF-na-Ube">
-                                <rect key="frame" x="20" y="98" width="280" height="77"/>
+                                <rect key="frame" x="20" y="98" width="280" height="83"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
@@ -338,27 +321,43 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYJ-gm-5ei">
+                                        <rect key="frame" x="14" y="-5" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <mapView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7h-Zw-zYH">
+                                <rect key="frame" x="0.0" y="394" width="320" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="sgB-39-b9W" appends="YES" id="h6N-S6-Ots"/>
+                                </connections>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="eqd-M7-JXd" secondAttribute="trailing" constant="20" id="VaB-nr-GDQ"/>
                             <constraint firstItem="6gF-na-Ube" firstAttribute="centerX" secondItem="S4w-al-2Mc" secondAttribute="centerX" id="kHQ-dh-Ydj"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="erD-k1-NAf"/>
                     <connections>
+                        <outlet property="anonymBox" destination="DYJ-gm-5ei" id="MJP-xH-Gvb"/>
                         <outlet property="charCount" destination="hKA-nq-pbt" id="Fqi-fm-P6Q"/>
                         <outlet property="descriptionView" destination="6gF-na-Ube" id="p4P-0z-Sk0"/>
-                        <outlet property="refineLocationButton" destination="eqd-M7-JXd" id="A1Y-jZ-yXb"/>
+                        <outlet property="mapView" destination="i7h-Zw-zYH" id="j1q-Aw-61i"/>
                         <outlet property="shoutImageView" destination="S4w-al-2Mc" id="fIl-PL-sZK"/>
                         <outlet property="topKeyboardView" destination="Ntx-uj-eMm" id="HX7-Qf-xG0"/>
                         <segue destination="Kte-b7-QO8" kind="push" identifier="Refine Shout Location" id="7T2-pa-D5v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pF-an-gi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="sgB-39-b9W"/>
             </objects>
             <point key="canvasLocation" x="461" y="-774"/>
         </scene>
@@ -670,12 +669,9 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="y1c-Mb-1ry"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" text="This is a new shout m!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" misplaced="YES" text="This is a new shout m!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb">
                                         <rect key="frame" x="20" y="20" width="280" height="35"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="280" id="9lC-za-B0d"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

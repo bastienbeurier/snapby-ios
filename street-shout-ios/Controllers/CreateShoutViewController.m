@@ -23,20 +23,19 @@
 
 @interface CreateShoutViewController ()
 
-////@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
-////@property (strong, nonatomic) MKPointAnnotation *shoutAnnotation;
-////@property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (strong, nonatomic) NSString *shoutImageName;
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
-@property (weak, nonatomic) IBOutlet UIButton *refineLocationButton;
 @property(nonatomic,retain) ALAssetsLibrary *library;
 @property (nonatomic) BOOL blackListed;
+@property (nonatomic) BOOL firstOpening;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 @property (weak, nonatomic) IBOutlet UIView *topKeyboardView;
+//@property (weak, nonatomic) IBOutlet CheckBox *anonymBox;
 
 
 @end
@@ -45,20 +44,28 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     
-
-//    [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:NO];
-//    
-//    [self.mapView removeAnnotations:self.mapView.annotations];
-//    MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
-//    shoutAnnotation.coordinate = self.shoutLocation.coordinate;
-//    [self.mapView addAnnotation:shoutAnnotation];
-    
     self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
     
-    // Set the cursor before a placeholder
-    self.descriptionView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
-    self.descriptionView.textColor = [UIColor lightGrayColor];
-    [self.descriptionView becomeFirstResponder];
+    // Center the map on user location
+    [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:YES];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
+    shoutAnnotation.coordinate = self.shoutLocation.coordinate;
+    [self.mapView addAnnotation:shoutAnnotation];
+    
+    // Set the cursor before the placeholder
+    if (self.firstOpening) {
+        [self.descriptionView becomeFirstResponder];
+        [GeneralUtilities adaptHeightTextView:self.descriptionView];
+        self.firstOpening = FALSE;
+    }
+}
+
+- (void) viewDidLayoutSubviews {
+    // strange hack to avoid opening bug
+    if (!self.firstOpening) {
+         [GeneralUtilities adaptHeightTextView:self.descriptionView];
+     }
 }
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
@@ -71,6 +78,7 @@
     [super viewDidLoad];
     
     self.blackListed = NO;
+    self.firstOpening = TRUE;
     self.descriptionView.delegate = self;
     self.library = [ALAssetsLibrary new];
     
@@ -91,6 +99,15 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
+    // Put the placeholder
+    self.descriptionView.textColor = [UIColor lightGrayColor];
+    self.descriptionView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
+    
+    // Prepare one touch action on map
+    UITapGestureRecognizer *mapTouch = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(handleGesture:)];
+    [self.mapView addGestureRecognizer:mapTouch];
+
     // Display a square camera
     [self displaySquareCamera];
 }
@@ -243,7 +260,10 @@
     });
 }
 
-- (IBAction)refineLocationButtonClicked:(id)sender {
+- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
+        return;
     [self performSegueWithIdentifier:@"Refine Shout Location" sender:nil];
 }
 

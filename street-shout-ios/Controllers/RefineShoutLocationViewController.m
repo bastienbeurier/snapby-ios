@@ -69,7 +69,6 @@
 
 - (void)backButtonClicked
 {
-    [self.refineShoutLocationVCDelegate showMapInCreateShoutViewController];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

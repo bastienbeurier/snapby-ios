@@ -13,7 +13,7 @@
 #import "UAPush.h"
 #import "TestFlight.h"
 #import "Constants.h"
-#import "NavigationViewController.h"
+#import "ExploreViewController.h"
 #import "Shout.h"
 #import "AFStreetShoutAPIClient.h"
 #import "Mixpanel.h"
@@ -158,8 +158,8 @@
     if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         
-        if ([[navController topViewController] isKindOfClass:[NavigationViewController class]]) {
-            NavigationViewController *navigationViewController = (NavigationViewController *) [navController topViewController];
+        if ([[navController topViewController] isKindOfClass:[ExploreViewController class]]) {
+            ExploreViewController *navigationViewController = (ExploreViewController *) [navController topViewController];
             
             NSDictionary *extra = [notification objectForKey:@"extra"];
             NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];

@@ -10,7 +10,7 @@
 #import "MapRequestHandler.h"
 #import "TimeUtilities.h"
 #import "ShoutViewController.h"
-#import "NavigationViewController.h"
+#import "ExploreViewController.h"
 #import "ShoutTableViewCell.h"
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
