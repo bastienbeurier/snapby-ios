@@ -14,6 +14,9 @@
 
 + (void)identifyWithMixpanel:(User *)user isSigningUp:(BOOL)isSigningUp
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     //Alias to merge mixpanel people id before signup and street shout id after sign up
@@ -28,6 +31,9 @@
 
 + (void)trackCreateShout
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     [mixpanel track:@"Create shout"];
@@ -37,6 +43,9 @@
 
 + (void)trackAppOpened
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
 //    NSString *signedInParam = [SessionUtilities isSignedIn] ? @"Yes" : @"No";
@@ -48,6 +57,9 @@
 
 + (void)trackSignUpWithSource:(NSString *)source
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     [mixpanel track:@"Sign up" properties:@{@"Source": source}];
@@ -55,6 +67,9 @@
 
 + (void)trackDisplayShout:(Shout *)shout withSource:(NSString *)source
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
 //    NSString *imageParam = shout.image ? @"Yes" : @"No";
