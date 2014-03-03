@@ -54,7 +54,7 @@ static const NSUInteger kShoutMaxLength = 140;
 static const NSUInteger kMaxUsernameLength = 20;
 static const NSUInteger kMaxShoutDescriptionLength = 140;
 static const NSUInteger kShoutRadius = 300;
-static const NSUInteger kShoutImageSize = 400;
+static const NSUInteger kShoutImageWidth = 400;
 
 static const NSUInteger kDistanceWhenRedirectedFromCreateShout = 250;
 static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;
@@ -64,6 +64,7 @@ static const NSUInteger kDistanceWhenMapDisplayShoutClicked = 2000;
 
 // Size of UI elements
 static const NSUInteger kMaxShoutDescriptionWidth = 280;
+static const NSUInteger kCameraHeight = 426;
 
 //Initialize map on Paris, with max zoom out
 static const double kMapInitialLatitude = 48.856541;

@@ -164,7 +164,7 @@
     //Fill with shout info
     if (self.shout) {
         if (self.shout.image) {
-            NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
+            NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             
             [self.shoutImageView setHidden:NO];

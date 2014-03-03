@@ -23,19 +23,20 @@
 
 @interface CreateShoutViewController ()
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UILabel *charCount;
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (nonatomic) IBOutlet UIView *cameraOverlayView;
+
 @property (strong, nonatomic) NSString *shoutImageName;
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
-@property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
 @property(nonatomic,retain) ALAssetsLibrary *library;
+
 @property (nonatomic) BOOL blackListed;
 @property (nonatomic) BOOL isAnonymous;
-@property (nonatomic) BOOL firstOpening;
-@property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
-@property (weak, nonatomic) IBOutlet UITextView *descriptionView;
+@property (weak, nonatomic) IBOutlet UILabel *charCount;
 @property (weak, nonatomic) IBOutlet UIView *topKeyboardView;
+@property (weak, nonatomic) IBOutlet UITextField *addDescriptionField;
 
 
 @end
@@ -44,29 +45,24 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     
+    [super viewDidAppear:animated];
     self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
     
-    // Center the map on user location
-    [LocationUtilities animateMap:self.mapView ToLatitude:self.shoutLocation.coordinate.latitude Longitude:self.shoutLocation.coordinate.longitude WithDistance:2*kShoutRadius Animated:YES];
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    MKPointAnnotation *shoutAnnotation = [[MKPointAnnotation alloc] init];
-    shoutAnnotation.coordinate = self.shoutLocation.coordinate;
-    [self.mapView addAnnotation:shoutAnnotation];
     
-    // Set the cursor before the placeholder
-    if (self.firstOpening) {
-        [self.descriptionView becomeFirstResponder];
-        [GeneralUtilities adaptHeightTextView:self.descriptionView];
-        self.firstOpening = FALSE;
-    }
+//    // Set the cursor before the placeholder
+//    if (self.firstOpening) {
+//        [self.descriptionView becomeFirstResponder];
+//        [GeneralUtilities adaptHeightTextView:self.descriptionView];
+//        self.firstOpening = FALSE;
+//    }
 }
 
-- (void) viewDidLayoutSubviews {
-    // strange hack to avoid opening bug
-    if (!self.firstOpening) {
-         [GeneralUtilities adaptHeightTextView:self.descriptionView];
-     }
-}
+//- (void) viewDidLayoutSubviews {
+//    // strange hack to avoid opening bug
+//    if (!self.firstOpening) {
+//         [GeneralUtilities adaptHeightTextView:self.descriptionView];
+//     }
+//}
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
 {
@@ -76,18 +72,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    //todobt
+    self.isAnonymous = YES;
     self.blackListed = NO;
-    self.firstOpening = TRUE;
-    self.descriptionView.delegate = self;
+//    self.firstOpening = TRUE;
+//    self.descriptionView.delegate = self;
     self.library = [ALAssetsLibrary new];
     
     //Round corners
-    self.descriptionView.layer.cornerRadius = 5;
-    self.descriptionView.clipsToBounds = YES;
+//    self.descriptionView.layer.cornerRadius = 5;
+//    self.descriptionView.clipsToBounds = YES;
     
     //Nav Bar
-    [ImageUtilities drawCustomNavBarWithLeftItem:@"cancel" rightItem:@"ok" title:@"Shout" sizeBig:YES inViewController:self];
+//    [ImageUtilities drawCustomNavBarWithLeftItem:@"cancel" rightItem:@"ok" title:@"Shout" sizeBig:YES inViewController:self];
     
     // observe keyboard show notifications to resize the text view appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -98,18 +95,14 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
-    // Put the placeholder
-    self.descriptionView.textColor = [UIColor lightGrayColor];
-    self.descriptionView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
-    
-    // Prepare one touch action on map
-    UITapGestureRecognizer *mapTouch = [[UITapGestureRecognizer alloc]
-                                   initWithTarget:self action:@selector(handleGesture:)];
-    [self.mapView addGestureRecognizer:mapTouch];
+//    
+//    // Put the placeholder
+//    self.descriptionView.textColor = [UIColor lightGrayColor];
+//    self.descriptionView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
 
-    // Display a square camera
-    [self displaySquareCamera];
+    // Display camera
+    [self displayFullScreenCamera];
+
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -130,26 +123,26 @@
     return (remainingCharCount >= 0);
 }
 
-- (void)textViewDidChange:(UITextView *)textView {
-    [GeneralUtilities adaptHeightTextView:textView];
-}
+//- (void)textViewDidChange:(UITextView *)textView {
+//    [GeneralUtilities adaptHeightTextView:textView];
+//}
 
-- (void)textViewDidChangeSelection:(UITextView *)textView
-{
-    if ([textView.text isEqualToString:NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil)]) {
-        textView.selectedRange = NSMakeRange(0, 0);
-    }
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if ([textView.text isEqualToString:@""]) {
-        textView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
-        textView.textColor = [UIColor lightGrayColor];
-        [GeneralUtilities adaptHeightTextView:textView];
-        [self.view endEditing:YES];
-    }
-}
+//- (void)textViewDidChangeSelection:(UITextView *)textView
+//{
+//    if ([textView.text isEqualToString:NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil)]) {
+//        textView.selectedRange = NSMakeRange(0, 0);
+//    }
+//}
+//
+//- (void)textViewDidEndEditing:(UITextView *)textView
+//{
+//    if ([textView.text isEqualToString:@""]) {
+//        textView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
+//        textView.textColor = [UIColor lightGrayColor];
+//        [GeneralUtilities adaptHeightTextView:textView];
+//        [self.view endEditing:YES];
+//    }
+//}
 
 - (void)okButtonClicked
 {
@@ -166,11 +159,11 @@
         title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
         message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
         error = YES;
-    } else if (self.descriptionView.text.length == 0) {
+    } else if (self.addDescriptionField.text.length == 0) {
         title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
         message = NSLocalizedStringFromTable (@"shout_description_blank", @"Strings", @"comment");
         error = YES;
-    } else if (self.descriptionView.text.length > kMaxShoutDescriptionLength) {
+    } else if (self.addDescriptionField.text.length > kMaxShoutDescriptionLength) {
         title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
         NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxShoutDescriptionLength];
         message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
@@ -230,7 +223,7 @@
             [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                    Lng:self.shoutLocation.coordinate.longitude
                                               Username:currentUser.username
-                                           Description:self.descriptionView.text
+                                           Description:self.addDescriptionField.text
                                                  Image:self.shoutImageUrl
                                                 UserId:currentUser.identifier
                                              Anonymous:self.isAnonymous
@@ -266,6 +259,106 @@
     }
 }
 
+// Custom button actions
+
+- (IBAction)quitButtonclicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+// Utilities
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    [KeyboardUtilities pushUpTopView:self.topKeyboardView whenKeyboardWillShowNotification:notification];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [KeyboardUtilities pushDownTopView:self.topKeyboardView whenKeyboardWillhideNotification:notification];
+}
+
+
+
+// ----------------------------------------------------------
+// Full screen Camera
+// ----------------------------------------------------------
+
+
+- (void) displayFullScreenCamera
+{
+    
+    // Create custom camera view
+    UIImagePickerController *imagePickerController = [UIImagePickerController new];
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePickerController.delegate = self;
+
+    // Full screen
+    imagePickerController.showsCameraControls = NO;
+    imagePickerController.allowsEditing = NO;
+    imagePickerController.navigationBarHidden=YES;
+    [[NSBundle mainBundle] loadNibNamed:@"OverlayView" owner:self options:nil];
+    self.cameraOverlayView.frame = imagePickerController.cameraOverlayView.frame;
+    imagePickerController.cameraOverlayView = self.cameraOverlayView;
+    self.cameraOverlayView = nil;
+
+    // Transform camera to get full screen
+    double scalingRatio = self.view.frame.size.height / kCameraHeight;
+    double translationFactor = (self.view.frame.size.height - kCameraHeight) / 2;
+    CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, translationFactor);
+    imagePickerController.cameraViewTransform = translate;
+    
+    CGAffineTransform scale = CGAffineTransformScale(translate, scalingRatio, scalingRatio);
+    imagePickerController.cameraViewTransform = scale;
+    
+    self.imagePickerController = imagePickerController;
+    [self presentViewController:self.imagePickerController animated:NO completion:nil];
+}
+
+// Custom button actions
+
+- (IBAction)cameraQuitButtonClicked:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)takePictureButtonClicked:(id)sender {
+    [self.imagePickerController takePicture];
+}
+- (IBAction)flipCameraButtonClicked:(id)sender {
+    if (self.imagePickerController.cameraDevice == UIImagePickerControllerCameraDeviceFront){
+        self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    } else {
+        self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    }
+}
+
+
+// Utilities
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)editInfo
+{
+    UIImage *image =  [editInfo objectForKey:UIImagePickerControllerOriginalImage];
+    [self saveImageToFileSystem:image];
+    
+    // Resize image
+    CGFloat newWidth = kShoutImageWidth / image.size.width;
+    self.capturedImage = [UIImage imageWithCGImage:[image CGImage] scale:newWidth orientation:image.imageOrientation];
+    
+    if (!image || !self.capturedImage) {
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"take_and_resize_picture_failed", @"Strings", @"comment") withTitle:nil];
+        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+    
+    self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
+    self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
+
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.shoutImageView setImage:self.capturedImage];
+    self.imagePickerController = nil;
+}
 
 - (void)saveImageToFileSystem:(UIImage *)image
 {
@@ -280,63 +373,5 @@
                                    }];
 }
 
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    if (image) {
-        [self resizeAndSaveSelectedImageAndUpdate:image];
-    } else {
-        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"comment_failed_message", @"Strings", @"comment") withTitle:nil];
-        [self dismissViewControllerAnimated:YES completion:NULL];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-- (void)resizeAndSaveSelectedImageAndUpdate:(UIImage *)image
-{
-    self.capturedImage = [ImageUtilities cropBiggestCenteredSquareImageFromImage:image withSide:kShoutImageSize];
-    
-    [self saveImageToFileSystem:self.capturedImage];
-    self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
-    self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
-    
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    [self.shoutImageView setImage:self.capturedImage];
-    self.imagePickerController = nil;
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)backButtonClicked
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void) displaySquareCamera
-{
-    UIImagePickerController *imagePickerController = [UIImagePickerController new];
-    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePickerController.delegate = self;
-    imagePickerController.showsCameraControls = YES;
-    [ImageUtilities addSquareBoundsToImagePicker:imagePickerController];
-    self.imagePickerController = imagePickerController;
-    [self presentViewController:self.imagePickerController animated:NO completion:nil];
-}
-
-- (void)keyboardWillShow:(NSNotification *)notification {
-    
-    [KeyboardUtilities pushUpTopView:self.topKeyboardView whenKeyboardWillShowNotification:notification];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    [KeyboardUtilities pushDownTopView:self.topKeyboardView whenKeyboardWillhideNotification:notification];
-}
 
 @end

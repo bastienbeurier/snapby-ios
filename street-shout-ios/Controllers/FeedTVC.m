@@ -121,7 +121,7 @@
         if (shout.image) {
             cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder-square-small"];
             
-            NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
+            NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
             [cell.shoutImageView setImageWithURL:url placeholderImage:nil];
             
             cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
