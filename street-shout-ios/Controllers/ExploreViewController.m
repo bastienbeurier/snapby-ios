@@ -132,7 +132,7 @@
     
     self.feedTVC.shouts = @[@"Loading"];
     
-    [MapRequestHandler pullShoutsInZone:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
+    [MapRequestHandler addMapRequest:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
         [self.activityView stopAnimating];
         
         shouts = [GeneralUtilities checkForRemovedShouts:shouts];

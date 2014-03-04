@@ -114,6 +114,14 @@
 {    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
+    AFStreetShoutAPIClient *manager = [AFStreetShoutAPIClient sharedClient];
+//    NSOperationQueue *operationQueue = manager.operationQueue;
+//    [manager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+//        if(status == AFNetworkReachabilityStatusNotReachable) {
+//            [operationQueue cancelAllOperations];
+//        }
+//    }];
+    
     // Enrich with token
     if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
         return;
@@ -129,7 +137,7 @@
     
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts.json"];
     
-    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [manager POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSString *rawShout = [result valueForKeyPath:@"shout"];

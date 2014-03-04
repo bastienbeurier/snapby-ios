@@ -85,8 +85,16 @@
 
     // Display camera
     [self displayFullScreenCamera];
+    
+    // Start monitoring network
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
@@ -328,14 +336,18 @@
     UIImage *image =  [editInfo objectForKey:UIImagePickerControllerOriginalImage];
     [self saveImageToFileSystem:image];
     
+    // Force portrait
+    UIImage* portraitImage = [UIImage imageWithCGImage:image.CGImage scale:1
+                                    orientation:UIImageOrientationRight];
+    
     // Resize image
-    CGSize rescaleSize = image.size;
+    CGSize rescaleSize = portraitImage.size;
     CGFloat scaleRatio = kShoutImageWidth / rescaleSize.width;
     rescaleSize.height *= scaleRatio;
     rescaleSize.width *= scaleRatio;
-    self.capturedImage = [ImageUtilities imageWithImage:image scaledToSize:rescaleSize];
+    self.capturedImage = [ImageUtilities imageWithImage:portraitImage scaledToSize:rescaleSize];
     
-    if (!image || !self.capturedImage) {
+    if (!portraitImage || !self.capturedImage) {
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"take_and_resize_picture_failed", @"Strings", @"comment") withTitle:nil];
         [self dismissViewControllerAnimated:YES completion:NULL];
         [self.navigationController popViewControllerAnimated:YES];
@@ -348,7 +360,7 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
     
     // Display the same as the camera screen
-    [self.shoutImageView setImage:[ImageUtilities cropWidthOfImage:self.capturedImage by:(self.rescalingRatio - 1)]];
+    [self.shoutImageView setImage:[ImageUtilities cropWidthOfImage:self.capturedImage by:(1-1/self.rescalingRatio)]];
     self.imagePickerController = nil;
 }
 
