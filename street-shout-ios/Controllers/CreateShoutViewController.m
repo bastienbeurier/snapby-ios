@@ -25,7 +25,9 @@
 
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (nonatomic) IBOutlet UIView *cameraOverlayView;
+@property (weak, nonatomic) IBOutlet UIButton *anonymousButton;
 
+@property (nonatomic) CGFloat rescalingRatio;
 @property (strong, nonatomic) NSString *shoutImageName;
 @property (strong, nonatomic) NSString *shoutImageUrl;
 @property (strong, nonatomic) UIImage *capturedImage;
@@ -35,34 +37,26 @@
 @property (nonatomic) BOOL blackListed;
 @property (nonatomic) BOOL isAnonymous;
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
-@property (weak, nonatomic) IBOutlet UIView *topKeyboardView;
 @property (weak, nonatomic) IBOutlet UITextField *addDescriptionField;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 
 
 @end
 
 @implementation CreateShoutViewController
 
+
+// ----------------------------------------------------------
+// Create Shout Screen
+// ----------------------------------------------------------
+
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
     self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
     
-    
-//    // Set the cursor before the placeholder
-//    if (self.firstOpening) {
-//        [self.descriptionView becomeFirstResponder];
-//        [GeneralUtilities adaptHeightTextView:self.descriptionView];
-//        self.firstOpening = FALSE;
-//    }
+    [self.addDescriptionField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.05f];
 }
-
-//- (void) viewDidLayoutSubviews {
-//    // strange hack to avoid opening bug
-//    if (!self.firstOpening) {
-//         [GeneralUtilities adaptHeightTextView:self.descriptionView];
-//     }
-//}
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
 {
@@ -72,19 +66,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //todobt
-    self.isAnonymous = YES;
+
+    self.isAnonymous = NO;
     self.blackListed = NO;
-//    self.firstOpening = TRUE;
-//    self.descriptionView.delegate = self;
+    self.addDescriptionField.delegate = self;
     self.library = [ALAssetsLibrary new];
-    
-    //Round corners
-//    self.descriptionView.layer.cornerRadius = 5;
-//    self.descriptionView.clipsToBounds = YES;
-    
-    //Nav Bar
-//    [ImageUtilities drawCustomNavBarWithLeftItem:@"cancel" rightItem:@"ok" title:@"Shout" sizeBig:YES inViewController:self];
+    self.rescalingRatio = self.view.frame.size.height / kCameraHeight;
     
     // observe keyboard show notifications to resize the text view appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -95,57 +82,32 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-//    
-//    // Put the placeholder
-//    self.descriptionView.textColor = [UIColor lightGrayColor];
-//    self.descriptionView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
 
     // Display camera
     [self displayFullScreenCamera];
-
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
+        [textField resignFirstResponder];
         return NO;
-    }
-    if ([textView.text isEqualToString:NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil)]) {
-        textView.text = @"";
-        textView.textColor = [UIColor whiteColor];
-        [GeneralUtilities adaptHeightTextView:textView];
     }
     
     // Update char count
-    NSInteger charCount = [textView.text length] + [text length] - range.length;
+    NSInteger charCount = [textField.text length] + [text length] - range.length;
     NSInteger remainingCharCount = kShoutMaxLength - charCount;
-    self.charCount.text = [NSString stringWithFormat:@"%d", remainingCharCount];
-    return (remainingCharCount >= 0);
+    if (remainingCharCount >= 0 ) {
+        self.charCount.text = [NSString stringWithFormat:@"%d", remainingCharCount];
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
-//- (void)textViewDidChange:(UITextView *)textView {
-//    [GeneralUtilities adaptHeightTextView:textView];
-//}
 
-//- (void)textViewDidChangeSelection:(UITextView *)textView
-//{
-//    if ([textView.text isEqualToString:NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil)]) {
-//        textView.selectedRange = NSMakeRange(0, 0);
-//    }
-//}
-//
-//- (void)textViewDidEndEditing:(UITextView *)textView
-//{
-//    if ([textView.text isEqualToString:@""]) {
-//        textView.text = NSLocalizedStringFromTable (@"description_placeholder", @"Strings",nil);
-//        textView.textColor = [UIColor lightGrayColor];
-//        [GeneralUtilities adaptHeightTextView:textView];
-//        [self.view endEditing:YES];
-//    }
-//}
-
-- (void)okButtonClicked
-{
+- (IBAction)createShoutButtonClicked:(id)sender {
+    
     if (![SessionUtilities isSignedIn]){
         [SessionUtilities redirectToSignIn];
         return;
@@ -180,6 +142,7 @@
         }
     }
 }
+
 
 - (void)createShout
 {
@@ -243,14 +206,45 @@
     });
 }
 
-- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
-        return;
+
+
+
+// Custom button actions
+
+- (IBAction)quitButtonclicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)refineLocationButtonClicked:(id)sender {
+    [self.addDescriptionField resignFirstResponder];
     [self performSegueWithIdentifier:@"Refine Shout Location" sender:nil];
 }
 
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)anonymousButtonClicked:(id)sender {
+    if (self.isAnonymous) {
+        self.isAnonymous = NO;
+        [self.anonymousButton setImage:[UIImage imageNamed:@"create_anonymous_button.png"] forState:UIControlStateNormal];
+        [self displayToastWithMessage:NSLocalizedStringFromTable (@"anonymous_button_disabled", @"Strings", @"comment")];
+    } else {
+        self.isAnonymous = YES;
+        [self.anonymousButton setImage:[UIImage imageNamed:@"create_anonymous_button_pressed.png"] forState:UIControlStateNormal];
+        [self displayToastWithMessage:NSLocalizedStringFromTable (@"anonymous_button_enabled", @"Strings", @"comment")];
+    }
+}
+
+
+// Utilities
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    [KeyboardUtilities pushUpTopView:self.containerView whenKeyboardWillShowNotification:notification];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [KeyboardUtilities pushDownTopView:self.containerView whenKeyboardWillhideNotification:notification];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"Refine Shout Location"]) {
@@ -259,22 +253,16 @@
     }
 }
 
-// Custom button actions
-
-- (IBAction)quitButtonclicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-// Utilities
-
-- (void)keyboardWillShow:(NSNotification *)notification {
-    
-    [KeyboardUtilities pushUpTopView:self.topKeyboardView whenKeyboardWillShowNotification:notification];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    [KeyboardUtilities pushDownTopView:self.topKeyboardView whenKeyboardWillhideNotification:notification];
+- (void)displayToastWithMessage:(NSString *)message{
+    MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    // Configure for text only and offset down
+    toast.mode = MBProgressHUDModeText;
+    toast.labelText = message;
+    toast.opacity = 0.3f;
+    toast.margin =10.f;
+    toast.yOffset = -100.f;
+    toast.removeFromSuperViewOnHide = YES;
+    [toast hide:YES afterDelay:1];
 }
 
 
@@ -303,12 +291,11 @@
     self.cameraOverlayView = nil;
 
     // Transform camera to get full screen
-    double scalingRatio = self.view.frame.size.height / kCameraHeight;
     double translationFactor = (self.view.frame.size.height - kCameraHeight) / 2;
     CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, translationFactor);
     imagePickerController.cameraViewTransform = translate;
     
-    CGAffineTransform scale = CGAffineTransformScale(translate, scalingRatio, scalingRatio);
+    CGAffineTransform scale = CGAffineTransformScale(translate, self.rescalingRatio, self.rescalingRatio);
     imagePickerController.cameraViewTransform = scale;
     
     self.imagePickerController = imagePickerController;
@@ -342,8 +329,11 @@
     [self saveImageToFileSystem:image];
     
     // Resize image
-    CGFloat newWidth = kShoutImageWidth / image.size.width;
-    self.capturedImage = [UIImage imageWithCGImage:[image CGImage] scale:newWidth orientation:image.imageOrientation];
+    CGSize rescaleSize = image.size;
+    CGFloat scaleRatio = kShoutImageWidth / rescaleSize.width;
+    rescaleSize.height *= scaleRatio;
+    rescaleSize.width *= scaleRatio;
+    self.capturedImage = [ImageUtilities imageWithImage:image scaledToSize:rescaleSize];
     
     if (!image || !self.capturedImage) {
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"take_and_resize_picture_failed", @"Strings", @"comment") withTitle:nil];
@@ -356,7 +346,9 @@
     self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
 
     [self dismissViewControllerAnimated:YES completion:NULL];
-    [self.shoutImageView setImage:self.capturedImage];
+    
+    // Display the same as the camera screen
+    [self.shoutImageView setImage:[ImageUtilities cropWidthOfImage:self.capturedImage by:(self.rescalingRatio - 1)]];
     self.imagePickerController = nil;
 }
 

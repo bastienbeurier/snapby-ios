@@ -66,6 +66,36 @@
     return image;
 }
 
++ (UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize {
+    UIGraphicsBeginImageContext( newSize );
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
++ (UIImage*)cropWidthOfImage:(UIImage*)image by:(CGFloat)croppedPercentage {
+    
+    if(croppedPercentage<0 || croppedPercentage>=1){
+        // do nothing
+        return image;
+    }
+    
+    // Create rectangle from middle of current image
+    CGFloat croppedWidth = croppedPercentage * image.size.width;
+    CGRect croprect = CGRectMake(croppedWidth / 2, 0.0,
+                                 image.size.width - croppedWidth, image.size.height);
+    
+    // Draw new image in current graphics context
+    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], croprect);
+    
+    // Create new cropped UIImage
+    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return croppedImage;
+}
+
 //From http://stackoverflow.com/questions/14917770/finding-the-biggest-centered-square-from-a-landscape-or-a-portrait-uiimage-and-s
 + (UIImage*) cropBiggestCenteredSquareImageFromImage:(UIImage*)image withSide:(CGFloat)side
 {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ulg-pG-c5t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ulg-pG-c5t">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -294,37 +294,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S4w-al-2Mc">
+                            <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4w-al-2Mc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QgX-WZ-781">
-                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Z6-u1-rMD">
+                                <rect key="frame" x="15" y="25" width="34" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VUO-36-hrb">
-                                        <rect key="frame" x="10" y="10" width="269" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="140" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKA-nq-pbt">
-                                        <rect key="frame" x="282" y="14" width="29" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="12"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="bmd-HV-Q1H"/>
+                                    <constraint firstAttribute="width" constant="34" id="4TQ-XK-OOC"/>
+                                    <constraint firstAttribute="height" constant="34" id="CIU-0X-zb5"/>
                                 </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Z6-u1-rMD">
-                                <rect key="frame" x="15" y="15" width="34" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" image="camera-quit-button.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -333,15 +314,122 @@
                                     <action selector="quitButtonclicked:" destination="vn8-un-4WF" eventType="touchUpInside" id="cLK-me-MUE"/>
                                 </connections>
                             </button>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIt-S7-SRz" colorLabel="IBBuiltInLabel-Red">
+                                <rect key="frame" x="0.0" y="468" width="320" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QgX-WZ-781">
+                                        <rect key="frame" x="0.0" y="50" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What's happening here and now?" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VUO-36-hrb">
+                                                <rect key="frame" x="10" y="10" width="271" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="sMZ-Or-ZTd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textField>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKA-nq-pbt">
+                                                <rect key="frame" x="291" y="17" width="19" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="12"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="VUO-36-hrb" secondAttribute="bottom" constant="10" id="ESW-UZ-u6D"/>
+                                            <constraint firstItem="VUO-36-hrb" firstAttribute="leading" secondItem="QgX-WZ-781" secondAttribute="leading" constant="10" id="Ew1-MM-iS0"/>
+                                            <constraint firstItem="hKA-nq-pbt" firstAttribute="leading" secondItem="VUO-36-hrb" secondAttribute="trailing" constant="10" id="GDz-NY-FIS"/>
+                                            <constraint firstAttribute="height" constant="50" id="bmd-HV-Q1H"/>
+                                            <constraint firstItem="hKA-nq-pbt" firstAttribute="centerY" secondItem="VUO-36-hrb" secondAttribute="centerY" id="mwL-sw-d4Z"/>
+                                            <constraint firstAttribute="trailing" secondItem="hKA-nq-pbt" secondAttribute="trailing" constant="10" id="sCE-L3-7MW"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xV-1q-hLK">
+                                        <rect key="frame" x="273" y="7" width="37" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="37" id="8Rg-NO-ss3"/>
+                                            <constraint firstAttribute="height" constant="36" id="hI1-Kn-iMt"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" title="Button" image="create_send_button.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="createShoutButtonClicked:" destination="vn8-un-4WF" eventType="touchUpInside" id="UPj-9R-Wxg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="33" placeholderIntrinsicHeight="38" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QxV-Te-Vjf">
+                                        <rect key="frame" x="66" y="6" width="33" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="38" id="Nq2-fO-4A1"/>
+                                            <constraint firstAttribute="width" constant="33" id="SQt-a3-p65"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" image="create_refine_button.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="refineLocationButtonClicked:" destination="vn8-un-4WF" eventType="touchUpInside" id="jey-pg-eZz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhK-iD-nGU">
+                                        <rect key="frame" x="10" y="10" width="50" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="tV8-BI-uI3"/>
+                                            <constraint firstAttribute="height" constant="30" id="ylK-Ha-jlf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" image="create_anonymous_button.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="anonymousButtonClicked:" destination="vn8-un-4WF" eventType="touchUpInside" id="t38-JP-2Sb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="3Z8-Yg-XgZ"/>
+                                    <constraint firstItem="vhK-iD-nGU" firstAttribute="top" secondItem="QIt-S7-SRz" secondAttribute="top" constant="10" id="65Z-uA-qIZ"/>
+                                    <constraint firstItem="QxV-Te-Vjf" firstAttribute="leading" secondItem="vhK-iD-nGU" secondAttribute="trailing" constant="6" id="9qz-3n-FJN"/>
+                                    <constraint firstItem="QgX-WZ-781" firstAttribute="leading" secondItem="QIt-S7-SRz" secondAttribute="leading" id="Asv-A1-l1t"/>
+                                    <constraint firstAttribute="bottom" secondItem="QgX-WZ-781" secondAttribute="bottom" id="F4C-VR-m47"/>
+                                    <constraint firstAttribute="trailing" secondItem="6xV-1q-hLK" secondAttribute="trailing" constant="10" id="IYX-XT-eLm"/>
+                                    <constraint firstItem="QxV-Te-Vjf" firstAttribute="centerY" secondItem="vhK-iD-nGU" secondAttribute="centerY" id="Pgf-yp-fFE"/>
+                                    <constraint firstItem="QxV-Te-Vjf" firstAttribute="centerY" secondItem="6xV-1q-hLK" secondAttribute="centerY" id="cal-Nr-Gqr"/>
+                                    <constraint firstItem="vhK-iD-nGU" firstAttribute="leading" secondItem="QIt-S7-SRz" secondAttribute="leading" constant="10" id="dXX-Z6-Mba"/>
+                                    <constraint firstAttribute="trailing" secondItem="QgX-WZ-781" secondAttribute="trailing" id="lAj-8C-Lat"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4Z6-u1-rMD" firstAttribute="top" secondItem="M7t-Cj-xNa" secondAttribute="bottom" constant="5" id="9Wf-Qz-n4E"/>
+                            <constraint firstItem="4Z6-u1-rMD" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="15" id="JOG-oi-XVc"/>
+                            <constraint firstItem="S4w-al-2Mc" firstAttribute="top" secondItem="hPd-hm-le7" secondAttribute="top" id="YVL-qS-yFl"/>
+                            <constraint firstItem="S4w-al-2Mc" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" id="YdL-Co-xcX"/>
+                            <constraint firstItem="QIt-S7-SRz" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" id="e9R-qO-IDm"/>
+                            <constraint firstItem="6Xi-lT-oCm" firstAttribute="top" secondItem="S4w-al-2Mc" secondAttribute="bottom" id="jYN-Ac-GYI"/>
+                            <constraint firstItem="6Xi-lT-oCm" firstAttribute="top" secondItem="QIt-S7-SRz" secondAttribute="bottom" id="kE0-yQ-NLQ"/>
+                            <constraint firstAttribute="trailing" secondItem="S4w-al-2Mc" secondAttribute="trailing" id="lLZ-rK-JZp"/>
+                            <constraint firstAttribute="trailing" secondItem="QIt-S7-SRz" secondAttribute="trailing" id="pYK-1B-SHT"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="erD-k1-NAf"/>
                     <connections>
                         <outlet property="addDescriptionField" destination="VUO-36-hrb" id="lIH-rz-J9R"/>
+                        <outlet property="anonymousButton" destination="vhK-iD-nGU" id="SPV-8V-uIW"/>
                         <outlet property="charCount" destination="hKA-nq-pbt" id="Fqi-fm-P6Q"/>
+                        <outlet property="containerView" destination="QIt-S7-SRz" id="uNk-XZ-EhJ"/>
                         <outlet property="shoutImageView" destination="S4w-al-2Mc" id="fIl-PL-sZK"/>
-                        <outlet property="topKeyboardView" destination="QgX-WZ-781" id="Az3-pF-85i"/>
                         <segue destination="Kte-b7-QO8" kind="push" identifier="Refine Shout Location" id="7T2-pa-D5v"/>
                     </connections>
                 </viewController>
@@ -658,7 +746,7 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="y1c-Mb-1ry"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" misplaced="YES" text="This is a new shout m!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="600" text="This is a new shout m!!!!!!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="cRS-g9-DDb">
                                         <rect key="frame" x="20" y="20" width="280" height="35"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
@@ -1486,6 +1574,9 @@
     <resources>
         <image name="camera-quit-button.png" width="150" height="151"/>
         <image name="create-shout-icon.png" width="74" height="74"/>
+        <image name="create_anonymous_button.png" width="150" height="90"/>
+        <image name="create_refine_button.png" width="132" height="150"/>
+        <image name="create_send_button.png" width="150" height="151"/>
         <image name="email-icon.png" width="50" height="36"/>
         <image name="more-button.png" width="74" height="74"/>
         <image name="my-location-button.png" width="74" height="74"/>
