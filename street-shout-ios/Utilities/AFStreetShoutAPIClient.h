@@ -59,5 +59,7 @@
 
 + (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
 
++ (void)removeShout: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
 @end
 
