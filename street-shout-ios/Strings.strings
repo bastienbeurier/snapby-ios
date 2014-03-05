@@ -78,6 +78,7 @@
 "take_and_resize_picture_failed" = "Unexpected error while saving your picture. Please try again.";
 "anonymous_button_enabled" = "Anonymous mode enabled";
 "anonymous_button_disabled" = "Anonymous mode disabled";
+"missing_image"= "Image is missing";
 
 
  

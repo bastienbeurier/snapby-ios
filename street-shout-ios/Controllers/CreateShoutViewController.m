@@ -123,7 +123,7 @@
     
     [self.view endEditing:YES];
     
-    BOOL error = NO; NSString *title; NSString *message;
+    BOOL error = NO; NSString *title = nil; NSString *message = nil;
     
     if (self.blackListed) {
         title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
@@ -133,6 +133,9 @@
         title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
         NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxShoutDescriptionLength];
         message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
+        error = YES;
+    } else if (!self.capturedImage) {
+        title = NSLocalizedStringFromTable (@"missing_image", @"Strings", @"comment");
         error = YES;
     }
     
@@ -281,6 +284,9 @@
     
     // Create custom camera view
     UIImagePickerController *imagePickerController = [UIImagePickerController new];
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        return;
+    }
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePickerController.delegate = self;
