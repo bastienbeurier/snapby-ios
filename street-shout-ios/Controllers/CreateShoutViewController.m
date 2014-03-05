@@ -129,10 +129,6 @@
         title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
         message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
         error = YES;
-    } else if (self.addDescriptionField.text.length == 0) {
-        title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
-        message = NSLocalizedStringFromTable (@"shout_description_blank", @"Strings", @"comment");
-        error = YES;
     } else if (self.addDescriptionField.text.length > kMaxShoutDescriptionLength) {
         title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
         NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxShoutDescriptionLength];
@@ -357,9 +353,9 @@
     self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
     self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
 
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:NO completion:NULL];
     
-    // Display the same as the camera screen
+    // Display the same format as in the camera screen
     [self.shoutImageView setImage:[ImageUtilities cropWidthOfImage:self.capturedImage by:(1-1/self.rescalingRatio)]];
     self.imagePickerController = nil;
 }

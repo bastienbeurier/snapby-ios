@@ -37,6 +37,7 @@
 @property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
 @property (weak, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) Shout *redirectToShout;
+@property (strong, nonatomic) MapRequestHandler *mapRequestHandler;
 
 @end
 
@@ -50,6 +51,8 @@
     self.moreButton.layer.cornerRadius = buttonHeight/2;
     
     self.mapView = self.mapViewController.mapView;
+    
+    self.mapRequestHandler = [MapRequestHandler new];
     
     [super viewDidLoad];
 }
@@ -132,16 +135,18 @@
     
     self.feedTVC.shouts = @[@"Loading"];
     
-    [MapRequestHandler addMapRequest:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
-        [self.activityView stopAnimating];
+    __weak typeof(self) weakSelf = self;
+    [self.mapRequestHandler addMapRequest:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
+        
+        [weakSelf.activityView stopAnimating];
         
         shouts = [GeneralUtilities checkForRemovedShouts:shouts];
         
-        self.mapViewController.shouts = shouts;
-        self.feedTVC.shouts = shouts;
+        weakSelf.mapViewController.shouts = shouts;
+        weakSelf.feedTVC.shouts = shouts;
     } failure:^{
-        [self.activityView stopAnimating];
-        self.feedTVC.shouts = @[@"No connection"];
+        [weakSelf.activityView stopAnimating];
+        weakSelf.feedTVC.shouts = @[@"No connection"];
     }];
 }
 

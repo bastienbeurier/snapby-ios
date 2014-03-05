@@ -62,6 +62,9 @@ static const NSUInteger kDistanceWhenDisplayShout = 200;
 static const NSUInteger kDistanceAtStartup = 6000;
 static const NSUInteger kDistanceWhenMapDisplayShoutClicked = 2000;
 
+// Request delay
+static const double kRequestDelay = 0.5;
+
 // Size of UI elements
 static const NSUInteger kMaxShoutDescriptionWidth = 280;
 static const NSUInteger kCameraHeight = 426;

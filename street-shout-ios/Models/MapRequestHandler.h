@@ -10,6 +10,7 @@
 
 @interface MapRequestHandler : NSObject
 
-+ (void)addMapRequest:(NSArray *)cornersCoordinates AndExecuteSuccess:(void(^)(NSArray *shouts))successBlock failure:(void(^)())failureBlock;
+- (void)addMapRequest:(NSArray *)cornersCoordinates AndExecuteSuccess:(void(^)(NSArray *shouts))successBlock failure:(void(^)())failureBlock;
+
 
 @end

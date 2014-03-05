@@ -27,8 +27,15 @@
             _sharedClient = [[AFStreetShoutAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kProdAFStreetShoutAPIBaseURLString]];
         } else {
             _sharedClient = [[AFStreetShoutAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kDevAFStreetShoutAPIBaseURLString]];
+            
+            //todoBT put this in prod too when tested
+            NSOperationQueue *operationQueue = _sharedClient.operationQueue;
+            [_sharedClient.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+                if(status == AFNetworkReachabilityStatusNotReachable) {
+                    [operationQueue cancelAllOperations];
+                }
+            }];
         }
-        
     });
     
     return _sharedClient;
@@ -115,12 +122,6 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
     AFStreetShoutAPIClient *manager = [AFStreetShoutAPIClient sharedClient];
-//    NSOperationQueue *operationQueue = manager.operationQueue;
-//    [manager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-//        if(status == AFNetworkReachabilityStatusNotReachable) {
-//            [operationQueue cancelAllOperations];
-//        }
-//    }];
     
     // Enrich with token
     if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
