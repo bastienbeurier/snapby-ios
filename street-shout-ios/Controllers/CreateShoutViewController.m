@@ -338,9 +338,13 @@
     UIImage *image =  [editInfo objectForKey:UIImagePickerControllerOriginalImage];
     [self saveImageToFileSystem:image];
     
-    // Force portrait
-    UIImage* portraitImage = [UIImage imageWithCGImage:image.CGImage scale:1
-                                    orientation:UIImageOrientationRight];
+
+    // Force portrait, and avoid flip of front camera
+    UIImageOrientation orientation = self.imagePickerController.cameraDevice == UIImagePickerControllerCameraDeviceFront ? UIImageOrientationLeftMirrored : UIImageOrientationRight;
+    
+    UIImage* portraitImage = [UIImage imageWithCGImage:image.CGImage
+                                            scale:1
+                                      orientation:orientation];
     
     // Resize image
     CGSize rescaleSize = portraitImage.size;
