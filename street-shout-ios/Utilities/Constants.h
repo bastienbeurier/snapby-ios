@@ -60,7 +60,7 @@ static const NSUInteger kDistanceWhenRedirectedFromCreateShout = 250;
 static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;
 static const NSUInteger kDistanceWhenDisplayShout = 200;
 static const NSUInteger kDistanceAtStartup = 6000;
-static const NSUInteger kDistanceWhenMapDisplayShoutClicked = 2000;
+static const NSUInteger kDistanceWhenMapDisplayShoutClicked = 1000;
 
 // Request delay
 static const double kRequestDelay = 0.5;

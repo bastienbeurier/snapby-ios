@@ -309,7 +309,6 @@
 // Share to FB, sms, email.. using UIActivityViewController
 - (IBAction)shareButtonPressed:(id)sender {
     NSString *shareString = @"Hey, check this shout before it's too late!\n";
-    //UIImage *shareImage = [UIImage imageNamed:@"app-icon-58.png"];
 
     NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdShoutBaseURLString : kDevAFStreetShoutAPIBaseURLString) stringByAppendingString:@"shouts/"]stringByAppendingString:[NSString stringWithFormat:@"%d",self.shout.identifier]]];
     
