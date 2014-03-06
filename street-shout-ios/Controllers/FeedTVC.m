@@ -10,7 +10,7 @@
 #import "MapRequestHandler.h"
 #import "TimeUtilities.h"
 #import "ShoutViewController.h"
-#import "NavigationViewController.h"
+#import "ExploreViewController.h"
 #import "ShoutTableViewCell.h"
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
@@ -121,11 +121,13 @@
         if (shout.image) {
             cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder-square-small"];
             
-            NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
+            // Get image
+            NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
             [cell.shoutImageView setImageWithURL:url placeholderImage:nil];
             
-            cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
             cell.shoutImageView.clipsToBounds = YES;
+            cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+            
             cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
             cell.imageViewDropShadow.clipsToBounds = YES;
             
@@ -143,7 +145,7 @@
         }
         
         cell.shoutContentLabel.text = shout.description;
-        cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.username];
+        cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.anonymous? @"Anonymous" : shout.username];
         
         NSArray *shoutAgeStrings = [TimeUtilities ageToStrings:[TimeUtilities getShoutAge:shout.created]];
         

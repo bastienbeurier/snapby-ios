@@ -25,6 +25,7 @@
                Description:(NSString *)description
                      Image:(NSString *)imageUrl
                     UserId:(NSUInteger)userId
+                 Anonymous:(BOOL)isAnonymous
          AndExecuteSuccess:(void(^)(Shout *))successBlock
                    Failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
 
@@ -57,6 +58,12 @@
 + (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount, NSMutableArray *likerIds))successBlock failure:(void(^)())failureBlock;
 
 + (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
+
++ (void)removeShout: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)removeLike: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)makeShoutTrending: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
 @end
 

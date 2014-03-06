@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Street Shout. All rights reserved.
 //
 
-#import "NavigationViewController.h"
+#import "ExploreViewController.h"
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
 #import "Shout.h"
@@ -20,10 +20,11 @@
 #import "SessionUtilities.h"
 #import "MBProgressHUD.h"
 #import "TrackingUtilities.h"
+#import "LocationUtilities.h"
 
 #define SHOUT_BUTTON_SIZE 72.0
 
-@interface NavigationViewController ()
+@interface ExploreViewController ()
 
 @property (nonatomic, weak) UINavigationController *feedNavigationController;
 @property (nonatomic, weak) FeedTVC *feedTVC;
@@ -36,10 +37,11 @@
 @property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
 @property (weak, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) Shout *redirectToShout;
+@property (strong, nonatomic) MapRequestHandler *mapRequestHandler;
 
 @end
 
-@implementation NavigationViewController
+@implementation ExploreViewController
 
 - (void)viewDidLoad
 {
@@ -49,6 +51,8 @@
     self.moreButton.layer.cornerRadius = buttonHeight/2;
     
     self.mapView = self.mapViewController.mapView;
+    
+    self.mapRequestHandler = [MapRequestHandler new];
     
     [super viewDidLoad];
 }
@@ -65,8 +69,6 @@
     
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
-    
-    [self refreshShouts];
     
     [super viewWillAppear:animated];
 }
@@ -133,16 +135,18 @@
     
     self.feedTVC.shouts = @[@"Loading"];
     
-    [MapRequestHandler pullShoutsInZone:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
-        [self.activityView stopAnimating];
+    __weak typeof(self) weakSelf = self;
+    [self.mapRequestHandler addMapRequest:mapBounds AndExecuteSuccess:^(NSArray *shouts) {
+        
+        [weakSelf.activityView stopAnimating];
         
         shouts = [GeneralUtilities checkForRemovedShouts:shouts];
         
-        self.mapViewController.shouts = shouts;
-        self.feedTVC.shouts = shouts;
+        weakSelf.mapViewController.shouts = shouts;
+        weakSelf.feedTVC.shouts = shouts;
     } failure:^{
-        [self.activityView stopAnimating];
-        self.feedTVC.shouts = @[@"No connection"];
+        [weakSelf.activityView stopAnimating];
+        weakSelf.feedTVC.shouts = @[@"No connection"];
     }];
 }
 
@@ -280,6 +284,11 @@
                                                  cancelButtonTitle:@"OK"
                                                  otherButtonTitles:nil];
     [self.obsoleteAPIAlertView show];
+}
+
+- (void)updateMapLocationtoLat:(double)lat lng:(double)lng
+{
+    [LocationUtilities animateMap:self.mapViewController.mapView ToLatitude:lat Longitude:lng WithDistance:kDistanceWhenMapDisplayShoutClicked Animated:YES];
 }
 
 @end

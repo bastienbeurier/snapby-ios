@@ -121,7 +121,7 @@
     if (![GeneralUtilities validUsername:newUsername]) {
         message = NSLocalizedStringFromTable (@"invalid_username_alert_text", @"Strings", @"comment");
         error = YES;
-    } else if ([newUsername length] < 6 || [newUsername length] > 20) {
+    } else if ([newUsername length] < 1 || [newUsername length] > 20) {
         message = NSLocalizedStringFromTable (@"username_length_alert_text", @"Strings", @"comment");
         error = YES;
     }

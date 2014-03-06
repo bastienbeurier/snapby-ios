@@ -23,7 +23,11 @@
 
 + (UIColor *)getShoutBlue;
 
-+ (UIImage*) cropBiggestCenteredSquareImageFromImage:(UIImage*)image withSide:(CGFloat)side;
++ (UIImage*)cropBiggestCenteredSquareImageFromImage:(UIImage*)image withSide:(CGFloat)side;
+
++ (UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize;
+
++ (UIImage*)cropWidthOfImage:(UIImage*)image by:(CGFloat)croppedPercentage;
 
 + (UIColor *)getFacebookBlue;
 

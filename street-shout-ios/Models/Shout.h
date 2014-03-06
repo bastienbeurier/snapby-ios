@@ -23,5 +23,6 @@
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *image;
 @property (nonatomic) BOOL removed;
+@property (nonatomic) BOOL anonymous;
 
 @end

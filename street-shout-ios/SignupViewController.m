@@ -127,7 +127,7 @@
     if (![GeneralUtilities validUsername:self.usernameTextView.text]) {
         message = NSLocalizedStringFromTable (@"invalid_username_alert_text", @"Strings", @"comment");
         error = YES;
-    } else if (self.usernameTextView.text.length < 6 || self.usernameTextView.text.length > 20) {
+    } else if (self.usernameTextView.text.length < 1 || self.usernameTextView.text.length > 20) {
         message = NSLocalizedStringFromTable (@"username_length_alert_text", @"Strings", @"comment");
         error = YES;
     } else if (![GeneralUtilities validEmail:self.emailTextView.text]) {

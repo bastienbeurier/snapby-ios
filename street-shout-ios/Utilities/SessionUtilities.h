@@ -31,4 +31,6 @@
 
 + (void)wipeOffCredentials;
 
++ (BOOL) currentUserIsAdmin;
+
 @end

@@ -163,4 +163,13 @@
                       otherButtonTitles:nil] show];
 }
 
+// Adapt height of textview to text
++ (void)adaptHeightTextView:(UITextView *)textView {
+    // Change size of the text view
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(kMaxShoutDescriptionWidth, MAXFLOAT)];
+    CGRect newFrame = textView.frame;
+    newFrame.size = CGSizeMake(kMaxShoutDescriptionWidth, newSize.height);
+    textView.frame = newFrame;
+}
+
 @end

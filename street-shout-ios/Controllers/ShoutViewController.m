@@ -19,11 +19,14 @@
 
 #define MORE_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"report_shout", @"Strings", @"comment")
 #define MORE_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"navigate_to_shout", @"Strings", @"comment")
+#define MORE_ACTION_SHEET_OPTION_3 NSLocalizedStringFromTable (@"remove_shout", @"Strings", @"comment")
+
 #define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_3 NSLocalizedStringFromTable (@"privacy_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_4 NSLocalizedStringFromTable (@"inaccurate_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_5 NSLocalizedStringFromTable (@"other_content", @"Strings", @"comment")
+
 #define FLAG_ACTION_SHEET_CANCEL NSLocalizedStringFromTable (@"cancel", @"Strings", @"comment")
 
 @interface ShoutViewController ()
@@ -87,6 +90,11 @@
     
     //Shout content round corners
     self.shoutContent.layer.cornerRadius = 5;
+    
+    // Prepare one touch action on map
+    UITapGestureRecognizer *mapTouch = [[UITapGestureRecognizer alloc]
+                                        initWithTarget:self action:@selector(handleGesture:)];
+    [self.mapView addGestureRecognizer:mapTouch];
     
     //Add bottom bar borders
     CALayer *topBorder = [CALayer layer];
@@ -159,9 +167,11 @@
     //Fill with shout info
     if (self.shout) {
         if (self.shout.image) {
-            NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageSize]];
+            // Get image
+            NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             
+            self.shoutImageView.clipsToBounds = YES;
             [self.shoutImageView setHidden:NO];
             [self.shoutImageDropShadowView setHidden:NO];
             self.shoutContent.backgroundColor = [UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.25];
@@ -172,7 +182,7 @@
             self.shoutContent.backgroundColor = [UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.5];
         }
         
-        self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.username];
+        self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.anonymous? @"Anonymous" : self.shout.username];
 
         self.shoutContent.text = self.shout.description;
         
@@ -193,11 +203,17 @@
 
 - (IBAction)moreShoutOptionButtonPressed:(id)sender {
     
-    
-    self.moreActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+    if([SessionUtilities currentUserIsAdmin] || self.shout.userId == [SessionUtilities getCurrentUser].identifier) {
+        self.moreActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                           delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:MORE_ACTION_SHEET_OPTION_1, MORE_ACTION_SHEET_OPTION_3, nil];
+    } else {
+        self.moreActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
                                                    destructiveButtonTitle:nil
                                                         otherButtonTitles:MORE_ACTION_SHEET_OPTION_1, MORE_ACTION_SHEET_OPTION_2, nil];
+    }
     
     [self.moreActionSheet showInView:self.view];
 }
@@ -218,9 +234,7 @@
                                                  destructiveButtonTitle:nil
                                                       otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
             [self.flagActionSheet showInView:self.view];
-        }
-        
-        if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_2]) {
+        } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_2]) {
             Class mapItemClass = [MKMapItem class];
             if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)]) {
                 // Create an MKMapItem to pass to the Maps app
@@ -232,6 +246,10 @@
                 // Pass the map item to the Maps app
                 [mapItem openInMapsWithLaunchOptions:nil];
             }
+        } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_3]) {
+            [AFStreetShoutAPIClient removeShout: self.shout success:nil failure:nil];
+            [self.shoutVCDelegate updateMapLocationtoLat:self.shout.lat lng:self.shout.lng];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     } else if (actionSheet == self.flagActionSheet) {
         typedef void (^FailureBlock)(NSURLSessionDataTask *);
@@ -291,8 +309,8 @@
 // Share to FB, sms, email.. using UIActivityViewController
 - (IBAction)shareButtonPressed:(id)sender {
     NSString *shareString = @"Hey, check this shout before it's too late!\n";
-    //UIImage *shareImage = [UIImage imageNamed:@"app-icon-58.png"];
-    NSURL *shareUrl = [NSURL URLWithString:[[kProdShoutBaseURLString stringByAppendingString:@"shouts/"]stringByAppendingString:[NSString stringWithFormat:@"%d",self.shout.identifier]]];
+
+    NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdShoutBaseURLString : kDevAFStreetShoutAPIBaseURLString) stringByAppendingString:@"shouts/"]stringByAppendingString:[NSString stringWithFormat:@"%d",self.shout.identifier]]];
     
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, nil];
     
@@ -382,5 +400,15 @@
     }
     
 }
+
+- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
+        return;
+    [self.shoutVCDelegate updateMapLocationtoLat:self.shout.lat lng:self.shout.lng];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 
 @end

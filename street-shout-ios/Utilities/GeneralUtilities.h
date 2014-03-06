@@ -38,4 +38,6 @@
 
 + (void)showMessage:(NSString *)text withTitle:(NSString *)title;
 
++ (void)adaptHeightTextView:(UITextView *)textView;
+
 @end

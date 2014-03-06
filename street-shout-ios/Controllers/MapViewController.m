@@ -10,7 +10,7 @@
 #import "MKPointAnnotation+ShoutPointAnnotation.h"
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
-#import "NavigationViewController.h"
+#import "ExploreViewController.h"
 #import "Constants.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"

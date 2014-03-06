@@ -18,11 +18,10 @@
     @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @end
 
+
 @protocol RefineShoutLocationViewControllerDelegate
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation;
-
-- (void)showMapInCreateShoutViewController;
 
 @property (nonatomic, strong) CLLocation *myLocation;
 

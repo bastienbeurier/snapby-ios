@@ -14,6 +14,9 @@
 
 + (void)identifyWithMixpanel:(User *)user isSigningUp:(BOOL)isSigningUp
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     //Alias to merge mixpanel people id before signup and street shout id after sign up
@@ -26,19 +29,23 @@
     [mixpanel.people set:@{@"Username": user.username, @"Email": user.email}];
 }
 
-+ (void)trackCreateShoutImage:(BOOL)image textLength:(NSUInteger)length
++ (void)trackCreateShout
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
-    NSString *imageParam = image ? @"Yes" : @"No";
-        
-    [mixpanel track:@"Create shout" properties:@{@"Image": imageParam, @"Text length": [NSNumber numberWithInt:length]}];
+    [mixpanel track:@"Create shout"];
     
     [mixpanel.people increment:@"Create shout count" by:[NSNumber numberWithInt:1]];
 }
 
 + (void)trackAppOpened
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     NSString *signedInParam = [SessionUtilities isSignedIn] ? @"Yes" : @"No";
@@ -50,6 +57,9 @@
 
 + (void)trackSignUpWithSource:(NSString *)source
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     [mixpanel track:@"Sign up" properties:@{@"Source": source}];
@@ -57,11 +67,14 @@
 
 + (void)trackDisplayShout:(Shout *)shout withSource:(NSString *)source
 {
+    if(!PRODUCTION)
+        return;
+    
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
-    NSString *imageParam = shout.image ? @"Yes" : @"No";
+//    NSString *imageParam = shout.image ? @"Yes" : @"No";
     
-    [mixpanel track:@"Display shout" properties:@{@"Source": source, @"Image": imageParam}];
+//    [mixpanel track:@"Display shout" properties:@{@"Source": source, @"Image": imageParam}];
     
     [mixpanel.people increment:@"Display shout count" by:[NSNumber numberWithInt:1]];
 }
