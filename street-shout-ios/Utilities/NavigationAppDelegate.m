@@ -168,8 +168,7 @@
                 [navigationViewController onShoutNotificationPressedWhileAppInNavigationVC:shout];
             } failure:nil];
         } else if ([[navController topViewController] isKindOfClass:[ShoutViewController class]] ||
-            [[navController topViewController] isKindOfClass:[SettingsViewController class]] ||
-            [[navController topViewController] isKindOfClass:[CreateShoutViewController class]]) {
+            [[navController topViewController] isKindOfClass:[SettingsViewController class]]) {
             
             [self setRedirectionToNotificationShout:notification];
             [navController popViewControllerAnimated:NO];
@@ -188,6 +187,10 @@
                    [[navController topViewController] isKindOfClass:[ForgotPasswordViewController class]]) {
             
             [self setRedirectionToNotificationShout:notification];
+        } else if ([[navController topViewController] isKindOfClass:[CreateShoutViewController class]]){
+            [self setRedirectionToNotificationShout:notification];
+            [[navController topViewController] dismissViewControllerAnimated:NO completion:NULL];
+            [navController popViewControllerAnimated:NO];
         }
 
     }
