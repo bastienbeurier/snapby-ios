@@ -61,5 +61,9 @@
 
 + (void)removeShout: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
++ (void)removeLike: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)makeShoutTrending: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
 @end
 

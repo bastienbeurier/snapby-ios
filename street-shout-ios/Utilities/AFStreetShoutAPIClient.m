@@ -508,10 +508,55 @@
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts/remove.json"];
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
 
     [parameters setObject:[NSNumber numberWithInteger:shout.identifier] forKey:@"shout_id"];
-    [parameters setObject:[NSNumber numberWithInteger:shout.userId] forKey:@"shouter_id"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        if(successBlock) {
+            successBlock();
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
++ (void)removeLike: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"likes/delete.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:shout.identifier] forKey:@"shout_id"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] DELETE:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        if(successBlock) {
+            successBlock();
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
++ (void)makeShoutTrending: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts/trending.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:shout.identifier] forKey:@"shout_id"];
     
     if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
         return;

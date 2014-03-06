@@ -125,11 +125,9 @@
             NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
             [cell.shoutImageView setImageWithURL:url placeholderImage:nil];
             
-            // Make it square
-            [cell.shoutImageView setImage:[ImageUtilities cropBiggestCenteredSquareImageFromImage:cell.shoutImageView.image withSide:cell.shoutImageView.image.size.width]];
-            
-            cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
             cell.shoutImageView.clipsToBounds = YES;
+            cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+            
             cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
             cell.imageViewDropShadow.clipsToBounds = YES;
             

@@ -734,7 +734,7 @@
                                             <constraint firstAttribute="height" constant="320" id="oth-cI-0XH"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-Is-qMB">
+                                    <imageView contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-Is-qMB">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <gestureRecognizers/>
                                         <constraints>
