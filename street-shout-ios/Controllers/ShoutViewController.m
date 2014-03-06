@@ -164,8 +164,12 @@
     //Fill with shout info
     if (self.shout) {
         if (self.shout.image) {
+            // Get image
             NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
+            
+            // Make it square
+            [self.shoutImageView setImage:[ImageUtilities cropBiggestCenteredSquareImageFromImage:self.shoutImageView.image withSide:self.shoutImageView.image.size.width]];
             
             [self.shoutImageView setHidden:NO];
             [self.shoutImageDropShadowView setHidden:NO];
