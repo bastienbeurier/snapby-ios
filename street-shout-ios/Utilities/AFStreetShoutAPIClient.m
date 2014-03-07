@@ -27,15 +27,14 @@
             _sharedClient = [[AFStreetShoutAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kProdAFStreetShoutAPIBaseURLString]];
         } else {
             _sharedClient = [[AFStreetShoutAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kDevAFStreetShoutAPIBaseURLString]];
-            
-            //todoBT put this in prod too when tested
-            NSOperationQueue *operationQueue = _sharedClient.operationQueue;
-            [_sharedClient.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-                if(status == AFNetworkReachabilityStatusNotReachable) {
-                    [operationQueue cancelAllOperations];
-                }
-            }];
         }
+        //todoBT check this for prod
+        NSOperationQueue *operationQueue = _sharedClient.operationQueue;
+        [_sharedClient.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+            if(status == AFNetworkReachabilityStatusNotReachable) {
+                [operationQueue cancelAllOperations];
+            }
+        }];
     });
     
     return _sharedClient;

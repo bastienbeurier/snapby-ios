@@ -10,7 +10,6 @@
 		0B07B9DF17E6FF8300DA26EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F72F1795C66500F37227 /* main.m */; };
 		0B07B9E017E6FF8300DA26EE /* NavigationAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7331795C66500F37227 /* NavigationAppDelegate.m */; };
 		0B07B9E117E6FF8300DA26EE /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* ExploreViewController.m */; };
-		0B07B9EB17E6FF8300DA26EE /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */; };
 		0B07B9EC17E6FF8300DA26EE /* Shout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71C17971AF300312BFD /* Shout.m */; };
 		0B07B9ED17E6FF8300DA26EE /* MapRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71F17971B1D00312BFD /* MapRequestHandler.m */; };
 		0B07B9EE17E6FF8300DA26EE /* LocationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A72217975E5C00312BFD /* LocationUtilities.m */; };
@@ -51,14 +50,11 @@
 		0B07BA1817E6FF8300DA26EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7231795C66500F37227 /* UIKit.framework */; };
 		0B07BA1917E6FF8300DA26EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7251795C66500F37227 /* Foundation.framework */; };
 		0B07BA1A17E6FF8300DA26EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7271795C66500F37227 /* CoreGraphics.framework */; };
-		0B07BA1B17E6FF8300DA26EE /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3B0A3B17A082350026EE12 /* libTestFlight.a */; };
 		0B07BA1C17E6FF8300DA26EE /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDB474A17BBF8AD00369A14 /* AWSRuntime.framework */; };
 		0B07BA1D17E6FF8300DA26EE /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDB475817BC365700369A14 /* AWSS3.framework */; };
 		0B07BA1F17E6FF8300DA26EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F72C1795C66500F37227 /* InfoPlist.strings */; };
 		0B07BA2317E6FF8300DA26EE /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */; };
 		0B07BA2517E6FF8300DA26EE /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2F179F35520026EE12 /* Strings.strings */; };
-		0B07BA2617E6FF8300DA26EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3C17A082350026EE12 /* README.md */; };
-		0B07BA2717E6FF8300DA26EE /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3D17A082350026EE12 /* release_notes.md */; };
 		0B07BA2817E6FF8300DA26EE /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B363B4F17BEC97100C3104A /* AirshipConfig.plist */; };
 		0B0D7AB8180B043500CA3DCE /* remove-photo-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B0D7AB6180B043500CA3DCE /* remove-photo-button@2x~iphone.png */; };
 		0B10B08917E9C2DF00507381 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B10B08817E9C2DF00507381 /* AssetsLibrary.framework */; };
@@ -162,7 +158,6 @@
 		0BC30FE51894444400917C3C /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* ExploreViewController.m */; };
 		0BC30FEC1894444400917C3C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCA5F3918095063003A8637 /* SettingsViewController.m */; };
 		0BC30FED1894444400917C3C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F681885E9B7002B1254 /* MBProgressHUD.m */; };
-		0BC30FF11894444400917C3C /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */; };
 		0BC30FF21894444400917C3C /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5973591880649B00E27402 /* DeviceUtilities.m */; };
 		0BC30FF31894444400917C3C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7C47C7188D7EC900D308A9 /* Comment.m */; };
 		0BC30FF41894444400917C3C /* Shout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71C17971AF300312BFD /* Shout.m */; };
@@ -232,7 +227,6 @@
 		0BC310361894444400917C3C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7231795C66500F37227 /* UIKit.framework */; };
 		0BC310371894444400917C3C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7251795C66500F37227 /* Foundation.framework */; };
 		0BC310381894444400917C3C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7271795C66500F37227 /* CoreGraphics.framework */; };
-		0BC310391894444400917C3C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3B0A3B17A082350026EE12 /* libTestFlight.a */; };
 		0BC3103A1894444400917C3C /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDB474A17BBF8AD00369A14 /* AWSRuntime.framework */; };
 		0BC3103B1894444400917C3C /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDB475817BC365700369A14 /* AWSS3.framework */; };
 		0BC3103D1894444400917C3C /* app-icon-dev-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDFAA1A1891A51F00876109 /* app-icon-dev-120.png */; };
@@ -290,10 +284,8 @@
 		0BC310711894444400917C3C /* my-location-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A3121887FAA1009F68C0 /* my-location-button@2x~iphone.png */; };
 		0BC310721894444400917C3C /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */; };
 		0BC310731894444400917C3C /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2F179F35520026EE12 /* Strings.strings */; };
-		0BC310741894444400917C3C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3C17A082350026EE12 /* README.md */; };
 		0BC310751894444400917C3C /* MPCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F281885E969002B1254 /* MPCheckmark.png */; };
 		0BC310761894444400917C3C /* MPDismissKeyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F2A1885E969002B1254 /* MPDismissKeyboard.png */; };
-		0BC310771894444400917C3C /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3D17A082350026EE12 /* release_notes.md */; };
 		0BC310781894444400917C3C /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDFAA331891F21B00876109 /* Default~iphone.png */; };
 		0BC310791894444400917C3C /* create-shout-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B28C6931892D567008C46BF /* create-shout-icon@2x~iphone.png */; };
 		0BC3107A1894444400917C3C /* app-icon-dev-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDFAA181891A51F00876109 /* app-icon-dev-58.png */; };
@@ -313,7 +305,6 @@
 		0BC310881894444400917C3C /* cancel-item-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B28C6A21892DF0B008C46BF /* cancel-item-button@2x~iphone.png */; };
 		0BC310891894444400917C3C /* shout-bar-comment-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B28C6B01892EE02008C46BF /* shout-bar-comment-icon.png */; };
 		0BCA5F3B18095063003A8637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCA5F3918095063003A8637 /* SettingsViewController.m */; };
-		0BCBC602189160DB00933715 /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
 		0BCBC603189160DB00933715 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB44FBA187DAF0500AE4A64 /* User.m */; };
 		0BCBC604189160DB00933715 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F72F1795C66500F37227 /* main.m */; };
 		0BCBC605189160DB00933715 /* Mixpanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F231885E969002B1254 /* Mixpanel.m */; };
@@ -321,7 +312,6 @@
 		0BCBC607189160DB00933715 /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B65F7421795C66500F37227 /* ExploreViewController.m */; };
 		0BCBC60E189160DB00933715 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCA5F3918095063003A8637 /* SettingsViewController.m */; };
 		0BCBC60F189160DB00933715 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F681885E9B7002B1254 /* MBProgressHUD.m */; };
-		0BCBC613189160DB00933715 /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */; };
 		0BCBC614189160DB00933715 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5973591880649B00E27402 /* DeviceUtilities.m */; };
 		0BCBC615189160DB00933715 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7C47C7188D7EC900D308A9 /* Comment.m */; };
 		0BCBC616189160DB00933715 /* Shout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42A71C17971AF300312BFD /* Shout.m */; };
@@ -391,7 +381,6 @@
 		0BCBC658189160DB00933715 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7231795C66500F37227 /* UIKit.framework */; };
 		0BCBC659189160DB00933715 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7251795C66500F37227 /* Foundation.framework */; };
 		0BCBC65A189160DB00933715 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B65F7271795C66500F37227 /* CoreGraphics.framework */; };
-		0BCBC65B189160DB00933715 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3B0A3B17A082350026EE12 /* libTestFlight.a */; };
 		0BCBC65C189160DB00933715 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDB474A17BBF8AD00369A14 /* AWSRuntime.framework */; };
 		0BCBC65D189160DB00933715 /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDB475817BC365700369A14 /* AWSS3.framework */; };
 		0BCBC65F189160DB00933715 /* MPLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F2C1885E969002B1254 /* MPLogo.png */; };
@@ -427,10 +416,8 @@
 		0BCBC69A189160DB00933715 /* my-location-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B71A3121887FAA1009F68C0 /* my-location-button@2x~iphone.png */; };
 		0BCBC69B189160DB00933715 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */; };
 		0BCBC69D189160DB00933715 /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A2F179F35520026EE12 /* Strings.strings */; };
-		0BCBC69E189160DB00933715 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3C17A082350026EE12 /* README.md */; };
 		0BCBC69F189160DB00933715 /* MPCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F281885E969002B1254 /* MPCheckmark.png */; };
 		0BCBC6A2189160DB00933715 /* MPDismissKeyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF63F2A1885E969002B1254 /* MPDismissKeyboard.png */; };
-		0BCBC6A3189160DB00933715 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B3B0A3D17A082350026EE12 /* release_notes.md */; };
 		0BCBC6A6189160DB00933715 /* refresh-map-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF72BB0180B46DD002F5FC8 /* refresh-map-button@2x~iphone.png */; };
 		0BCBC6A9189160DB00933715 /* username-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B57F9461885452700FC23BF /* username-icon.png */; };
 		0BCBC6AC189160DB00933715 /* remove-photo-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B0D7AB6180B043500CA3DCE /* remove-photo-button@2x~iphone.png */; };
@@ -481,6 +468,14 @@
 		0BFEAB661803241B009B5D12 /* ShoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */; };
 		3C27CBC5189BFD0700D7E139 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3C27CBC4189BFD0700D7E139 /* default.gpx */; };
 		3C301606187EAF0A0006F70A /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
+		3C48A78518C9D35F00646E31 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48A77F18C9D35F00646E31 /* libTestFlight.a */; };
+		3C48A78618C9D35F00646E31 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48A77F18C9D35F00646E31 /* libTestFlight.a */; };
+		3C48A78718C9D35F00646E31 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3C48A78018C9D35F00646E31 /* README.md */; };
+		3C48A78818C9D35F00646E31 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3C48A78018C9D35F00646E31 /* README.md */; };
+		3C48A78918C9D35F00646E31 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 3C48A78118C9D35F00646E31 /* release_notes.md */; };
+		3C48A78A18C9D35F00646E31 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 3C48A78118C9D35F00646E31 /* release_notes.md */; };
+		3C48A78B18C9D80300646E31 /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838C4818C8F89C002C08AB /* AFStreetShoutAPIClient.m */; };
+		3C48A78C18C9D98400646E31 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B69818BB973D006EF1A6 /* UIImageView+AFNetworking.m */; };
 		3C59F38E18B78D40004A1BBC /* libUAirship-3.0.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C59F38D18B78D40004A1BBC /* libUAirship-3.0.3.a */; };
 		3C66B6A018BB973D006EF1A6 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B69018BB973D006EF1A6 /* AFNetworkActivityIndicatorManager.m */; };
 		3C66B6A118BB973D006EF1A6 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B69218BB973D006EF1A6 /* UIActivityIndicatorView+AFNetworking.m */; };
@@ -533,7 +528,22 @@
 		3C838BF518C8E70A002C08AB /* navigation-create-shout-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C838BF218C8E70A002C08AB /* navigation-create-shout-button.png */; };
 		3C838BF618C8E70A002C08AB /* navigation-create-shout-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C838BF318C8E70A002C08AB /* navigation-create-shout-button@2x~iphone.png */; };
 		3C838BF718C8E70A002C08AB /* navigation-create-shout-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C838BF318C8E70A002C08AB /* navigation-create-shout-button@2x~iphone.png */; };
+		3C838C4C18C8F8DB002C08AB /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
+		3C8A712418C8FB5000041D09 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6AC18BB9750006EF1A6 /* AFHTTPRequestOperationManager.m */; };
+		3C8A712518C8FB5900041D09 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6AE18BB9750006EF1A6 /* AFHTTPSessionManager.m */; };
+		3C8A712618C8FB7300041D09 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B118BB9750006EF1A6 /* AFNetworkReachabilityManager.m */; };
+		3C8A712718C8FB7F00041D09 /* KeyboardUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */; };
+		3C8A712818C8FB8C00041D09 /* AFStreetShoutAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838C4818C8F89C002C08AB /* AFStreetShoutAPIClient.m */; };
+		3C8A712918C8FBAA00041D09 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6BB18BB9750006EF1A6 /* AFURLSessionManager.m */; };
+		3C8A712A18C8FBBE00041D09 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B918BB9750006EF1A6 /* AFURLResponseSerialization.m */; };
+		3C8A712B18C8FBC400041D09 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B718BB9750006EF1A6 /* AFURLRequestSerialization.m */; };
+		3C8A712C18C8FBD400041D09 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B518BB9750006EF1A6 /* AFURLConnectionOperation.m */; };
+		3C8A712D18C8FBE300041D09 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6B318BB9750006EF1A6 /* AFSecurityPolicy.m */; };
+		3C8A712E18C8FC0900041D09 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B69018BB973D006EF1A6 /* AFNetworkActivityIndicatorManager.m */; };
 		3CA5F09618BF8F5B00C7677B /* KeyboardUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */; };
+		3CAB483518C8FECD0063EA05 /* libUAirship-3.0.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C59F38D18B78D40004A1BBC /* libUAirship-3.0.3.a */; };
+		3CAB483D18C900C30063EA05 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C66B6AA18BB9750006EF1A6 /* AFHTTPRequestOperation.m */; };
+		3CAB483F18C9015A0063EA05 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CAB483E18C9015A0063EA05 /* CoreData.framework */; };
 		3CEB380918882E1A00ADC994 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CEB380818882E1A00ADC994 /* ForgotPasswordViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -581,10 +591,6 @@
 		0B3B0A2F179F35520026EE12 /* Strings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Strings.strings; sourceTree = "<group>"; };
 		0B3B0A31179F36AC0026EE12 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
 		0B3B0A32179F36AC0026EE12 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Utilities/Constants.m; sourceTree = "<group>"; };
-		0B3B0A3B17A082350026EE12 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		0B3B0A3C17A082350026EE12 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		0B3B0A3D17A082350026EE12 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		0B3B0A3E17A082350026EE12 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		0B3B0A4217A0828A0026EE12 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		0B3B0A4417A0AA830026EE12 /* CreateShoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateShoutViewController.h; path = Controllers/CreateShoutViewController.h; sourceTree = "<group>"; };
 		0B3B0A4517A0AA830026EE12 /* CreateShoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateShoutViewController.m; path = Controllers/CreateShoutViewController.m; sourceTree = "<group>"; };
@@ -593,7 +599,6 @@
 		0B42A70A17970C0600312BFD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0B42A70C17970C0E00312BFD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0B42A7121797133500312BFD /* AFStreetShoutAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFStreetShoutAPIClient.h; path = Utilities/AFStreetShoutAPIClient.h; sourceTree = "<group>"; };
-		0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFStreetShoutAPIClient.m; path = Utilities/AFStreetShoutAPIClient.m; sourceTree = "<group>"; };
 		0B42A7171797143400312BFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0B42A7191797146B00312BFD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		0B42A71B17971AF300312BFD /* Shout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shout.h; path = Models/Shout.h; sourceTree = "<group>"; };
@@ -765,6 +770,12 @@
 		3C27CBC4189BFD0700D7E139 /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
 		3C301604187EAF0A0006F70A /* SessionUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionUtilities.h; path = Utilities/SessionUtilities.h; sourceTree = "<group>"; };
 		3C301605187EAF0A0006F70A /* SessionUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionUtilities.m; path = Utilities/SessionUtilities.m; sourceTree = "<group>"; };
+		3C48A77F18C9D35F00646E31 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		3C48A78018C9D35F00646E31 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		3C48A78118C9D35F00646E31 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		3C48A78218C9D35F00646E31 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		3C48A78318C9D35F00646E31 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		3C48A78418C9D35F00646E31 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		3C59F38D18B78D40004A1BBC /* libUAirship-3.0.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-3.0.3.a"; path = "Airship/libUAirship-3.0.3.a"; sourceTree = "<group>"; };
 		3C66B68F18BB973D006EF1A6 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
 		3C66B69018BB973D006EF1A6 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
@@ -819,8 +830,10 @@
 		3C6E0E5E18C5073100DBD1EF /* create_send_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_send_button.png; sourceTree = "<group>"; };
 		3C838BF218C8E70A002C08AB /* navigation-create-shout-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-create-shout-button.png"; sourceTree = "<group>"; };
 		3C838BF318C8E70A002C08AB /* navigation-create-shout-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-create-shout-button@2x~iphone.png"; sourceTree = "<group>"; };
+		3C838C4818C8F89C002C08AB /* AFStreetShoutAPIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AFStreetShoutAPIClient.m; path = Utilities/AFStreetShoutAPIClient.m; sourceTree = "<group>"; };
 		3CA5F09418BF8F5B00C7677B /* KeyboardUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyboardUtilities.h; path = Utilities/KeyboardUtilities.h; sourceTree = "<group>"; };
 		3CA5F09518BF8F5B00C7677B /* KeyboardUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyboardUtilities.m; path = Utilities/KeyboardUtilities.m; sourceTree = "<group>"; };
+		3CAB483E18C9015A0063EA05 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		3CEB380718882E1A00ADC994 /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgotPasswordViewController.h; path = Controllers/ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		3CEB380818882E1A00ADC994 /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForgotPasswordViewController.m; path = Controllers/ForgotPasswordViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -830,11 +843,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C59F38E18B78D40004A1BBC /* libUAirship-3.0.3.a in Frameworks */,
 				0B57FAC71885DFDF00FC23BF /* Accelerate.framework in Frameworks */,
 				0B57FAC41885DF8A00FC23BF /* AdSupport.framework in Frameworks */,
 				0BF3312B18034ABA00E5C59B /* QuartzCore.framework in Frameworks */,
 				0B10B08917E9C2DF00507381 /* AssetsLibrary.framework in Frameworks */,
-				3C59F38E18B78D40004A1BBC /* libUAirship-3.0.3.a in Frameworks */,
+				3C48A78518C9D35F00646E31 /* libTestFlight.a in Frameworks */,
 				0B07BA0D17E6FF8300DA26EE /* AudioToolbox.framework in Frameworks */,
 				0B07BA0E17E6FF8300DA26EE /* MessageUI.framework in Frameworks */,
 				0B07BA0F17E6FF8300DA26EE /* CoreTelephony.framework in Frameworks */,
@@ -850,7 +864,6 @@
 				0B07BA1817E6FF8300DA26EE /* UIKit.framework in Frameworks */,
 				0B07BA1917E6FF8300DA26EE /* Foundation.framework in Frameworks */,
 				0B07BA1A17E6FF8300DA26EE /* CoreGraphics.framework in Frameworks */,
-				0B07BA1B17E6FF8300DA26EE /* libTestFlight.a in Frameworks */,
 				0B07BA1C17E6FF8300DA26EE /* AWSRuntime.framework in Frameworks */,
 				0B07BA1D17E6FF8300DA26EE /* AWSS3.framework in Frameworks */,
 			);
@@ -879,7 +892,6 @@
 				0BC310361894444400917C3C /* UIKit.framework in Frameworks */,
 				0BC310371894444400917C3C /* Foundation.framework in Frameworks */,
 				0BC310381894444400917C3C /* CoreGraphics.framework in Frameworks */,
-				0BC310391894444400917C3C /* libTestFlight.a in Frameworks */,
 				0BC3103A1894444400917C3C /* AWSRuntime.framework in Frameworks */,
 				0BC3103B1894444400917C3C /* AWSS3.framework in Frameworks */,
 			);
@@ -889,7 +901,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CAB483F18C9015A0063EA05 /* CoreData.framework in Frameworks */,
+				3CAB483518C8FECD0063EA05 /* libUAirship-3.0.3.a in Frameworks */,
 				0BCBC647189160DB00933715 /* Accelerate.framework in Frameworks */,
+				3C48A78618C9D35F00646E31 /* libTestFlight.a in Frameworks */,
 				0BCBC648189160DB00933715 /* AdSupport.framework in Frameworks */,
 				0BCBC649189160DB00933715 /* QuartzCore.framework in Frameworks */,
 				0BCBC64A189160DB00933715 /* AssetsLibrary.framework in Frameworks */,
@@ -908,7 +923,6 @@
 				0BCBC658189160DB00933715 /* UIKit.framework in Frameworks */,
 				0BCBC659189160DB00933715 /* Foundation.framework in Frameworks */,
 				0BCBC65A189160DB00933715 /* CoreGraphics.framework in Frameworks */,
-				0BCBC65B189160DB00933715 /* libTestFlight.a in Frameworks */,
 				0BCBC65C189160DB00933715 /* AWSRuntime.framework in Frameworks */,
 				0BCBC65D189160DB00933715 /* AWSS3.framework in Frameworks */,
 			);
@@ -1034,17 +1048,6 @@
 			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
-		0B3B0A3A17A082350026EE12 /* TestFlightSDK1.2.6 */ = {
-			isa = PBXGroup;
-			children = (
-				0B3B0A3B17A082350026EE12 /* libTestFlight.a */,
-				0B3B0A3C17A082350026EE12 /* README.md */,
-				0B3B0A3D17A082350026EE12 /* release_notes.md */,
-				0B3B0A3E17A082350026EE12 /* TestFlight.h */,
-			);
-			path = TestFlightSDK1.2.6;
-			sourceTree = "<group>";
-		};
 		0B3B0A4A17A2E9EC0026EE12 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -1065,12 +1068,12 @@
 		0B42A70E17970C4500312BFD /* 3rd Parties */ = {
 			isa = PBXGroup;
 			children = (
+				3C48A77E18C9D35F00646E31 /* TestFlightSDK3.0.0 */,
 				3C66B6A818BB9750006EF1A6 /* AFNetworking */,
 				3C66B68E18BB973D006EF1A6 /* UIKit+AFNetworking */,
 				0BF63F211885E969002B1254 /* Mixpanel */,
 				0B10B08C17EC527A00507381 /* Reachability */,
 				0B3AA93017BD8D8A0091E103 /* MBProgressHUD */,
-				0B3B0A3A17A082350026EE12 /* TestFlightSDK1.2.6 */,
 			);
 			name = "3rd Parties";
 			sourceTree = "<group>";
@@ -1127,7 +1130,7 @@
 			isa = PBXGroup;
 			children = (
 				0B42A7121797133500312BFD /* AFStreetShoutAPIClient.h */,
-				0B42A7131797133500312BFD /* AFStreetShoutAPIClient.m */,
+				3C838C4818C8F89C002C08AB /* AFStreetShoutAPIClient.m */,
 				0B65F7321795C66500F37227 /* NavigationAppDelegate.h */,
 				0B65F7331795C66500F37227 /* NavigationAppDelegate.m */,
 				0B42A71E17971B1D00312BFD /* MapRequestHandler.h */,
@@ -1178,6 +1181,7 @@
 		0B65F7221795C66500F37227 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3CAB483E18C9015A0063EA05 /* CoreData.framework */,
 				3C59F38D18B78D40004A1BBC /* libUAirship-3.0.3.a */,
 				0B9D3DBE1886E0C500A3CACF /* FacebookSDK.framework */,
 				0B57FB921885E17F00FC23BF /* SenTestingKit.framework */,
@@ -1332,6 +1336,19 @@
 				0B7286FF1890230900FB4CC4 /* LikesTableViewCell.xib */,
 			);
 			name = Interface;
+			sourceTree = "<group>";
+		};
+		3C48A77E18C9D35F00646E31 /* TestFlightSDK3.0.0 */ = {
+			isa = PBXGroup;
+			children = (
+				3C48A77F18C9D35F00646E31 /* libTestFlight.a */,
+				3C48A78018C9D35F00646E31 /* README.md */,
+				3C48A78118C9D35F00646E31 /* release_notes.md */,
+				3C48A78218C9D35F00646E31 /* TestFlight+AsyncLogging.h */,
+				3C48A78318C9D35F00646E31 /* TestFlight+ManualSessions.h */,
+				3C48A78418C9D35F00646E31 /* TestFlight.h */,
+			);
+			path = TestFlightSDK3.0.0;
 			sourceTree = "<group>";
 		};
 		3C66B68E18BB973D006EF1A6 /* UIKit+AFNetworking */ = {
@@ -1540,6 +1557,8 @@
 				3C6E0E4D18C4F6C800DBD1EF /* camera-flip-button@2x~iphone.png in Resources */,
 				0B28C6CC1892EE02008C46BF /* shout-bar-share-icon.png in Resources */,
 				0B28C6E218930889008C46BF /* shout-image-place-holder-square-small@2x~iphone.png in Resources */,
+				3C48A78718C9D35F00646E31 /* README.md in Resources */,
+				3C48A78918C9D35F00646E31 /* release_notes.md in Resources */,
 				0B97D107181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png in Resources */,
 				0BF63F4F1885E969002B1254 /* MPDismissKeyboard@2x.png in Resources */,
 				0B28C6C41892EE02008C46BF /* shout-bar-like-icon-liked@2x~iphone.png in Resources */,
@@ -1547,8 +1566,6 @@
 				0B07BA2517E6FF8300DA26EE /* Strings.strings in Resources */,
 				0B28C6941892D567008C46BF /* create-shout-icon.png in Resources */,
 				0B71A3131887FAA1009F68C0 /* my-location-button@2x~iphone.png in Resources */,
-				0B07BA2617E6FF8300DA26EE /* README.md in Resources */,
-				0B07BA2717E6FF8300DA26EE /* release_notes.md in Resources */,
 				0BF63F491885E969002B1254 /* MPCheckmark.png in Resources */,
 				3C6E0E5318C4F6C800DBD1EF /* camera-shout-button.png in Resources */,
 				0BF63F4D1885E969002B1254 /* MPDismissKeyboard.png in Resources */,
@@ -1639,10 +1656,8 @@
 				0BC310711894444400917C3C /* my-location-button@2x~iphone.png in Resources */,
 				0BC310721894444400917C3C /* MainStoryboard_iPhone.storyboard in Resources */,
 				0BC310731894444400917C3C /* Strings.strings in Resources */,
-				0BC310741894444400917C3C /* README.md in Resources */,
 				0BC310751894444400917C3C /* MPCheckmark.png in Resources */,
 				0BC310761894444400917C3C /* MPDismissKeyboard.png in Resources */,
-				0BC310771894444400917C3C /* release_notes.md in Resources */,
 				0BC310781894444400917C3C /* Default~iphone.png in Resources */,
 				0BC310791894444400917C3C /* create-shout-icon@2x~iphone.png in Resources */,
 				0BC3107A1894444400917C3C /* app-icon-dev-58.png in Resources */,
@@ -1670,6 +1685,7 @@
 			files = (
 				3C6E0E4E18C4F6C800DBD1EF /* camera-flip-button@2x~iphone.png in Resources */,
 				0BDFAA231891A51F00876109 /* app-icon-dev-120.png in Resources */,
+				3C48A78A18C9D35F00646E31 /* release_notes.md in Resources */,
 				0BDFAA381891F21B00876109 /* Default@2x~iphone.png in Resources */,
 				0BCBC65F189160DB00933715 /* MPLogo.png in Resources */,
 				0BCBC661189160DB00933715 /* MPArrowRight.png in Resources */,
@@ -1731,11 +1747,10 @@
 				0BCBC69B189160DB00933715 /* MainStoryboard_iPhone.storyboard in Resources */,
 				3C6E0E4C18C4F6C800DBD1EF /* camera-flip-button.png in Resources */,
 				0BCBC69D189160DB00933715 /* Strings.strings in Resources */,
-				0BCBC69E189160DB00933715 /* README.md in Resources */,
 				3C6E0E5218C4F6C800DBD1EF /* camera-quit-button@2x~iphone.png in Resources */,
 				0BCBC69F189160DB00933715 /* MPCheckmark.png in Resources */,
 				0BCBC6A2189160DB00933715 /* MPDismissKeyboard.png in Resources */,
-				0BCBC6A3189160DB00933715 /* release_notes.md in Resources */,
+				3C48A78818C9D35F00646E31 /* README.md in Resources */,
 				3C6E0E6818C5073100DBD1EF /* create_refine_button.png in Resources */,
 				0BDFAA361891F21B00876109 /* Default~iphone.png in Resources */,
 				0B28C6971892D567008C46BF /* create-shout-icon@2x~iphone.png in Resources */,
@@ -1772,6 +1787,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C48A78B18C9D80300646E31 /* AFStreetShoutAPIClient.m in Sources */,
 				3CA5F09618BF8F5B00C7677B /* KeyboardUtilities.m in Sources */,
 				3C66B6C418BB9750006EF1A6 /* AFURLSessionManager.m in Sources */,
 				3C301606187EAF0A0006F70A /* SessionUtilities.m in Sources */,
@@ -1784,7 +1800,6 @@
 				3C66B6C218BB9750006EF1A6 /* AFURLRequestSerialization.m in Sources */,
 				0BCA5F3B18095063003A8637 /* SettingsViewController.m in Sources */,
 				0BF63F691885E9B7002B1254 /* MBProgressHUD.m in Sources */,
-				0B07B9EB17E6FF8300DA26EE /* AFStreetShoutAPIClient.m in Sources */,
 				0B59735A1880649B00E27402 /* DeviceUtilities.m in Sources */,
 				3C66B6BD18BB9750006EF1A6 /* AFHTTPRequestOperationManager.m in Sources */,
 				3C66B6A218BB973D006EF1A6 /* UIAlertView+AFNetworking.m in Sources */,
@@ -1864,7 +1879,6 @@
 				0BC30FE51894444400917C3C /* ExploreViewController.m in Sources */,
 				0BC30FEC1894444400917C3C /* SettingsViewController.m in Sources */,
 				0BC30FED1894444400917C3C /* MBProgressHUD.m in Sources */,
-				0BC30FF11894444400917C3C /* AFStreetShoutAPIClient.m in Sources */,
 				0BC30FF21894444400917C3C /* DeviceUtilities.m in Sources */,
 				0BC30FF31894444400917C3C /* Comment.m in Sources */,
 				0BC30FF41894444400917C3C /* Shout.m in Sources */,
@@ -1922,7 +1936,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0BCBC602189160DB00933715 /* SessionUtilities.m in Sources */,
+				3C48A78C18C9D98400646E31 /* UIImageView+AFNetworking.m in Sources */,
+				3CAB483D18C900C30063EA05 /* AFHTTPRequestOperation.m in Sources */,
+				3C8A712E18C8FC0900041D09 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				3C8A712D18C8FBE300041D09 /* AFSecurityPolicy.m in Sources */,
+				3C8A712C18C8FBD400041D09 /* AFURLConnectionOperation.m in Sources */,
+				3C8A712B18C8FBC400041D09 /* AFURLRequestSerialization.m in Sources */,
+				3C8A712A18C8FBBE00041D09 /* AFURLResponseSerialization.m in Sources */,
+				3C8A712918C8FBAA00041D09 /* AFURLSessionManager.m in Sources */,
+				3C8A712818C8FB8C00041D09 /* AFStreetShoutAPIClient.m in Sources */,
+				3C8A712718C8FB7F00041D09 /* KeyboardUtilities.m in Sources */,
+				3C8A712618C8FB7300041D09 /* AFNetworkReachabilityManager.m in Sources */,
+				3C8A712518C8FB5900041D09 /* AFHTTPSessionManager.m in Sources */,
+				3C8A712418C8FB5000041D09 /* AFHTTPRequestOperationManager.m in Sources */,
+				3C838C4C18C8F8DB002C08AB /* SessionUtilities.m in Sources */,
 				0BCBC603189160DB00933715 /* User.m in Sources */,
 				0BCBC604189160DB00933715 /* main.m in Sources */,
 				0BCBC605189160DB00933715 /* Mixpanel.m in Sources */,
@@ -1930,7 +1957,6 @@
 				0BCBC607189160DB00933715 /* ExploreViewController.m in Sources */,
 				0BCBC60E189160DB00933715 /* SettingsViewController.m in Sources */,
 				0BCBC60F189160DB00933715 /* MBProgressHUD.m in Sources */,
-				0BCBC613189160DB00933715 /* AFStreetShoutAPIClient.m in Sources */,
 				0BCBC614189160DB00933715 /* DeviceUtilities.m in Sources */,
 				0BCBC615189160DB00933715 /* Comment.m in Sources */,
 				0BCBC616189160DB00933715 /* Shout.m in Sources */,
@@ -2036,7 +2062,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK1.2.6\"",
+					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK3.0.0\"",
 					"$(SRCROOT)",
 					"\"$(SRCROOT)/Airship\"",
 				);
@@ -2068,7 +2094,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK1.2.6\"",
+					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK3.0.0\"",
 					"$(SRCROOT)",
 					"\"$(SRCROOT)/Airship\"",
 				);
@@ -2211,7 +2237,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bastien Beurier (63863BWF5M)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2223,18 +2249,19 @@
 					"PRODUCTION=\"$(inProduction)\"",
 					"DEBUG=1",
 				);
-				HEADER_SEARCH_PATHS = "./Airship/**";
+				HEADER_SEARCH_PATHS = "Airship/**";
 				INFOPLIST_FILE = "$(SRCROOT)/street-shout-ios/street-shout-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK1.2.6\"",
-					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Airship\"",
+					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK3.0.0\"",
+					"$(inherited)",
+					"$(SRCROOT)",
 				);
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = Shout;
-				PROVISIONING_PROFILE = "05A3F36F-8F96-4D92-BDE1-E37F9A696DB3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "05A3F36F-8F96-4D92-BDE1-E37F9A696DB3";
+				PROVISIONING_PROFILE = "0DBEE6B6-E0D4-41FC-916F-C119BAE5938D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0DBEE6B6-E0D4-41FC-916F-C119BAE5938D";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = YES;
@@ -2245,7 +2272,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2254,18 +2281,19 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "street-shout-ios/street-shout-ios-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "PRODUCTION=\"$(inProduction)\"";
-				HEADER_SEARCH_PATHS = "./Airship/**";
+				HEADER_SEARCH_PATHS = "Airship/**";
 				INFOPLIST_FILE = "$(SRCROOT)/street-shout-ios/street-shout-ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK1.2.6\"",
-					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Airship\"",
+					"\"$(SRCROOT)/street-shout-ios/TestFlightSDK3.0.0\"",
+					"$(inherited)",
+					"$(SRCROOT)",
 				);
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = Shout;
-				PROVISIONING_PROFILE = "667B9DE4-F61A-498F-A960-1E215EC76265";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "667B9DE4-F61A-498F-A960-1E215EC76265";
+				PROVISIONING_PROFILE = "0DBEE6B6-E0D4-41FC-916F-C119BAE5938D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0DBEE6B6-E0D4-41FC-916F-C119BAE5938D";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = YES;
