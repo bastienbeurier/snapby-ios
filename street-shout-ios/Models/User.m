@@ -17,6 +17,17 @@
 
 @implementation User
 
++ (NSArray *)rawUsersToInstances:(NSArray *)rawUsers
+{
+    NSMutableArray *users = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *rawUser in rawUsers) {
+        [users addObject:[User rawUserToInstance:rawUser]];
+    }
+    
+    return users;
+}
+
 + (User *)rawUserToInstance:(NSDictionary *)rawUser
 {
     User *user= [[User alloc] init];

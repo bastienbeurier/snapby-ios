@@ -233,9 +233,10 @@
             // Request information about the user
             [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                 if (!error) {
+                    
                     // Get the user and token from the database
                     // If the user does not exist, it is created
-                    [self sendSignInOrUpRequestWithFacebookParameters: result];
+                    [self sendConnectFacebookRequestWithParameters: result];
                     
                     // Set in the phone our connection preference
                     [SessionUtilities setFBConnectedPref:true];
@@ -271,9 +272,11 @@
             
             // If the user cancelled login, do nothing
             if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-                NSLog(@"User cancelled login");
+                //The user refused to log in into your app, either ignore or...
+                alertTitle = @"Login cancelled";
+                alertText = @"You need to login to access this part of the app";
+                [GeneralUtilities showMessage:alertText withTitle:alertTitle];
                 
-                // Handle session closures that happen outside of the app
             } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
                 alertTitle = @"Session Error";
                 alertText = @"Your current session is no longer valid. Please log in again.";
@@ -307,7 +310,7 @@
 
 
 // Prepare failure and success block for the signInOrUpWithFacebookWithParameters request
-- (void)sendSignInOrUpRequestWithFacebookParameters: (id)params
+- (void)sendConnectFacebookRequestWithParameters: (id)params
 {
     
     typedef void (^SuccessBlock)(User *, NSString *, BOOL);
@@ -324,7 +327,19 @@
             } else {
                 [TrackingUtilities identifyWithMixpanel:user isSigningUp:NO];
             }
-        
+            
+            // Issue a Facebook Graph API request to get your user's friend list
+            [FBRequestConnection startForMyFriendsWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                if (!error) {
+                    // result will contain an array with your user's friends in the "data" key
+                    NSArray *friendObjects = [result objectForKey:@"data"];
+                    // Use it to create automatically relationships in database
+                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [AFStreetShoutAPIClient createRelationshipsFromFacebookFriends:friendObjects success:nil failure:nil];
+                    });
+                }
+            }];
+
             [self skipWelcomeController];
         });
     };
@@ -343,7 +358,7 @@
     };
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [AFStreetShoutAPIClient signInOrUpWithFacebookWithParameters:params success:successBlock failure:failureBlock];
+        [AFStreetShoutAPIClient connectFacebookWithParameters:params success:successBlock failure:failureBlock];
     });
 }
 

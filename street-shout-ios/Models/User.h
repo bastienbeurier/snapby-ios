@@ -10,6 +10,8 @@
 
 @interface User : NSObject
 
++ (NSArray *)rawUsersToInstances:(NSArray *)rawUsers;
+
 + (User *)rawUserToInstance:(NSDictionary *)rawUser;
 
 

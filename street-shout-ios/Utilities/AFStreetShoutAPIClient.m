@@ -70,9 +70,9 @@
 
 
 
-// ---------------
-// Requests
-// ---------------
+// ------------------------------------------------
+// Shout
+// ------------------------------------------------
 
 // Retrieve and display shouts on the map
 + (void)pullShoutsInZone:(NSArray *)cornersCoordinates
@@ -148,6 +148,84 @@
     }];
 }
 
+// Remove shout
++ (void)removeShout: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts/remove.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:shout.identifier] forKey:@"shout_id"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        if(successBlock) {
+            successBlock();
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
+// Flag
++ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [parameters setObject:[NSNumber numberWithInt:shoutId] forKey:@"shout_id"];
+    [parameters setObject:motive forKey:@"motive"];
+    [parameters setObject:[NSNumber numberWithInt:flaggerId] forKey:@"flagger_id"];
+    
+    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"flags.json"];
+    
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        if (successBlock) {
+            successBlock();
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failureBlock) {
+            failureBlock(task);
+        }
+    }];
+}
+
++ (void)makeShoutTrending: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts/trending.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:shout.identifier] forKey:@"shout_id"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        if(successBlock) {
+            successBlock();
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
+
+// ------------------------------------------------
+// User
+// ------------------------------------------------
+
 + (void)updateUserInfo
 {
     [AFStreetShoutAPIClient updateUserInfoWithLat:0 Lng:0];
@@ -178,31 +256,6 @@
         [SessionUtilities updateCurrentUserInfoInPhone:user];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-    }];
-}
-
-+ (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
-{
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
-    
-    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
-        return;
-    }
-    
-    [parameters setObject:[NSNumber numberWithInt:shoutId] forKey:@"shout_id"];
-    [parameters setObject:motive forKey:@"motive"];
-    [parameters setObject:[NSNumber numberWithInt:flaggerId] forKey:@"flagger_id"];
-
-    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"flags.json"];
-    
-    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
-        if (successBlock) {
-            successBlock();
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (failureBlock) {
-            failureBlock(task);
-        }
     }];
 }
 
@@ -290,7 +343,7 @@
 }
 
 // Sign in or up with Facebook
-+ (void)signInOrUpWithFacebookWithParameters: (id) params success:(void(^)(User *user, NSString *authToken, BOOL isSignup))successBlock failure:(void(^)())failureBlock
++ (void)connectFacebookWithParameters: (id) params success:(void(^)(User *user, NSString *authToken, BOOL isSignup))successBlock failure:(void(^)())failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/facebook_create_or_update.json"];
     
@@ -317,7 +370,7 @@
                 successBlock(user, authToken, isSignup);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"Failure in signInOrUpWithFacebook");
+        NSLog(@"Failure in connectFacebook");
         failureBlock();
     }];
 }
@@ -336,6 +389,44 @@
         failureBlock();
     }];
 }
+
+// Change username
++ (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock
+{
+    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"modify_user_credentials.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    [parameters setObject:username forKey:@"username"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        
+        NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
+        
+        if (errors) {
+            failureBlock(errors);
+        } else {
+            NSDictionary *result = [JSON valueForKeyPath:@"result"];
+            
+            NSDictionary *rawUser = [result valueForKeyPath:@"user"];
+            User *user = [User rawUserToInstance:rawUser];
+            
+            if (successBlock) {
+                successBlock(user);
+            }
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        failureBlock(nil);
+    }];
+}
+
+// ------------------------------------------------
+// Likes & comments
+// ------------------------------------------------
 
 + (void)getCommentsForShout:(Shout *)shout success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
 {
@@ -469,63 +560,6 @@
     }];
 }
 
-+ (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock
-{
-    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"modify_user_credentials.json"];
-    
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    
-    [parameters setObject:username forKey:@"username"];
-    
-    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
-        return;
-    }
-
-    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
-        
-        NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
-        
-        if (errors) {
-            failureBlock(errors);
-        } else {
-            NSDictionary *result = [JSON valueForKeyPath:@"result"];
-            
-            NSDictionary *rawUser = [result valueForKeyPath:@"user"];
-            User *user = [User rawUserToInstance:rawUser];
-            
-            if (successBlock) {
-                successBlock(user);
-            }
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        failureBlock(nil);
-    }];
-}
-
-
-+ (void)removeShout: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock
-{
-    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts/remove.json"];
-    
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
-
-    [parameters setObject:[NSNumber numberWithInteger:shout.identifier] forKey:@"shout_id"];
-    
-    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
-        return;
-    }
-    
-    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
-        if(successBlock) {
-            successBlock();
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if(failureBlock) {
-            failureBlock();
-        }
-    }];
-}
-
 + (void)removeLike: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"likes/delete.json"];
@@ -549,19 +583,162 @@
     }];
 }
 
-+ (void)makeShoutTrending: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock
+
+
+// ------------------------------------------------
+// Friendship
+// ------------------------------------------------
+
+// follow
++ (void)followUser: (NSUInteger) followedId success:(void(^)())successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts/trending.json"];
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"relationships.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
-    [parameters setObject:[NSNumber numberWithInteger:shout.identifier] forKey:@"shout_id"];
+    [parameters setObject:[NSNumber numberWithInteger:followedId] forKey:@"followed_id"];
     
     if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        if(successBlock) {
+            successBlock();
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
+// Unfollow
++ (void)unfollowUser: (NSUInteger) followedId success:(void(^)())successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"relationships/delete.json"]];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:followedId] forKey:@"followed_id"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        if(successBlock) {
+            successBlock();
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
+// Get followers
++ (void)getFollowersOfUser:(NSInteger) followedId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/%d/followers.json", followedId]];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:followedId] forKey:@"user_id"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSArray *rawUsers = [result valueForKeyPath:@"followers"];
+        NSArray *users = [User rawUsersToInstances:rawUsers];
+        successBlock(users);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
+// Get followed users
++ (void)getFollowingOfUser:(NSInteger) followerId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/%d/followed_users.json", followerId]];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:followerId] forKey:@"user_id"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSArray *rawUsers = [result valueForKeyPath:@"followed_users"];
+        NSArray *users = [User rawUsersToInstances:rawUsers];
+        successBlock(users);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
+// Get user info (for profile)
++ (void)getOtherUserInfo:(NSInteger) userId success:(void(^)(User *, NSInteger, NSInteger, BOOL))successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/info"]];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:userId] forKey:@"user_id"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSDictionary *rawUser = [result valueForKeyPath:@"user"];
+        User *otherUser = [User rawUserToInstance:rawUser];
+        NSInteger nbFollowers = [[result valueForKeyPath:@"followers_count"] integerValue];
+        NSInteger nbFollowedUsers = [[result valueForKeyPath:@"followed_count"] integerValue];
+        BOOL isFollowedByCurrentUser = [[result valueForKeyPath:@"is_followed"] boolValue];
+        successBlock(otherUser, nbFollowers, nbFollowedUsers, isFollowedByCurrentUser);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if(failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
+// Facebook autofollow
++ (void)createRelationshipsFromFacebookFriends:(NSArray *) friendObjects success:(void(^)())successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/autofollow"]];
+    
+    NSMutableArray *friendIds = [NSMutableArray arrayWithCapacity:friendObjects.count];
+    // Create a list of friends' Facebook IDs
+    for (NSDictionary *friendObject in friendObjects) {
+        [friendIds addObject:[friendObject objectForKey:@"id"]];
+    }
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:friendIds forKey:@"friend_ids"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         if(successBlock) {
             successBlock();
         }

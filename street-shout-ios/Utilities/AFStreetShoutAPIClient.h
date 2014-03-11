@@ -16,6 +16,10 @@
 
 + (AFStreetShoutAPIClient *)sharedClient;
 
+// ------------------------------------------------
+// Shout
+// ------------------------------------------------
+
 + (void)pullShoutsInZone:(NSArray *)cornersCoordinates
               AndExecuteSuccess:(void(^)(NSArray *shouts))sucessBlock failure:(void (^)())failureBlock;
 
@@ -33,6 +37,15 @@
 
 + (void)reportShout:(NSUInteger)shoutId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
 
++ (void)removeShout: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)makeShoutTrending: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
+
+// ------------------------------------------------
+// User
+// ------------------------------------------------
+
 + (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())obsoleteBlock;
 
 + (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
@@ -43,9 +56,16 @@
 
 + (void)updateUserInfo;
 
-+ (void)signInOrUpWithFacebookWithParameters: (id)params success:(void(^)(User *user, NSString *authToken, BOOL isSignup))successBlock failure:(void(^)())failureBlock;
++ (void)connectFacebookWithParameters: (id)params success:(void(^)(User *user, NSString *authToken, BOOL isSignup))successBlock failure:(void(^)())failureBlock;
 
 + (void)sendResetPasswordInstructionsToEmail: (NSString *) email success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
+
+
+// ------------------------------------------------
+// Likes & comments
+// ------------------------------------------------
 
 + (void)createComment:(NSString *)comment forShout:(Shout *)shout lat:(double)lat lng:(double)lng success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
 
@@ -57,13 +77,24 @@
 
 + (void)getShoutMetaData:(Shout *)shout success:(void(^)(NSInteger commentCount, NSMutableArray *likerIds))successBlock failure:(void(^)())failureBlock;
 
-+ (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
-
-+ (void)removeShout: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
-
 + (void)removeLike: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
-+ (void)makeShoutTrending: (Shout *) shout success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
+// ------------------------------------------------
+// Friendship
+// ------------------------------------------------
+
++ (void)followUser: (NSUInteger) followedId success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)unfollowUser: (NSUInteger) relationshipId success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)getFollowersOfUser:(NSInteger) followedId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
+
++ (void)getFollowingOfUser:(NSInteger) followerId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
+
++ (void)getOtherUserInfo:(NSInteger) userId success:(void(^)(User *, NSInteger, NSInteger, BOOL))successBlock failure:(void(^)())failureBlock;
+
++ (void)createRelationshipsFromFacebookFriends:(NSArray *) friends success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
 @end
 
