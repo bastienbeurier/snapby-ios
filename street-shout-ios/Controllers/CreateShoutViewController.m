@@ -26,6 +26,7 @@
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (nonatomic) IBOutlet UIView *cameraOverlayView;
 @property (weak, nonatomic) IBOutlet UIButton *anonymousButton;
+@property (weak, nonatomic) IBOutlet UIButton *flashButton;
 
 @property (nonatomic) CGFloat rescalingRatio;
 @property (strong, nonatomic) NSString *shoutImageName;
@@ -291,7 +292,7 @@
     imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePickerController.delegate = self;
 
-    // Full screen
+    // Custom buttons
     imagePickerController.showsCameraControls = NO;
     imagePickerController.allowsEditing = NO;
     imagePickerController.navigationBarHidden=YES;
@@ -308,6 +309,9 @@
     CGAffineTransform scale = CGAffineTransformScale(translate, self.rescalingRatio, self.rescalingRatio);
     imagePickerController.cameraViewTransform = scale;
     
+    // flash disactivated by default
+    imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+    
     self.imagePickerController = imagePickerController;
     [self presentViewController:self.imagePickerController animated:NO completion:nil];
 }
@@ -322,11 +326,22 @@
 - (IBAction)takePictureButtonClicked:(id)sender {
     [self.imagePickerController takePicture];
 }
+
 - (IBAction)flipCameraButtonClicked:(id)sender {
     if (self.imagePickerController.cameraDevice == UIImagePickerControllerCameraDeviceFront){
         self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
     } else {
         self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    }
+}
+
+- (IBAction)flashButtonClicked:(id)sender {
+    if(self.imagePickerController.cameraFlashMode == UIImagePickerControllerCameraFlashModeOff){
+        [self.flashButton setImage:[UIImage imageNamed:@"flash_on.png"] forState:UIControlStateNormal];
+        self.imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOn;
+    } else {
+        [self.flashButton setImage:[UIImage imageNamed:@"flash_off.png"] forState:UIControlStateNormal];
+        self.imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
     }
 }
 
@@ -360,7 +375,7 @@
         return;
     }
     
-    self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%d", [GeneralUtilities currentDateInMilliseconds]];
+    self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%lu", (unsigned long)[GeneralUtilities currentDateInMilliseconds]];
     self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
 
     [self dismissViewControllerAnimated:NO completion:NULL];
