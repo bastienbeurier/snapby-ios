@@ -2096,7 +2096,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bastien Beurier (63863BWF5M)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2252,8 +2252,8 @@
 		0BCBC6BB189160DB00933715 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bastien Beurier (63863BWF5M)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2276,8 +2276,8 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = Shout;
-				PROVISIONING_PROFILE = "0DBEE6B6-E0D4-41FC-916F-C119BAE5938D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0DBEE6B6-E0D4-41FC-916F-C119BAE5938D";
+				PROVISIONING_PROFILE = "52623919-88A2-4324-B772-49F84789E355";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "52623919-88A2-4324-B772-49F84789E355";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = YES;
@@ -2288,7 +2288,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2308,8 +2308,8 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = Shout;
-				PROVISIONING_PROFILE = "0DBEE6B6-E0D4-41FC-916F-C119BAE5938D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0DBEE6B6-E0D4-41FC-916F-C119BAE5938D";
+				PROVISIONING_PROFILE = "52623919-88A2-4324-B772-49F84789E355";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "52623919-88A2-4324-B772-49F84789E355";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = YES;

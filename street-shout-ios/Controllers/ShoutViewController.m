@@ -168,7 +168,7 @@
     if (self.shout) {
         if (self.shout.image) {
             // Get image
-            NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
+            NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%lu", (unsigned long)kShoutImageWidth]];
             [self.shoutImageView setImageWithURL:url placeholderImage:nil];
             
             self.shoutImageView.clipsToBounds = YES;
@@ -310,7 +310,7 @@
 - (IBAction)shareButtonPressed:(id)sender {
     NSString *shareString = @"Hey, check this shout before it's too late!\n";
 
-    NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdShoutBaseURLString : kDevAFStreetShoutAPIBaseURLString) stringByAppendingString:@"shouts/"]stringByAppendingString:[NSString stringWithFormat:@"%d",self.shout.identifier]]];
+    NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdShoutBaseURLString : kDevAFStreetShoutAPIBaseURLString) stringByAppendingString:@"shouts/"]stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)self.shout.identifier]]];
     
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, nil];
     
@@ -346,7 +346,7 @@
     }
     
     //Update the UI
-    [self.likerIds insertObject:[NSNumber numberWithInt:[SessionUtilities getCurrentUser].identifier] atIndex:0];
+    [self.likerIds insertObject:[NSNumber numberWithLong:[SessionUtilities getCurrentUser].identifier] atIndex:0];
     [self updateUIOnShoutLiked:YES];
     
     double lat = 0;
@@ -385,18 +385,18 @@
 - (void)updateLikeCount:(NSUInteger)count
 {
     if (count < 2) {
-        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d like", [self.likerIds count]] forState:UIControlStateNormal];
+        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%lu like", (unsigned long)[self.likerIds count]] forState:UIControlStateNormal];
     } else {
-        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%d likes", [self.likerIds count]] forState:UIControlStateNormal];
+        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%lu likes", (unsigned long)[self.likerIds count]] forState:UIControlStateNormal];
     }
 }
 
 - (void)updateCommentCount:(NSInteger)count
 {
     if (count < 2) {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comment", count] forState:UIControlStateNormal];
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%ld comment", (long)count] forState:UIControlStateNormal];
     } else {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%d comments", count] forState:UIControlStateNormal];
+        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%ld comments", (long)count] forState:UIControlStateNormal];
     }
     
 }
@@ -408,7 +408,6 @@
     [self.shoutVCDelegate updateMapLocationtoLat:self.shout.lat lng:self.shout.lng];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 
 @end

@@ -144,7 +144,7 @@ NSString *kKeychainKeyIdentifier;
     }
     else
     {
-        AMZLogDebug(@"Unable to fetch value for keychain key '%@', Error Code: %ld", key, keychainError);
+        AMZLogDebug(@"Unable to fetch value for keychain key '%@', Error Code: %d", key, (int)keychainError);
         return nil;
     }
 }
@@ -167,7 +167,7 @@ NSString *kKeychainKeyIdentifier;
     }
     
     if (keychainError != errSecSuccess) {
-        AMZLogDebug(@"Error saving value to keychain key '%@', Error Code: %ld", key, keychainError);
+        AMZLogDebug(@"Error saving value to keychain key '%@', Error Code: %d", key, (int)keychainError);
     }
 }
 
@@ -184,14 +184,14 @@ NSString *kKeychainKeyIdentifier;
     
     if(keychainError != errSecSuccess && keychainError != errSecItemNotFound)
     {
-        AMZLogDebug(@"Keychain Key: kKeychainUidIdentifier, Error Code: %ld", keychainError);
+        AMZLogDebug(@"Keychain Key: kKeychainUidIdentifier, Error Code: %d", (int)keychainError);
         return keychainError;
     }
     
     keychainError = SecItemDelete((CFDictionaryRef)[AmazonKeyChainWrapper createKeychainDictionaryForKey : kKeychainKeyIdentifier]);
     if(keychainError != errSecSuccess && keychainError != errSecItemNotFound)
     {
-        AMZLogDebug(@"Keychain Key: kKeychainKeyIdentifier, Error Code: %ld", keychainError);
+        AMZLogDebug(@"Keychain Key: kKeychainKeyIdentifier, Error Code: %d", (int)keychainError);
         return keychainError;
     }
     
@@ -204,7 +204,7 @@ NSString *kKeychainKeyIdentifier;
     
     if(keychainError != errSecSuccess && keychainError != errSecItemNotFound)
     {
-        AMZLogDebug(@"Keychain Key: kKeychainAccessKeyIdentifier, Error Code: %ld", keychainError);
+        AMZLogDebug(@"Keychain Key: kKeychainAccessKeyIdentifier, Error Code: %d", (int)keychainError);
         return keychainError;
     }
     
@@ -212,7 +212,7 @@ NSString *kKeychainKeyIdentifier;
     
     if(keychainError != errSecSuccess && keychainError != errSecItemNotFound)
     {
-        AMZLogDebug(@"Keychain Key: kKeychainSecretKeyIdentifier, Error Code: %ld", keychainError);
+        AMZLogDebug(@"Keychain Key: kKeychainSecretKeyIdentifier, Error Code: %d", (int)keychainError);
         return keychainError;
     }
     
@@ -220,7 +220,7 @@ NSString *kKeychainKeyIdentifier;
     
     if(keychainError != errSecSuccess && keychainError != errSecItemNotFound)
     {
-        AMZLogDebug(@"Keychain Key: kKeychainSecrutiyTokenIdentifier, Error Code: %ld", keychainError);
+        AMZLogDebug(@"Keychain Key: kKeychainSecrutiyTokenIdentifier, Error Code: %d", (int)keychainError);
         return keychainError;
     }
     
@@ -228,7 +228,7 @@ NSString *kKeychainKeyIdentifier;
     
     if(keychainError != errSecSuccess && keychainError != errSecItemNotFound) 
     {
-        AMZLogDebug(@"Keychain Key: kKeychainExpirationDateIdentifier, Error Code: %ld", keychainError);
+        AMZLogDebug(@"Keychain Key: kKeychainExpirationDateIdentifier, Error Code: %d", (int)keychainError);
         return keychainError;
     }
     

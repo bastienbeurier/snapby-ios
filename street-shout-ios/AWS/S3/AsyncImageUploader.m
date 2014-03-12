@@ -57,7 +57,7 @@
     [self didChangeValueForKey:@"isExecuting"];
     
     NSString *bucketName = S3_BUCKET;
-    NSString *keyName = [shoutImageName stringByAppendingFormat:@"--%d", kShoutImageWidth];
+    NSString *keyName = [shoutImageName stringByAppendingFormat:@"--%lu", (unsigned long)kShoutImageWidth];
 
     NSData *imageData = UIImageJPEGRepresentation (shoutImage, 0.8);
     

@@ -203,7 +203,7 @@
 
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
-    [prefs setObject:[NSNumber numberWithInt:shoutId] forKey:NOTIFICATION_SHOUT_ID_PREF];
+    [prefs setObject:[NSNumber numberWithLong:shoutId] forKey:NOTIFICATION_SHOUT_ID_PREF];
     [prefs synchronize];
 }
 

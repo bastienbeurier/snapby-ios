@@ -107,7 +107,7 @@
     NSInteger charCount = [textField.text length] + [text length] - range.length;
     NSInteger remainingCharCount = kShoutMaxLength - charCount;
     if (remainingCharCount >= 0 ) {
-        self.charCount.text = [NSString stringWithFormat:@"%d", remainingCharCount];
+        self.charCount.text = [NSString stringWithFormat:@"%ld", (long)remainingCharCount];
         return YES;
     } else {
         return NO;
@@ -132,7 +132,7 @@
         error = YES;
     } else if (self.addDescriptionField.text.length > kMaxShoutDescriptionLength) {
         title = NSLocalizedStringFromTable (@"incorrect_shout_description", @"Strings", @"comment");
-        NSString *maxChars = [NSString stringWithFormat:@" (max: %d).", kMaxShoutDescriptionLength];
+        NSString *maxChars = [NSString stringWithFormat:@" (max: %lu).", (unsigned long)kMaxShoutDescriptionLength];
         message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
         error = YES;
     } else if (!self.capturedImage) {

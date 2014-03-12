@@ -96,5 +96,7 @@
 
 + (void)createRelationshipsFromFacebookFriends:(NSArray *) friends success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
++ (void)getFriendSuggestionForUser:(NSInteger) userId success:(void(^)(NSArray *users))successBlock failure:(void(^)())failureBlock;
+
 @end
 

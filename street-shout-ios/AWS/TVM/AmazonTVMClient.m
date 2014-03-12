@@ -101,7 +101,7 @@
 
         if (error == nil)
         {
-            return [handler handleResponse:response.statusCode body:[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease]];
+            return [handler handleResponse:(int)response.statusCode body:[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease]];
         }
     } while (delegate.failed && retries-- > 0);
 

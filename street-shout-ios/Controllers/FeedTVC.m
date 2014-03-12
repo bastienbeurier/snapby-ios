@@ -122,7 +122,7 @@
             cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder-square-small"];
             
             // Get image
-            NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
+            NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%lu", (unsigned long)kShoutImageWidth]];
             [cell.shoutImageView setImageWithURL:url placeholderImage:nil];
             
             cell.shoutImageView.clipsToBounds = YES;
