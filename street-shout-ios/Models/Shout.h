@@ -19,7 +19,6 @@
 @property (nonatomic) double lng;
 @property (strong, nonatomic) NSString *description;
 @property (strong, nonatomic) NSString *created;
-@property (strong, nonatomic) NSString *source;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *image;
 @property (nonatomic) BOOL removed;

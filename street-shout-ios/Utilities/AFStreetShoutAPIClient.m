@@ -393,9 +393,9 @@
 // Change username
 + (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock
 {
-    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"modify_user_credentials.json"];
+    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingFormat:@"users/%lu.json", (unsigned long)[SessionUtilities getCurrentUser].identifier];
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
     [parameters setObject:username forKey:@"username"];
     
@@ -754,9 +754,7 @@
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/suggested_friends"]];
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
-    
-    [parameters setObject:[NSNumber numberWithInteger:userId] forKey:@"user_id"];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:1];
     
     if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
         return;
