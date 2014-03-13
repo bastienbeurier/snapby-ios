@@ -83,17 +83,10 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
         font = [font fontWithSize:size];
         CGSize sizeToFit;
 
-        // Use boundingRectWithSize for iOS 7 and above, sizeWithFont otherwise.
-        if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-            sizeToFit = [_prompt.text boundingRectWithSize:constraintSize
+        sizeToFit = [_prompt.text boundingRectWithSize:constraintSize
                                                        options:NSStringDrawingUsesLineFragmentOrigin
                                                     attributes:@{NSFontAttributeName: font}
                                                        context:nil].size;
-        } else {
-            sizeToFit = [_prompt.text sizeWithFont:font
-                                 constrainedToSize:constraintSize
-                                     lineBreakMode:_prompt.lineBreakMode];
-        }
 
         if (sizeToFit.height <= promptHeight) {
             promptHeight = sizeToFit.height;
