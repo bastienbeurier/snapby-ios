@@ -762,7 +762,7 @@
         return;
     }
     
-    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSArray *rawUsers = [result valueForKeyPath:@"suggested_friends"];
         successBlock([User rawUsersToInstances:rawUsers]);
