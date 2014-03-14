@@ -307,8 +307,10 @@
 - (IBAction)flipCameraButtonClicked:(id)sender {
     if (self.imagePickerController.cameraDevice == UIImagePickerControllerCameraDeviceFront){
         self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+        [self.flashButton setHidden:false];
     } else {
         self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+        [self.flashButton setHidden:true];
     }
 }
 

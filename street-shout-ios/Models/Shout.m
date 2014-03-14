@@ -58,4 +58,11 @@
     return [NSURL URLWithString:[[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier] stringByAppendingString:@"--400"]];
 }
 
+- (NSURL *)getShoutThumbURL
+{
+    NSString *baseURL = PRODUCTION ? kProdShoutThumbBaseURL : kDevShoutThumbBaseURL;
+    
+    return [NSURL URLWithString:[[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier] stringByAppendingString:@"--400"]];
+}
+
 @end

@@ -42,12 +42,14 @@ static NSString * const kApiVersion = @"2";
 static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
 static NSString * const kDevTestFlightAppToken = @"c4904202-ba89-449a-bc2f-f53e231f1319";
 static NSString * const kDevShoutImageBaseURL = @"http://s3.amazonaws.com/shout_development/original/image_";
+static NSString * const kDevShoutThumbBaseURL = @"http://s3.amazonaws.com/shout_development/small/image_";
 
 //Production
 static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5";
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 static NSString * const kProdShoutBaseURLString = @"http://shouthereandnow.com/";
 static NSString * const kProdShoutImageBaseURL = @"http://s3.amazonaws.com/shout_production1/original/image_";
+static NSString * const kProdShoutThumbBaseURL = @"http://s3.amazonaws.com/shout_production1/small/image_";
 
 
 //Shout duration in seconds

@@ -13,6 +13,7 @@
 + (NSArray *)rawShoutsToInstances:(NSArray *)rawShouts;
 + (Shout *)rawShoutToInstance:(id)rawShout;
 - (NSURL *)getShoutImageURL;
+- (NSURL *)getShoutThumbURL;
 
 @property (nonatomic) NSUInteger identifier;
 @property (nonatomic) NSUInteger userId;
