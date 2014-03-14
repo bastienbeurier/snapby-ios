@@ -39,4 +39,6 @@
 
 + (void)drawCustomNavBarWithLeftItem:(NSString *)leftItem rightItem:(NSString *)rightItem title:(NSString *)title sizeBig:(BOOL)sizeBig inViewController:(UIViewController *)viewController;
 
++ (NSString *)encodeToBase64String:(UIImage *)image;
+
 @end

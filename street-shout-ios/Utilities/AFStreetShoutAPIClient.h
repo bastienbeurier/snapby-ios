@@ -27,7 +27,7 @@
                        Lng:(double)lng
                   Username:(NSString *)username
                Description:(NSString *)description
-                     Image:(NSString *)imageUrl
+              encodedImage:(NSString *)imageUrl
                     UserId:(NSUInteger)userId
                  Anonymous:(BOOL)isAnonymous
          AndExecuteSuccess:(void(^)(Shout *))successBlock

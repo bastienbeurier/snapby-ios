@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "AFStreetShoutAPIClient.h"
 #import "LocationUtilities.h"
-#import "AsyncImageUploader.h"
 #import "GeneralUtilities.h"
 #import "MBProgressHUD.h"
 #import "ImageUtilities.h"
@@ -29,10 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 
 @property (nonatomic) CGFloat rescalingRatio;
-@property (strong, nonatomic) NSString *shoutImageName;
-@property (strong, nonatomic) NSString *shoutImageUrl;
-@property (strong, nonatomic) UIImage *capturedImage;
 @property (weak, nonatomic) IBOutlet UIImageView *shoutImageView;
+@property (strong, nonatomic) IBOutlet UIImage *sentImage;
 @property(nonatomic,retain) ALAssetsLibrary *library;
 
 @property (nonatomic) BOOL blackListed;
@@ -135,7 +132,7 @@
         NSString *maxChars = [NSString stringWithFormat:@" (max: %lu).", (unsigned long)kMaxShoutDescriptionLength];
         message = [(NSLocalizedStringFromTable (@"shout_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
         error = YES;
-    } else if (!self.capturedImage) {
+    } else if (!self.shoutImageView) {
         title = NSLocalizedStringFromTable (@"missing_image", @"Strings", @"comment");
         error = YES;
     }
@@ -156,62 +153,42 @@
 {
     typedef void (^SuccessBlock)(Shout *);
     SuccessBlock successBlock = ^(Shout *shout) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [TrackingUtilities trackCreateShout];
+        [TrackingUtilities trackCreateShout];
             
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [self.navigationController popViewControllerAnimated:YES];
-            [self.createShoutVCDelegate onShoutCreated:shout];
-        });
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.createShoutVCDelegate onShoutCreated:shout];
     };
     
     typedef void (^FailureBlock)(NSURLSessionDataTask *);
     FailureBlock failureBlock = ^(NSURLSessionDataTask *task) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            //In this case, 401 means that the auth token is no valid.
-            if ([SessionUtilities invalidTokenResponse:task]) {
-                [SessionUtilities redirectToSignIn];
-            } else {
-                NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
-                NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
-                [GeneralUtilities showMessage:message withTitle:title];
-            }
-        });
+        //In this case, 401 means that the auth token is no valid.
+        if ([SessionUtilities invalidTokenResponse:task]) {
+            [SessionUtilities redirectToSignIn];
+        } else {
+            NSString *title = NSLocalizedStringFromTable (@"create_shout_failed_title", @"Strings", @"comment");
+            NSString *message = NSLocalizedStringFromTable (@"create_shout_failed_message", @"Strings", @"comment");
+            [GeneralUtilities showMessage:message withTitle:title];
+        }
     };
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+    User *currentUser = [SessionUtilities getCurrentUser];
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        typedef void (^UploadImageCompletionBlock)();
-        UploadImageCompletionBlock createShoutSuccessBlock;
-        UploadImageCompletionBlock createShoutFailureBlock;
-        
-        User *currentUser = [SessionUtilities getCurrentUser];
-        
-        createShoutSuccessBlock = ^{
-            [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
+    NSString *encodedImage = [ImageUtilities encodeToBase64String:self.sentImage];
+
+    [AFStreetShoutAPIClient createShoutWithLat:self.shoutLocation.coordinate.latitude
                                                    Lng:self.shoutLocation.coordinate.longitude
                                               Username:currentUser.username
                                            Description:self.addDescriptionField.text
-                                                 Image:self.shoutImageUrl
+                                                 encodedImage:encodedImage
                                                 UserId:currentUser.identifier
                                              Anonymous:self.isAnonymous
                                      AndExecuteSuccess:successBlock
                                                Failure:failureBlock];
-        };
-        
-        createShoutFailureBlock = ^{
-            failureBlock(nil);
-        };
-        
-        AsyncImageUploader *imageUploader = [[AsyncImageUploader alloc] initWithImage:self.capturedImage AndName:self.shoutImageName];
-        imageUploader.uploadImageSuccessBlock = createShoutSuccessBlock;
-        imageUploader.uploadImageFailureBlock = createShoutFailureBlock;
-        NSOperationQueue *operationQueue = [NSOperationQueue new];
-        [operationQueue addOperation:imageUploader];
-    });
 }
 
 
@@ -363,25 +340,22 @@
     
     // Resize image
     CGSize rescaleSize = portraitImage.size;
-    CGFloat scaleRatio = kShoutImageWidth / rescaleSize.width;
+    CGFloat scaleRatio = kShoutImageHeight / rescaleSize.height;
     rescaleSize.height *= scaleRatio;
     rescaleSize.width *= scaleRatio;
-    self.capturedImage = [ImageUtilities imageWithImage:portraitImage scaledToSize:rescaleSize];
-    
-    if (!portraitImage || !self.capturedImage) {
+    self.sentImage = [ImageUtilities imageWithImage:portraitImage scaledToSize:rescaleSize];
+
+    if (!self.sentImage) {
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"take_and_resize_picture_failed", @"Strings", @"comment") withTitle:nil];
         [self dismissViewControllerAnimated:YES completion:NULL];
         [self.navigationController popViewControllerAnimated:YES];
         return;
     }
-    
-    self.shoutImageName = [[GeneralUtilities getDeviceID] stringByAppendingFormat:@"--%lu", (unsigned long)[GeneralUtilities currentDateInMilliseconds]];
-    self.shoutImageUrl = [S3_URL stringByAppendingString:self.shoutImageName];
 
     [self dismissViewControllerAnimated:NO completion:NULL];
     
     // Display the same format as in the camera screen
-    [self.shoutImageView setImage:[ImageUtilities cropWidthOfImage:self.capturedImage by:(1-1/self.rescalingRatio)]];
+    [self.shoutImageView setImage:[ImageUtilities cropWidthOfImage:self.sentImage by:(1-1/self.rescalingRatio)]];
     self.imagePickerController = nil;
 }
 

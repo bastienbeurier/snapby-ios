@@ -41,11 +41,14 @@ static NSString * const kApiVersion = @"2";
 //Development
 static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-shout.herokuapp.com/";
 static NSString * const kDevTestFlightAppToken = @"c4904202-ba89-449a-bc2f-f53e231f1319";
+static NSString * const kDevShoutImageBaseURL = @"http://s3.amazonaws.com/shout_development/original/image_";
 
 //Production
 static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5";
 static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-shout.herokuapp.com/";
 static NSString * const kProdShoutBaseURLString = @"http://shouthereandnow.com/";
+static NSString * const kProdShoutImageBaseURL = @"http://s3.amazonaws.com/shout_production1/original/image_";
+
 
 //Shout duration in seconds
 static const NSUInteger kShoutDuration = 4 * 60 * 60;
@@ -54,7 +57,7 @@ static const NSUInteger kShoutMaxLength = 140;
 static const NSUInteger kMaxUsernameLength = 20;
 static const NSUInteger kMaxShoutDescriptionLength = 140;
 static const NSUInteger kShoutRadius = 300;
-static const NSUInteger kShoutImageWidth = 400;
+static const NSUInteger kShoutImageHeight = 400;
 
 static const NSUInteger kDistanceWhenRedirectedFromCreateShout = 250;
 static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;

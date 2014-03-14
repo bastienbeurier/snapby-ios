@@ -166,21 +166,13 @@
     
     //Fill with shout info
     if (self.shout) {
-        if (self.shout.image) {
-            // Get image
-            NSURL *url = [NSURL URLWithString:[self.shout.image stringByAppendingFormat:@"--%lu", (unsigned long)kShoutImageWidth]];
-            [self.shoutImageView setImageWithURL:url placeholderImage:nil];
-            
-            self.shoutImageView.clipsToBounds = YES;
-            [self.shoutImageView setHidden:NO];
-            [self.shoutImageDropShadowView setHidden:NO];
-            self.shoutContent.backgroundColor = [UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.25];
-        } else {
-            [self.shoutImageView setHidden:YES];
-            [self.shoutImageDropShadowView setHidden:NO];
-            //Make background darker if no photo
-            self.shoutContent.backgroundColor = [UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.5];
-        }
+        // Get image
+        [self.shoutImageView setImageWithURL:[self.shout getShoutImageURL] placeholderImage:nil];
+        
+        self.shoutImageView.clipsToBounds = YES;
+        [self.shoutImageView setHidden:NO];
+        [self.shoutImageDropShadowView setHidden:NO];
+        self.shoutContent.backgroundColor = [UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.25];
         
         self.shoutUsername.text = [NSString stringWithFormat:@"@%@", self.shout.anonymous? @"Anonymous" : self.shout.username];
 
@@ -408,6 +400,5 @@
     [self.shoutVCDelegate updateMapLocationtoLat:self.shout.lat lng:self.shout.lng];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 @end

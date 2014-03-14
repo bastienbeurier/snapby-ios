@@ -116,7 +116,7 @@
 }
 
 // Shout creation
-+ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)username Description:(NSString *)description Image:(NSString *)imageUrl UserId:(NSUInteger)userId Anonymous:(BOOL)isAnonymous AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
++ (void)createShoutWithLat:(double)lat Lng:(double)lng Username:(NSString *)username Description:(NSString *)description encodedImage:(NSString *)encodedImage UserId:(NSUInteger)userId Anonymous:(BOOL)isAnonymous AndExecuteSuccess:(void(^)(Shout *shout))successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
 {    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
@@ -133,7 +133,7 @@
     [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
     [parameters setObject:[NSNumber numberWithInteger:userId] forKey:@"user_id"];
     [parameters setObject:[NSNumber numberWithBool:isAnonymous] forKey:@"anonymous"];
-    [parameters setObject:imageUrl forKey:@"image"];
+    [parameters setObject:encodedImage forKey:@"avatar"];
     
     NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"shouts.json"];
     
@@ -640,7 +640,7 @@
 // Get followers
 + (void)getFollowersOfUser:(NSInteger) followedId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/%ldl/followers.json", (long)followedId]];
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/followers.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
@@ -667,7 +667,7 @@
 // Get followed users
 + (void)getFollowingOfUser:(NSInteger) followerId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/%ld/followed_users.json", (long)followerId]];
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"usersfollowed_users.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     

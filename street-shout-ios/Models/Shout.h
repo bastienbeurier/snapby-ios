@@ -12,6 +12,7 @@
 
 + (NSArray *)rawShoutsToInstances:(NSArray *)rawShouts;
 + (Shout *)rawShoutToInstance:(id)rawShout;
+- (NSURL *)getShoutImageURL;
 
 @property (nonatomic) NSUInteger identifier;
 @property (nonatomic) NSUInteger userId;
@@ -20,7 +21,6 @@
 @property (strong, nonatomic) NSString *description;
 @property (strong, nonatomic) NSString *created;
 @property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) NSString *image;
 @property (nonatomic) BOOL removed;
 @property (nonatomic) BOOL anonymous;
 
