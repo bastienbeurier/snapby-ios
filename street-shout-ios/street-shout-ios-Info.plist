@@ -49,6 +49,8 @@
 	<string>612068318842588</string>
 	<key>FacebookDisplayName</key>
 	<string>Shout</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIMainStoryboardFile</key>

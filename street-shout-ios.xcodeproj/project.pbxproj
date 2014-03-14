@@ -2072,7 +2072,7 @@
 		0BCBC6BB189160DB00933715 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bastien Beurier (9688VHJV6U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2096,8 +2096,8 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = Shout;
-				PROVISIONING_PROFILE = "52623919-88A2-4324-B772-49F84789E355";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "52623919-88A2-4324-B772-49F84789E355";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = YES;
@@ -2128,8 +2128,8 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = Shout;
-				PROVISIONING_PROFILE = "52623919-88A2-4324-B772-49F84789E355";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "52623919-88A2-4324-B772-49F84789E355";
+				PROVISIONING_PROFILE = "AEA06470-E2C1-44EF-9B68-CD8D8CE0F59A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AEA06470-E2C1-44EF-9B68-CD8D8CE0F59A";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 				inProduction = YES;
