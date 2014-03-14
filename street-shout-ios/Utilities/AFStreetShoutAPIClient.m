@@ -667,7 +667,7 @@
 // Get followed users
 + (void)getFollowingOfUser:(NSInteger) followerId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"usersfollowed_users.json"];
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/followed_users.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
