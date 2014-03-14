@@ -81,13 +81,13 @@
         NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long) distanceYd];
         return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"yd", @"Strings", @"comment"), nil];
     } else if (distanceMiles < 1) {
-        NSString *str = [NSString stringWithFormat:@"%lu", (NSUInteger) round(distanceYd / 100.0) * 100];
+        NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long) round(distanceYd / 100.0) * 100];
         return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"yd", @"Strings", @"comment"), nil];
     } else if (distanceMiles < 10) {
         NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long)distanceMiles];
         return [[NSArray alloc] initWithObjects:str, @"mi", nil];
     } else if (distanceMiles < 100 ) {
-        NSString *str = [NSString stringWithFormat:@"%lu", (NSUInteger) round(distanceMiles / 10.0) * 10];
+        NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long) round(distanceMiles / 10.0) * 10];
         return [[NSArray alloc] initWithObjects:str, @"mi", nil];
     } else {
         return [[NSArray alloc] initWithObjects:@"+100", @"mi", nil];
@@ -100,13 +100,13 @@
         NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long) distance];
         return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"m", @"Strings", @"comment"), nil];
     } else if (distance < 1000) {
-        NSString *str = [NSString stringWithFormat:@"%lu", (NSUInteger) round(distance / 100.0) * 100];
+        NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long) round(distance / 100.0) * 100];
         return [[NSArray alloc] initWithObjects:str, NSLocalizedStringFromTable (@"m", @"Strings", @"comment"), nil];
     } else if (distance < 10000) {
         NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long) round(distance / 1000.0)];
         return [[NSArray alloc] initWithObjects:str, @"km", nil];
     } else if (distance < 100000 ) {
-        NSString *str = [NSString stringWithFormat:@"%lu", (NSUInteger) round(distance / 10000.0) * 10];
+        NSString *str = [NSString stringWithFormat:@"%lu", (unsigned long) round(distance / 10000.0) * 10];
         return [[NSArray alloc] initWithObjects:str, @"km", nil];
     } else {
         return [[NSArray alloc] initWithObjects:@"+100", @"km", nil];
