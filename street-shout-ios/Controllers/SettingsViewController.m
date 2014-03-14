@@ -70,7 +70,7 @@
 }
 
 - (IBAction)unitSegmentedControlValueChanged:(UISegmentedControl *)sender {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:self.unitSegmentedControl.selectedSegmentIndex] forKey:DISTANCE_UNIT_PREF];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLong:self.unitSegmentedControl.selectedSegmentIndex] forKey:DISTANCE_UNIT_PREF];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

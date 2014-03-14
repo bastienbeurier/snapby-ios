@@ -17,7 +17,7 @@
 {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
-    NSNumber *userId = [NSNumber numberWithInt:currentUser.identifier];
+    NSNumber *userId = [NSNumber numberWithLong:currentUser.identifier];
     NSNumber *isBlackListed = [NSNumber numberWithBool:currentUser.isBlackListed];
 
     [prefs setObject:userId forKey:USER_ID_PREF];

@@ -8,6 +8,7 @@
 
 #import "Shout.h"
 #import "AFStreetShoutAPIClient.h"
+#import "Constants.h"
 
 #define SHOUT_ID @"id"
 #define USER_ID @"user_id"
@@ -32,17 +33,9 @@
     shout.lng = [[rawShout objectForKey:SHOUT_LNG] doubleValue];
     shout.description = [rawShout objectForKey:SHOUT_DESCRIPTION];
     shout.created = [rawShout objectForKey:SHOUT_CREATED_AT];
-    shout.source = [rawShout objectForKey:SHOUT_SOURCE];
     shout.username = [rawShout objectForKey:SHOUT_USERNAME];
-    shout.image = [rawShout objectForKey:SHOUT_IMAGE];
     shout.removed = [[rawShout objectForKey:SHOUT_REMOVED] integerValue] == 1 ? YES : NO;
     shout.anonymous = [[rawShout objectForKey:SHOUT_ANONYMOUS] integerValue] == 1 ? YES : NO;
-    
-    if (shout.image && shout.image != (id)[NSNull null] && shout.image.length != 0 && ![shout.image isEqualToString:@"null"]) {
-        shout.image = [@"http://" stringByAppendingString:shout.image];
-    } else {
-        shout.image = nil;
-    }
     
     return shout;
 }
@@ -56,6 +49,13 @@
     }
     
     return shouts;
+}
+
+- (NSURL *)getShoutImageURL
+{
+    NSString *baseURL = PRODUCTION ? kProdShoutImageBaseURL : kDevShoutImageBaseURL;
+    
+    return [NSURL URLWithString:[[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier] stringByAppendingString:@"--400"]];
 }
 
 @end

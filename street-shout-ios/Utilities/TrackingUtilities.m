@@ -21,10 +21,10 @@
     
     //Alias to merge mixpanel people id before signup and street shout id after sign up
     if (isSigningUp) {
-        [mixpanel createAlias:[NSString stringWithFormat:@"%d", user.identifier] forDistinctID:mixpanel.distinctId];
+        [mixpanel createAlias:[NSString stringWithFormat:@"%lu", (unsigned long)user.identifier] forDistinctID:mixpanel.distinctId];
     }
     
-    [mixpanel identify:[NSString stringWithFormat:@"%d", user.identifier]];
+    [mixpanel identify:[NSString stringWithFormat:@"%lu", (unsigned long)user.identifier]];
     
     [mixpanel.people set:@{@"Username": user.username, @"Email": user.email}];
 }

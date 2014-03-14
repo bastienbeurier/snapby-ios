@@ -118,31 +118,23 @@
         
         Shout *shout = (Shout *)self.shouts[indexPath.row];
         
-        if (shout.image) {
-            cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder-square-small"];
+        cell.imageViewDropShadow.image = [UIImage imageNamed:@"shout-image-place-holder-square-small"];
             
-            // Get image
-            NSURL *url = [NSURL URLWithString:[shout.image stringByAppendingFormat:@"--%d", kShoutImageWidth]];
-            [cell.shoutImageView setImageWithURL:url placeholderImage:nil];
-            
-            cell.shoutImageView.clipsToBounds = YES;
-            cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
-            
-            cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
-            cell.imageViewDropShadow.clipsToBounds = YES;
-            
-            cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
-            
-            [GeneralUtilities resizeView:cell.shoutContentLabel Width:SHOUT_CONTENT_WIDTH_WITH_PHOTO];
-            
-            [cell.shoutImageView setHidden:NO];
-            [cell.imageViewDropShadow setHidden:NO];
-        } else {
-            [GeneralUtilities resizeView:cell.shoutContentLabel Width:SHOUT_CONTENT_WIDTH_WITHOUT_PHOTO];
-            
-            [cell.shoutImageView setHidden:YES];
-            [cell.imageViewDropShadow setHidden:YES];
-        }
+        // Get image
+        [cell.shoutImageView setImageWithURL:[shout getShoutImageURL] placeholderImage:nil];
+        
+        cell.shoutImageView.clipsToBounds = YES;
+        cell.shoutImageView.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+        
+        cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+        cell.imageViewDropShadow.clipsToBounds = YES;
+        
+        cell.imageViewDropShadow.layer.cornerRadius = SHOUT_IMAGE_SIZE/2;
+        
+        [GeneralUtilities resizeView:cell.shoutContentLabel Width:SHOUT_CONTENT_WIDTH_WITH_PHOTO];
+        
+        [cell.shoutImageView setHidden:NO];
+        [cell.imageViewDropShadow setHidden:NO];
         
         cell.shoutContentLabel.text = shout.description;
         cell.shoutUserNameLabel.text = [NSString stringWithFormat:@"by %@", shout.anonymous? @"Anonymous" : shout.username];

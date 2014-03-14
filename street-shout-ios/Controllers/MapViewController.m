@@ -107,7 +107,7 @@
     
     for (Shout *shout in shouts) {
         
-        NSString *shoutKey = [NSString stringWithFormat:@"%d", shout.identifier];
+        NSString *shoutKey = [NSString stringWithFormat:@"%lu", (unsigned long)shout.identifier];
         
         MKPointAnnotation *shoutAnnotation;
         

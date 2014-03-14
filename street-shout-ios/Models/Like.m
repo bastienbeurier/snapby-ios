@@ -57,7 +57,7 @@
     NSMutableArray *likerIds = [[NSMutableArray alloc] init];
     
     for (NSString *rawLikerId in rawLikerIds) {
-        [likerIds addObject:[NSNumber numberWithInt:[rawLikerId integerValue]]];
+        [likerIds addObject:[NSNumber numberWithLong:[rawLikerId integerValue]]];
     }
     
     return likerIds;

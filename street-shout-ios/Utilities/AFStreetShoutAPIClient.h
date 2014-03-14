@@ -27,7 +27,7 @@
                        Lng:(double)lng
                   Username:(NSString *)username
                Description:(NSString *)description
-                     Image:(NSString *)imageUrl
+              encodedImage:(NSString *)imageUrl
                     UserId:(NSUInteger)userId
                  Anonymous:(BOOL)isAnonymous
          AndExecuteSuccess:(void(^)(Shout *))successBlock
@@ -95,6 +95,8 @@
 + (void)getOtherUserInfo:(NSInteger) userId success:(void(^)(User *, NSInteger, NSInteger, BOOL))successBlock failure:(void(^)())failureBlock;
 
 + (void)createRelationshipsFromFacebookFriends:(NSArray *) friends success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)getFriendSuggestionForUser:(NSInteger) userId success:(void(^)(NSArray *users))successBlock failure:(void(^)())failureBlock;
 
 @end
 
