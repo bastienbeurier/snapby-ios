@@ -34,7 +34,6 @@
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
-@property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
 @property (weak, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) Shout *redirectToShout;
 @property (strong, nonatomic) MapRequestHandler *mapRequestHandler;
@@ -61,11 +60,6 @@
 {
     //Status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
-    // Check if API obsolete
-    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
-        [self createObsoleteAPIAlertView];
-    }];
     
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
@@ -266,24 +260,6 @@
     } else {
         NSLog(@"Could not send device info");
     }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView == self.obsoleteAPIAlertView) {
-        [GeneralUtilities redirectToAppStore];
-        [self createObsoleteAPIAlertView];
-    }
-}
-
-- (void)createObsoleteAPIAlertView
-{
-    self.obsoleteAPIAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"obsolete_api_error_title", @"Strings", @"comment")
-                                                           message:NSLocalizedStringFromTable (@"obsolete_api_error_message", @"Strings", @"comment")
-                                                          delegate:self
-                                                 cancelButtonTitle:@"OK"
-                                                 otherButtonTitles:nil];
-    [self.obsoleteAPIAlertView show];
 }
 
 - (void)updateMapLocationtoLat:(double)lat lng:(double)lng

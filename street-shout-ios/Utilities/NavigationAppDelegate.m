@@ -28,6 +28,12 @@
 #import "LikesViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
+@interface NavigationAppDelegate()
+
+@property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
+
+@end
+
 @implementation NavigationAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -137,6 +143,11 @@
     
     // Handle the user leaving the app while the Facebook login dialog is being shown
     [FBAppCall handleDidBecomeActive];
+    
+    // Check if API obsolete
+    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
+        [self createObsoleteAPIAlertView];
+    }];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -146,6 +157,7 @@
     // Close the FB session before quitting
     [FBSession.activeSession close];
 }
+
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
@@ -360,6 +372,25 @@
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [AFStreetShoutAPIClient connectFacebookWithParameters:params success:successBlock failure:failureBlock];
     });
+}
+
+// Check that API is not obsolete
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.obsoleteAPIAlertView) {
+        [GeneralUtilities redirectToAppStore];
+        [self createObsoleteAPIAlertView];
+    }
+}
+
+- (void)createObsoleteAPIAlertView
+{
+    self.obsoleteAPIAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"obsolete_api_error_title", @"Strings", @"comment")
+                                                           message:NSLocalizedStringFromTable (@"obsolete_api_error_message", @"Strings", @"comment")
+                                                          delegate:self
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
+    [self.obsoleteAPIAlertView show];
 }
 
 @end
