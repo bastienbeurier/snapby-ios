@@ -1,5 +1,5 @@
 //
-//  NavigationViewController.h
+//  ExploreViewController.h
 //  street-shout-ios
 //
 //  Created by Bastien Beurier on 7/16/13.

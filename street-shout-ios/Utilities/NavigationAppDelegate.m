@@ -171,13 +171,13 @@
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         
         if ([[navController topViewController] isKindOfClass:[ExploreViewController class]]) {
-            ExploreViewController *navigationViewController = (ExploreViewController *) [navController topViewController];
+            ExploreViewController *exploreViewController = (ExploreViewController *) [navController topViewController];
             
             NSDictionary *extra = [notification objectForKey:@"extra"];
             NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
             
             [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecuteSuccess:^(Shout *shout){
-                [navigationViewController onShoutNotificationPressedWhileAppInNavigationVC:shout];
+                [exploreViewController onShoutNotificationPressedWhileAppInNavigationVC:shout];
             } failure:nil];
         } else if ([[navController topViewController] isKindOfClass:[ShoutViewController class]] ||
             [[navController topViewController] isKindOfClass:[SettingsViewController class]]) {
