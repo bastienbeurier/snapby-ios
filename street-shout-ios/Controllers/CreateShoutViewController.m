@@ -34,6 +34,8 @@
 
 @property (nonatomic) BOOL blackListed;
 @property (nonatomic) BOOL isAnonymous;
+@property (nonatomic) BOOL flashOn;
+
 @property (weak, nonatomic) IBOutlet UILabel *charCount;
 @property (weak, nonatomic) IBOutlet UITextField *addDescriptionField;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -287,6 +289,7 @@
     imagePickerController.cameraViewTransform = scale;
     
     // flash disactivated by default
+    self.flashOn = NO;
     imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
     
     self.imagePickerController = imagePickerController;
@@ -315,12 +318,14 @@
 }
 
 - (IBAction)flashButtonClicked:(id)sender {
-    if(self.imagePickerController.cameraFlashMode == UIImagePickerControllerCameraFlashModeOff){
+    if(self.flashOn == NO){
         [self.flashButton setImage:[UIImage imageNamed:@"flash_on.png"] forState:UIControlStateNormal];
         self.imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOn;
+        self.flashOn = YES;
     } else {
         [self.flashButton setImage:[UIImage imageNamed:@"flash_off.png"] forState:UIControlStateNormal];
         self.imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+        self.flashOn = NO;
     }
 }
 
