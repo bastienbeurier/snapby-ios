@@ -101,7 +101,7 @@
 
 - (void)backButtonClicked
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.settingsViewControllerdelegate moveToImagePickerController];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField

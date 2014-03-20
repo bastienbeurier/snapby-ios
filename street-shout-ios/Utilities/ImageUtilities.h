@@ -41,4 +41,6 @@
 
 + (NSString *)encodeToBase64String:(UIImage *)image;
 
++ (UIImagePickerController *) initFullScreenCameraControllerWithDelegate:(UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate> *)imagePickerDelegate;
+
 @end

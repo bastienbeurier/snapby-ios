@@ -35,7 +35,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (weak, nonatomic) MKMapView *mapView;
-@property (strong, nonatomic) Shout *redirectToShout;
 @property (strong, nonatomic) MapRequestHandler *mapRequestHandler;
 
 @end
@@ -164,11 +163,6 @@
     [self performSegueWithIdentifier:@"Shout Push Segue" sender:shout];
 }
 
-- (void)onShoutCreated:(Shout *)shout
-{
-    //Don't show shout controller immidiately (as for notification handling), otherwise segues get mixed up.
-    self.redirectToShout = shout;
-}
 
 - (void)handleShoutRedirection:(Shout *)shout
 {
@@ -191,14 +185,6 @@
         self.feedTVC.feedTVCdelegate = self;
     }
     
-    if ([segueName isEqualToString: @"Create Shout Modal"]) {
-        MKUserLocation *myLocation = (MKUserLocation *)sender;
-        
-        ((CreateShoutViewController *)[segue destinationViewController]).myLocation = myLocation.location;
-        ((CreateShoutViewController *)[segue destinationViewController]).shoutLocation = myLocation.location;
-        ((CreateShoutViewController *)[segue destinationViewController]).createShoutVCDelegate = self;
-    }
-    
     if ([segueName isEqualToString: @"Shout Push Segue"]) {
         ((ShoutViewController *) [segue destinationViewController]).shout = (Shout *)sender;
         ((ShoutViewController *) [segue destinationViewController]).shoutVCDelegate = self;
@@ -213,24 +199,21 @@
         return;
     }
     
-    NSString *errorMessageTitle;
-    NSString *errorMessageBody;
-    
-    if ([GeneralUtilities connected]) {
-        MKUserLocation *myLocation = [self getMyLocation];
-        
-        if (myLocation && [LocationUtilities userLocationValid:myLocation]) {
-            [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
-            return;
-        } else {
-            errorMessageTitle = NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment");
-            errorMessageBody = NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment");
-        }
-    } else {
-        errorMessageTitle = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
-    }
-    
-    [GeneralUtilities showMessage:errorMessageBody withTitle:errorMessageTitle];
+//    NSString *errorMessageTitle;
+//    NSString *errorMessageBody;
+//    
+//    MKUserLocation *myLocation = [self getMyLocation];
+//        
+//    if (myLocation && [LocationUtilities userLocationValid:myLocation]) {
+//        [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
+//        return;
+//    } else {
+//        errorMessageTitle = NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment");
+//        errorMessageBody = NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment");
+//    }
+//    
+//    [GeneralUtilities showMessage:errorMessageBody withTitle:errorMessageTitle];
+    [self.exploreControllerdelegate moveToImagePickerController];
 }
 
 - (MKUserLocation *)getMyLocation
@@ -238,18 +221,6 @@
     return self.mapViewController.mapView.userLocation;
 }
 
-- (IBAction)moreButtonClicked:(id)sender {
-    if (![SessionUtilities isSignedIn]){
-        [SessionUtilities redirectToSignIn];
-        return;
-    }
-    
-    if ([GeneralUtilities connected]) {
-        [self performSegueWithIdentifier:@"Settings Push Segue" sender:nil];
-    } else {
-        [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
-    }
-}
 
 - (void)updateUserInfo
 {

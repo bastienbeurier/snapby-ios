@@ -227,7 +227,7 @@
     [TrackingUtilities identifyWithMixpanel:[SessionUtilities getCurrentUser] isSigningUp:NO];
     
     WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
-    [welcomeViewController performSegueWithIdentifier:@"Navigation Push Segue From Welcome" sender:nil];
+    [welcomeViewController performSegueWithIdentifier:@"Multiple From Welcome Push Segue" sender:nil];
 }
 
 // This method will handle ALL the session state changes in the app

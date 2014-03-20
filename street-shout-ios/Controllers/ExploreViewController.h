@@ -14,8 +14,20 @@
 #import "SettingsViewController.h"
 #import "CommentsViewController.h"
 
-@interface ExploreViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, UIAlertViewDelegate>
+@protocol ExploreControllerDelegate;
+
+
+@interface ExploreViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, ShoutVCDelegate, UIAlertViewDelegate>
+
+@property (weak, nonatomic) id <ExploreControllerDelegate> exploreControllerdelegate;
+@property (strong, nonatomic) Shout *redirectToShout;
 
 - (void)onShoutNotificationPressedWhileAppInNavigationVC:(Shout *)shout;
+
+@end
+
+@protocol ExploreControllerDelegate
+
+- (void)moveToImagePickerController;
 
 @end

@@ -105,7 +105,7 @@
             //Mixpanel identification
             [TrackingUtilities identifyWithMixpanel:user isSigningUp:NO];
             
-            [self performSegueWithIdentifier:@"Navigation Push Segue From Signin" sender:nil];
+            [self performSegueWithIdentifier:@"Multiple From Signin Push Segue" sender:nil];
         });
     };
     
