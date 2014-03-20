@@ -8,7 +8,7 @@
         <!--Settings View Controller-->
         <scene sceneID="jWd-KT-nds">
             <objects>
-                <viewController id="sd5-g2-Szr" customClass="SettingsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" id="sd5-g2-Szr" customClass="SettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="doY-1Q-Ifn"/>
                         <viewControllerLayoutGuide type="bottom" id="0Yl-Ve-dv6"/>
@@ -190,12 +190,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QoS-1g-2uo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="461" y="809"/>
+            <point key="canvasLocation" x="829" y="1207"/>
         </scene>
         <!--Explore View Controller-->
         <scene sceneID="5">
             <objects>
-                <viewController storyboardIdentifier="NavigationViewController" id="2" customClass="ExploreViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ExploreViewController" id="2" customClass="ExploreViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9At-1p-99c"/>
                         <viewControllerLayoutGuide type="bottom" id="g04-xb-cCJ"/>
@@ -234,25 +234,9 @@
                                     <action selector="createShoutButtonClicked:" destination="2" eventType="touchUpInside" id="Dtw-Kh-GbL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CoJ-3a-fJQ">
-                                <rect key="frame" x="10" y="20" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="3o2-nP-1RS"/>
-                                    <constraint firstAttribute="height" constant="50" id="sLs-2S-FlL"/>
-                                </constraints>
-                                <state key="normal" image="more-button.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="moreButtonClicked:" destination="2" eventType="touchUpInside" id="sSG-rv-8sK"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="CoJ-3a-fJQ" firstAttribute="top" secondItem="9At-1p-99c" secondAttribute="bottom" id="2yV-CP-dvm"/>
                             <constraint firstItem="q8p-tE-cHT" firstAttribute="top" secondItem="3" secondAttribute="top" id="3On-Pj-w4a"/>
                             <constraint firstItem="R9z-ng-Ift" firstAttribute="top" secondItem="q8p-tE-cHT" secondAttribute="bottom" id="J3M-5d-XaX"/>
                             <constraint firstAttribute="trailing" secondItem="OTR-fb-maE" secondAttribute="trailing" constant="10" id="QfP-gV-gUk"/>
@@ -261,7 +245,6 @@
                             <constraint firstAttribute="trailing" secondItem="R9z-ng-Ift" secondAttribute="trailing" id="VqC-Zq-MDE"/>
                             <constraint firstAttribute="bottom" secondItem="R9z-ng-Ift" secondAttribute="bottom" id="d0s-sq-vWo"/>
                             <constraint firstItem="R9z-ng-Ift" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="fJ6-tc-YPg"/>
-                            <constraint firstItem="CoJ-3a-fJQ" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="10" id="fns-4b-Myk"/>
                             <constraint firstItem="q8p-tE-cHT" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="rrZ-Rz-ZTu"/>
                         </constraints>
                     </view>
@@ -269,16 +252,13 @@
                     <connections>
                         <outlet property="bottomContainerView" destination="R9z-ng-Ift" id="1hv-08-G5c"/>
                         <outlet property="createShoutButton" destination="OTR-fb-maE" id="trM-gr-C6w"/>
-                        <outlet property="moreButton" destination="CoJ-3a-fJQ" id="m27-fF-xOH"/>
                         <outlet property="topContainerView" destination="q8p-tE-cHT" id="wu4-Kd-2gO"/>
-                        <segue destination="vn8-un-4WF" kind="push" identifier="Create Shout Modal" id="rBF-pL-H2a"/>
-                        <segue destination="sd5-g2-Szr" kind="push" identifier="Settings Push Segue" id="7WF-t0-jVs"/>
                         <segue destination="qtI-Lc-vOJ" kind="push" identifier="Shout Push Segue" id="F51-BZ-H1M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-83" y="35"/>
+            <point key="canvasLocation" x="829" y="-651"/>
         </scene>
         <!--Create Shout View Controller-->
         <scene sceneID="ZHD-Ls-YaW">
@@ -428,13 +408,13 @@
                         <outlet property="charCount" destination="hKA-nq-pbt" id="Fqi-fm-P6Q"/>
                         <outlet property="containerView" destination="QIt-S7-SRz" id="uNk-XZ-EhJ"/>
                         <outlet property="shoutImageView" destination="S4w-al-2Mc" id="fIl-PL-sZK"/>
-                        <segue destination="Kte-b7-QO8" kind="push" identifier="Refine Shout Location" id="7T2-pa-D5v"/>
+                        <segue destination="Kte-b7-QO8" kind="modal" identifier="Refine Shout modal segue" id="7T2-pa-D5v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pF-an-gi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="sgB-39-b9W"/>
             </objects>
-            <point key="canvasLocation" x="461" y="-774"/>
+            <point key="canvasLocation" x="829" y="478"/>
         </scene>
         <!--Refine Shout Location View Controller-->
         <scene sceneID="vGH-HM-GOd">
@@ -498,7 +478,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDn-BB-Aeb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1004" y="-774"/>
+            <point key="canvasLocation" x="1405" y="478"/>
         </scene>
         <!--FeedTVC-->
         <scene sceneID="Pcm-I4-R7x">
@@ -554,7 +534,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QY6-fM-sTX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="952" y="403"/>
+            <point key="canvasLocation" x="2032" y="-1157"/>
         </scene>
         <!--Shout View Controller-->
         <scene sceneID="ipw-Bq-gbV">
@@ -861,7 +841,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="461" y="1522"/>
+            <point key="canvasLocation" x="1405" y="-232"/>
         </scene>
         <!--Comments View Controller-->
         <scene sceneID="fxJ-sn-Xyx">
@@ -976,7 +956,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k09-04-Mo8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1128" y="1174"/>
+            <point key="canvasLocation" x="2032" y="-660"/>
         </scene>
         <!--Likes View Controller-->
         <scene sceneID="K9Z-7g-sSZ">
@@ -1039,7 +1019,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Bt-pq-2ZJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1128" y="1985"/>
+            <point key="canvasLocation" x="2032" y="73"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="P85-2B-qT4">
@@ -1091,7 +1071,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDN-fj-Qjo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="461" y="-94"/>
+            <point key="canvasLocation" x="1405" y="-812"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bqC-fN-MKP">
@@ -1109,7 +1089,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ang-uR-KQl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="461" y="433"/>
+            <point key="canvasLocation" x="1405" y="-1157"/>
         </scene>
         <!--Navigation Controller - globalNavigationController-->
         <scene sceneID="r5z-xR-Hcw">
@@ -1253,12 +1233,20 @@
                         <outlet property="emailTextView" destination="BIJ-eo-9sp" id="9Qr-lU-7aP"/>
                         <outlet property="passwordTextView" destination="4Gm-Xg-5zI" id="jja-T7-kYL"/>
                         <outlet property="usernameTextView" destination="eqA-so-ySk" id="278-Mf-Kac"/>
-                        <segue destination="2" kind="push" identifier="Navigation Push Segue From Signup" id="InE-sI-u17"/>
+                        <segue destination="zaG-6c-kjL" kind="push" identifier="Multiple From Signyp Push Segue" id="bXp-H4-gUw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Yb-ZZ-yQ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-622" y="-409"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="eFt-JV-dpS">
+            <objects>
+                <pageViewController storyboardIdentifier="ShoutPageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="HVT-jj-8nQ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tga-2J-fti" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="178" y="-770"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="mti-zj-el5">
@@ -1423,7 +1411,7 @@
                         <outlet property="welcomeImageView" destination="7lt-qk-zfF" id="C3X-C8-ega"/>
                         <segue destination="vDb-ke-i4Z" kind="push" identifier="Signup Push Segue" id="A40-3P-OSY"/>
                         <segue destination="rza-Wx-gpU" kind="push" identifier="Signin Push Segue" id="Q4V-zu-SF7"/>
-                        <segue destination="2" kind="push" identifier="Navigation Push Segue From Welcome" id="WWO-rE-4Oh"/>
+                        <segue destination="zaG-6c-kjL" kind="push" identifier="Multiple From Welcome Push Segue" id="ibm-OD-prq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FWt-Ol-muJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1513,13 +1501,35 @@
                     <connections>
                         <outlet property="emailTextView" destination="W3J-dY-UzK" id="8s8-rn-Aob"/>
                         <outlet property="passwordTextView" destination="tD7-Dt-yvn" id="7gm-eO-rWf"/>
-                        <segue destination="2" kind="push" identifier="Navigation Push Segue From Signin" id="jeb-yC-wvX"/>
                         <segue destination="u0S-Nc-D7q" kind="push" identifier="Forgot Password Modal From Sign In" id="9nd-6c-HOY"/>
+                        <segue destination="zaG-6c-kjL" kind="push" identifier="Multiple From Signin Push Segue" id="EIY-MZ-TBi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BJI-rf-iGq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-622" y="411"/>
+        </scene>
+        <!--Multiple View Controller-->
+        <scene sceneID="Rci-Dl-ve1">
+            <objects>
+                <viewController id="zaG-6c-kjL" customClass="MultipleViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="s9m-hw-PQO"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jua-MJ-KfK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tOx-GQ-ZKI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="aY5-UP-TZo"/>
+                    <connections>
+                        <segue destination="vn8-un-4WF" kind="modal" identifier="Create from Multiple modal segue" animates="NO" id="UJD-U0-uzD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PMj-dS-Bwt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="178" y="35"/>
         </scene>
         <!--Forgot Password View Controller-->
         <scene sceneID="Yhw-K3-25c">
@@ -1575,7 +1585,6 @@
         <image name="create_refine_button.png" width="132" height="150"/>
         <image name="create_send_button.png" width="150" height="151"/>
         <image name="email-icon.png" width="50" height="36"/>
-        <image name="more-button.png" width="74" height="74"/>
         <image name="my-location-button.png" width="74" height="74"/>
         <image name="navigation-create-shout-button.png" width="150" height="147"/>
         <image name="password-icon.png" width="43" height="50"/>
@@ -1598,7 +1607,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="InE-sI-u17"/>
+        <segue reference="EIY-MZ-TBi"/>
         <segue reference="fbw-tr-rR7"/>
     </inferredMetricsTieBreakers>
 </document>

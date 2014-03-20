@@ -141,7 +141,7 @@
     portraitImage = [ImageUtilities imageWithImage:portraitImage scaledToSize:rescaleSize];
     
     // Push segue to create shout
-    [self performSegueWithIdentifier:@"Create from Multiple push segue" sender:portraitImage];
+    [self performSegueWithIdentifier:@"Create from Multiple modal segue" sender:portraitImage];
 }
 
 - (void)saveImageToFileSystem:(UIImage *)image
@@ -163,7 +163,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Create from Multiple push segue"]) {
+    if ([segueName isEqualToString: @"Create from Multiple modal segue"]) {
         ((CreateShoutViewController *) [segue destinationViewController]).sentImage = (UIImage *) sender;
         ((CreateShoutViewController *) [segue destinationViewController]).createShoutVCDelegate = self;
     }

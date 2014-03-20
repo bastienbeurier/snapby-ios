@@ -186,7 +186,7 @@
 
 - (IBAction)refineLocationButtonClicked:(id)sender {
     [self.addDescriptionField resignFirstResponder];
-    [self performSegueWithIdentifier:@"Refine Shout Location" sender:nil];
+    [self performSegueWithIdentifier:@"Refine Shout modal segue" sender:nil];
 }
 
 - (IBAction)anonymousButtonClicked:(id)sender {
@@ -215,7 +215,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Refine Shout Location"]) {
+    if ([segueName isEqualToString: @"Refine Shout modal segue"]) {
         ((RefineShoutLocationViewController *) [segue destinationViewController]).myLocation = self.myLocation;
         ((RefineShoutLocationViewController *) [segue destinationViewController]).refineShoutLocationVCDelegate = self;
     }
