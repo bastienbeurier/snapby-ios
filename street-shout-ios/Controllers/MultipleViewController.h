@@ -14,4 +14,6 @@
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
+- (ExploreViewController *) getOrInitExploreViewController;
+
 @end

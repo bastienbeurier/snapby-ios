@@ -28,7 +28,7 @@
         } else {
             _sharedClient = [[AFStreetShoutAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kDevAFStreetShoutAPIBaseURLString]];
         }
-        //todoBT check this for prod
+
         NSOperationQueue *operationQueue = _sharedClient.operationQueue;
         [_sharedClient.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             if(status == AFNetworkReachabilityStatusNotReachable) {

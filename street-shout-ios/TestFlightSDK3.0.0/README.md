@@ -104,7 +104,7 @@ To turn this off set this option before calling `takeOff:`
     
 ### Checkpoints
 
-When a tester does something you care about in your app, you can pass a checkpoint. For example completing a level, adding a todo item, etc. The checkpoint progress is used to provide insight into how your testers are testing your apps. The passed checkpoints are also attached to crashes, which can help when creating steps to replicate. Checkpoints are visible for all beta builds.
+When a tester does something you care about in your app, you can pass a checkpoint. For example completing a level, adding a to do item, etc. The checkpoint progress is used to provide insight into how your testers are testing your apps. The passed checkpoints are also attached to crashes, which can help when creating steps to replicate. Checkpoints are visible for all beta builds.
 
     [TestFlight passCheckpoint:@"CHECKPOINT_NAME"];
 

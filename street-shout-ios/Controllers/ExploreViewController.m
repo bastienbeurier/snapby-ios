@@ -68,7 +68,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //Redirect to recentrly created shout
+    //Redirect to recently created shout
     if (self.redirectToShout) {
         [self handleShoutRedirection:self.redirectToShout];
         self.redirectToShout = nil;

@@ -41,9 +41,12 @@
     self.flashOn = NO;
     self.library = [ALAssetsLibrary new];
     
-    // Display it as the first screen
-    NSArray *viewControllers = @[self.imagePickerController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    // Display it as the first screen unless notif
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSNumber *notificationShoutId = [prefs objectForKey:NOTIFICATION_SHOUT_ID_PREF];
+
+    NSArray *viewControllers = @[notificationShoutId? [self getOrInitExploreViewController] : self.imagePickerController];
+   [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];

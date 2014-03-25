@@ -14,6 +14,7 @@
 #import "TestFlight.h"
 #import "Constants.h"
 #import "ExploreViewController.h"
+#import "MultipleViewController.h"
 #import "Shout.h"
 #import "AFStreetShoutAPIClient.h"
 #import "Mixpanel.h"
@@ -169,42 +170,41 @@
     if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         
-        if ([[navController topViewController] isKindOfClass:[ExploreViewController class]]) {
-            ExploreViewController *exploreViewController = (ExploreViewController *) [navController topViewController];
+        if ([[navController visibleViewController] isKindOfClass:[MultipleViewController class]]) {
+            MultipleViewController *multipleViewController = (MultipleViewController *) [navController visibleViewController];
             
-            NSDictionary *extra = [notification objectForKey:@"extra"];
-            NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
+            if ([multipleViewController.pageViewController.viewControllers[0] isKindOfClass:[ExploreViewController class]]) {
+                ExploreViewController * exploreViewController = multipleViewController.pageViewController.viewControllers[0];
+                NSDictionary *extra = [notification objectForKey:@"extra"];
+                NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
+                [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecuteSuccess:^(Shout *shout){
+                    [exploreViewController onShoutNotificationPressedWhileAppInNavigationVC:shout];
+                } failure:nil];
+            } else {
+                [self setRedirectionToNotificationShout:notification];
+                NSArray *viewControllers = @[[multipleViewController getOrInitExploreViewController]];
+                [multipleViewController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+            }
             
-            [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecuteSuccess:^(Shout *shout){
-                [exploreViewController onShoutNotificationPressedWhileAppInNavigationVC:shout];
-            } failure:nil];
-        } else if ([[navController topViewController] isKindOfClass:[ShoutViewController class]] ||
-            [[navController topViewController] isKindOfClass:[SettingsViewController class]]) {
+        } else if ([[navController visibleViewController] isKindOfClass:[ShoutViewController class]]) {
             
             [self setRedirectionToNotificationShout:notification];
             [navController popViewControllerAnimated:NO];
             
-        } else if ([[navController topViewController] isKindOfClass:[CommentsViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[LikesViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[RefineShoutLocationViewController class]]) {
+        } else if ([[navController visibleViewController] isKindOfClass:[CommentsViewController class]] ||
+                   [[navController visibleViewController] isKindOfClass:[LikesViewController class]]) {
             
             [self setRedirectionToNotificationShout:notification];
             [navController popViewControllerAnimated:NO];
             [navController popViewControllerAnimated:NO];
             
-        } else if ([[navController topViewController] isKindOfClass:[SigninViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[SignupViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[WelcomeViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[ForgotPasswordViewController class]]) {
+        } else if ([[navController visibleViewController] isKindOfClass:[SigninViewController class]] ||
+                   [[navController visibleViewController] isKindOfClass:[SignupViewController class]] ||
+                   [[navController visibleViewController] isKindOfClass:[WelcomeViewController class]] ||
+                   [[navController visibleViewController] isKindOfClass:[ForgotPasswordViewController class]]) {
             
             [self setRedirectionToNotificationShout:notification];
-            
-        } else if ([[navController topViewController] isKindOfClass:[CreateShoutViewController class]]){
-            [self setRedirectionToNotificationShout:notification];
-            [[navController topViewController] dismissViewControllerAnimated:NO completion:NULL];
-            [navController popViewControllerAnimated:NO];
         }
-
     }
 }
 
