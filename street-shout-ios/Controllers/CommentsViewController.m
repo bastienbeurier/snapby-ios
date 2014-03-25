@@ -236,7 +236,7 @@
     double lat = 0;
     double lng = 0;
     
-    if ([LocationUtilities userLocationValid:self.userLocation]) {
+    if ([LocationUtilities userLocationValid:self.userLocation.location]) {
         lat = self.userLocation.coordinate.latitude;
         lng = self.userLocation.coordinate.longitude;
     }

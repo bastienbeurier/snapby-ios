@@ -148,8 +148,11 @@
     return (NSUInteger) MIN(hDist, vDist);
 }
 
-+ (BOOL)userLocationValid:(MKUserLocation *)userLocation
++ (BOOL)userLocationValid:(CLLocation *)userLocation
 {
+    if(!userLocation){
+        return false;
+    }
     return userLocation.coordinate.latitude != 0 &&
     userLocation.coordinate.latitude != -180 &&
     userLocation.coordinate.longitude != 0 &&

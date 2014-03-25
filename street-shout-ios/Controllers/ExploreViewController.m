@@ -33,7 +33,6 @@
 @property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
-@property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (weak, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) MapRequestHandler *mapRequestHandler;
 
@@ -45,9 +44,7 @@
 {
     //Buttons round corner
     NSUInteger buttonHeight = self.createShoutButton.bounds.size.height;
-    self.createShoutButton.layer.cornerRadius = buttonHeight/2;
-    self.moreButton.layer.cornerRadius = buttonHeight/2;
-    
+    self.createShoutButton.layer.cornerRadius = buttonHeight/2;    
     self.mapView = self.mapViewController.mapView;
     
     self.mapRequestHandler = [MapRequestHandler new];
@@ -57,6 +54,9 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    // stop updating user location
+    self.mapView.showsUserLocation = YES;
+    
     //Status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
@@ -99,6 +99,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [self updateUserInfo];
+    
+    // stop updating user location
+    self.mapView.showsUserLocation = NO;
     
     [super viewDidDisappear:animated];
 }
@@ -199,26 +202,7 @@
         return;
     }
     
-//    NSString *errorMessageTitle;
-//    NSString *errorMessageBody;
-//    
-//    MKUserLocation *myLocation = [self getMyLocation];
-//        
-//    if (myLocation && [LocationUtilities userLocationValid:myLocation]) {
-//        [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
-//        return;
-//    } else {
-//        errorMessageTitle = NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment");
-//        errorMessageBody = NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment");
-//    }
-//    
-//    [GeneralUtilities showMessage:errorMessageBody withTitle:errorMessageTitle];
     [self.exploreControllerdelegate moveToImagePickerController];
-}
-
-- (MKUserLocation *)getMyLocation
-{
-    return self.mapViewController.mapView.userLocation;
 }
 
 

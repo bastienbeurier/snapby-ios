@@ -1024,7 +1024,7 @@
         <!--Map View Controller-->
         <scene sceneID="P85-2B-qT4">
             <objects>
-                <viewController storyboardIdentifier="mapViewController" id="d4j-A5-G8j" customClass="MapViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" id="d4j-A5-G8j" customClass="MapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8SG-cq-0CT"/>
                         <viewControllerLayoutGuide type="bottom" id="19H-bp-LSd"/>

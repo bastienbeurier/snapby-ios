@@ -346,7 +346,7 @@
     
     MKUserLocation *userLocation = self.mapView.userLocation;
     
-    if ([LocationUtilities userLocationValid:userLocation]) {
+    if ([LocationUtilities userLocationValid:userLocation.location]) {
         lat = userLocation.coordinate.latitude;
         lng = userLocation.coordinate.longitude;
     }

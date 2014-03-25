@@ -38,8 +38,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    
     // !!!: Use setDeviceIdentifier (removing deprecated warning with clang pragmas)
 #ifdef TESTING
 #pragma clang diagnostic push
@@ -62,20 +60,19 @@
         config.inProduction = NO;
     }
     
-    // Manage the network activity indicator
-    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-    
     // Urban airship config
     [UAirship takeOff:config];
     
-    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    // Manage the network activity indicator
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-    //Notification received when app closed
+    // Notification received when app closed
+    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if(remoteNotif) {
         [self setRedirectionToNotificationShout:remoteNotif];
     }
     
-    // Check if the user has not been logged out
+    // Handle the case were the user is still signed in
     if ([SessionUtilities isSignedIn]) {
         
         // Check if he logged in with facebook
@@ -152,12 +149,14 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    
     // Close the FB session before quitting
     [FBSession.activeSession close];
 }
 
+
+// ---------------
+// Notification
+// ---------------
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
@@ -199,6 +198,7 @@
                    [[navController topViewController] isKindOfClass:[ForgotPasswordViewController class]]) {
             
             [self setRedirectionToNotificationShout:notification];
+            
         } else if ([[navController topViewController] isKindOfClass:[CreateShoutViewController class]]){
             [self setRedirectionToNotificationShout:notification];
             [[navController topViewController] dismissViewControllerAnimated:NO completion:NULL];
@@ -311,7 +311,6 @@
 }
 
 // After facebook authentication, the app is called back with the session information.
-// Override application:openURL:sourceApplication:annotation to call the FBsession object that handles the incoming URL
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication

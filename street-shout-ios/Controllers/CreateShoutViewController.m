@@ -33,6 +33,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *addDescriptionField;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
+@property (strong, nonatomic) CLLocation *shoutLocation;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
@@ -43,23 +45,10 @@
 // Create Shout Screen
 // ----------------------------------------------------------
 
-- (void)viewDidAppear:(BOOL)animated {
-    
-    [super viewDidAppear:animated];
-    self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
-    
-    // Open keyboard to create shout
-    [self.addDescriptionField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.05f];
-}
-
-- (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
-{
-    self.shoutLocation = shoutLocation;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     self.isAnonymous = NO;
     self.blackListed = NO;
@@ -68,6 +57,12 @@
     [self.shoutImageView setImage:[ImageUtilities cropWidthOfImage:self.sentImage by:(1-1/rescalingRatio)]];
     
     self.addDescriptionField.delegate = self;
+    
+    // Get user location
+    self.locationManager = [CLLocationManager new];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    [self.locationManager startUpdatingLocation];
     
     // observe keyboard show notifications to resize the text view appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -80,6 +75,21 @@
                                                object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
+    
+    // Open keyboard to create shout
+    [self.addDescriptionField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.05f];
+}
+
+
+// RefineShout protocole
+- (void)updateCreateShoutLocation:(CLLocation *)shoutLocation
+{
+    self.shoutLocation = shoutLocation;
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
@@ -108,6 +118,12 @@
     
     [self.view endEditing:YES];
     
+    // Get user location if we don't have already one
+    if (![LocationUtilities userLocationValid:self.shoutLocation]) {
+        self.shoutLocation = self.locationManager.location;
+    }
+    
+    // Check error
     NSString *title = nil; NSString *message = nil;
     
     if (self.blackListed) {
@@ -121,6 +137,9 @@
         title = NSLocalizedStringFromTable (@"missing_image", @"Strings", @"comment");
     } else if (![GeneralUtilities connected]) {
         title = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
+    } else if (![LocationUtilities userLocationValid:self.shoutLocation]) {
+        title = NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment");
+        message = NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment");
     }
     
     if (title || message) {
@@ -216,7 +235,7 @@
 {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"Refine Shout modal segue"]) {
-        ((RefineShoutLocationViewController *) [segue destinationViewController]).myLocation = self.myLocation;
+        ((RefineShoutLocationViewController *) [segue destinationViewController]).myLocation = self.locationManager.location;
         ((RefineShoutLocationViewController *) [segue destinationViewController]).refineShoutLocationVCDelegate = self;
     }
 }

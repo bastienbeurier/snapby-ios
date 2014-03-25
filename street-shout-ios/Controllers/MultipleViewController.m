@@ -51,30 +51,6 @@
 }
 
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitExploreViewController];
-    } else if ([viewController isKindOfClass:[SettingsViewController class]]){
-        return self.imagePickerController;
-    } else {
-        return nil;
-    }
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitSettingsViewController];
-    } else if ([viewController isKindOfClass:[ExploreViewController class]]){
-        return self.imagePickerController;
-    } else {
-        return nil;
-    }
-}
-
-
-
 // ----------------------------------------------------------
 // Full screen Camera
 // ----------------------------------------------------------
@@ -158,7 +134,31 @@
 }
 
 
-// Utilities for controller transitions
+// ----------------------
+// Controller transitions
+// ----------------------
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
+        return [self getOrInitExploreViewController];
+    } else if ([viewController isKindOfClass:[SettingsViewController class]]){
+        return self.imagePickerController;
+    } else {
+        return nil;
+    }
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
+        return [self getOrInitSettingsViewController];
+    } else if ([viewController isKindOfClass:[ExploreViewController class]]){
+        return self.imagePickerController;
+    } else {
+        return nil;
+    }
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -191,6 +191,9 @@
     return self.settingsViewController;
 }
 
+
+// CreateShoutDelegate protocole
+
 - (void)onShoutCreated:(Shout *)shout
 {
     NSArray *viewControllers = @[[self getOrInitExploreViewController]];
@@ -199,5 +202,6 @@
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
 }
+
 
 @end
