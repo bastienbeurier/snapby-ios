@@ -54,8 +54,9 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    // stop updating user location
+    // start updating map and stop location manager
     self.mapView.showsUserLocation = YES;
+    [self.exploreControllerdelegate stopLocationUpdate];
     
     //Status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
@@ -102,6 +103,7 @@
     
     // stop updating user location
     self.mapView.showsUserLocation = NO;
+    [self.exploreControllerdelegate startLocationUpdate];
     
     [super viewDidDisappear:animated];
 }

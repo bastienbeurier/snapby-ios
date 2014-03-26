@@ -19,5 +19,7 @@
 @protocol SettingsViewControllerDelegate
 
 - (void)moveToImagePickerController;
+- (void)startLocationUpdate;
+- (void)stopLocationUpdate;
 
 @end

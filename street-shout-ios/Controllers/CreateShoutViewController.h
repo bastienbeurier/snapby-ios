@@ -10,16 +10,16 @@
 #import <MapKit/MapKit.h>
 #import "RefineShoutLocationViewController.h"
 #import "Shout.h"
-#import <CoreLocation/CLLocationManager.h>
+
 
 @protocol CreateShoutViewControllerDelegate;
 
-@interface CreateShoutViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, RefineShoutLocationViewControllerDelegate, UIActionSheetDelegate, CLLocationManagerDelegate>
+@interface CreateShoutViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, RefineShoutLocationViewControllerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) id <CreateShoutViewControllerDelegate> createShoutVCDelegate;
 
 @property (strong, nonatomic) IBOutlet UIImage *sentImage;
-
+@property (strong, nonatomic) CLLocation *shoutLocation;
 
 @end
 

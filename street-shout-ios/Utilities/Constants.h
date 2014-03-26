@@ -67,6 +67,8 @@ static const NSUInteger kDistanceWhenDisplayShout = 200;
 static const NSUInteger kDistanceAtStartup = 6000;
 static const NSUInteger kDistanceWhenMapDisplayShoutClicked = 1000;
 
+static const NSUInteger kDistanceBeforeUpdateLocation = 50;
+
 // Request delay
 static const double kRequestDelay = 0.5;
 

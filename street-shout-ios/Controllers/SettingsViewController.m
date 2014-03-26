@@ -63,6 +63,15 @@
     self.logOutButton.layer.cornerRadius = cornerRadius;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.settingsViewControllerdelegate stopLocationUpdate];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.settingsViewControllerdelegate startLocationUpdate];
+}
+
 - (void)setInitialUsername
 {
     self.usernameTextField.text = [@"@" stringByAppendingString:[SessionUtilities getCurrentUser].username];

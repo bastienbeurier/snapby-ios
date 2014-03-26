@@ -19,6 +19,7 @@
 @property (strong, nonatomic) CreateShoutViewController * createShoutViewController;
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @property (nonatomic) BOOL flashOn;
 @property(nonatomic,retain) ALAssetsLibrary *library;
@@ -32,20 +33,17 @@
 {
     [super viewDidLoad];
     
+    // Alloc location manager
+    [self allocAndInitLocationManager];
+    
     // Create page view controller
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ShoutPageViewController"];
     self.pageViewController.dataSource = self;
     
-    // Init the full screen camera
-    self.imagePickerController = [ImageUtilities initFullScreenCameraControllerWithDelegate:self];
-    self.flashOn = NO;
-    self.library = [ALAssetsLibrary new];
-    
-    // Display it as the first screen unless notif
+    // If notif, redirect to Shout else display camera
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSNumber *notificationShoutId = [prefs objectForKey:NOTIFICATION_SHOUT_ID_PREF];
-
-    NSArray *viewControllers = @[notificationShoutId? [self getOrInitExploreViewController] : self.imagePickerController];
+    NSArray *viewControllers = @[notificationShoutId? [self getOrInitExploreViewController] : [self getOrInitImagePickerController]];
    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
     [self addChildViewController:_pageViewController];
@@ -53,13 +51,131 @@
     [self.pageViewController didMoveToParentViewController:self];
 }
 
+// To cope with the case where we push or dismiss the create shout
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.locationManager startUpdatingLocation];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.locationManager stopUpdatingLocation];
+}
+
+         
+// ----------------------
+// Controller transitions
+// ----------------------
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
+        return [self getOrInitExploreViewController];
+    } else if ([viewController isKindOfClass:[SettingsViewController class]]){
+        return [self getOrInitImagePickerController];
+    } else {
+        return nil;
+    }
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
+        return [self getOrInitSettingsViewController];
+    } else if ([viewController isKindOfClass:[ExploreViewController class]]){
+        return [self getOrInitImagePickerController];
+    } else {
+        return nil;
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"Create from Multiple modal segue"]) {
+        CreateShoutViewController * createShoutViewController = (CreateShoutViewController *) [segue destinationViewController];
+        createShoutViewController.sentImage = (UIImage *) sender;
+        createShoutViewController.createShoutVCDelegate = self;
+        createShoutViewController.shoutLocation = self.locationManager.location;
+    }
+}
+
+- (void) moveToImagePickerController
+{
+    NSArray *viewControllers = @[[self getOrInitImagePickerController]];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+}
+
+
+// ---------------------------
+// Controller initializations
+// --------------------------
+
+- (UIImagePickerController *) getOrInitImagePickerController {
+    if(!self.imagePickerController){
+        [self allocAndInitFullScreenCamera];
+    }
+    return self.imagePickerController;
+}
+
+- (ExploreViewController *) getOrInitExploreViewController {
+    if(!self.exploreViewController){
+        self.exploreViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ExploreViewController"];
+        self.exploreViewController.exploreControllerdelegate = self;
+    }
+    return self.exploreViewController;
+}
+
+- (SettingsViewController *) getOrInitSettingsViewController {
+    if(!self.settingsViewController){
+        self.settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+        self.settingsViewController.settingsViewControllerdelegate = self;
+    }
+    return self.settingsViewController;
+}
+
 
 // ----------------------------------------------------------
 // Full screen Camera
 // ----------------------------------------------------------
 
-// Custom button and actions
+// Alloc the impage picker controller
+- (void) allocAndInitFullScreenCamera
+{
+    // Create custom camera view
+    UIImagePickerController *imagePickerController = [UIImagePickerController new];
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        return;
+    }
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePickerController.delegate = self;
+    
+    // Custom buttons
+    imagePickerController.showsCameraControls = NO;
+    imagePickerController.allowsEditing = NO;
+    imagePickerController.navigationBarHidden=YES;
+    NSArray* nibViews = [[NSBundle mainBundle] loadNibNamed:@"OverlayCameraView" owner:self options:nil];
+    UIView* myView = [ nibViews objectAtIndex: 0];
+    
+    imagePickerController.cameraOverlayView = myView;
+    
+    // Transform camera to get full screen
+    double translationFactor = (self.view.frame.size.height - kCameraHeight) / 2;
+    CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, translationFactor);
+    imagePickerController.cameraViewTransform = translate;
+    
+    double rescalingRatio = self.view.frame.size.height / kCameraHeight;
+    CGAffineTransform scale = CGAffineTransformScale(translate, rescalingRatio, rescalingRatio);
+    imagePickerController.cameraViewTransform = scale;
+    
+    // flash disactivated by default
+    imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+    self.flashOn = NO;
+    self.library = [ALAssetsLibrary new];
+    self.imagePickerController = imagePickerController;
+}
 
+// Custom button and actions
 - (IBAction)mapButtonClicked:(id)sender {
     NSArray *viewControllers = @[[self getOrInitExploreViewController]];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -98,7 +214,6 @@
 
 
 // Utilities
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)editInfo
 {
     UIImage *image =  [editInfo objectForKey:UIImagePickerControllerOriginalImage];
@@ -137,64 +252,6 @@
 }
 
 
-// ----------------------
-// Controller transitions
-// ----------------------
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitExploreViewController];
-    } else if ([viewController isKindOfClass:[SettingsViewController class]]){
-        return self.imagePickerController;
-    } else {
-        return nil;
-    }
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitSettingsViewController];
-    } else if ([viewController isKindOfClass:[ExploreViewController class]]){
-        return self.imagePickerController;
-    } else {
-        return nil;
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Create from Multiple modal segue"]) {
-        ((CreateShoutViewController *) [segue destinationViewController]).sentImage = (UIImage *) sender;
-        ((CreateShoutViewController *) [segue destinationViewController]).createShoutVCDelegate = self;
-    }
-}
-
-- (void) moveToImagePickerController
-{
-    NSArray *viewControllers = @[self.imagePickerController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-}
-
-- (ExploreViewController *) getOrInitExploreViewController {
-    if(!self.exploreViewController){
-        self.exploreViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ExploreViewController"];
-        self.exploreViewController.exploreControllerdelegate = self;
-    }
-    return self.exploreViewController;
-}
-
-- (SettingsViewController *) getOrInitSettingsViewController {
-    if(!self.settingsViewController){
-        self.settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
-        self.settingsViewController.settingsViewControllerdelegate = self;
-    }
-    return self.settingsViewController;
-}
-
-
 // CreateShoutDelegate protocole
 
 - (void)onShoutCreated:(Shout *)shout
@@ -203,8 +260,23 @@
     //Don't show shout controller immidiately (as for notification handling), otherwise segues get mixed up.
     self.exploreViewController.redirectToShout = shout;
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
+}
+- (void)startLocationUpdate
+{
+    [self.locationManager startUpdatingLocation];
+}
+- (void)stopLocationUpdate
+{
+    [self.locationManager stopUpdatingLocation];
 }
 
+// Location Manager
+- (void)allocAndInitLocationManager
+{
+    self.locationManager = [CLLocationManager new];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    self.locationManager.distanceFilter = kDistanceBeforeUpdateLocation;
+}
 
 @end

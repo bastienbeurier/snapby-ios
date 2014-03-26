@@ -61,6 +61,7 @@
         config.inProduction = NO;
     }
     
+    
     // Urban airship config
     [UAirship takeOff:config];
     
@@ -391,5 +392,7 @@
                                                  otherButtonTitles:nil];
     [self.obsoleteAPIAlertView show];
 }
+
+
 
 @end

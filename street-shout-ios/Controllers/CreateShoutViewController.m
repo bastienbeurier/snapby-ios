@@ -33,8 +33,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *addDescriptionField;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
-@property (strong, nonatomic) CLLocation *shoutLocation;
-@property (strong, nonatomic) CLLocationManager *locationManager;
+
 
 @end
 
@@ -57,12 +56,6 @@
     [self.shoutImageView setImage:[ImageUtilities cropWidthOfImage:self.sentImage by:(1-1/rescalingRatio)]];
     
     self.addDescriptionField.delegate = self;
-    
-    // Get user location
-    self.locationManager = [CLLocationManager new];
-    self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-    [self.locationManager startUpdatingLocation];
     
     // observe keyboard show notifications to resize the text view appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -117,11 +110,6 @@
     }
     
     [self.view endEditing:YES];
-    
-    // Get user location if we don't have already one
-    if (![LocationUtilities userLocationValid:self.shoutLocation]) {
-        self.shoutLocation = self.locationManager.location;
-    }
     
     // Check error
     NSString *title = nil; NSString *message = nil;
@@ -235,7 +223,7 @@
 {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"Refine Shout modal segue"]) {
-        ((RefineShoutLocationViewController *) [segue destinationViewController]).myLocation = self.locationManager.location;
+        ((RefineShoutLocationViewController *) [segue destinationViewController]).myLocation = self.shoutLocation;
         ((RefineShoutLocationViewController *) [segue destinationViewController]).refineShoutLocationVCDelegate = self;
     }
 }

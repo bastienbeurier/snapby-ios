@@ -307,40 +307,5 @@
 }
 
 
-+ (UIImagePickerController *) initFullScreenCameraControllerWithDelegate:(UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate> *)imagePickerDelegate
-{
-    // Create custom camera view
-    UIImagePickerController *imagePickerController = [UIImagePickerController new];
-    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        return nil;
-    }
-    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePickerController.delegate = imagePickerDelegate;
-    
-    // Custom buttons
-    imagePickerController.showsCameraControls = NO;
-    imagePickerController.allowsEditing = NO;
-    imagePickerController.navigationBarHidden=YES;
-    NSArray* nibViews = [[NSBundle mainBundle] loadNibNamed:@"OverlayCameraView" owner:imagePickerDelegate options:nil];
-    UIView* myView = [ nibViews objectAtIndex: 0];
-    
-    imagePickerController.cameraOverlayView = myView;
-    
-    // Transform camera to get full screen
-    double translationFactor = (imagePickerDelegate.view.frame.size.height - kCameraHeight) / 2;
-    CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, translationFactor);
-    imagePickerController.cameraViewTransform = translate;
-    
-    double rescalingRatio = imagePickerDelegate.view.frame.size.height / kCameraHeight;
-    CGAffineTransform scale = CGAffineTransformScale(translate, rescalingRatio, rescalingRatio);
-    imagePickerController.cameraViewTransform = scale;
-    
-    // flash disactivated by default
-    imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
-    
-    return imagePickerController;
-}
-
 
 @end
