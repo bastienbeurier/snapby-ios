@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "ImageUtilities.h"
 #import "GeneralUtilities.h"
+#import "LocationUtilities.h"
 
 @interface MultipleViewController ()
 
@@ -187,7 +188,11 @@
 }
 
 - (IBAction)takePictureButtonClicked:(id)sender {
-    [self.imagePickerController takePicture];
+    if ([LocationUtilities userLocationValid:self.locationManager.location]) {
+        [self.imagePickerController takePicture];
+    } else {
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment") withTitle:NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment")];
+    }
 }
 
 - (IBAction)flipCameraButtonClicked:(id)sender {

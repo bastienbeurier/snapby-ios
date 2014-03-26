@@ -44,7 +44,7 @@
                         <action selector="takePictureButtonClicked:" destination="-1" eventType="touchUpInside" id="pz9-Ph-gUj"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d8O-u5-t0u">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d8O-u5-t0u">
                     <rect key="frame" x="269" y="508" width="41" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
@@ -97,7 +97,7 @@
                 <constraint firstItem="jKj-Af-43j" firstAttribute="top" secondItem="c2G-Xt-y7K" secondAttribute="top" constant="20" id="RUZ-xL-S3S"/>
                 <constraint firstItem="d8O-u5-t0u" firstAttribute="centerY" secondItem="zqA-BL-jh3" secondAttribute="centerY" id="TNE-UE-uO8"/>
                 <constraint firstItem="d8O-u5-t0u" firstAttribute="bottom" secondItem="Agt-9O-iUE" secondAttribute="bottom" id="cOh-1s-Ddc"/>
-                <constraint firstAttribute="trailing" secondItem="d8O-u5-t0u" secondAttribute="trailing" constant="15" id="fZv-2C-VTn"/>
+                <constraint firstAttribute="trailing" secondItem="d8O-u5-t0u" secondAttribute="trailing" constant="10" id="fZv-2C-VTn"/>
                 <constraint firstAttribute="trailing" secondItem="jKj-Af-43j" secondAttribute="trailing" constant="10" id="o7T-qw-9lL"/>
                 <constraint firstItem="dbb-qi-Scv" firstAttribute="top" secondItem="c2G-Xt-y7K" secondAttribute="top" constant="20" id="oZT-bh-W34"/>
                 <constraint firstItem="dbb-qi-Scv" firstAttribute="leading" secondItem="c2G-Xt-y7K" secondAttribute="leading" constant="10" id="tK8-6a-8q9"/>
