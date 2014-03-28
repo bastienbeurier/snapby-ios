@@ -226,10 +226,6 @@
 // User
 // ------------------------------------------------
 
-+ (void)updateUserInfo
-{
-    [AFStreetShoutAPIClient updateUserInfoWithLat:0 Lng:0];
-}
 
 + (void)updateUserInfoWithLat:(double)lat Lng:(double)lng;
 {
@@ -638,7 +634,7 @@
 }
 
 // Get followers
-+ (void)getFollowersOfUser:(NSInteger) followedId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
++ (void)getFollowersOfUser:(NSInteger) followedId success:(void(^)(NSArray *users, NSArray *currentUserFollowedIds))successBlock failure:(void(^)())failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/followers.json"];
     
@@ -655,7 +651,8 @@
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSArray *rawUsers = [result valueForKeyPath:@"followers"];
         NSArray *users = [User rawUsersToInstances:rawUsers];
-        successBlock(users);
+        NSArray *currentUserFollowedIds = [result valueForKeyPath:@"current_user_followed_user_ids"];
+        successBlock(users,currentUserFollowedIds);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if(failureBlock) {
@@ -665,7 +662,7 @@
 }
 
 // Get followed users
-+ (void)getFollowingOfUser:(NSInteger) followerId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
++ (void)getFollowingOfUser:(NSInteger) followerId success:(void(^)(NSArray *, NSArray *))successBlock failure:(void(^)())failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:@"users/followed_users.json"];
     
@@ -682,7 +679,8 @@
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSArray *rawUsers = [result valueForKeyPath:@"followed_users"];
         NSArray *users = [User rawUsersToInstances:rawUsers];
-        successBlock(users);
+        NSArray *currentUserFollowedIds = [result valueForKeyPath:@"current_user_followed_user_ids"];
+        successBlock(users,currentUserFollowedIds);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if(failureBlock) {
             failureBlock();
@@ -693,7 +691,7 @@
 // Get user info (for profile)
 + (void)getOtherUserInfo:(NSInteger) userId success:(void(^)(User *, NSInteger, NSInteger, BOOL))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/info"]];
+    NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/get_user_info"]];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
@@ -703,7 +701,7 @@
         return;
     }
     
-    [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[AFStreetShoutAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSDictionary *rawUser = [result valueForKeyPath:@"user"];
@@ -750,7 +748,7 @@
 }
 
 // Get friends sugestions
-+ (void)getFriendSuggestionForUser:(NSInteger) userId success:(void(^)(NSArray *users))successBlock failure:(void(^)())failureBlock
++ (void)getSuggestedFriendsOfUser:(NSInteger) userId success:(void(^)(NSArray *, NSArray *))successBlock failure:(void(^)())failureBlock
 {
     NSString *path =  [[AFStreetShoutAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/suggested_friends"]];
     
@@ -763,7 +761,9 @@
     [[AFStreetShoutAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSArray *rawUsers = [result valueForKeyPath:@"suggested_friends"];
-        successBlock([User rawUsersToInstances:rawUsers]);
+         NSArray *users=[User rawUsersToInstances:rawUsers];
+        NSArray *currentUserFollowedIds = [result valueForKeyPath:@"current_user_followed_user_ids"];
+        successBlock(users,currentUserFollowedIds);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if(failureBlock) {
             failureBlock();

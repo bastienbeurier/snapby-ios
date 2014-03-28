@@ -13,8 +13,6 @@
 
 @interface ImageUtilities : NSObject
 
-+ (void)addSquareBoundsToImagePicker:(UIImagePickerController *)imagePickerController;
-
 + (ALAssetOrientation)convertImageOrientationToAssetOrientation:(UIImageOrientation)orientation;
 
 + (void)addInnerShadowToView:(UIView *)view;

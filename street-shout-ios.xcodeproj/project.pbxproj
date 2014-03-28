@@ -427,6 +427,16 @@
 		3C10E0AE18E1FAA90058B027 /* camera-profile-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C10E0AC18E1FAA90058B027 /* camera-profile-button@2x~iphone.png */; };
 		3C27CBC5189BFD0700D7E139 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3C27CBC4189BFD0700D7E139 /* default.gpx */; };
 		3C301606187EAF0A0006F70A /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
+		3C459D2918E4909D009BD56A /* followButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D2718E4909D009BD56A /* followButton.png */; };
+		3C459D2A18E4909D009BD56A /* followButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D2718E4909D009BD56A /* followButton.png */; };
+		3C459D2B18E4909D009BD56A /* followButton@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D2818E4909D009BD56A /* followButton@2x~iphone.png */; };
+		3C459D2C18E4909D009BD56A /* followButton@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D2818E4909D009BD56A /* followButton@2x~iphone.png */; };
+		3C459D2F18E5A567009BD56A /* settingsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D2D18E5A567009BD56A /* settingsButton.png */; };
+		3C459D3018E5A567009BD56A /* settingsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D2D18E5A567009BD56A /* settingsButton.png */; };
+		3C459D3118E5A567009BD56A /* settingsButton@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D2E18E5A567009BD56A /* settingsButton@2x~iphone.png */; };
+		3C459D3218E5A567009BD56A /* settingsButton@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D2E18E5A567009BD56A /* settingsButton@2x~iphone.png */; };
+		3C459D3718E5AC79009BD56A /* findFriendsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D3618E5AC79009BD56A /* findFriendsButton.png */; };
+		3C459D3818E5AC79009BD56A /* findFriendsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C459D3618E5AC79009BD56A /* findFriendsButton.png */; };
 		3C48A78518C9D35F00646E31 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48A77F18C9D35F00646E31 /* libTestFlight.a */; };
 		3C48A78618C9D35F00646E31 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48A77F18C9D35F00646E31 /* libTestFlight.a */; };
 		3C48A78718C9D35F00646E31 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3C48A78018C9D35F00646E31 /* README.md */; };
@@ -481,6 +491,13 @@
 		3C6E0E6C18C5073100DBD1EF /* create_send_button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C6E0E5D18C5073100DBD1EF /* create_send_button@2x~iphone.png */; };
 		3C6E0E6D18C5073100DBD1EF /* create_send_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C6E0E5E18C5073100DBD1EF /* create_send_button.png */; };
 		3C6E0E6E18C5073100DBD1EF /* create_send_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C6E0E5E18C5073100DBD1EF /* create_send_button.png */; };
+		3C7EE71218E30A6D0099D3F0 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7EE71118E30A6D0099D3F0 /* ProfileViewController.m */; };
+		3C7EE71B18E4352D0099D3F0 /* UsersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7EE71A18E4352D0099D3F0 /* UsersListViewController.m */; };
+		3C7EE71C18E4352D0099D3F0 /* UsersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7EE71A18E4352D0099D3F0 /* UsersListViewController.m */; };
+		3C7EE71F18E454840099D3F0 /* UsersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7EE71E18E454840099D3F0 /* UsersTableViewCell.m */; };
+		3C7EE72018E454840099D3F0 /* UsersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7EE71E18E454840099D3F0 /* UsersTableViewCell.m */; };
+		3C7EE72218E455390099D3F0 /* UsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7EE72118E455390099D3F0 /* UsersTableViewCell.xib */; };
+		3C7EE72318E455390099D3F0 /* UsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7EE72118E455390099D3F0 /* UsersTableViewCell.xib */; };
 		3C838BF418C8E70A002C08AB /* navigation-create-shout-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C838BF218C8E70A002C08AB /* navigation-create-shout-button.png */; };
 		3C838BF518C8E70A002C08AB /* navigation-create-shout-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C838BF218C8E70A002C08AB /* navigation-create-shout-button.png */; };
 		3C838BF618C8E70A002C08AB /* navigation-create-shout-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C838BF318C8E70A002C08AB /* navigation-create-shout-button@2x~iphone.png */; };
@@ -711,6 +728,11 @@
 		3C27CBC4189BFD0700D7E139 /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
 		3C301604187EAF0A0006F70A /* SessionUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionUtilities.h; path = Utilities/SessionUtilities.h; sourceTree = "<group>"; };
 		3C301605187EAF0A0006F70A /* SessionUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionUtilities.m; path = Utilities/SessionUtilities.m; sourceTree = "<group>"; };
+		3C459D2718E4909D009BD56A /* followButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = followButton.png; sourceTree = "<group>"; };
+		3C459D2818E4909D009BD56A /* followButton@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "followButton@2x~iphone.png"; sourceTree = "<group>"; };
+		3C459D2D18E5A567009BD56A /* settingsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsButton.png; sourceTree = "<group>"; };
+		3C459D2E18E5A567009BD56A /* settingsButton@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@2x~iphone.png"; sourceTree = "<group>"; };
+		3C459D3618E5AC79009BD56A /* findFriendsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = findFriendsButton.png; sourceTree = "<group>"; };
 		3C48A77F18C9D35F00646E31 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		3C48A78018C9D35F00646E31 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		3C48A78118C9D35F00646E31 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
@@ -768,6 +790,13 @@
 		3C6E0E5C18C5073100DBD1EF /* create_refine_button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create_refine_button@2x~iphone.png"; sourceTree = "<group>"; };
 		3C6E0E5D18C5073100DBD1EF /* create_send_button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create_send_button@2x~iphone.png"; sourceTree = "<group>"; };
 		3C6E0E5E18C5073100DBD1EF /* create_send_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_send_button.png; sourceTree = "<group>"; };
+		3C7EE71018E30A6D0099D3F0 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Controllers/ProfileViewController.h; sourceTree = "<group>"; };
+		3C7EE71118E30A6D0099D3F0 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = Controllers/ProfileViewController.m; sourceTree = "<group>"; };
+		3C7EE71918E4352D0099D3F0 /* UsersListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UsersListViewController.h; path = Controllers/UsersListViewController.h; sourceTree = "<group>"; };
+		3C7EE71A18E4352D0099D3F0 /* UsersListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UsersListViewController.m; path = Controllers/UsersListViewController.m; sourceTree = "<group>"; };
+		3C7EE71D18E454840099D3F0 /* UsersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UsersTableViewCell.h; path = Custom/UsersTableViewCell.h; sourceTree = "<group>"; };
+		3C7EE71E18E454840099D3F0 /* UsersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UsersTableViewCell.m; path = Custom/UsersTableViewCell.m; sourceTree = "<group>"; };
+		3C7EE72118E455390099D3F0 /* UsersTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsersTableViewCell.xib; sourceTree = "<group>"; };
 		3C838BF218C8E70A002C08AB /* navigation-create-shout-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-create-shout-button.png"; sourceTree = "<group>"; };
 		3C838BF318C8E70A002C08AB /* navigation-create-shout-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-create-shout-button@2x~iphone.png"; sourceTree = "<group>"; };
 		3C838C4818C8F89C002C08AB /* AFStreetShoutAPIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AFStreetShoutAPIClient.m; path = Utilities/AFStreetShoutAPIClient.m; sourceTree = "<group>"; };
@@ -871,6 +900,11 @@
 		0B0602E917FF0A3B00EA69F0 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				3C459D2718E4909D009BD56A /* followButton.png */,
+				3C459D3618E5AC79009BD56A /* findFriendsButton.png */,
+				3C459D2818E4909D009BD56A /* followButton@2x~iphone.png */,
+				3C459D2D18E5A567009BD56A /* settingsButton.png */,
+				3C459D2E18E5A567009BD56A /* settingsButton@2x~iphone.png */,
 				3CE5750D18DB410800741129 /* map_button.png */,
 				3CE5750E18DB410800741129 /* map_button@2x~iphone.png */,
 				3C10E0AB18E1FAA90058B027 /* camera-profile-button.png */,
@@ -1006,6 +1040,8 @@
 				0B7C47D2188D8A4500D308A9 /* CommentsTableViewCell.m */,
 				0B728702189023AF00FB4CC4 /* LikesTableViewCell.h */,
 				0B728703189023AF00FB4CC4 /* LikesTableViewCell.m */,
+				3C7EE71D18E454840099D3F0 /* UsersTableViewCell.h */,
+				3C7EE71E18E454840099D3F0 /* UsersTableViewCell.m */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -1054,6 +1090,10 @@
 				0B7286FC1890203A00FB4CC4 /* LikesViewController.m */,
 				3C0B66AA18D89948004F5EDF /* MultipleViewController.h */,
 				3C0B66AB18D89948004F5EDF /* MultipleViewController.m */,
+				3C7EE71018E30A6D0099D3F0 /* ProfileViewController.h */,
+				3C7EE71118E30A6D0099D3F0 /* ProfileViewController.m */,
+				3C7EE71918E4352D0099D3F0 /* UsersListViewController.h */,
+				3C7EE71A18E4352D0099D3F0 /* UsersListViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1223,10 +1263,11 @@
 			isa = PBXGroup;
 			children = (
 				0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */,
+				3CE5750A18DA146A00741129 /* OverlayCameraView.xib */,
 				0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */,
 				0B7C47CE188D88AC00D308A9 /* CommentsTableViewCell.xib */,
 				0B7286FF1890230900FB4CC4 /* LikesTableViewCell.xib */,
-				3CE5750A18DA146A00741129 /* OverlayCameraView.xib */,
+				3C7EE72118E455390099D3F0 /* UsersTableViewCell.xib */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -1419,6 +1460,7 @@
 				0B9CBBE2188F09B000C596DF /* shout-comment-icon.png in Resources */,
 				0B57F9521885452700FC23BF /* password-icon@2x~iphone.png in Resources */,
 				0B28C6AC1892DF0B008C46BF /* cancel-item-button@2x~iphone.png in Resources */,
+				3C459D3118E5A567009BD56A /* settingsButton@2x~iphone.png in Resources */,
 				0B07BA1F17E6FF8300DA26EE /* InfoPlist.strings in Resources */,
 				0B9CBBF2188F0D0700C596DF /* shout-cancel-icon.png in Resources */,
 				0BF63F411885E969002B1254 /* MPArrowLeft.png in Resources */,
@@ -1451,7 +1493,10 @@
 				0BC30FD8189417CE00917C3C /* app-icon-120.png in Resources */,
 				0B57F9541885452700FC23BF /* email-icon@2x~iphone.png in Resources */,
 				0B71A31C188801BF009F68C0 /* my-location-button.png in Resources */,
+				3C459D3718E5AC79009BD56A /* findFriendsButton.png in Resources */,
 				3C1050A318D07BB100D7B61A /* flash_on.png in Resources */,
+				3C459D2F18E5A567009BD56A /* settingsButton.png in Resources */,
+				3C459D2918E4909D009BD56A /* followButton.png in Resources */,
 				0B07BA2317E6FF8300DA26EE /* MainStoryboard_iPhone.storyboard in Resources */,
 				3C6E0E4D18C4F6C800DBD1EF /* camera-flip-button@2x~iphone.png in Resources */,
 				0B28C6CC1892EE02008C46BF /* shout-bar-share-icon.png in Resources */,
@@ -1459,6 +1504,7 @@
 				3C48A78718C9D35F00646E31 /* README.md in Resources */,
 				3C48A78918C9D35F00646E31 /* release_notes.md in Resources */,
 				0B97D107181EA88900CE08A3 /* shout-marker-3-deselected@2x~iphone.png in Resources */,
+				3C7EE72218E455390099D3F0 /* UsersTableViewCell.xib in Resources */,
 				0BF63F4F1885E969002B1254 /* MPDismissKeyboard@2x.png in Resources */,
 				0B28C6C41892EE02008C46BF /* shout-bar-like-icon-liked@2x~iphone.png in Resources */,
 				0B7287001890230900FB4CC4 /* LikesTableViewCell.xib in Resources */,
@@ -1471,6 +1517,7 @@
 				0BF63F4D1885E969002B1254 /* MPDismissKeyboard.png in Resources */,
 				0B07BA2817E6FF8300DA26EE /* AirshipConfig.plist in Resources */,
 				3C838BF418C8E70A002C08AB /* navigation-create-shout-button.png in Resources */,
+				3C459D2B18E4909D009BD56A /* followButton@2x~iphone.png in Resources */,
 				3C1050A118D07BB100D7B61A /* flash_off.png in Resources */,
 				0BDFAA351891F21B00876109 /* Default~iphone.png in Resources */,
 				3C27CBC5189BFD0700D7E139 /* default.gpx in Resources */,
@@ -1635,6 +1682,7 @@
 				3C6E0E6E18C5073100DBD1EF /* create_send_button.png in Resources */,
 				0BCBC68B189160DB00933715 /* MPSurvey.storyboard in Resources */,
 				0BCBC68D189160DB00933715 /* password-icon.png in Resources */,
+				3C459D2C18E4909D009BD56A /* followButton@2x~iphone.png in Resources */,
 				0BCBC690189160DB00933715 /* my-location-button.png in Resources */,
 				0B28C6A51892DF0B008C46BF /* ok-item-button@2x~iphone.png in Resources */,
 				3C6E0E6A18C5073100DBD1EF /* create_refine_button@2x~iphone.png in Resources */,
@@ -1645,6 +1693,7 @@
 				3CE5751218DB410800741129 /* map_button.png in Resources */,
 				0B28C6CB1892EE02008C46BF /* shout-bar-more-icon.png in Resources */,
 				0BCBC696189160DB00933715 /* LikesTableViewCell.xib in Resources */,
+				3C459D3018E5A567009BD56A /* settingsButton.png in Resources */,
 				0BCBC698189160DB00933715 /* MPDismissKeyboard@2x.png in Resources */,
 				0BCBC69A189160DB00933715 /* my-location-button@2x~iphone.png in Resources */,
 				0BCBC69B189160DB00933715 /* MainStoryboard_iPhone.storyboard in Resources */,
@@ -1657,6 +1706,8 @@
 				3C6E0E6818C5073100DBD1EF /* create_refine_button.png in Resources */,
 				0BDFAA361891F21B00876109 /* Default~iphone.png in Resources */,
 				0B28C6971892D567008C46BF /* create-shout-icon@2x~iphone.png in Resources */,
+				3C459D3218E5A567009BD56A /* settingsButton@2x~iphone.png in Resources */,
+				3C459D3818E5AC79009BD56A /* findFriendsButton.png in Resources */,
 				0BDFAA1F1891A51F00876109 /* app-icon-dev-58.png in Resources */,
 				0B28C6C71892EE02008C46BF /* shout-bar-share-icon@2x~iphone.png in Resources */,
 				0B28C6C31892EE02008C46BF /* shout-bar-like-icon-liked.png in Resources */,
@@ -1664,6 +1715,7 @@
 				3CE5751418DB410800741129 /* map_button@2x~iphone.png in Resources */,
 				0BCBC6A6189160DB00933715 /* refresh-map-button@2x~iphone.png in Resources */,
 				0BCBC6A9189160DB00933715 /* username-icon.png in Resources */,
+				3C459D2A18E4909D009BD56A /* followButton.png in Resources */,
 				0BCBC6AC189160DB00933715 /* remove-photo-button@2x~iphone.png in Resources */,
 				0BCBC6AE189160DB00933715 /* AirshipConfig.plist in Resources */,
 				0B28C6951892D567008C46BF /* create-shout-icon.png in Resources */,
@@ -1674,6 +1726,7 @@
 				0BCBC6B0189160DB00933715 /* email-icon.png in Resources */,
 				0BCBC6B1189160DB00933715 /* more-button@2x~iphone.png in Resources */,
 				0BCBC6B2189160DB00933715 /* shout-like-icon@2x~iphone.png in Resources */,
+				3C7EE72318E455390099D3F0 /* UsersTableViewCell.xib in Resources */,
 				3C6E0E5418C4F6C800DBD1EF /* camera-shout-button.png in Resources */,
 				0BCBC6B6189160DB00933715 /* MPCheckmark@2x.png in Resources */,
 				0B28C6AD1892DF0B008C46BF /* cancel-item-button@2x~iphone.png in Resources */,
@@ -1699,6 +1752,7 @@
 				0BF63F3F1885E969002B1254 /* Mixpanel.m in Sources */,
 				0B07B9E017E6FF8300DA26EE /* NavigationAppDelegate.m in Sources */,
 				0B07B9E117E6FF8300DA26EE /* ExploreViewController.m in Sources */,
+				3C7EE71218E30A6D0099D3F0 /* ProfileViewController.m in Sources */,
 				3C66B6A118BB973D006EF1A6 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				3C66B6C218BB9750006EF1A6 /* AFURLRequestSerialization.m in Sources */,
 				0BCA5F3B18095063003A8637 /* SettingsViewController.m in Sources */,
@@ -1753,7 +1807,9 @@
 				0B10B09017EC528500507381 /* Reachability.m in Sources */,
 				3C66B6C318BB9750006EF1A6 /* AFURLResponseSerialization.m in Sources */,
 				3C0B66AC18D89948004F5EDF /* MultipleViewController.m in Sources */,
+				3C7EE71F18E454840099D3F0 /* UsersTableViewCell.m in Sources */,
 				3C66B6BC18BB9750006EF1A6 /* AFHTTPRequestOperation.m in Sources */,
+				3C7EE71B18E4352D0099D3F0 /* UsersListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1857,12 +1913,14 @@
 				0BCBC630189160DB00933715 /* NSData+MPBase64.m in Sources */,
 				0BCBC631189160DB00933715 /* Like.m in Sources */,
 				0BCBC634189160DB00933715 /* ShoutTableViewCell.m in Sources */,
+				3C7EE71C18E4352D0099D3F0 /* UsersListViewController.m in Sources */,
 				0BCBC63A189160DB00933715 /* WelcomeViewController.m in Sources */,
 				0BCBC63B189160DB00933715 /* GeneralUtilities.m in Sources */,
 				0BCBC63C189160DB00933715 /* MPSurvey.m in Sources */,
 				0BCBC63D189160DB00933715 /* MKMapView+ZoomLevel.m in Sources */,
 				0BCBC63E189160DB00933715 /* SigninViewController.m in Sources */,
 				0BCBC63F189160DB00933715 /* MPSurveyNavigationController.m in Sources */,
+				3C7EE72018E454840099D3F0 /* UsersTableViewCell.m in Sources */,
 				0BCBC640189160DB00933715 /* ImageUtilities.m in Sources */,
 				0BCBC641189160DB00933715 /* UIImage+MPAverageColor.m in Sources */,
 				0BCBC642189160DB00933715 /* ForgotPasswordViewController.m in Sources */,

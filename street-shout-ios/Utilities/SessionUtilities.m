@@ -25,10 +25,6 @@
     [prefs setObject:currentUser.username forKey:USERNAME_PREF];
     [prefs setObject:isBlackListed forKey:USER_BLACKLISTED];
     
-    if (currentUser.profilePicture) {
-        [prefs setObject:currentUser.profilePicture forKey:PROFILE_PICTURE_PREF];
-    }
-    
     [prefs synchronize];
 }
 
@@ -41,7 +37,6 @@
     user.email = [prefs objectForKey:USER_EMAIL_PREF];
     user.username = [prefs objectForKey:USERNAME_PREF];
     user.isBlackListed = [[prefs objectForKey:USER_BLACKLISTED] boolValue];
-    user.profilePicture = [prefs objectForKey:PROFILE_PICTURE_PREF];
     
     if (user.identifier && user.email && user.username) {
         return user;

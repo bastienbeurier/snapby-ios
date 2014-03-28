@@ -12,10 +12,11 @@
 #import "ImageUtilities.h"
 #import "GeneralUtilities.h"
 #import "LocationUtilities.h"
+#import "SessionUtilities.h"
 
 @interface MultipleViewController ()
 
-@property (strong, nonatomic) SettingsViewController * settingsViewController;
+@property (strong, nonatomic) ProfileViewController * myProfileViewController;
 @property (strong, nonatomic) ExploreViewController * exploreViewController;
 @property (strong, nonatomic) CreateShoutViewController * createShoutViewController;
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
@@ -23,7 +24,9 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
 @property (nonatomic) BOOL flashOn;
-@property(nonatomic,retain) ALAssetsLibrary *library;
+@property (nonatomic, strong) ALAssetsLibrary *library;
+
+@property (nonatomic, strong) User* currentUser;
 
 @end
 
@@ -33,6 +36,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Get current user
+    self.currentUser = [SessionUtilities getCurrentUser];
     
     // Alloc location manager
     [self allocAndInitLocationManager];
@@ -52,13 +58,18 @@
     [self.pageViewController didMoveToParentViewController:self];
 }
 
-// To cope with the case where we push or dismiss the create shout
+
 - (void)viewWillAppear:(BOOL)animated
 {
+    // Start user location
     [self.locationManager startUpdatingLocation];
 }
+
 - (void)viewWillDisappear:(BOOL)animated
 {
+    // Update and stop user location
+    self.currentUser.lat = self.locationManager.location.coordinate.latitude;
+    self.currentUser.lng = self.locationManager.location.coordinate.longitude;
     [self.locationManager stopUpdatingLocation];
 }
 
@@ -81,7 +92,7 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
     if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitSettingsViewController];
+        return [self getOrInitMyProfileViewController];
     } else if ([viewController isKindOfClass:[ExploreViewController class]]){
         return [self getOrInitImagePickerController];
     } else {
@@ -126,12 +137,14 @@
     return self.exploreViewController;
 }
 
-- (SettingsViewController *) getOrInitSettingsViewController {
-    if(!self.settingsViewController){
-        self.settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
-        self.settingsViewController.settingsViewControllerdelegate = self;
+- (ProfileViewController *) getOrInitMyProfileViewController {
+    if(!self.myProfileViewController){
+        self.myProfileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyProfileViewController"];
+        self.myProfileViewController.myProfileViewControllerDelegate = self;
+        self.myProfileViewController.currentUser = self.currentUser;
+        self.myProfileViewController.profileUserId = self.currentUser.identifier;
     }
-    return self.settingsViewController;
+    return self.myProfileViewController;
 }
 
 
@@ -183,7 +196,7 @@
 }
 
 - (IBAction)profileButtonClicked:(id)sender {
-    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
+    NSArray *viewControllers = @[[self getOrInitMyProfileViewController]];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
 

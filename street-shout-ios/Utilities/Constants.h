@@ -31,6 +31,10 @@
 #define NOTIFICATION_SHOUT_ID_PREF @"Notification shout identifier"
 #define PROFILE_PICTURE_PREF @"Profile picture preference"
 
+#define FOLLOWERS_LIST NSLocalizedStringFromTable (@"followers", @"Strings", @"comment")
+#define FOLLOWING_LIST NSLocalizedStringFromTable (@"following", @"Strings", @"comment")
+#define SUGGESTED_FRIENDS_LIST NSLocalizedStringFromTable (@"suggested_friends", @"Strings", @"comment")
+
 @interface Constants : NSObject
 
 @end
@@ -50,6 +54,7 @@ static NSString * const kProdAFStreetShoutAPIBaseURLString = @"http://street-sho
 static NSString * const kProdShoutBaseURLString = @"http://shouthereandnow.com/";
 static NSString * const kProdShoutImageBaseURL = @"http://s3.amazonaws.com/shout_production1/original/image_";
 static NSString * const kProdShoutThumbBaseURL = @"http://s3.amazonaws.com/shout_production1/small/image_";
+static NSString * const kProdProfilePicsBaseURL = @"http://s3.amazonaws.com/shout_profile_pics/thumb/profile_";
 
 
 //Shout duration in seconds
@@ -59,7 +64,7 @@ static const NSUInteger kShoutMaxLength = 140;
 static const NSUInteger kMaxUsernameLength = 20;
 static const NSUInteger kMaxShoutDescriptionLength = 140;
 static const NSUInteger kShoutRadius = 300;
-static const NSUInteger kShoutImageHeight = 400;
+static const NSUInteger kShoutImageHeight = 600;
 
 static const NSUInteger kDistanceWhenRedirectedFromCreateShout = 250;
 static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;

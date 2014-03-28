@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SettingsViewController.h"
+
+#import "ProfileViewController.h"
 #import "ExploreViewController.h"
 #import <CoreLocation/CLLocationManager.h>
 
-@interface MultipleViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ExploreControllerDelegate, SettingsViewControllerDelegate, CreateShoutViewControllerDelegate, CLLocationManagerDelegate>
+@interface MultipleViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ExploreControllerDelegate, MyProfileViewControllerDelegate, CreateShoutViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 

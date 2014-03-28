@@ -203,7 +203,6 @@
         [SessionUtilities redirectToSignIn];
         return;
     }
-    
     [self.exploreControllerdelegate moveToImagePickerController];
 }
 

@@ -254,37 +254,34 @@
     
     //Create bar view
     UIView *customNavBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewController.view.frame.size.width, barHeight)];
-//    CALayer *bottomBorder = [CALayer layer];
-//    bottomBorder.frame = CGRectMake(0.0f, customNavBar.frame.size.height - 0.5f, customNavBar.frame.size.width, 0.5f);
-//    bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
-//    [customNavBar.layer addSublayer:bottomBorder];
     customNavBar.backgroundColor = [ImageUtilities getShoutBlue];
     [viewController.view addSubview:customNavBar];
     
-    //Add ok button
+    // Right Button
+    CGRect rightRect = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
     if ([rightItem isEqualToString:@"ok"]) {
-        UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        okButton.frame = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin , buttonTopMargin, buttonSize, buttonSize);
-        [okButton addTarget:viewController action:@selector(okButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIImage *okImage = [UIImage imageNamed:@"ok-item-button.png"];
-        [okButton setBackgroundImage:okImage forState:UIControlStateNormal];
-        
-        [customNavBar addSubview:okButton];
+        [ImageUtilities addButtonWithImage:@"ok-item-button.png"
+                                    target:viewController
+                                  selector:@selector(okButtonClicked)
+                                      rect:rightRect
+                                  toNavBar:customNavBar];
+    } else if ([rightItem isEqualToString:@"settings"]) {
+        [ImageUtilities addButtonWithImage:@"settingsButton.png"
+                                    target:viewController
+                                  selector:@selector(settingsButtonClicked)
+                                      rect:rightRect
+                                  toNavBar:customNavBar];
     }
     
-    //Add back Button
-    if ([leftItem isEqualToString:@"back"]||[leftItem isEqualToString:@"cancel"]) {
-        
-        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        backButton.frame = CGRectMake(buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
-        [backButton addTarget:viewController action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIImage *backImage = [leftItem isEqualToString:@"back"] ? [UIImage imageNamed:@"back-item-button.png"] : [UIImage imageNamed:@"cancel-item-button.png"];
-        [backButton setBackgroundImage:backImage forState:UIControlStateNormal];
-        
-        [customNavBar addSubview:backButton];
-    }
+    // Left Button
+    CGRect leftRect = CGRectMake(buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
+    if ([leftItem isEqualToString:@"back"]) {
+        [ImageUtilities addButtonWithImage:@"back-item-button.png"
+                                    target:viewController
+                                  selector:@selector(backButtonClicked)
+                                      rect:leftRect
+                                  toNavBar:customNavBar];
+    } 
     
     //Add title
     if (title) {
@@ -300,6 +297,19 @@
         
         [customNavBar addSubview:label];
     }
+}
+
++ (void)addButtonWithImage:(NSString*)imageName
+                             target:(UIViewController *)viewController
+                           selector:(SEL)selector
+                               rect:(CGRect)rect
+                            toNavBar:(UIView *)navBar
+{
+    UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    customButton.frame = rect;
+    [customButton addTarget:viewController action:selector forControlEvents:UIControlEventTouchUpInside];
+    [customButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [navBar addSubview:customButton];
 }
 
 + (NSString *)encodeToBase64String:(UIImage *)image {

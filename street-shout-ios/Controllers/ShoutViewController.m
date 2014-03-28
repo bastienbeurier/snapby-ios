@@ -376,21 +376,12 @@
 
 - (void)updateLikeCount:(NSUInteger)count
 {
-    if (count < 2) {
-        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%lu like", (unsigned long)[self.likerIds count]] forState:UIControlStateNormal];
-    } else {
-        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%lu likes", (unsigned long)[self.likerIds count]] forState:UIControlStateNormal];
-    }
+    [self.likesCountButton setTitle:[NSString stringWithFormat:@"%lu like%@", (unsigned long)count, count>1? @"s" : @""] forState:UIControlStateNormal];
 }
 
 - (void)updateCommentCount:(NSInteger)count
 {
-    if (count < 2) {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%ld comment", (long)count] forState:UIControlStateNormal];
-    } else {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%ld comments", (long)count] forState:UIControlStateNormal];
-    }
-    
+    [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%ld comment%@", (long)count, count>1 ? @"s" : @""] forState:UIControlStateNormal];
 }
 
 - (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer

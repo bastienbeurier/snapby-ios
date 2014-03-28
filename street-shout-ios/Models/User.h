@@ -14,11 +14,15 @@
 
 + (User *)rawUserToInstance:(NSDictionary *)rawUser;
 
+- (NSURL *)getUserProfilePicture;
+
 
 @property (nonatomic) NSUInteger identifier;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic) BOOL isBlackListed;
-@property (nonatomic, strong) NSString *profilePicture;
+@property (nonatomic) NSInteger shoutCount;
+@property (nonatomic) double lat;
+@property (nonatomic) double lng;
 
 @end
