@@ -46,7 +46,7 @@
 
 - (NSURL *)getUserProfilePicture
 {
-    NSString *baseURL = kProdProfilePicsBaseURL;
+    NSString *baseURL = PRODUCTION ? kProdProfilePicsBaseURL : kDevProfilePicsBaseURL;
     return [NSURL URLWithString:[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier]];
 }
 

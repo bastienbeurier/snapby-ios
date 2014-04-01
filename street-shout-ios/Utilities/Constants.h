@@ -47,6 +47,7 @@ static NSString * const kDevAFStreetShoutAPIBaseURLString = @"http://dev-street-
 static NSString * const kDevTestFlightAppToken = @"c4904202-ba89-449a-bc2f-f53e231f1319";
 static NSString * const kDevShoutImageBaseURL = @"http://s3.amazonaws.com/shout_development/original/image_";
 static NSString * const kDevShoutThumbBaseURL = @"http://s3.amazonaws.com/shout_development/small/image_";
+static NSString * const kDevProfilePicsBaseURL = @"http://s3.amazonaws.com/shout_profile_pics_dev/thumb/profile_";
 
 //Production
 static NSString * const kProdTestFlightAppToken = @"fb996d52-77ad-4dd7-bdbf-e4069ea0ced5";
