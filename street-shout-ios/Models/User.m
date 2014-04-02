@@ -38,16 +38,25 @@
     user.email = [rawUser objectForKey:USER_EMAIL];
     user.username = [rawUser objectForKey:USERNAME];
     user.shoutCount = [[rawUser objectForKey:SHOUT_COUNT] intValue];
-    user.lat = [[rawUser objectForKey:LAT] doubleValue];
-    user.lng = [[rawUser objectForKey:LNG] doubleValue];
+    if ([rawUser objectForKey:LAT] != (id)[NSNull null]) {
+        user.lat = [[rawUser objectForKey:LAT] doubleValue];
+    }
+    if ([rawUser objectForKey:LNG] != (id)[NSNull null]) {
+        user.lng = [[rawUser objectForKey:LNG] doubleValue];
+    }
     
     return user;
 }
 
-- (NSURL *)getUserProfilePicture
+- (NSURL *)getUserProfilePictureURL
+{
+    return [User getUserProfilePictureURLFromUserId:self.identifier];
+}
+
++ (NSURL *)getUserProfilePictureURLFromUserId:(NSInteger)userId
 {
     NSString *baseURL = PRODUCTION ? kProdProfilePicsBaseURL : kDevProfilePicsBaseURL;
-    return [NSURL URLWithString:[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier]];
+    return [NSURL URLWithString:[baseURL stringByAppendingFormat:@"%lu",(unsigned long)userId]];
 }
 
 @end

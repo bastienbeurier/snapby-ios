@@ -11,6 +11,7 @@
 #import <MapKit/MapKit.h>
 #import "MapViewController.h"
 #import "ShoutViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 #define DISPLAY_SHOUT_MAP_SIZE 100
 #define INITIAL_FEED_SIZE 170
@@ -216,12 +217,17 @@
     return [UIColor colorWithRed:59/256.0 green:89/256.0 blue:152/256.0 alpha:1];
 }
 
-+ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color
++ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color andHeight:(double)height
 {
     CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, view.frame.size.height - 1.0f, view.frame.size.width, 1.0f);
+    bottomBorder.frame = CGRectMake(0.0f, view.frame.size.height - height, view.frame.size.width, height);
     bottomBorder.backgroundColor = color.CGColor;
     [view.layer addSublayer:bottomBorder];
+}
+
++ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color
+{
+    [ImageUtilities drawBottomBorderForView:view withColor:color andHeight:1.0f];
 }
 
 + (void)drawTopBorderForView:(UIView *)view withColor:(UIColor *)color
@@ -316,6 +322,12 @@
     return [UIImageJPEGRepresentation(image,0.9) base64EncodedStringWithOptions:0];
 }
 
-
++ (void)setWithoutCachingImageView:(UIImageView *)imageView withURL:(NSURL *)url
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    request.cachePolicy=NSURLRequestReloadIgnoringCacheData;
+    [imageView setImageWithURLRequest:request placeholderImage:nil success:nil failure:nil];
+}
 
 @end

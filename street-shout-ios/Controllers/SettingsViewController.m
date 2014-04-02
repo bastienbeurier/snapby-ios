@@ -13,19 +13,28 @@
 #import "ImageUtilities.h"
 #import "SessionUtilities.h"
 #import "AFStreetShoutAPIClient.h"
+#import "UIImageView+AFNetworking.h"
+#include "MBProgressHUD.h"
 
 
 @interface SettingsViewController ()
-@property (weak, nonatomic) IBOutlet UIButton *usernameContainer;
+
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
-@property (weak, nonatomic) IBOutlet UILabel *rateMeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *distanceUnitButton;
-@property (weak, nonatomic) IBOutlet UIButton *feedbackButton;
-@property (weak, nonatomic) IBOutlet UIButton *ratemeButton;
-@property (weak, nonatomic) IBOutlet UIButton *logOutButton;
 @property (strong, nonatomic) NSArray *distanceUnitPreferences;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *unitSegmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *shoutVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *editTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *settingsTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *participateTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *profilePictureLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *feedbackLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rateMeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePictureView;
+
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (strong, nonatomic) UIImage *squareImage;
 
 @end
 
@@ -54,20 +63,23 @@
     //Set username
     [self setInitialUsername];
     
-    //Round corners
-    NSUInteger cornerRadius = 10;
-    self.usernameContainer.layer.cornerRadius = cornerRadius;
-    self.distanceUnitButton.layer.cornerRadius = cornerRadius;
-    self.feedbackButton.layer.cornerRadius = cornerRadius;
-    self.ratemeButton.layer.cornerRadius = cornerRadius;
-    self.logOutButton.layer.cornerRadius = cornerRadius;
+    [ImageUtilities drawBottomBorderForView:self.editTitleLabel withColor:[UIColor grayColor]];
+    [ImageUtilities drawBottomBorderForView:self.settingsTitleLabel withColor:[UIColor grayColor]];
+    [ImageUtilities drawBottomBorderForView:self.participateTitleLabel withColor:[UIColor grayColor]];
+    
+    [ImageUtilities setWithoutCachingImageView:self.profilePictureView withURL:[self.currentUser getUserProfilePictureURL]];
 }
 
 - (void)setInitialUsername
 {
-    self.usernameTextField.text = [@"@" stringByAppendingString:[SessionUtilities getCurrentUser].username];
+    self.usernameTextField.text = [@"@" stringByAppendingString:self.currentUser.username];
     self.usernameTextField.delegate = self;
 }
+
+
+// --------------------------
+// Label clicked
+// --------------------------
 
 - (IBAction)unitSegmentedControlValueChanged:(UISegmentedControl *)sender {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLong:self.unitSegmentedControl.selectedSegmentIndex] forKey:DISTANCE_UNIT_PREF];
@@ -90,11 +102,6 @@
     }
 }
 
-- (void)viewDidUnload {
-    [self setRateMeLabel:nil];
-    [super viewDidUnload];
-}
-
 - (IBAction)logoutButtonClicked:(id)sender {
     [SessionUtilities redirectToSignIn];
 }
@@ -103,6 +110,11 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+// --------------------------
+// Username change
+// --------------------------
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -172,6 +184,74 @@
 {
     [textField resignFirstResponder];
     return NO;
+}
+
+
+// --------------------------
+// Profile picture change
+// --------------------------
+
+- (IBAction)addPhotoButtonClicked:(id)sender {
+    if (![GeneralUtilities connected]) {
+        [GeneralUtilities showMessage:nil withTitle: NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
+        return;
+    }
+    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+}
+
+
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
+{
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = sourceType;
+    imagePickerController.delegate = self;
+    
+    self.imagePickerController = imagePickerController;
+    [self presentViewController:self.imagePickerController animated:YES completion:nil];
+}
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    if (image) {
+        [self resizeAndUpdateProfilePicture:image];
+    } else {
+        NSLog(@"Failed to get image");
+    }
+}
+
+- (void)resizeAndUpdateProfilePicture:(UIImage *)image
+{
+    // Crop and rescale image
+    CGSize rescaleSize = {kShoutImageHeight, kShoutImageHeight};
+    self.squareImage = [ImageUtilities imageWithImage:[ImageUtilities cropBiggestCenteredSquareImageFromImage:image withSide:image.size.width] scaledToSize:rescaleSize];
+    
+    // encode profile pic;
+    NSString *encodedImage = [ImageUtilities encodeToBase64String:self.squareImage];
+
+    void(^successBlock)() = ^(void) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.profilePictureView setImage:self.squareImage];
+    };
+    void(^failureBlock)() = ^(void) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        self.squareImage = nil;
+        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"fail_update_profile_pic_title", @"Strings", @"comment") withTitle:nil];
+    };
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [AFStreetShoutAPIClient updateProfilePicture:encodedImage success:successBlock failure:failureBlock];
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    self.imagePickerController = nil;
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

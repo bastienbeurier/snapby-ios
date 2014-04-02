@@ -81,6 +81,7 @@ static const double kRequestDelay = 0.5;
 // Size of UI elements
 static const NSUInteger kMaxShoutDescriptionWidth = 280;
 static const NSUInteger kCameraHeight = 426;
+static const NSUInteger kCellProfilePictureSize = 50;
 
 //Initialize map on Paris, with max zoom out
 static const double kMapInitialLatitude = 48.856541;

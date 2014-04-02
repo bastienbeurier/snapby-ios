@@ -29,6 +29,8 @@
 
 + (UIColor *)getFacebookBlue;
 
++ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color andHeight:(double)height;
+
 + (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color;
 
 + (void)drawTopBorderForView:(UIView *)view withColor:(UIColor *)color;
@@ -39,6 +41,7 @@
 
 + (NSString *)encodeToBase64String:(UIImage *)image;
 
++ (void)setWithoutCachingImageView:(UIImageView *)imageView withURL:(NSURL *)url;
 
 
 @end

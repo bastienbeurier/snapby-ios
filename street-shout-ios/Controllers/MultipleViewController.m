@@ -133,6 +133,7 @@
     if(!self.exploreViewController){
         self.exploreViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ExploreViewController"];
         self.exploreViewController.exploreControllerdelegate = self;
+        self.exploreViewController.currentUser = self.currentUser;
     }
     return self.exploreViewController;
 }
@@ -236,7 +237,6 @@
 {
     UIImage *image =  [editInfo objectForKey:UIImagePickerControllerOriginalImage];
     [self saveImageToFileSystem:image];
-    
     
     // Force portrait, and avoid flip of front camera
     UIImageOrientation orientation = self.imagePickerController.cameraDevice == UIImagePickerControllerCameraDeviceFront ? UIImageOrientationLeftMirrored : UIImageOrientationRight;

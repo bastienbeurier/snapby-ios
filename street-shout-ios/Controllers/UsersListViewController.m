@@ -18,7 +18,6 @@
 #define NO_USERS_TAG @"No users"
 #define LOADING_TAG @"Loading"
 #define NO_CONNECTION_TAG @"No connection"
-#define PROFILE_PIC_SIZE 50
 
 
 @interface UsersListViewController ()
@@ -153,9 +152,9 @@
         }
         
         // Picture
-        [cell.profileThumb setImageWithURL:[user getUserProfilePicture] placeholderImage:nil];
+        [cell.profileThumb setImageWithURL:[user getUserProfilePictureURL] placeholderImage:nil];
         cell.profileThumb.clipsToBounds = YES;
-        cell.profileThumb.layer.cornerRadius = PROFILE_PIC_SIZE/2;
+        cell.profileThumb.layer.cornerRadius = kCellProfilePictureSize/2;
         
         if (indexPath.row != 0) {
             UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 0.3)];

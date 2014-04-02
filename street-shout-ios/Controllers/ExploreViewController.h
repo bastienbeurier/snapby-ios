@@ -21,6 +21,7 @@
 
 @property (weak, nonatomic) id <ExploreControllerDelegate> exploreControllerdelegate;
 @property (strong, nonatomic) Shout *redirectToShout;
+@property (weak, nonatomic) User *currentUser;
 
 - (void)onShoutNotificationPressedWhileAppInNavigationVC:(Shout *)shout;
 

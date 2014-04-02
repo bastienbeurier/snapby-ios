@@ -14,7 +14,8 @@
 
 + (User *)rawUserToInstance:(NSDictionary *)rawUser;
 
-- (NSURL *)getUserProfilePicture;
+- (NSURL *)getUserProfilePictureURL;
++ (NSURL *)getUserProfilePictureURLFromUserId:(NSInteger)userId;
 
 
 @property (nonatomic) NSUInteger identifier;

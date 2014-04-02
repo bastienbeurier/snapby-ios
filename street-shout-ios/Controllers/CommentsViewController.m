@@ -7,7 +7,6 @@
 //
 
 #import "CommentsViewController.h"
-#import "CommentsTableViewCell.h"
 #import "Comment.h"
 #import "ImageUtilities.h"
 #import "AFStreetShoutAPIClient.h"
@@ -15,6 +14,9 @@
 #import "LocationUtilities.h"
 #import "GeneralUtilities.h"
 #import "KeyboardUtilities.h"
+#import "Constants.h"
+#import "UIImageView+AFNetworking.h"
+#import "ProfileViewController.h"
 
 #define NO_COMMENT_TAG @"No comment"
 #define LOADING_TAG @"Loading"
@@ -144,6 +146,8 @@
         
         Comment *comment = (Comment *)self.comments[indexPath.row];
         
+        cell.commentsTableViewCellDelegate = self;
+        cell.commenterId = comment.commenterId;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",comment.commenterUsername];
         cell.descriptionLabel.text = comment.description;
         
@@ -155,6 +159,11 @@
             NSArray *distanceStrings = [LocationUtilities formattedDistanceLat1:comment.lat lng1:comment.lng lat2:self.shout.lat lng2:self.shout.lng];
             cell.stampLabel.text = [NSString stringWithFormat:@" %@ | %@%@", cell.stampLabel.text, [distanceStrings firstObject], [distanceStrings objectAtIndex:1]];
         }
+        
+        // Picture
+        [cell.profilePictureView setImageWithURL:[User getUserProfilePictureURLFromUserId:comment.commenterId] placeholderImage:nil];
+        cell.profilePictureView.clipsToBounds = YES;
+        cell.profilePictureView.layer.cornerRadius = kCellProfilePictureSize/2;
         
         //separator
         if (indexPath.row != 0) {
@@ -170,9 +179,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self noCommentsInArray:self.comments]) {
-        return 54;
+        return 60;
     } else if ([self errorRetrievingComments:self.comments]) {
-        return 54;
+        return 60;
     } else {
         static NSString *cellIdentifier = @"CommentsTableViewCell";
         
@@ -197,13 +206,13 @@
         
         height += 1.0f;
         
-        return height;
+        return MAX(60,height);
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 54;
+    return 60;
 }
 
 - (BOOL)noCommentsInArray:(NSArray *)comments
@@ -258,6 +267,21 @@
 {
     [textField resignFirstResponder];
     return NO;
+}
+
+- (void)moveToProfileOfUser:(NSInteger)userId
+{
+    [self performSegueWithIdentifier:@"Profile from Comments push segue" sender:[NSNumber numberWithLong:userId]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"Profile from Comments push segue"]) {
+        ProfileViewController * usersListViewController = (ProfileViewController *) [segue destinationViewController];
+        usersListViewController.currentUser = self.currentUser;
+        usersListViewController.profileUserId = [(NSNumber *) sender intValue];
+    }
 }
 
 @end

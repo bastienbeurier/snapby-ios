@@ -60,6 +60,8 @@
 
 + (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
 
++ (void)updateProfilePicture:(NSString *)encodedImage success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
 
 // ------------------------------------------------
 // Likes & comments

@@ -420,6 +420,22 @@
     }];
 }
 
+// Change profile pic
++ (void)updateProfilePicture:(NSString *)encodedImage success:(void(^)())successBlock failure:(void(^)())failureBlock
+{
+    NSString *path = [[AFStreetShoutAPIClient getBasePath] stringByAppendingFormat:@"users/%lu.json", (unsigned long)[SessionUtilities getCurrentUser].identifier];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:encodedImage forKey:@"avatar"];
+    
+    if (![AFStreetShoutAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFStreetShoutAPIClient sharedClient] PATCH:path parameters:parameters success:successBlock failure:failureBlock];
+}
+
 // ------------------------------------------------
 // Likes & comments
 // ------------------------------------------------

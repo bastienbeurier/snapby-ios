@@ -14,6 +14,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "UsersListViewController.h"
 #import "Constants.h"
+#import "SettingsViewController.h"
 
 #define FIND_FRIENDS_TITLE NSLocalizedStringFromTable(@"find_friends", @"Strings", @"comment")
 #define UNFOLLOW_TITLE NSLocalizedStringFromTable(@"unfollow", @"Strings", @"comment")
@@ -38,7 +39,7 @@
 
 - (void)viewDidLoad
 {
-    [self profileButtonsSetTextToNil];
+    [self initProfile];
     [super viewDidLoad];
     
     //Nav Bar
@@ -100,6 +101,10 @@
         usersListViewController.profileUserId = self.profileUserId;
         usersListViewController.listType = (NSString *)sender;
     }
+    if ([segueName isEqualToString: @"settings push segue"]) {
+        SettingsViewController * settingsViewController = (SettingsViewController *) [segue destinationViewController];
+        settingsViewController.currentUser = self.currentUser;
+    }
 }
 
 
@@ -118,8 +123,10 @@
         self.followedCount.text = [NSString stringWithFormat:@"%ld", (long)nbFollowedUsers];
         self.shoutCount.text = [NSString stringWithFormat: @"(%ld shout%@)", (long)user.shoutCount, user.shoutCount>1 ? @"s" : @""];
         self.userName.text = [NSString stringWithFormat: @"@%@", user.username];
-        [self.profilePictureView setImageWithURL:[user getUserProfilePicture] placeholderImage:nil];
         [self setRelationshipButtonTitle:isFollowedByCurrentUser];
+        
+        // Get the profile picture (and avoid caching)
+        [ImageUtilities setWithoutCachingImageView:self.profilePictureView withURL:[self.profileUser getUserProfilePictureURL]];
     };
     
     void (^failureBlock)() = ^() {
@@ -154,13 +161,17 @@
     [self.relationshipButton setTitle:relationshipButtonTitle forState:UIControlStateNormal];
 }
 
-- (void)profileButtonsSetTextToNil
+- (void)initProfile
 {
     [self.shoutCount setText:nil];
     [self.userName setText:nil];
     [self.followedCount setText:nil];
     [self.followerCount setText:nil];
     [self.relationshipButton setTitle:nil forState:UIControlStateNormal];
+    
+    [self.profilePictureView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+    [self.profilePictureView.layer setBorderWidth:2.0];
+    [self.profilePictureView.layer setCornerRadius: 5.0];
 }
 
 @end

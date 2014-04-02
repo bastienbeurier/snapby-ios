@@ -12,6 +12,10 @@
 
 @implementation UsersTableViewCell
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    return; // to avoid the cell to stay selected
+}
 
 - (IBAction)followButtonClicked:(id)sender {
     if(!self.userId) {
