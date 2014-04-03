@@ -53,6 +53,9 @@
                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
                         <color key="textColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="5bU-GX-dpX" appends="YES" id="Z7y-Me-Tz7"/>
+                        </connections>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="600 m away" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJb-rj-epE">
                         <rect key="frame" x="65" y="26" width="170" height="16"/>
@@ -63,9 +66,6 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                         <nil key="highlightedColor"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="5bU-GX-dpX" appends="YES" id="pxP-bN-w8Y"/>
-                        </connections>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 shouts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="co9-YS-fk2">
                         <rect key="frame" x="65" y="41" width="170" height="16"/>

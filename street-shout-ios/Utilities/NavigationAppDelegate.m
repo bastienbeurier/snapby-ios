@@ -28,6 +28,7 @@
 #import "ForgotPasswordViewController.h"
 #import "LikesViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "UsersListViewController.h"
 
 @interface NavigationAppDelegate()
 
@@ -129,6 +130,8 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    [navController popToViewController:navController.childViewControllers[1] animated:NO];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -171,6 +174,16 @@
     if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         
+        if ([[navController visibleViewController] isKindOfClass:[CommentsViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[LikesViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[ShoutViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[ProfileViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[UsersListViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[SettingsViewController class]]) {
+            // Pop up all push controllers to come back to multiple
+            [navController popToViewController:navController.childViewControllers[1] animated:NO];
+        }
+        
         if ([[navController visibleViewController] isKindOfClass:[MultipleViewController class]]) {
             MultipleViewController *multipleViewController = (MultipleViewController *) [navController visibleViewController];
             
@@ -186,19 +199,6 @@
                 NSArray *viewControllers = @[[multipleViewController getOrInitExploreViewController]];
                 [multipleViewController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
             }
-            
-        } else if ([[navController visibleViewController] isKindOfClass:[ShoutViewController class]]) {
-            
-            [self setRedirectionToNotificationShout:notification];
-            [navController popViewControllerAnimated:NO];
-            
-        } else if ([[navController visibleViewController] isKindOfClass:[CommentsViewController class]] ||
-                   [[navController visibleViewController] isKindOfClass:[LikesViewController class]]) {
-            
-            [self setRedirectionToNotificationShout:notification];
-            [navController popViewControllerAnimated:NO];
-            [navController popViewControllerAnimated:NO];
-            
         } else if ([[navController visibleViewController] isKindOfClass:[SigninViewController class]] ||
                    [[navController visibleViewController] isKindOfClass:[SignupViewController class]] ||
                    [[navController visibleViewController] isKindOfClass:[WelcomeViewController class]] ||

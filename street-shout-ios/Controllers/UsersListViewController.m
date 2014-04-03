@@ -144,7 +144,7 @@
         cell.userId = user.identifier;
         cell.usersTableViewCellDelegate = self;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",user.username];
-        cell.shoutCountLabel.text = [NSString stringWithFormat:@"%ld shout%@",user.shoutCount, user.shoutCount>1 ? @"s" : @""];
+        cell.shoutCountLabel.text = [NSString stringWithFormat:@"%ld shout%@",(long)user.shoutCount, user.shoutCount>1 ? @"s" : @""];
         
         if (user.lat !=0 && user.lng !=0 ) {
             NSArray *distanceStrings = [LocationUtilities formattedDistanceLat1:user.lat lng1:user.lng lat2:self.currentUser.lat lng2:self.currentUser.lng];
