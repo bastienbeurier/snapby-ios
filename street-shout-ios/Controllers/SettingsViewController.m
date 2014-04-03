@@ -146,6 +146,7 @@
         typedef void (^SuccessBlock)(User *);
         SuccessBlock successBlock = ^(User *user) {
             [SessionUtilities updateCurrentUserInfoInPhone:user];
+            self.currentUser.username = [NSString stringWithString:user.username];
         };
         
         typedef void (^FailureBlock)(NSDictionary *);

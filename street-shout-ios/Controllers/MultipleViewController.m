@@ -52,7 +52,7 @@
     NSNumber *notificationShoutId = [prefs objectForKey:NOTIFICATION_SHOUT_ID_PREF];
     NSArray *viewControllers = @[notificationShoutId? [self getOrInitExploreViewController] : [self getOrInitImagePickerController]];
    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-
+    
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
@@ -78,6 +78,7 @@
 // Controller transitions
 // ----------------------
 
+// UIPageViewControllerDataSource protocole
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     if ([viewController isKindOfClass:[UIImagePickerController class]]) {
