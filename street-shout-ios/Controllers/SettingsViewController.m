@@ -19,6 +19,7 @@
 
 @interface SettingsViewController ()
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) NSArray *distanceUnitPreferences;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *unitSegmentedControl;
@@ -26,11 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *editTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *settingsTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *participateTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *profilePictureLabel;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *feedbackLabel;
-@property (weak, nonatomic) IBOutlet UILabel *rateMeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureView;
 
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
@@ -62,6 +58,11 @@
     
     //Set username
     [self setInitialUsername];
+    
+    //Disable scroll view if screen is big enough
+    if ([[UIScreen mainScreen] bounds].size.height == 568.0f) {
+        self.scrollView.scrollEnabled = NO;
+    }
     
     [ImageUtilities drawBottomBorderForView:self.editTitleLabel withColor:[UIColor grayColor]];
     [ImageUtilities drawBottomBorderForView:self.settingsTitleLabel withColor:[UIColor grayColor]];
