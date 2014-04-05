@@ -83,7 +83,7 @@
 {
     if ([viewController isKindOfClass:[UIImagePickerController class]]) {
         return [self getOrInitExploreViewController];
-    } else if ([viewController isKindOfClass:[SettingsViewController class]]){
+    } else if ([viewController isKindOfClass:[ProfileViewController class]]){
         return [self getOrInitImagePickerController];
     } else {
         return nil;

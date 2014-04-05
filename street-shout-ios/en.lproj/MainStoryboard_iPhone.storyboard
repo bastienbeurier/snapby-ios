@@ -227,7 +227,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTY-P6-OFw">
+                                    <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTY-P6-OFw">
                                         <rect key="frame" x="10" y="120" width="300" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
@@ -236,6 +236,9 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <nil key="highlightedColor"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="pUn-u1-5K4" appends="YES" id="lJe-H6-39T"/>
+                                        </connections>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBZ-z9-DpY">
                                         <rect key="frame" x="10" y="180" width="300" height="40"/>
@@ -333,7 +336,7 @@
                                             <outletCollection property="gestureRecognizers" destination="kNv-sj-CHu" appends="YES" id="ySh-Yx-a1l"/>
                                         </connections>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="B5592913-11AE-4F45-AE97-6F6A38EEFB81" translatesAutoresizingMaskIntoConstraints="NO" id="Pnl-rI-mqi">
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="7259CB9B-DA44-40DC-A52A-03A8CCF42D5A" translatesAutoresizingMaskIntoConstraints="NO" id="Pnl-rI-mqi">
                                         <rect key="frame" x="260" y="125" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
@@ -1917,7 +1920,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="B5592913-11AE-4F45-AE97-6F6A38EEFB81" width="80" height="80">
+        <image name="7259CB9B-DA44-40DC-A52A-03A8CCF42D5A" width="80" height="80">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
