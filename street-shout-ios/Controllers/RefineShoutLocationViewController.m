@@ -43,7 +43,7 @@
 {
     MKUserLocation *mapUserLocation = self.mapView.userLocation;
     
-    if (mapUserLocation && [LocationUtilities userLocationValid:mapUserLocation]) {
+    if ([LocationUtilities userLocationValid:mapUserLocation.location]) {
         self.myLocation = mapUserLocation.location;
     }
     
@@ -52,8 +52,6 @@
                          Longitude:self.myLocation.coordinate.longitude
                       WithDistance:2*kShoutRadius
                           Animated:NO];
-    
-    self.refineShoutLocationVCDelegate.myLocation = self.myLocation;
         
     if (self.shoutAnnotation) [self.mapView removeAnnotation:self.shoutAnnotation];
     self.shoutAnnotation = [[MKPointAnnotation alloc] init];
@@ -69,7 +67,7 @@
 
 - (void)backButtonClicked
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState
@@ -83,7 +81,6 @@
 
 - (void)updateShoutLocation:(CLLocation *)newShoutLocation
 {
-    self.refinedShoutLocation = newShoutLocation;
     [self.refineShoutLocationVCDelegate updateCreateShoutLocation:newShoutLocation];
 }
 

@@ -54,13 +54,13 @@
 
 + (void)updateUserInfoWithLat:(double)lat Lng:(double)lng;
 
-+ (void)updateUserInfo;
-
 + (void)connectFacebookWithParameters: (id)params success:(void(^)(User *user, NSString *authToken, BOOL isSignup))successBlock failure:(void(^)())failureBlock;
 
 + (void)sendResetPasswordInstructionsToEmail: (NSString *) email success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
 + (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock;
+
++ (void)updateProfilePicture:(NSString *)encodedImage success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
 
 // ------------------------------------------------
@@ -88,15 +88,15 @@
 
 + (void)unfollowUser: (NSUInteger) relationshipId success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
-+ (void)getFollowersOfUser:(NSInteger) followedId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
++ (void)getFollowersOfUser:(NSInteger) followedId success:(void(^)(NSArray *users, NSArray *currentUserFollowedIds))successBlock failure:(void(^)())failureBlock;
 
-+ (void)getFollowingOfUser:(NSInteger) followerId success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
++ (void)getFollowingOfUser:(NSInteger) followerId success:(void(^)(NSArray *, NSArray *))successBlock failure:(void(^)())failureBlock;
 
 + (void)getOtherUserInfo:(NSInteger) userId success:(void(^)(User *, NSInteger, NSInteger, BOOL))successBlock failure:(void(^)())failureBlock;
 
 + (void)createRelationshipsFromFacebookFriends:(NSArray *) friends success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
-+ (void)getFriendSuggestionForUser:(NSInteger) userId success:(void(^)(NSArray *users))successBlock failure:(void(^)())failureBlock;
++ (void)getSuggestedFriendsOfUser:(NSInteger) userId success:(void(^)(NSArray *, NSArray *))successBlock failure:(void(^)())failureBlock;
 
 @end
 

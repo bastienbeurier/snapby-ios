@@ -14,6 +14,7 @@
 #import "TestFlight.h"
 #import "Constants.h"
 #import "ExploreViewController.h"
+#import "MultipleViewController.h"
 #import "Shout.h"
 #import "AFStreetShoutAPIClient.h"
 #import "Mixpanel.h"
@@ -27,13 +28,18 @@
 #import "ForgotPasswordViewController.h"
 #import "LikesViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "UsersListViewController.h"
+
+@interface NavigationAppDelegate()
+
+@property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
+
+@end
 
 @implementation NavigationAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    
     // !!!: Use setDeviceIdentifier (removing deprecated warning with clang pragmas)
 #ifdef TESTING
 #pragma clang diagnostic push
@@ -56,20 +62,20 @@
         config.inProduction = NO;
     }
     
-    // Manage the network activity indicator
-    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
     // Urban airship config
     [UAirship takeOff:config];
     
-    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    // Manage the network activity indicator
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-    //Notification received when app closed
+    // Notification received when app closed
+    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if(remoteNotif) {
         [self setRedirectionToNotificationShout:remoteNotif];
     }
     
-    // Check if the user has not been logged out
+    // Handle the case were the user is still signed in
     if ([SessionUtilities isSignedIn]) {
         
         // Check if he logged in with facebook
@@ -124,6 +130,8 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    [navController popToViewController:navController.childViewControllers[1] animated:NO];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -137,15 +145,23 @@
     
     // Handle the user leaving the app while the Facebook login dialog is being shown
     [FBAppCall handleDidBecomeActive];
+    
+    // Check if API obsolete
+    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
+        [self createObsoleteAPIAlertView];
+    }];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    
     // Close the FB session before quitting
     [FBSession.activeSession close];
 }
+
+
+// ---------------
+// Notification
+// ---------------
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
@@ -158,41 +174,38 @@
     if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         
-        if ([[navController topViewController] isKindOfClass:[ExploreViewController class]]) {
-            ExploreViewController *navigationViewController = (ExploreViewController *) [navController topViewController];
-            
-            NSDictionary *extra = [notification objectForKey:@"extra"];
-            NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
-            
-            [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecuteSuccess:^(Shout *shout){
-                [navigationViewController onShoutNotificationPressedWhileAppInNavigationVC:shout];
-            } failure:nil];
-        } else if ([[navController topViewController] isKindOfClass:[ShoutViewController class]] ||
-            [[navController topViewController] isKindOfClass:[SettingsViewController class]]) {
-            
-            [self setRedirectionToNotificationShout:notification];
-            [navController popViewControllerAnimated:NO];
-            
-        } else if ([[navController topViewController] isKindOfClass:[CommentsViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[LikesViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[RefineShoutLocationViewController class]]) {
-            
-            [self setRedirectionToNotificationShout:notification];
-            [navController popViewControllerAnimated:NO];
-            [navController popViewControllerAnimated:NO];
-            
-        } else if ([[navController topViewController] isKindOfClass:[SigninViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[SignupViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[WelcomeViewController class]] ||
-                   [[navController topViewController] isKindOfClass:[ForgotPasswordViewController class]]) {
-            
-            [self setRedirectionToNotificationShout:notification];
-        } else if ([[navController topViewController] isKindOfClass:[CreateShoutViewController class]]){
-            [self setRedirectionToNotificationShout:notification];
-            [[navController topViewController] dismissViewControllerAnimated:NO completion:NULL];
-            [navController popViewControllerAnimated:NO];
+        if ([[navController visibleViewController] isKindOfClass:[CommentsViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[LikesViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[ShoutViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[ProfileViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[UsersListViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[SettingsViewController class]]) {
+            // Pop up all push controllers to come back to multiple
+            [navController popToViewController:navController.childViewControllers[1] animated:NO];
         }
-
+        
+        if ([[navController visibleViewController] isKindOfClass:[MultipleViewController class]]) {
+            MultipleViewController *multipleViewController = (MultipleViewController *) [navController visibleViewController];
+            
+            if ([multipleViewController.pageViewController.viewControllers[0] isKindOfClass:[ExploreViewController class]]) {
+                ExploreViewController * exploreViewController = multipleViewController.pageViewController.viewControllers[0];
+                NSDictionary *extra = [notification objectForKey:@"extra"];
+                NSUInteger shoutId = [[extra objectForKey:@"shout_id"] integerValue];
+                [AFStreetShoutAPIClient getShoutInfo:shoutId AndExecuteSuccess:^(Shout *shout){
+                    [exploreViewController onShoutNotificationPressedWhileAppInNavigationVC:shout];
+                } failure:nil];
+            } else {
+                [self setRedirectionToNotificationShout:notification];
+                NSArray *viewControllers = @[[multipleViewController getOrInitExploreViewController]];
+                [multipleViewController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+            }
+        } else if ([[navController visibleViewController] isKindOfClass:[SigninViewController class]] ||
+                   [[navController visibleViewController] isKindOfClass:[SignupViewController class]] ||
+                   [[navController visibleViewController] isKindOfClass:[WelcomeViewController class]] ||
+                   [[navController visibleViewController] isKindOfClass:[ForgotPasswordViewController class]]) {
+            
+            [self setRedirectionToNotificationShout:notification];
+        }
     }
 }
 
@@ -215,7 +228,7 @@
     [TrackingUtilities identifyWithMixpanel:[SessionUtilities getCurrentUser] isSigningUp:NO];
     
     WelcomeViewController* welcomeViewController = (WelcomeViewController *)  self.window.rootViewController.childViewControllers[0];
-    [welcomeViewController performSegueWithIdentifier:@"Navigation Push Segue From Welcome" sender:nil];
+    [welcomeViewController performSegueWithIdentifier:@"Multiple From Welcome Push Segue" sender:nil];
 }
 
 // This method will handle ALL the session state changes in the app
@@ -299,7 +312,6 @@
 }
 
 // After facebook authentication, the app is called back with the session information.
-// Override application:openURL:sourceApplication:annotation to call the FBsession object that handles the incoming URL
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
@@ -361,5 +373,26 @@
         [AFStreetShoutAPIClient connectFacebookWithParameters:params success:successBlock failure:failureBlock];
     });
 }
+
+// Check that API is not obsolete
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.obsoleteAPIAlertView) {
+        [GeneralUtilities redirectToAppStore];
+        [self createObsoleteAPIAlertView];
+    }
+}
+
+- (void)createObsoleteAPIAlertView
+{
+    self.obsoleteAPIAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"obsolete_api_error_title", @"Strings", @"comment")
+                                                           message:NSLocalizedStringFromTable (@"obsolete_api_error_message", @"Strings", @"comment")
+                                                          delegate:self
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
+    [self.obsoleteAPIAlertView show];
+}
+
+
 
 @end

@@ -13,7 +13,6 @@
 
 @interface RefineShoutLocationViewController : UIViewController
     @property (weak, nonatomic) id <RefineShoutLocationViewControllerDelegate> refineShoutLocationVCDelegate;
-    @property (strong, nonatomic) CLLocation *refinedShoutLocation;
     @property (strong, nonatomic) CLLocation *myLocation;
     @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @end
@@ -22,7 +21,5 @@
 @protocol RefineShoutLocationViewControllerDelegate
 
 - (void)updateCreateShoutLocation:(CLLocation *)shoutLocation;
-
-@property (nonatomic, strong) CLLocation *myLocation;
 
 @end

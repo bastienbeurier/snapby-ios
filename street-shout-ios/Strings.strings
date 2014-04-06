@@ -80,6 +80,15 @@
 "anonymous_button_disabled" = "Anonymous mode disabled";
 "missing_image"= "Image is missing";
 "remove_shout"= "Delete this shout";
+"follow"= "Follow";
+"unfollow"= "Unfollow";
+"find_friends"= "Find shouters";
+"user_info_error_message" = "Error retrieving user info";
+"followers" = "Followers";
+"following" = "Following";
+"suggested_friends" = "Shouters in my area";
+"relationship_error_title" = "Unexpected error";
+"fail_update_profile_pic_title" = "Your profile picture could not be updated";
 
 
  

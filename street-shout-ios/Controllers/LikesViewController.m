@@ -9,9 +9,11 @@
 #import "LikesViewController.h"
 #import "ImageUtilities.h"
 #import "AFStreetShoutAPIClient.h"
-#import "LikesTableViewCell.h"
 #import "TimeUtilities.h"
 #import "LocationUtilities.h"
+#import "Constants.h"
+#import "UIImageView+AFNetworking.h"
+#import "ProfileViewController.h"
 
 #define NO_LIKE_TAG @"No like"
 #define LOADING_TAG @"Loading"
@@ -104,6 +106,8 @@
         
         Like *like = (Like *)self.likes[indexPath.row];
         
+        cell.likesTableViewCellDelegate = self;
+        cell.likerId = like.likerId;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",like.likerUsername];
         
         NSArray *likeAgeStrings = [TimeUtilities ageToShortStrings:[TimeUtilities getShoutAge:like.created]];
@@ -114,6 +118,11 @@
             NSArray *distanceStrings = [LocationUtilities formattedDistanceLat1:like.lat lng1:like.lng lat2:self.shout.lat lng2:self.shout.lng];
             cell.stampLabel.text = [NSString stringWithFormat:@" %@ | %@%@", cell.stampLabel.text, [distanceStrings firstObject], [distanceStrings objectAtIndex:1]];
         }
+
+        // Picture
+        [cell.profilePictureView setImageWithURL:[User getUserProfilePictureURLFromUserId:like.likerId] placeholderImage:nil];
+        cell.profilePictureView.clipsToBounds = YES;
+        cell.profilePictureView.layer.cornerRadius = kCellProfilePictureSize/2;
         
         //separator
         if (indexPath.row != 0) {
@@ -128,9 +137,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45;
+    return 60;
 }
-
 
 - (BOOL)noLikesInArray:(NSArray *)likes
 {
@@ -140,6 +148,21 @@
 - (BOOL)errorRetrievingLikes:(NSArray *)likes
 {
     return [likes count] == 1 && [likes[0] isKindOfClass:[NSString class]] && [likes[0] isEqualToString:NO_CONNECTION_TAG];
+}
+
+- (void)moveToProfileOfUser:(NSInteger)userId
+{
+    [self performSegueWithIdentifier:@"Profile from Likes push segue" sender:[NSNumber numberWithLong:userId]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"Profile from Likes push segue"]) {
+        ProfileViewController * usersListViewController = (ProfileViewController *) [segue destinationViewController];
+        usersListViewController.currentUser = self.currentUser;
+        usersListViewController.profileUserId = [(NSNumber *) sender intValue];
+    }
 }
 
 @end

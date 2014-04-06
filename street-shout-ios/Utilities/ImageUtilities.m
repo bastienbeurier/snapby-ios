@@ -11,6 +11,7 @@
 #import <MapKit/MapKit.h>
 #import "MapViewController.h"
 #import "ShoutViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 #define DISPLAY_SHOUT_MAP_SIZE 100
 #define INITIAL_FEED_SIZE 170
@@ -216,12 +217,17 @@
     return [UIColor colorWithRed:59/256.0 green:89/256.0 blue:152/256.0 alpha:1];
 }
 
-+ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color
++ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color andHeight:(double)height
 {
     CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, view.frame.size.height - 1.0f, view.frame.size.width, 1.0f);
+    bottomBorder.frame = CGRectMake(0.0f, view.frame.size.height - height, view.frame.size.width, height);
     bottomBorder.backgroundColor = color.CGColor;
     [view.layer addSublayer:bottomBorder];
+}
+
++ (void)drawBottomBorderForView:(UIView *)view withColor:(UIColor *)color
+{
+    [ImageUtilities drawBottomBorderForView:view withColor:color andHeight:1.0f];
 }
 
 + (void)drawTopBorderForView:(UIView *)view withColor:(UIColor *)color
@@ -254,37 +260,34 @@
     
     //Create bar view
     UIView *customNavBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewController.view.frame.size.width, barHeight)];
-//    CALayer *bottomBorder = [CALayer layer];
-//    bottomBorder.frame = CGRectMake(0.0f, customNavBar.frame.size.height - 0.5f, customNavBar.frame.size.width, 0.5f);
-//    bottomBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
-//    [customNavBar.layer addSublayer:bottomBorder];
     customNavBar.backgroundColor = [ImageUtilities getShoutBlue];
     [viewController.view addSubview:customNavBar];
     
-    //Add ok button
+    // Right Button
+    CGRect rightRect = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
     if ([rightItem isEqualToString:@"ok"]) {
-        UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        okButton.frame = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin , buttonTopMargin, buttonSize, buttonSize);
-        [okButton addTarget:viewController action:@selector(okButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIImage *okImage = [UIImage imageNamed:@"ok-item-button.png"];
-        [okButton setBackgroundImage:okImage forState:UIControlStateNormal];
-        
-        [customNavBar addSubview:okButton];
+        [ImageUtilities addButtonWithImage:@"ok-item-button.png"
+                                    target:viewController
+                                  selector:@selector(okButtonClicked)
+                                      rect:rightRect
+                                  toNavBar:customNavBar];
+    } else if ([rightItem isEqualToString:@"settings"]) {
+        [ImageUtilities addButtonWithImage:@"settingsButton.png"
+                                    target:viewController
+                                  selector:@selector(settingsButtonClicked)
+                                      rect:rightRect
+                                  toNavBar:customNavBar];
     }
     
-    //Add back Button
-    if ([leftItem isEqualToString:@"back"]||[leftItem isEqualToString:@"cancel"]) {
-        
-        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        backButton.frame = CGRectMake(buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
-        [backButton addTarget:viewController action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIImage *backImage = [leftItem isEqualToString:@"back"] ? [UIImage imageNamed:@"back-item-button.png"] : [UIImage imageNamed:@"cancel-item-button.png"];
-        [backButton setBackgroundImage:backImage forState:UIControlStateNormal];
-        
-        [customNavBar addSubview:backButton];
-    }
+    // Left Button
+    CGRect leftRect = CGRectMake(buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
+    if ([leftItem isEqualToString:@"back"]) {
+        [ImageUtilities addButtonWithImage:@"back-item-button.png"
+                                    target:viewController
+                                  selector:@selector(backButtonClicked)
+                                      rect:leftRect
+                                  toNavBar:customNavBar];
+    } 
     
     //Add title
     if (title) {
@@ -302,9 +305,29 @@
     }
 }
 
++ (void)addButtonWithImage:(NSString*)imageName
+                             target:(UIViewController *)viewController
+                           selector:(SEL)selector
+                               rect:(CGRect)rect
+                            toNavBar:(UIView *)navBar
+{
+    UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    customButton.frame = rect;
+    [customButton addTarget:viewController action:selector forControlEvents:UIControlEventTouchUpInside];
+    [customButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [navBar addSubview:customButton];
+}
+
 + (NSString *)encodeToBase64String:(UIImage *)image {
     return [UIImageJPEGRepresentation(image,0.9) base64EncodedStringWithOptions:0];
 }
 
++ (void)setWithoutCachingImageView:(UIImageView *)imageView withURL:(NSURL *)url
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    request.cachePolicy=NSURLRequestReloadIgnoringCacheData;
+    [imageView setImageWithURLRequest:request placeholderImage:nil success:nil failure:nil];
+}
 
 @end

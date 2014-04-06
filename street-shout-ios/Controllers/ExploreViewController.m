@@ -1,5 +1,5 @@
 //
-//  NavigationViewController.m
+//  ExploreViewController.m
 //  street-shout-ios
 //
 //  Created by Bastien Beurier on 7/16/13.
@@ -33,10 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIView *topContainerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIButton *createShoutButton;
-@property (weak, nonatomic) IBOutlet UIButton *moreButton;
-@property (strong, nonatomic) UIAlertView *obsoleteAPIAlertView;
 @property (weak, nonatomic) MKMapView *mapView;
-@property (strong, nonatomic) Shout *redirectToShout;
 @property (strong, nonatomic) MapRequestHandler *mapRequestHandler;
 
 @end
@@ -47,9 +44,7 @@
 {
     //Buttons round corner
     NSUInteger buttonHeight = self.createShoutButton.bounds.size.height;
-    self.createShoutButton.layer.cornerRadius = buttonHeight/2;
-    self.moreButton.layer.cornerRadius = buttonHeight/2;
-    
+    self.createShoutButton.layer.cornerRadius = buttonHeight/2;    
     self.mapView = self.mapViewController.mapView;
     
     self.mapRequestHandler = [MapRequestHandler new];
@@ -59,13 +54,12 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    // start updating map and stop location manager
+    self.mapView.showsUserLocation = YES;
+    [self.exploreControllerdelegate stopLocationUpdate];
+    
     //Status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
-    // Check if API obsolete
-    [AFStreetShoutAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
-        [self createObsoleteAPIAlertView];
-    }];
     
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
@@ -75,7 +69,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //Redirect to recentrly created shout
+    //Redirect to recently created shout
     if (self.redirectToShout) {
         [self handleShoutRedirection:self.redirectToShout];
         self.redirectToShout = nil;
@@ -106,6 +100,10 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [self updateUserInfo];
+    
+    // stop updating user location
+    self.mapView.showsUserLocation = NO;
+    [self.exploreControllerdelegate startLocationUpdate];
     
     [super viewDidDisappear:animated];
 }
@@ -170,11 +168,6 @@
     [self performSegueWithIdentifier:@"Shout Push Segue" sender:shout];
 }
 
-- (void)onShoutCreated:(Shout *)shout
-{
-    //Don't show shout controller immidiately (as for notification handling), otherwise segues get mixed up.
-    self.redirectToShout = shout;
-}
 
 - (void)handleShoutRedirection:(Shout *)shout
 {
@@ -197,16 +190,9 @@
         self.feedTVC.feedTVCdelegate = self;
     }
     
-    if ([segueName isEqualToString: @"Create Shout Modal"]) {
-        MKUserLocation *myLocation = (MKUserLocation *)sender;
-        
-        ((CreateShoutViewController *)[segue destinationViewController]).myLocation = myLocation.location;
-        ((CreateShoutViewController *)[segue destinationViewController]).shoutLocation = myLocation.location;
-        ((CreateShoutViewController *)[segue destinationViewController]).createShoutVCDelegate = self;
-    }
-    
     if ([segueName isEqualToString: @"Shout Push Segue"]) {
         ((ShoutViewController *) [segue destinationViewController]).shout = (Shout *)sender;
+        ((ShoutViewController *) [segue destinationViewController]).currentUser = self.currentUser;
         ((ShoutViewController *) [segue destinationViewController]).shoutVCDelegate = self;
         [self.mapViewController deselectAnnotationsOnMap];
     }
@@ -218,44 +204,9 @@
         [SessionUtilities redirectToSignIn];
         return;
     }
-    
-    NSString *errorMessageTitle;
-    NSString *errorMessageBody;
-    
-    if ([GeneralUtilities connected]) {
-        MKUserLocation *myLocation = [self getMyLocation];
-        
-        if (myLocation && [LocationUtilities userLocationValid:myLocation]) {
-            [self performSegueWithIdentifier:@"Create Shout Modal" sender:myLocation];
-            return;
-        } else {
-            errorMessageTitle = NSLocalizedStringFromTable (@"no_location_for_shout_title", @"Strings", @"comment");
-            errorMessageBody = NSLocalizedStringFromTable (@"no_location_for_shout_message", @"Strings", @"comment");
-        }
-    } else {
-        errorMessageTitle = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
-    }
-    
-    [GeneralUtilities showMessage:errorMessageBody withTitle:errorMessageTitle];
+    [self.exploreControllerdelegate moveToImagePickerController];
 }
 
-- (MKUserLocation *)getMyLocation
-{
-    return self.mapViewController.mapView.userLocation;
-}
-
-- (IBAction)moreButtonClicked:(id)sender {
-    if (![SessionUtilities isSignedIn]){
-        [SessionUtilities redirectToSignIn];
-        return;
-    }
-    
-    if ([GeneralUtilities connected]) {
-        [self performSegueWithIdentifier:@"Settings Push Segue" sender:nil];
-    } else {
-        [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
-    }
-}
 
 - (void)updateUserInfo
 {
@@ -266,24 +217,6 @@
     } else {
         NSLog(@"Could not send device info");
     }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView == self.obsoleteAPIAlertView) {
-        [GeneralUtilities redirectToAppStore];
-        [self createObsoleteAPIAlertView];
-    }
-}
-
-- (void)createObsoleteAPIAlertView
-{
-    self.obsoleteAPIAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable (@"obsolete_api_error_title", @"Strings", @"comment")
-                                                           message:NSLocalizedStringFromTable (@"obsolete_api_error_message", @"Strings", @"comment")
-                                                          delegate:self
-                                                 cancelButtonTitle:@"OK"
-                                                 otherButtonTitles:nil];
-    [self.obsoleteAPIAlertView show];
 }
 
 - (void)updateMapLocationtoLat:(double)lat lng:(double)lng

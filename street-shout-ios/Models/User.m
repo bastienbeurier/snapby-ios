@@ -14,6 +14,9 @@
 #define USERNAME @"username"
 #define BLACKLISTED @"black_listed"
 #define PROFILE_PICTURE @"profile_picture"
+#define SHOUT_COUNT @"shout_count"
+#define LAT @"lat"
+#define LNG @"lng"
 
 @implementation User
 
@@ -34,14 +37,26 @@
     user.identifier = [[rawUser objectForKey:USER_ID] integerValue];
     user.email = [rawUser objectForKey:USER_EMAIL];
     user.username = [rawUser objectForKey:USERNAME];
-    user.isBlackListed = [[rawUser objectForKey:BLACKLISTED] boolValue];
-    user.profilePicture = [rawUser objectForKey:PROFILE_PICTURE];
-    
-    if (user.profilePicture == (id)[NSNull null]) {
-        user.profilePicture = nil;
+    user.shoutCount = [[rawUser objectForKey:SHOUT_COUNT] intValue];
+    if ([rawUser objectForKey:LAT] != (id)[NSNull null]) {
+        user.lat = [[rawUser objectForKey:LAT] doubleValue];
+    }
+    if ([rawUser objectForKey:LNG] != (id)[NSNull null]) {
+        user.lng = [[rawUser objectForKey:LNG] doubleValue];
     }
     
     return user;
+}
+
+- (NSURL *)getUserProfilePictureURL
+{
+    return [User getUserProfilePictureURLFromUserId:self.identifier];
+}
+
++ (NSURL *)getUserProfilePictureURLFromUserId:(NSInteger)userId
+{
+    NSString *baseURL = PRODUCTION ? kProdProfilePicsBaseURL : kDevProfilePicsBaseURL;
+    return [NSURL URLWithString:[baseURL stringByAppendingFormat:@"%lu",(unsigned long)userId]];
 }
 
 @end

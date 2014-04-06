@@ -10,12 +10,14 @@
 #import "Shout.h"
 #import <MapKit/MapKit.h>
 #import "CommentsViewController.h"
+#import "User.h"
 
 @protocol ShoutVCDelegate;
 
 @interface ShoutViewController : UIViewController <UIActionSheetDelegate, MKMapViewDelegate, CommentsVCDelegate>
 
 @property (strong, nonatomic) Shout *shout;
+@property (weak, nonatomic) User *currentUser;
 
 @property (weak, nonatomic) id <ShoutVCDelegate> shoutVCDelegate;
 

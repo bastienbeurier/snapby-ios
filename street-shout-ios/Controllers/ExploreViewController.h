@@ -1,5 +1,5 @@
 //
-//  NavigationViewController.h
+//  ExploreViewController.h
 //  street-shout-ios
 //
 //  Created by Bastien Beurier on 7/16/13.
@@ -14,8 +14,23 @@
 #import "SettingsViewController.h"
 #import "CommentsViewController.h"
 
-@interface ExploreViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, CreateShoutViewControllerDelegate, ShoutVCDelegate, UIAlertViewDelegate>
+@protocol ExploreControllerDelegate;
+
+
+@interface ExploreViewController : UIViewController <MapViewControllerDelegate, FeedTVCDelegate, ShoutVCDelegate, UIAlertViewDelegate>
+
+@property (weak, nonatomic) id <ExploreControllerDelegate> exploreControllerdelegate;
+@property (strong, nonatomic) Shout *redirectToShout;
+@property (weak, nonatomic) User *currentUser;
 
 - (void)onShoutNotificationPressedWhileAppInNavigationVC:(Shout *)shout;
+
+@end
+
+@protocol ExploreControllerDelegate
+
+- (void)moveToImagePickerController;
+- (void)startLocationUpdate;
+- (void)stopLocationUpdate;
 
 @end

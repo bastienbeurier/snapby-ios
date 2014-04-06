@@ -16,6 +16,7 @@
 #import "AFStreetShoutAPIClient.h"
 #import "SessionUtilities.h"
 #import "LikesViewController.h"
+#import "ProfileViewController.h"
 
 #define MORE_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"report_shout", @"Strings", @"comment")
 #define MORE_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"navigate_to_shout", @"Strings", @"comment")
@@ -90,11 +91,6 @@
     
     //Shout content round corners
     self.shoutContent.layer.cornerRadius = 5;
-    
-    // Prepare one touch action on map
-    UITapGestureRecognizer *mapTouch = [[UITapGestureRecognizer alloc]
-                                        initWithTarget:self action:@selector(handleGesture:)];
-    [self.mapView addGestureRecognizer:mapTouch];
     
     //Add bottom bar borders
     CALayer *topBorder = [CALayer layer];
@@ -293,6 +289,11 @@
         ((LikesViewController *) [segue destinationViewController]).shout = self.shout;
         ((LikesViewController *) [segue destinationViewController]).userLocation = self.mapView.userLocation;
     }
+    
+    if ([segueName isEqualToString: @"Profile from Shout View push segue"]) {
+        ((ProfileViewController *) [segue destinationViewController]).profileUserId = self.shout.userId;
+        ((ProfileViewController *) [segue destinationViewController]).currentUser = self.currentUser;
+    }
 }
 - (IBAction)dissmissShoutClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -346,7 +347,7 @@
     
     MKUserLocation *userLocation = self.mapView.userLocation;
     
-    if ([LocationUtilities userLocationValid:userLocation]) {
+    if ([LocationUtilities userLocationValid:userLocation.location]) {
         lat = userLocation.coordinate.latitude;
         lng = userLocation.coordinate.longitude;
     }
@@ -376,29 +377,24 @@
 
 - (void)updateLikeCount:(NSUInteger)count
 {
-    if (count < 2) {
-        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%lu like", (unsigned long)[self.likerIds count]] forState:UIControlStateNormal];
-    } else {
-        [self.likesCountButton setTitle:[NSString stringWithFormat:@"%lu likes", (unsigned long)[self.likerIds count]] forState:UIControlStateNormal];
-    }
+    [self.likesCountButton setTitle:[NSString stringWithFormat:@"%lu like%@", (unsigned long)count, count>1? @"s" : @""] forState:UIControlStateNormal];
 }
 
 - (void)updateCommentCount:(NSInteger)count
 {
-    if (count < 2) {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%ld comment", (long)count] forState:UIControlStateNormal];
-    } else {
-        [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%ld comments", (long)count] forState:UIControlStateNormal];
-    }
-    
+    [self.commentsCountLabelButton setTitle:[NSString stringWithFormat:@"%ld comment%@", (long)count, count>1 ? @"s" : @""] forState:UIControlStateNormal];
 }
 
-- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
-        return;
+- (IBAction)usernameLabelClicked:(id)sender {
+    if (!self.shout.anonymous) {
+        [self performSegueWithIdentifier:@"Profile from Shout View push segue" sender:nil];
+    }
+}
+
+- (IBAction)mapClicked:(id)sender {
     [self.shoutVCDelegate updateMapLocationtoLat:self.shout.lat lng:self.shout.lng];
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 
 @end

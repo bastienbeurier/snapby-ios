@@ -170,7 +170,7 @@
             [TrackingUtilities identifyWithMixpanel:user isSigningUp:YES];
             [TrackingUtilities trackSignUpWithSource:@"Email"];
             
-            [self performSegueWithIdentifier:@"Navigation Push Segue From Signup" sender:nil];
+            [self performSegueWithIdentifier:@"Multiple From Signup Push Segue" sender:nil];
         });
     };
     

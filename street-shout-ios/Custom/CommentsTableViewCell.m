@@ -10,20 +10,15 @@
 
 @implementation CommentsTableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:selected animated:animated];
+    return;
+}
 
-    // Configure the view for the selected state
+- (IBAction)usernameClicked:(id)sender {
+    if(self.commenterId && self.commentsTableViewCellDelegate) {
+        [self.commentsTableViewCellDelegate moveToProfileOfUser:self.commenterId];
+    }
 }
 
 @end
