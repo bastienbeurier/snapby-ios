@@ -58,7 +58,7 @@
 // ----------------------------------------------------------
 
 - (IBAction)relationshipButtonClicked:(id)sender {
-    if(self.relationshipButton.titleLabel.text == FIND_FRIENDS_TITLE){
+    if([self.relationshipButton titleForState:UIControlStateNormal] == FIND_FRIENDS_TITLE){
         [self performSegueWithIdentifier:@"List from Profile push segue" sender:SUGGESTED_FRIENDS_LIST];
     } else {
         void (^successBlock)() = ^void(){
@@ -68,9 +68,9 @@
             [GeneralUtilities showMessage:NSLocalizedStringFromTable(@"Try_again_message", @"Strings", @"comment") withTitle:NSLocalizedStringFromTable(@"relationship_error_title", @"Strings", @"comment")];
         };
         
-        if(self.relationshipButton.titleLabel.text == UNFOLLOW_TITLE) {
+        if([self.relationshipButton titleForState:UIControlStateNormal] == UNFOLLOW_TITLE) {
             [AFStreetShoutAPIClient unfollowUser:self.profileUserId success:successBlock failure:failureBlock];
-        } else if(self.relationshipButton.titleLabel.text == FOLLOW_TITLE) {
+        } else if([self.relationshipButton titleForState:UIControlStateNormal] == FOLLOW_TITLE) {
             [AFStreetShoutAPIClient followUser:self.profileUserId success:successBlock failure:failureBlock];
         }
     }
