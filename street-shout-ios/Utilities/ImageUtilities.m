@@ -23,7 +23,7 @@
 {
     CGRect f = imagePickerController.view.bounds;
     
-    //TODO: make this more robust
+    // make this more robust
     if (f.size.height== 568.0f){
         UIGraphicsBeginImageContext(f.size);
         [[UIColor colorWithWhite:0 alpha:1] set];

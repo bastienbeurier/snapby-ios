@@ -336,7 +336,7 @@
                                             <outletCollection property="gestureRecognizers" destination="kNv-sj-CHu" appends="YES" id="ySh-Yx-a1l"/>
                                         </connections>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="7259CB9B-DA44-40DC-A52A-03A8CCF42D5A" translatesAutoresizingMaskIntoConstraints="NO" id="Pnl-rI-mqi">
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="B3E77ACD-13CB-4A61-88C2-55E3D1A9F997" translatesAutoresizingMaskIntoConstraints="NO" id="Pnl-rI-mqi">
                                         <rect key="frame" x="260" y="125" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
@@ -1573,7 +1573,7 @@
                         <outlet property="emailTextView" destination="BIJ-eo-9sp" id="9Qr-lU-7aP"/>
                         <outlet property="passwordTextView" destination="4Gm-Xg-5zI" id="jja-T7-kYL"/>
                         <outlet property="usernameTextView" destination="eqA-so-ySk" id="278-Mf-Kac"/>
-                        <segue destination="zaG-6c-kjL" kind="push" identifier="Multiple From Signyp Push Segue" id="bXp-H4-gUw"/>
+                        <segue destination="zaG-6c-kjL" kind="push" identifier="Multiple From Signup Push Segue" id="bXp-H4-gUw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Yb-ZZ-yQ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1920,7 +1920,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="7259CB9B-DA44-40DC-A52A-03A8CCF42D5A" width="80" height="80">
+        <image name="B3E77ACD-13CB-4A61-88C2-55E3D1A9F997" width="80" height="80">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

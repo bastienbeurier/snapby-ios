@@ -130,8 +130,16 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    // todo make this robust
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    [navController popToViewController:navController.childViewControllers[1] animated:NO];
+    if (navController.childViewControllers.count > 1) {
+        if([navController.childViewControllers[1] isKindOfClass:[MultipleViewController class]]) {
+            [navController popToViewController:navController.childViewControllers[1] animated:NO];
+        } else if(navController.childViewControllers.count > 2 && [navController.childViewControllers[2] isKindOfClass:[MultipleViewController class]]) {
+            [navController popToViewController:navController.childViewControllers[2] animated:NO];
+        }
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
