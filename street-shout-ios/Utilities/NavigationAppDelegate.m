@@ -340,25 +340,25 @@
             [SessionUtilities updateCurrentUserInfoInPhone:user];
             [SessionUtilities securelySaveCurrentUserToken:authToken];
             
-            //Mixpanel tracking
             if (isSignup) {
+                // Issue a Facebook Graph API request to get your user's friend list
+                [FBRequestConnection startForMyFriendsWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                    if (!error) {
+                        // result will contain an array with your user's friends in the "data" key
+                        NSArray *friendObjects = [result objectForKey:@"data"];
+                        // Use it to create automatically relationships in database
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                            [AFStreetShoutAPIClient createRelationshipsFromFacebookFriends:friendObjects success:nil failure:nil];
+                        });
+                    }
+                }];
+                
+                //Mixpanel tracking
                 [TrackingUtilities identifyWithMixpanel:user isSigningUp:YES];
                 [TrackingUtilities trackSignUpWithSource:@"Facebook"];
             } else {
                 [TrackingUtilities identifyWithMixpanel:user isSigningUp:NO];
             }
-            
-            // Issue a Facebook Graph API request to get your user's friend list
-            [FBRequestConnection startForMyFriendsWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                if (!error) {
-                    // result will contain an array with your user's friends in the "data" key
-                    NSArray *friendObjects = [result objectForKey:@"data"];
-                    // Use it to create automatically relationships in database
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                        [AFStreetShoutAPIClient createRelationshipsFromFacebookFriends:friendObjects success:nil failure:nil];
-                    });
-                }
-            }];
 
             [self skipWelcomeController];
         });
