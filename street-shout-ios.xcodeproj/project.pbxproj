@@ -418,6 +418,8 @@
 		0BF63F691885E9B7002B1254 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF63F681885E9B7002B1254 /* MBProgressHUD.m */; };
 		0BF72BB2180B46DD002F5FC8 /* refresh-map-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BF72BB0180B46DD002F5FC8 /* refresh-map-button@2x~iphone.png */; };
 		0BFEAB661803241B009B5D12 /* ShoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */; };
+		3C0A15D818FB1A1900B04A07 /* OverlayCameraView_small.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C0A15D718FB1A1900B04A07 /* OverlayCameraView_small.xib */; };
+		3C0A15D918FB1A1900B04A07 /* OverlayCameraView_small.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C0A15D718FB1A1900B04A07 /* OverlayCameraView_small.xib */; };
 		3C0B66AC18D89948004F5EDF /* MultipleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0B66AB18D89948004F5EDF /* MultipleViewController.m */; };
 		3C27CBC5189BFD0700D7E139 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3C27CBC4189BFD0700D7E139 /* default.gpx */; };
 		3C301606187EAF0A0006F70A /* SessionUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C301605187EAF0A0006F70A /* SessionUtilities.m */; };
@@ -725,6 +727,7 @@
 		0BF63F681885E9B7002B1254 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		0BF72BB0180B46DD002F5FC8 /* refresh-map-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh-map-button@2x~iphone.png"; sourceTree = "<group>"; };
 		0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoutTableViewCell.xib; sourceTree = "<group>"; };
+		3C0A15D718FB1A1900B04A07 /* OverlayCameraView_small.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayCameraView_small.xib; sourceTree = "<group>"; };
 		3C0B66AA18D89948004F5EDF /* MultipleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultipleViewController.h; path = Controllers/MultipleViewController.h; sourceTree = "<group>"; };
 		3C0B66AB18D89948004F5EDF /* MultipleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultipleViewController.m; path = Controllers/MultipleViewController.m; sourceTree = "<group>"; };
 		3C27CBC4189BFD0700D7E139 /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
@@ -1272,6 +1275,7 @@
 			children = (
 				0B65F73B1795C66500F37227 /* MainStoryboard_iPhone.storyboard */,
 				3CE5750A18DA146A00741129 /* OverlayCameraView.xib */,
+				3C0A15D718FB1A1900B04A07 /* OverlayCameraView_small.xib */,
 				0BFEAB641803241B009B5D12 /* ShoutTableViewCell.xib */,
 				0B7C47CE188D88AC00D308A9 /* CommentsTableViewCell.xib */,
 				0B7286FF1890230900FB4CC4 /* LikesTableViewCell.xib */,
@@ -1507,6 +1511,7 @@
 				0B07BA2317E6FF8300DA26EE /* MainStoryboard_iPhone.storyboard in Resources */,
 				3C6E0E4D18C4F6C800DBD1EF /* camera-flip-button@2x~iphone.png in Resources */,
 				0B28C6CC1892EE02008C46BF /* shout-bar-share-icon.png in Resources */,
+				3C0A15D818FB1A1900B04A07 /* OverlayCameraView_small.xib in Resources */,
 				0B28C6E218930889008C46BF /* shout-image-place-holder-square-small@2x~iphone.png in Resources */,
 				3C48A78718C9D35F00646E31 /* README.md in Resources */,
 				3C48A78918C9D35F00646E31 /* release_notes.md in Resources */,
@@ -1681,6 +1686,7 @@
 				0B28C6E518930889008C46BF /* shout-image-place-holder-square-small.png in Resources */,
 				0BCBC680189160DB00933715 /* MPArrowRight@2x.png in Resources */,
 				0BCBC681189160DB00933715 /* ShoutTableViewCell.xib in Resources */,
+				3C0A15D918FB1A1900B04A07 /* OverlayCameraView_small.xib in Resources */,
 				0BCBC686189160DB00933715 /* shout-marker-2-deselected.png in Resources */,
 				0BCBC687189160DB00933715 /* CommentsTableViewCell.xib in Resources */,
 				0BCBC688189160DB00933715 /* MPLogo@2x.png in Resources */,

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultipleViewController">
+            <connections>
+                <outlet property="flashButton" destination="Agt-9O-iUE" id="7ps-gd-dXj"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="c2G-Xt-y7K">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbb-qi-Scv">
+                    <rect key="frame" x="10" y="25" width="40" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="AQd-Gj-ff0"/>
+                        <constraint firstAttribute="height" constant="40" id="dlE-LI-LZq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" image="map_button.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="mapButtonClicked:" destination="-1" eventType="touchUpInside" id="cJD-XI-FCW"/>
+                    </connections>
+                </button>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqA-BL-jh3">
+                    <rect key="frame" x="116" y="400" width="88" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="5IN-SU-9KH"/>
+                        <constraint firstAttribute="width" constant="88" id="xee-T1-PTy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" image="camera-shout-button.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="takePictureButtonClicked:" destination="-1" eventType="touchUpInside" id="pz9-Ph-gUj"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d8O-u5-t0u">
+                    <rect key="frame" x="269" y="420" width="41" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="41" id="a9S-sJ-qyt"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" image="camera-flip-button.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="flipCameraButtonClicked:" destination="-1" eventType="touchUpInside" id="1YB-l3-yPF"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agt-9O-iUE">
+                    <rect key="frame" x="10" y="420" width="48" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Sdu-0a-AHs"/>
+                        <constraint firstAttribute="width" constant="48" id="VK0-m4-NSp"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                    <state key="normal" image="flash_off.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="flashButtonClicked:" destination="-1" eventType="touchUpInside" id="ceY-pM-mui"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jKj-Af-43j">
+                    <rect key="frame" x="270" y="25" width="40" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="LO8-mK-fKI"/>
+                        <constraint firstAttribute="width" constant="40" id="wYu-c7-Qa9"/>
+                    </constraints>
+                    <state key="normal" image="camera-profile-button.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="profileButtonClicked:" destination="-1" eventType="touchUpInside" id="Gcs-1T-xQd"/>
+                    </connections>
+                </button>
+            </subviews>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="Agt-9O-iUE" firstAttribute="top" secondItem="d8O-u5-t0u" secondAttribute="top" id="IVg-7E-zWa"/>
+                <constraint firstItem="zqA-BL-jh3" firstAttribute="centerX" secondItem="c2G-Xt-y7K" secondAttribute="centerX" id="LS2-sb-KnC"/>
+                <constraint firstItem="dbb-qi-Scv" firstAttribute="top" secondItem="c2G-Xt-y7K" secondAttribute="top" constant="25" id="Mzv-jY-IeL"/>
+                <constraint firstAttribute="bottom" secondItem="d8O-u5-t0u" secondAttribute="bottom" constant="30" id="PHB-Lm-gWd"/>
+                <constraint firstItem="d8O-u5-t0u" firstAttribute="centerY" secondItem="zqA-BL-jh3" secondAttribute="centerY" id="TNE-UE-uO8"/>
+                <constraint firstAttribute="bottom" secondItem="Agt-9O-iUE" secondAttribute="bottom" constant="30" id="bP1-Pf-qv6"/>
+                <constraint firstItem="jKj-Af-43j" firstAttribute="top" secondItem="c2G-Xt-y7K" secondAttribute="top" constant="25" id="bYr-pk-xIq"/>
+                <constraint firstItem="d8O-u5-t0u" firstAttribute="bottom" secondItem="Agt-9O-iUE" secondAttribute="bottom" id="cOh-1s-Ddc"/>
+                <constraint firstAttribute="trailing" secondItem="d8O-u5-t0u" secondAttribute="trailing" constant="10" id="fZv-2C-VTn"/>
+                <constraint firstAttribute="trailing" secondItem="jKj-Af-43j" secondAttribute="trailing" constant="10" id="hTh-g0-5rD"/>
+                <constraint firstItem="Agt-9O-iUE" firstAttribute="leading" secondItem="c2G-Xt-y7K" secondAttribute="leading" constant="10" id="lPh-3n-UGY"/>
+                <constraint firstAttribute="bottom" secondItem="zqA-BL-jh3" secondAttribute="bottom" constant="10" id="tWl-hL-mOR"/>
+                <constraint firstItem="dbb-qi-Scv" firstAttribute="leading" secondItem="c2G-Xt-y7K" secondAttribute="leading" constant="10" id="xIA-eu-Rkv"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="camera-flip-button.png" width="150" height="111"/>
+        <image name="camera-profile-button.png" width="300" height="300"/>
+        <image name="camera-shout-button.png" width="150" height="120"/>
+        <image name="flash_off.png" width="150" height="93"/>
+        <image name="map_button.png" width="300" height="300"/>
+    </resources>
+</document>
