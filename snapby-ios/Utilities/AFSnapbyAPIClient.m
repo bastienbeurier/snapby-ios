@@ -532,4 +532,30 @@
     }];
 }
 
++ (void)getSnapbies:(NSUInteger)userId page:(NSUInteger)page pageSize:(NSUInteger)pageSize andExecuteSuccess:(void(^)(NSArray *snapbies))successBlock failure:(void (^)())failureBlock
+{
+    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"snapbies.json"]];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [parameters setObject:[NSNumber numberWithInteger:userId] forKey:@"user_id"];
+    [parameters setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    [parameters setObject:[NSNumber numberWithInteger:pageSize] forKey:@"page_size"];
+    
+    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[AFSnapbyAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSArray *rawSnapbies = [result valueForKeyPath:@"snapbies"];
+        successBlock([Snapby rawSnapbiesToInstances:rawSnapbies]);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        failureBlock();
+    }];
+}
+
+
+
 @end

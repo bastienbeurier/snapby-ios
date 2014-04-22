@@ -39,14 +39,14 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb612068318842588</string>
+				<string>fb807530715943166</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>612068318842588</string>
+	<string>807530715943166</string>
 	<key>FacebookDisplayName</key>
 	<string>Snapby</string>
 	<key>LSApplicationCategoryType</key>

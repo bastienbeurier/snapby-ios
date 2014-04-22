@@ -11,7 +11,7 @@
 
 @protocol MyProfileViewControllerDelegate;
 
-@interface ProfileViewController : UIViewController
+@interface ProfileViewController : UIViewController <UIScrollViewDelegate>
 
 @property (weak, nonatomic) User *currentUser;
 @property (nonatomic) NSInteger profileUserId;

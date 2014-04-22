@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 // iTunesConnect (must be consistent with the one in Facebook Developper) 
-#define APP_ID 734887535
+#define APP_ID 807530715943166
 
 #define UA_DEVICE_TOKEN_PROD_PREF @"UA Device Token Production"
 #define UA_DEVICE_TOKEN_DEV_PREF @"UA Device Token Development"
@@ -62,26 +62,12 @@ static const NSUInteger kMaxSnapbyDescriptionLength = 140;
 static const NSUInteger kSnapbyRadius = 300;
 static const NSUInteger kSnapbyImageHeight = 600;
 
-static const NSUInteger kDistanceWhenRedirectedFromCreateSnapby = 250;
-static const NSUInteger kDistanceWhenMyLocationButtonClicked = 2000;
-static const NSUInteger kDistanceWhenDisplaySnapby = 200;
-static const NSUInteger kDistanceAtStartup = 6000;
-static const NSUInteger kDistanceWhenMapDisplaySnapbyClicked = 1000;
+static const NSUInteger kDistanceAtStartup = 600;
 
 static const NSUInteger kDistanceBeforeUpdateLocation = 50;
 
-// Request delay
-static const double kRequestDelay = 0.5;
-
-// Size of UI elements
-static const NSUInteger kMaxSnapbyDescriptionWidth = 280;
 static const NSUInteger kCameraHeight = 426;
 static const NSUInteger kCellProfilePictureSize = 50;
-
-//Initialize map on Paris, with max zoom out
-static const double kMapInitialLatitude = 48.856541;
-static const double kMapInitialLongitude = 2.352401;
-static const NSUInteger kMapInitialSpan = 180;
 
 //Design
 static const double kDropShadowX = 2.0;

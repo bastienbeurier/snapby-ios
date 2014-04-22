@@ -34,7 +34,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *snapbyImageView;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreSnapbyOptionsButton;
-@property (weak, nonatomic) IBOutlet UIView *bottomBarView;
 @property (strong, nonatomic) UIActionSheet *flagActionSheet;
 @property (strong, nonatomic) UIActionSheet *moreActionSheet;
 
@@ -54,27 +53,6 @@
 {
     //Status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
-    //Add bottom bar borders
-    CALayer *topBorder = [CALayer layer];
-    topBorder.frame = CGRectMake(0.0f, 0.0f, self.bottomBarView.frame.size.width, 0.5f);
-    topBorder.backgroundColor = [UIColor whiteColor].CGColor;
-    [self.bottomBarView.layer addSublayer:topBorder];
-    
-    CALayer *firstInterBorder = [CALayer layer];
-    firstInterBorder.frame = CGRectMake(80.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
-    firstInterBorder.backgroundColor = [UIColor whiteColor].CGColor;
-    [self.bottomBarView.layer addSublayer:firstInterBorder];
-    
-    CALayer *secondInterBorder = [CALayer layer];
-    secondInterBorder.frame = CGRectMake(160.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
-    secondInterBorder.backgroundColor = [UIColor whiteColor].CGColor;
-    [self.bottomBarView.layer addSublayer:secondInterBorder];
-    
-    CALayer *thirdInterBorder = [CALayer layer];
-    thirdInterBorder.frame = CGRectMake(240.0f, 10.0f, 0.5f, self.bottomBarView.frame.size.height - 20);
-    thirdInterBorder.backgroundColor = [UIColor whiteColor].CGColor;
-    [self.bottomBarView.layer addSublayer:thirdInterBorder];
     
     [super viewWillAppear:animated];
 }

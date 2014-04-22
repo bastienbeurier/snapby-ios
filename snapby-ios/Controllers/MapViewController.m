@@ -8,7 +8,6 @@
 
 #import "MapViewController.h"
 #import "MKPointAnnotation+SnapbyPointAnnotation.h"
-#import "MapRequestHandler.h"
 #import "LocationUtilities.h"
 #import "Constants.h"
 #import "GeneralUtilities.h"
@@ -22,7 +21,7 @@
 @interface MapViewController () <MKMapViewDelegate>
 
 @property (nonatomic) BOOL hasZoomedAtStartUp;
-@property (weak, nonatomic) IBOutlet UIScrollView *snapbiesScrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic) NSUInteger scrollViewWidth;
 @property (nonatomic) NSUInteger scrollViewHeight;
@@ -45,19 +44,19 @@
     //TODO: loading dialog if waiting for location
     
     self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
     
     //Status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
-    self.mapView.showsUserLocation = YES;
     self.automaticScrolling = NO;
     
     // a page is the width of the scroll view
-    self.snapbiesScrollView.pagingEnabled = YES;
-    self.snapbiesScrollView.showsHorizontalScrollIndicator = NO;
-    self.snapbiesScrollView.showsVerticalScrollIndicator = NO;
-    self.snapbiesScrollView.scrollsToTop = NO;
-    self.snapbiesScrollView.delegate = self;
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.scrollsToTop = NO;
+    self.scrollView.delegate = self;
 }
 
 - (void)refreshSnapbies
@@ -67,10 +66,11 @@
     [AFSnapbyAPIClient pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] AndExecuteSuccess:^(NSArray *snapbies) {
         
         //TODO Loading dialog
+        //TODO: handle case no snapby
         
         self.snapbies = snapbies;
     } failure:^{
-        //TODO Stop loading dialog
+        //TODO Stop loading dialog and display no connection
     }];
 }
 
@@ -91,12 +91,12 @@
     self.viewControllers = controllers;
     
     if (self.scrollViewWidth == 0 && self.scrollViewHeight == 0) {
-        self.scrollViewWidth = CGRectGetWidth(self.snapbiesScrollView.frame);
-        self.scrollViewHeight = CGRectGetHeight(self.snapbiesScrollView.frame);
+        self.scrollViewWidth = CGRectGetWidth(self.scrollView.frame);
+        self.scrollViewHeight = CGRectGetHeight(self.scrollView.frame);
     }
     
     
-    self.snapbiesScrollView.contentSize = CGSizeMake(self.scrollViewWidth * numberPages, self.scrollViewHeight);
+    self.scrollView.contentSize = CGSizeMake(self.scrollViewWidth * numberPages, self.scrollViewHeight);
     
     // pages are created on demand
     // load the visible page
@@ -268,7 +268,7 @@
         controller.view.frame = CGRectMake((self.scrollViewWidth) * page, 0, self.scrollViewWidth, self.scrollViewHeight);
         
         [self addChildViewController:controller];
-        [self.snapbiesScrollView addSubview:controller.view];
+        [self.scrollView addSubview:controller.view];
         [controller didMoveToParentViewController:self];
     }
 }
@@ -312,7 +312,7 @@
 {
     // switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = self.scrollViewWidth;
-    return floor((self.snapbiesScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    return floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
 }
 
 - (void)gotoPage:(NSUInteger)page animated:(BOOL)animated
@@ -327,12 +327,12 @@
     [self loadScrollViewWithPage:page + 3];
     
 	// update the scroll view to the appropriate page
-    CGRect bounds = self.snapbiesScrollView.bounds;
+    CGRect bounds = self.scrollView.bounds;
     bounds.origin.x = CGRectGetWidth(bounds) * page;
     bounds.origin.y = 0;
     
     self.automaticScrolling = YES;
-    [self.snapbiesScrollView scrollRectToVisible:bounds animated:animated];
+    [self.scrollView scrollRectToVisible:bounds animated:animated];
 }
 
 - (IBAction)onScrollViewClicked:(id)sender {

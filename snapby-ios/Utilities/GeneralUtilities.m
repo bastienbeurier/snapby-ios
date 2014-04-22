@@ -97,7 +97,7 @@
 
 + (void)redirectToAppStore
 {
-    NSString *reviewURL = [NSString stringWithFormat:@"http://itunes.apple.com/app/id%d?mt=8",APP_ID];
+    NSString *reviewURL = [NSString stringWithFormat:@"http://itunes.apple.com/app/id%ld?mt=8",APP_ID];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
 };
 
@@ -165,15 +165,6 @@
                                delegate:nil
                       cancelButtonTitle:@"OK!"
                       otherButtonTitles:nil] show];
-}
-
-// Adapt height of textview to text
-+ (void)adaptHeightTextView:(UITextView *)textView {
-    // Change size of the text view
-    CGSize newSize = [textView sizeThatFits:CGSizeMake(kMaxSnapbyDescriptionWidth, MAXFLOAT)];
-    CGRect newFrame = textView.frame;
-    newFrame.size = CGSizeMake(kMaxSnapbyDescriptionWidth, newSize.height);
-    textView.frame = newFrame;
 }
 
 @end

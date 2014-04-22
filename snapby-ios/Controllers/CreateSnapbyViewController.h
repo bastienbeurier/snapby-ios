@@ -14,7 +14,7 @@
 
 @protocol CreateSnapbyViewControllerDelegate;
 
-@interface CreateSnapbyViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, RefineSnapbyLocationViewControllerDelegate, UIActionSheetDelegate>
+@interface CreateSnapbyViewController : UIViewController <RefineSnapbyLocationViewControllerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) id <CreateSnapbyViewControllerDelegate> createSnapbyVCDelegate;
 

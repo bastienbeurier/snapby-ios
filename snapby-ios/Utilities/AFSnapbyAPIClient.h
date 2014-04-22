@@ -72,7 +72,9 @@
 
 + (void)removeLike: (Snapby *) snapby success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
-//GetMyLikes, getSnapbies, getLocalSnapbiesCount
++ (void)getSnapbies:(NSUInteger)userId page:(NSUInteger)page pageSize:(NSUInteger)pageSize andExecuteSuccess:(void(^)(NSArray *snapbies))successBlock failure:(void (^)())failureBlock;
+
+//GetMyLikes, getLocalSnapbiesCount
 
 
 @end

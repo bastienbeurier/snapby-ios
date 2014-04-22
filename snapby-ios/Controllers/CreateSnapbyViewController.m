@@ -29,8 +29,6 @@
 @property (nonatomic) BOOL isAnonymous;
 @property (nonatomic) BOOL flashOn;
 
-@property (weak, nonatomic) IBOutlet UILabel *charCount;
-@property (weak, nonatomic) IBOutlet UITextField *addDescriptionField;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
 
@@ -55,8 +53,6 @@
     double rescalingRatio = self.view.frame.size.height / kCameraHeight;
     [self.snapbyImageView setImage:[ImageUtilities cropWidthOfImage:self.sentImage by:(1-1/rescalingRatio)]];
     
-    self.addDescriptionField.delegate = self;
-    
     // observe keyboard show notifications to resize the text view appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -72,9 +68,6 @@
     
     [super viewDidAppear:animated];
     self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
-    
-    // Open keyboard to create snapby
-    [self.addDescriptionField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.05f];
 }
 
 
@@ -82,23 +75,6 @@
 - (void)updateCreateSnapbyLocation:(CLLocation *)snapbyLocation
 {
     self.snapbyLocation = snapbyLocation;
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)text {
-    if ([text isEqualToString:@"\n"]) {
-        [textField resignFirstResponder];
-        return NO;
-    }
-    
-    // Update char count
-    NSInteger charCount = [textField.text length] + [text length] - range.length;
-    NSInteger remainingCharCount = kSnapbyMaxLength - charCount;
-    if (remainingCharCount >= 0 ) {
-        self.charCount.text = [NSString stringWithFormat:@"%ld", (long)remainingCharCount];
-        return YES;
-    } else {
-        return NO;
-    }
 }
 
 
@@ -117,12 +93,6 @@
     if (self.blackListed) {
         title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
         message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
-    } else if (self.addDescriptionField.text.length > kMaxSnapbyDescriptionLength) {
-        title = NSLocalizedStringFromTable (@"incorrect_snapby_description", @"Strings", @"comment");
-        NSString *maxChars = [NSString stringWithFormat:@" (max: %lu).", (unsigned long)kMaxSnapbyDescriptionLength];
-        message = [(NSLocalizedStringFromTable (@"snapby_description_too_long", @"Strings", @"comment")) stringByAppendingString:maxChars];
-    } else if (!self.sentImage) {
-        title = NSLocalizedStringFromTable (@"missing_image", @"Strings", @"comment");
     } else if (![GeneralUtilities connected]) {
         title = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
     } else if (![LocationUtilities userLocationValid:self.snapbyLocation]) {
@@ -176,7 +146,7 @@
     [AFSnapbyAPIClient createSnapbyWithLat:self.snapbyLocation.coordinate.latitude
                                                    Lng:self.snapbyLocation.coordinate.longitude
                                               Username:currentUser.username
-                                           Description:self.addDescriptionField.text
+                                           Description:@""
                                                  encodedImage:encodedImage
                                                 UserId:currentUser.identifier
                                              Anonymous:self.isAnonymous
@@ -192,7 +162,6 @@
 }
 
 - (IBAction)refineLocationButtonClicked:(id)sender {
-    [self.addDescriptionField resignFirstResponder];
     [self performSegueWithIdentifier:@"Refine Snapby modal segue" sender:nil];
 }
 
