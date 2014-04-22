@@ -1,0 +1,94 @@
+/* 
+  Strings.strings
+  snapby-ios
+
+  Created by Bastien Beurier on 7/23/13.
+  Copyright (c) 2013 Snapby. All rights reserved.
+*/
+
+"just_now" = "just now";
+"now" = "now";
+"hour" = "hour";
+"hours" = "hours";
+"minute" = "min";
+"minutes" = "mins";
+"expired" = "exp";
+"snapby_expired" = " (expired)";
+"hours_ago" = "hours ago";
+"hour_ago" = "hour ago";
+"minutes_ago" = "mins ago";
+"minute_ago" = "min ago";
+"characters" = "char";
+"incorrect_username" = "Incorrect username";
+"username_blank" = "Your username can't be blank";
+"username_too_long" = "Your username is too long";
+"incorrect_snapby_description" = "Incorrect snapby";
+"snapby_description_blank" = "Your snapby can't be blank";
+"snapby_description_too_long" = "Your snapby is too long";
+"no_location_for_snapby_title" = "Can't retrieve your location";
+"no_location_for_snapby_message" = "Please check your connection and geolocation settings.";
+"no_connection_error_title" = "No internet connection.";
+"create_snapby_failed_title" = "Connection problem";
+"create_snapby_failed_message" = "Your snapby failed, please try again.";
+"none" = "none";
+"100m" = "100m";
+"1km" = "1km";
+"10km" = "10km";
+"100yd" = "100yd";
+"1mi" = "1mi";
+"10mi" = "10mi";
+"meters" = "mtrs";
+"meter" = "mtr";
+"miles" = "miles";
+"add_image_action_sheet_title" = "Add image";
+"camera" = "Camera";
+"photo_library" = "Photo library";
+"cancel" = "Cancel";
+"away" = "away";
+"nearby" = "near";
+"far_away" = "far";
+"notification_radius_instruction" = "Adjust your notification radius to get notified when somebody snapbies near you. Choose \"none\" to disable notifications.";
+"abusive_content" = "Abusive content";
+"spam_content" = "Spam or scam";
+"privacy_content" = "Invades my privacy";
+"inaccurate_content" = "Inaccurate content";
+"other_content" = "Other legal claim";
+"flag_action_sheet_title" = "Why do you want to report this snapby?";
+"flag_thanks_alert" = "Thank you for sharing your concern!";
+"black_listed_alert_title" = "Blacklisted";
+"black_listed_alert_text" = "You have been blacklisted due to Terms of Use violations.";
+"invalid_sign_in_message" = "Your email or password is incorrect.";
+"invalid_email_alert_text" = "Please enter a valid email.";
+"password_length_alert_text" = "Your password should contain at least 6 characters.";
+"invalid_username_alert_text" = "Please enter a valid username (letters, numbers or ._+-)";
+"username_length_alert_text" = "Your username should contain between 6 and 20 characters.";
+"passwords_matching_alert_text" = "Passwords don't match.";
+"email_already_taken_message" = "Email already taken.";
+"username_already_taken_message" = "Username already taken.";
+"obsolete_api_error_title" = "Outdated version of the app";
+"obsolete_api_error_message" = "Download the latest version on the App Store";
+"fb_sign_in_error_title" = "Facebook sign-in failure";
+"reset_password_sent_success_message" = "An email with reset password instructions has just been sent.";
+"Try_again_message" = "Please try again.";
+"email_not_in_database_message" = "Your email does not correspond to any existing user.";
+"comment_failed_message" = "Your comment could not be sent, please try again.";
+"like_failed_message" = "Your like could not be sent, please try again.";
+"report_snapby" = "Report this snapby";
+"navigate_to_snapby" = "Directions to snapby";
+"take_and_resize_picture_failed" = "Unexpected error while saving your picture. Please try again.";
+"anonymous_button_enabled" = "Anonymous mode enabled";
+"anonymous_button_disabled" = "Anonymous mode disabled";
+"missing_image"= "Image is missing";
+"remove_snapby"= "Delete this snapby";
+"follow"= "Follow";
+"unfollow"= "Unfollow";
+"find_friends"= "Find snapbyers";
+"user_info_error_message" = "Error retrieving user info";
+"followers" = "Followers";
+"following" = "Following";
+"suggested_friends" = "Snapbyers in my area";
+"relationship_error_title" = "Unexpected error";
+"fail_update_profile_pic_title" = "Your profile picture could not be updated";
+
+
+ 
