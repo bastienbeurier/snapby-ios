@@ -49,11 +49,6 @@
 // Navigation
 // ----------------------------------------------------------
 
-
-- (void)backButtonClicked {
-    [self dismissProfileController];
-}
-
 - (void)settingsButtonClicked {
     [self performSegueWithIdentifier:@"settings push segue" sender:nil];
 }
@@ -89,21 +84,10 @@
     };
     
     void (^failureBlock)() = ^() {
-        [GeneralUtilities showMessage:NSLocalizedStringFromTable(@"user_info_error_message", @"Strings", @"comment") withTitle:nil];
-        [self dismissProfileController];
+        //TODO handle profile did not load
     };
     
     [AFSnapbyAPIClient getOtherUserInfo:self.profileUserId success:successBlock failure:failureBlock];
-}
-
-// Dismiss controller if not MyProfile, else go to camera screen
-- (void)dismissProfileController
-{
-    if (self.myProfileViewControllerDelegate){
-        [self.myProfileViewControllerDelegate moveToImagePickerController];
-    } else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
 
 - (void)initProfile

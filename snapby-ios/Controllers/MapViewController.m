@@ -10,7 +10,6 @@
 #import "MKPointAnnotation+SnapbyPointAnnotation.h"
 #import "MapRequestHandler.h"
 #import "LocationUtilities.h"
-#import "ExploreViewController.h"
 #import "Constants.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
@@ -18,6 +17,7 @@
 #import "TrackingUtilities.h"
 #import "ExploreSnapbyViewController.h"
 #import "HackClipView.h"
+#import "AFSnapbyAPIClient.h"
 
 @interface MapViewController () <MKMapViewDelegate>
 
@@ -27,6 +27,11 @@
 @property (nonatomic) NSUInteger scrollViewWidth;
 @property (nonatomic) NSUInteger scrollViewHeight;
 @property (weak, nonatomic) IBOutlet HackClipView *scrollViewContainer;
+@property (weak, nonatomic) id <MapViewControllerDelegate> mapVCdelegate;
+@property (nonatomic, strong) NSArray *snapbies;
+@property (strong, nonatomic) NSMutableDictionary *displayedSnapbies;
+@property (weak, nonatomic) Snapby *previouslySelectedSnapby;
+@property (nonatomic) BOOL automaticScrolling;
 
 @end
 
@@ -36,9 +41,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //TODO: loading dialog if waiting for location
+    
     self.mapView.delegate = self;
     
-    [LocationUtilities animateMap:self.mapView ToLatitude:kMapInitialLatitude Longitude:kMapInitialLongitude Animated:NO];
+    //Status bar style
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
+    self.mapView.showsUserLocation = YES;
+    self.automaticScrolling = NO;
     
     // a page is the width of the scroll view
     self.snapbiesScrollView.pagingEnabled = YES;
@@ -46,6 +58,20 @@
     self.snapbiesScrollView.showsVerticalScrollIndicator = NO;
     self.snapbiesScrollView.scrollsToTop = NO;
     self.snapbiesScrollView.delegate = self;
+}
+
+- (void)refreshSnapbies
+{
+    //TODO Start loading
+    
+    [AFSnapbyAPIClient pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] AndExecuteSuccess:^(NSArray *snapbies) {
+        
+        //TODO Loading dialog
+        
+        self.snapbies = snapbies;
+    } failure:^{
+        //TODO Stop loading dialog
+    }];
 }
 
 - (void)setSnapbies:(NSArray *)snapbies
@@ -81,7 +107,6 @@
     [self loadScrollViewWithPage:1];
     [self loadScrollViewWithPage:2];
     [self loadScrollViewWithPage:3];
-    [self loadScrollViewWithPage:4];
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
@@ -91,13 +116,14 @@
         location.latitude = userLocation.coordinate.latitude;
         location.longitude = userLocation.coordinate.longitude;
    
-        UIEdgeInsets edgeInsets =
-        UIEdgeInsetsMake(0, 0, self.scrollViewContainer.frame.size.height, 0);
+        UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, self.scrollViewContainer.frame.size.height, 0);
         
         MKCoordinateRegion snapbyRegion = MKCoordinateRegionMakeWithDistance(location, kDistanceAtStartup, kDistanceAtStartup);
         
         [mapView setRegion:snapbyRegion animated:YES];
         [mapView setVisibleMapRect:[LocationUtilities mKMapRectForCoordinateRegion:snapbyRegion] edgePadding:edgeInsets animated:NO];
+        
+        [self refreshSnapbies];
 
         self.hasZoomedAtStartUp = YES;
     }
@@ -105,11 +131,6 @@
     
     MKAnnotationView* annotationView = [mapView viewForAnnotation:userLocation];
     annotationView.canShowCallout = NO;
-}
-
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-
-    [self.mapVCdelegate refreshSnapbies];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
@@ -120,18 +141,32 @@
     if ([annotation respondsToSelector:@selector(snapby)]) {
         Snapby *snapby = annotation.snapby;
         
-        //Mixpanel tracking
-        [TrackingUtilities trackDisplaySnapby:snapby withSource:@"Map"];
+        [self updateAnnotationPin:snapby selected:YES];
         
-        [self.mapVCdelegate snapbySelectionComingFromMap:snapby];
+        if (self.previouslySelectedSnapby != nil && self.previouslySelectedSnapby.identifier != snapby.identifier) {
+            [self updateAnnotationPin:self.previouslySelectedSnapby selected:NO];
+        }
+        
+        self.previouslySelectedSnapby = snapby;
+        
+        int i = 0;
+        NSUInteger length = [self.snapbies count];
+        
+        for (i = 0; i < length; i = i + 1) {
+            if (((Snapby *)[self.snapbies objectAtIndex:i]).identifier == snapby.identifier) {
+                if (i != [self getScrollViewPage]) {
+                    [self gotoPage:i animated:YES];
+                }
+            }
+        }
     }
 }
 
-- (void)deselectAnnotationsOnMap
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSArray *selectedAnnotations = self.mapView.selectedAnnotations;
-    for (id annotationView in selectedAnnotations) {
-        [self.mapView deselectAnnotation:annotationView animated:NO];
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"Snapby Push Segue"]) {
+        ((SnapbyViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
     }
 }
 
@@ -147,57 +182,45 @@
 
 - (void)displaySnapbies:(NSArray *)snapbies
 {
-    NSMutableDictionary *newDisplayedSnapbies = [[NSMutableDictionary alloc] init];
-    
-    for (Snapby *snapby in snapbies) {
-        
-        NSString *snapbyKey = [NSString stringWithFormat:@"%lu", (unsigned long)snapby.identifier];
-        
-        MKPointAnnotation *snapbyAnnotation;
-        
-        if ([self.displayedSnapbies objectForKey:snapbyKey]) {
-            //Use existing annotation
-            snapbyAnnotation = [self.displayedSnapbies objectForKey:snapbyKey];
-            [self.displayedSnapbies removeObjectForKey:snapbyKey];
-            [self updateAnnotation:snapbyAnnotation snapbyInfo:snapby];
-            [self updateAnnotation:snapbyAnnotation pinAccordingToSnapbyInfo:snapby];
-        } else {
-            //Create new annotation
-            CLLocationCoordinate2D annotationCoordinate;
-            annotationCoordinate.latitude = snapby.lat;
-            annotationCoordinate.longitude = snapby.lng;
-            
-            snapbyAnnotation = [[MKPointAnnotation alloc] init];
-            snapbyAnnotation.coordinate = annotationCoordinate;
-            
-            [self updateAnnotation:snapbyAnnotation snapbyInfo:snapby];
-            [self.mapView addAnnotation:snapbyAnnotation];
-        }
-        
-        [newDisplayedSnapbies setObject:snapbyAnnotation forKey:snapbyKey];
-    }
-    
     //Remove annotations that are not on screen anymore
     for (NSString *key in self.displayedSnapbies) {
         [self.mapView removeAnnotation:[self.displayedSnapbies objectForKey:key]];
     }
     
-    self.displayedSnapbies = newDisplayedSnapbies;
+    [self.displayedSnapbies removeAllObjects];
+    
+    for (Snapby *snapby in snapbies) {
+        NSString *snapbyKey = [NSString stringWithFormat:@"%lu", (unsigned long)snapby.identifier];
+        
+        CLLocationCoordinate2D annotationCoordinate;
+        annotationCoordinate.latitude = snapby.lat;
+        annotationCoordinate.longitude = snapby.lng;
+        
+        MKPointAnnotation *snapbyAnnotation = [[MKPointAnnotation alloc] init];
+        snapbyAnnotation.coordinate = annotationCoordinate;
+        
+        snapbyAnnotation.snapby = snapby;
+        [self.mapView addAnnotation:snapbyAnnotation];
+        
+        [self.displayedSnapbies setObject:snapbyAnnotation forKey:snapbyKey];
+    }
 }
 
-- (void)updateAnnotation:(MKPointAnnotation *)snapbyAnnotation pinAccordingToSnapbyInfo:(Snapby *)snapby
+- (void)updateAnnotationPin:(Snapby *)snapby selected:(BOOL)selected
 {
-    MKAnnotationView *annotationView = [self.mapView viewForAnnotation:snapbyAnnotation];
+    MKPointAnnotation *pointAnnotation = [self.displayedSnapbies objectForKey:[NSString stringWithFormat:@"%lu", snapby.identifier]];
     
-    NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby];
+    if (pointAnnotation == nil) {
+        return;
+    }
+    
+    MKAnnotationView *annotationView = [self.mapView viewForAnnotation:pointAnnotation];
+    
+    NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:selected];
     
     annotationView.image = [UIImage imageNamed:annotationPinImage];
-    annotationView.centerOffset = CGPointMake(kSnapbyAnnotationOffsetX, kSnapbyAnnotationOffsetY);
-}
-
-- (void)updateAnnotation:(MKPointAnnotation *)snapbyAnnotation snapbyInfo:(Snapby *)snapby
-{
-    snapbyAnnotation.snapby = snapby;
+    //TODO set proper offset
+//    annotationView.centerOffset = CGPointMake(kSnapbyAnnotationOffsetX, kSnapbyAnnotationOffsetY);
 }
 
 - (NSMutableDictionary *)displayedSnapbies
@@ -213,7 +236,7 @@
         MKPointAnnotation *annotation = (MKPointAnnotation *)annView.annotation;
         
         if ([annotation respondsToSelector:@selector(snapby)]) {
-            [self updateAnnotation:annotation pinAccordingToSnapbyInfo:annotation.snapby];
+            [self updateAnnotationPin:annotation.snapby selected:NO];
         }
         
         CGRect endFrame = annView.frame;
@@ -251,18 +274,22 @@
 }
 
 // at the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollViewDidEndDecelerating");
+    if (self.automaticScrolling) {
+        return;
+    }
     
-    // switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = self.scrollViewWidth;
-    NSUInteger page = floor((self.snapbiesScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    NSUInteger page = [self getScrollViewPage];
     
-    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    NSString *snapbyKey = [NSString stringWithFormat:@"%lu",((Snapby *)[self.snapbies objectAtIndex:page]).identifier];
     
+    MKPointAnnotation *shoutAnnotation = [self.displayedSnapbies objectForKey:snapbyKey];
     
-    [self loadScrollViewWithPage:page - 4];
+    if (shoutAnnotation) {
+        [self.mapView selectAnnotation:shoutAnnotation animated:NO];
+    }
+    
     [self loadScrollViewWithPage:page - 3];
     [self loadScrollViewWithPage:page - 2];
     [self loadScrollViewWithPage:page - 1];
@@ -270,9 +297,47 @@
     [self loadScrollViewWithPage:page + 1];
     [self loadScrollViewWithPage:page + 2];
     [self loadScrollViewWithPage:page + 3];
-    [self loadScrollViewWithPage:page + 4];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.automaticScrolling) {
+        self.automaticScrolling = NO;
+        
+        [self scrollViewDidScroll:scrollView];
+    }
+}
+
+- (NSUInteger)getScrollViewPage
+{
+    // switch the indicator when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = self.scrollViewWidth;
+    return floor((self.snapbiesScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+}
+
+- (void)gotoPage:(NSUInteger)page animated:(BOOL)animated
+{
+    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:page - 3];
+    [self loadScrollViewWithPage:page - 2];
+    [self loadScrollViewWithPage:page - 1];
+    [self loadScrollViewWithPage:page];
+    [self loadScrollViewWithPage:page + 1];
+    [self loadScrollViewWithPage:page + 2];
+    [self loadScrollViewWithPage:page + 3];
     
-    // a possible optimization would be to unload the views+controllers which are no longer visible
+	// update the scroll view to the appropriate page
+    CGRect bounds = self.snapbiesScrollView.bounds;
+    bounds.origin.x = CGRectGetWidth(bounds) * page;
+    bounds.origin.y = 0;
+    
+    self.automaticScrolling = YES;
+    [self.snapbiesScrollView scrollRectToVisible:bounds animated:animated];
+}
+
+- (IBAction)onScrollViewClicked:(id)sender {
+    Snapby *snapby = [self.snapbies objectAtIndex:[self getScrollViewPage]];
+    [self performSegueWithIdentifier:@"Snapby Push Segue" sender:snapby];
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "MultipleViewController.h"
-#import "CreateSnapbyViewController.h"
 #import "Constants.h"
 #import "ImageUtilities.h"
 #import "GeneralUtilities.h"
@@ -17,7 +16,7 @@
 @interface MultipleViewController ()
 
 @property (strong, nonatomic) ProfileViewController * myProfileViewController;
-@property (strong, nonatomic) ExploreViewController * exploreViewController;
+@property (strong, nonatomic) MapViewController * mapViewController;
 @property (strong, nonatomic) CreateSnapbyViewController * createSnapbyViewController;
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
@@ -49,6 +48,13 @@
     
    [self.pageViewController setViewControllers:@[[self getOrInitImagePickerController]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
+    [self getOrInitMapViewController];
+    [self getOrInitMyProfileViewController];
+    
+    //Hack to load the controllers
+    float dummy = self.mapViewController.view.frame.size.height + self.myProfileViewController.view.frame.size.height;
+    NSLog(@"Dummy %f", dummy);
+    
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
@@ -78,7 +84,7 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitExploreViewController];
+        return [self getOrInitMapViewController];
     } else if ([viewController isKindOfClass:[ProfileViewController class]]){
         return [self getOrInitImagePickerController];
     } else {
@@ -90,7 +96,7 @@
 {
     if ([viewController isKindOfClass:[UIImagePickerController class]]) {
         return [self getOrInitMyProfileViewController];
-    } else if ([viewController isKindOfClass:[ExploreViewController class]]){
+    } else if ([viewController isKindOfClass:[MapViewController class]]){
         return [self getOrInitImagePickerController];
     } else {
         return nil;
@@ -103,15 +109,8 @@
     if ([segueName isEqualToString: @"Create from Multiple modal segue"]) {
         CreateSnapbyViewController * createSnapbyViewController = (CreateSnapbyViewController *) [segue destinationViewController];
         createSnapbyViewController.sentImage = (UIImage *) sender;
-        createSnapbyViewController.createSnapbyVCDelegate = self;
         createSnapbyViewController.snapbyLocation = self.locationManager.location;
     }
-}
-
-- (void) moveToImagePickerController
-{
-    NSArray *viewControllers = @[[self getOrInitImagePickerController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
 
 
@@ -126,13 +125,11 @@
     return self.imagePickerController;
 }
 
-- (ExploreViewController *) getOrInitExploreViewController {
-    if(!self.exploreViewController){
-        self.exploreViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ExploreViewController"];
-        self.exploreViewController.exploreControllerdelegate = self;
-        self.exploreViewController.currentUser = self.currentUser;
+- (MapViewController *) getOrInitMapViewController {
+    if(!self.mapViewController){
+        self.mapViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapViewController"];
     }
-    return self.exploreViewController;
+    return self.mapViewController;
 }
 
 - (ProfileViewController *) getOrInitMyProfileViewController {
@@ -189,7 +186,7 @@
 
 // Custom button and actions
 - (IBAction)mapButtonClicked:(id)sender {
-    NSArray *viewControllers = @[[self getOrInitExploreViewController]];
+    NSArray *viewControllers = @[[self getOrInitMapViewController]];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
 
@@ -271,10 +268,7 @@
 
 - (void)onSnapbyCreated:(Snapby *)snapby
 {
-    NSArray *viewControllers = @[[self getOrInitExploreViewController]];
-    //Don't show snapby controller immidiately (as for notification handling), otherwise segues get mixed up.
-    self.exploreViewController.redirectToSnapby = snapby;
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    //TODO show success toast
 }
 - (void)startLocationUpdate
 {

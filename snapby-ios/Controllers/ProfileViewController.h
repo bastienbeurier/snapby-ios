@@ -23,7 +23,6 @@
 
 @protocol MyProfileViewControllerDelegate
 
-- (void)moveToImagePickerController;
 - (void)startLocationUpdate;
 - (void)stopLocationUpdate;
 

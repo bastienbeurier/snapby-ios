@@ -17,14 +17,5 @@
 @interface SnapbyViewController : UIViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) Snapby *snapby;
-@property (weak, nonatomic) User *currentUser;
-
-@property (weak, nonatomic) id <SnapbyVCDelegate> snapbyVCDelegate;
-
-@end
-
-@protocol SnapbyVCDelegate
-
-- (void)updateMapLocationtoLat:(double)lat lng:(double)lng;
 
 @end

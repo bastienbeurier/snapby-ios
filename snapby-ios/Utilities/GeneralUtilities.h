@@ -20,7 +20,7 @@
 
 + (BOOL)connected;
 
-+ (NSString *)getAnnotationPinImageForSnapby:(Snapby *)snapby;
++ (NSString *)getAnnotationPinImageForSnapby:(Snapby *)snapby selected:(BOOL)selected;
 
 + (UIColor *)getSnapbyAgeColor:(Snapby *)snapby;
 

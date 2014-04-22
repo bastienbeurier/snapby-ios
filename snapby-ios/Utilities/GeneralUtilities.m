@@ -53,16 +53,20 @@
     return !(networkStatus == NotReachable);
 }
 
-+ (NSString *)getAnnotationPinImageForSnapby:(Snapby *)snapby
++ (NSString *)getAnnotationPinImageForSnapby:(Snapby *)snapby selected:(BOOL)selected
 {
-    NSTimeInterval snapbyAge = [TimeUtilities getSnapbyAge:snapby.created];
-    
-    if (snapbyAge < kSnapbyDuration / kSnapbyDurationHours) {
-        return [NSString stringWithFormat:@"snapby-marker-%d-deselected", 3];
-    } else if (snapbyAge < 3 * (kSnapbyDuration / kSnapbyDurationHours)) {
-        return [NSString stringWithFormat:@"snapby-marker-%d-deselected", 2];
+    if (snapby.anonymous) {
+        if (selected) {
+            return @"snapby-marker-anonymous-selected";
+        } else {
+            return @"snapby-marker-anonymous";
+        }
     } else {
-        return [NSString stringWithFormat:@"snapby-marker-%d-deselected", 1];
+        if (selected) {
+            return @"snapby-marker-selected";
+        } else {
+            return @"snapby-marker";
+        }
     }
 }
 

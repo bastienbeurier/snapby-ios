@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 
 #import "ProfileViewController.h"
-#import "ExploreViewController.h"
 #import <CoreLocation/CLLocationManager.h>
+#import "CreateSnapbyViewController.h"
+#import "MapViewController.h"
 
-@interface MultipleViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ExploreControllerDelegate, MyProfileViewControllerDelegate, CreateSnapbyViewControllerDelegate, CLLocationManagerDelegate>
+@interface MultipleViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MyProfileViewControllerDelegate, CreateSnapbyViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
-- (ExploreViewController *) getOrInitExploreViewController;
+- (MapViewController *) getOrInitMapViewController;
 
 @end

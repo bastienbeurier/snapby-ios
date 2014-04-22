@@ -13,7 +13,6 @@
 #import "UAPush.h"
 #import "TestFlight.h"
 #import "Constants.h"
-#import "ExploreViewController.h"
 #import "MultipleViewController.h"
 #import "Snapby.h"
 #import "AFSnapbyAPIClient.h"

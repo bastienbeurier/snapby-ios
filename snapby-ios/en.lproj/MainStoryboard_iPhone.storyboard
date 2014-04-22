@@ -240,7 +240,7 @@
                                             <outletCollection property="gestureRecognizers" destination="kNv-sj-CHu" appends="YES" id="ySh-Yx-a1l"/>
                                         </connections>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="8DB11F89-09DC-4367-896E-D6706EEFEF71" translatesAutoresizingMaskIntoConstraints="NO" id="Pnl-rI-mqi">
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9714D3AD-B47E-4971-9C98-4C6634E72472" translatesAutoresizingMaskIntoConstraints="NO" id="Pnl-rI-mqi">
                                         <rect key="frame" x="260" y="125" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
@@ -356,60 +356,6 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1529" y="1375"/>
-        </scene>
-        <!--Explore View Controller-->
-        <scene sceneID="5">
-            <objects>
-                <viewController storyboardIdentifier="ExploreViewController" id="2" customClass="ExploreViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="9At-1p-99c"/>
-                        <viewControllerLayoutGuide type="bottom" id="g04-xb-cCJ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q8p-tE-cHT">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="d4j-A5-G8j" kind="embed" identifier="mapViewController" id="dOx-0C-kYO"/>
-                                </connections>
-                            </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OTR-fb-maE">
-                                <rect key="frame" x="260" y="20" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="BxJ-3H-gOl"/>
-                                    <constraint firstAttribute="width" constant="50" id="DZS-zS-1YW"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="navigation-create-snapby-button.png"/>
-                                <connections>
-                                    <action selector="createSnapbyButtonClicked:" destination="2" eventType="touchUpInside" id="Dtw-Kh-GbL"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="q8p-tE-cHT" firstAttribute="top" secondItem="3" secondAttribute="top" id="3On-Pj-w4a"/>
-                            <constraint firstItem="g04-xb-cCJ" firstAttribute="top" secondItem="q8p-tE-cHT" secondAttribute="bottom" id="E7f-pp-PQV"/>
-                            <constraint firstAttribute="trailing" secondItem="OTR-fb-maE" secondAttribute="trailing" constant="10" id="QfP-gV-gUk"/>
-                            <constraint firstItem="OTR-fb-maE" firstAttribute="top" secondItem="9At-1p-99c" secondAttribute="bottom" id="RL8-tC-x14"/>
-                            <constraint firstItem="q8p-tE-cHT" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="Uf9-B7-ngW"/>
-                            <constraint firstItem="q8p-tE-cHT" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="rrZ-Rz-ZTu"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="94I-Zg-wmd"/>
-                    <connections>
-                        <outlet property="createSnapbyButton" destination="OTR-fb-maE" id="trM-gr-C6w"/>
-                        <outlet property="topContainerView" destination="q8p-tE-cHT" id="wu4-Kd-2gO"/>
-                        <segue destination="qtI-Lc-vOJ" kind="push" identifier="Snapby Push Segue" id="F51-BZ-H1M"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="829" y="-651"/>
         </scene>
         <!--Create Snapby View Controller-->
         <scene sceneID="ZHD-Ls-YaW">
@@ -689,6 +635,9 @@
                             <imageView contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-Is-qMB">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="1YL-n0-2zw" appends="YES" id="1jK-ps-Xuh"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -711,18 +660,13 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S7c-O1-lwU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="R8D-Ri-EkC">
+                <tapGestureRecognizer id="1YL-n0-2zw">
                     <connections>
-                        <action selector="mapClicked:" destination="qtI-Lc-vOJ" id="Ehe-f7-7zM"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="FZz-mI-JvM">
-                    <connections>
-                        <action selector="usernameLabelClicked:" destination="qtI-Lc-vOJ" id="pkI-i4-NWP"/>
+                        <action selector="snapbyImageClicked:" destination="qtI-Lc-vOJ" id="1PA-8n-F99"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1475" y="-120"/>
+            <point key="canvasLocation" x="1474" y="-427"/>
         </scene>
         <!--Comments View Controller-->
         <scene sceneID="fxJ-sn-Xyx">
@@ -862,9 +806,13 @@
                                     <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pG4-jQ-1BS">
                                         <rect key="frame" x="60" y="0.0" width="185" height="240"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="240" id="sFQ-mP-81y"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="fCX-4o-PVR" appends="YES" id="1cp-ru-YNx"/>
+                                        </connections>
                                     </scrollView>
                                 </subviews>
                                 <constraints>
@@ -891,11 +839,17 @@
                         <outlet property="mapView" destination="Bgn-bn-PdH" id="6u7-q3-Xmi"/>
                         <outlet property="scrollViewContainer" destination="muy-pc-UMn" id="yaq-oL-P1V"/>
                         <outlet property="snapbiesScrollView" destination="pG4-jQ-1BS" id="QDC-89-g3M"/>
+                        <segue destination="qtI-Lc-vOJ" kind="push" identifier="Snapby Push Segue" id="70g-75-5Or"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDN-fj-Qjo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="fCX-4o-PVR">
+                    <connections>
+                        <action selector="onScrollViewClicked:" destination="d4j-A5-G8j" id="CId-y4-cWs"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1517" y="-790"/>
+            <point key="canvasLocation" x="1059" y="-409"/>
         </scene>
         <!--Navigation Controller - globalNavigationController-->
         <scene sceneID="r5z-xR-Hcw">
@@ -1386,7 +1340,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="8DB11F89-09DC-4367-896E-D6706EEFEF71" width="80" height="80">
+        <image name="9714D3AD-B47E-4971-9C98-4C6634E72472" width="80" height="80">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -1869,7 +1823,6 @@ sgC1ALcAuQC7AL0AwgDZANsA3W1PbVRtX21obXttf22SbZ1tpm2rbbNttm27bcptzm3Vbd1t6m3vbfFt
         <image name="create_refine_button.png" width="132" height="150"/>
         <image name="create_send_button.png" width="150" height="151"/>
         <image name="email-icon.png" width="50" height="36"/>
-        <image name="navigation-create-snapby-button.png" width="150" height="147"/>
         <image name="password-icon.png" width="43" height="50"/>
         <image name="refresh-map-button.png" width="75" height="75"/>
         <image name="snapby-bar-more-icon.png" width="49" height="49"/>

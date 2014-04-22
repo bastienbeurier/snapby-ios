@@ -139,7 +139,6 @@
             }
         } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_3]) {
             [AFSnapbyAPIClient removeSnapby: self.snapby success:nil failure:nil];
-            [self.snapbyVCDelegate updateMapLocationtoLat:self.snapby.lat lng:self.snapby.lng];
             [self.navigationController popViewControllerAnimated:YES];
         }
     } else if (actionSheet == self.flagActionSheet) {
@@ -190,6 +189,10 @@
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
     [self presentViewController:activityViewController animated:YES completion:nil];
+}
+- (IBAction)snapbyImageClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 
 
