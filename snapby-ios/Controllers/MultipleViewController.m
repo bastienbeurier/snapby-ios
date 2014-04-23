@@ -16,11 +16,12 @@
 @interface MultipleViewController ()
 
 @property (strong, nonatomic) ProfileViewController * myProfileViewController;
-@property (strong, nonatomic) MapViewController * mapViewController;
+@property (strong, nonatomic) ExploreViewController * mapViewController;
 @property (strong, nonatomic) CreateSnapbyViewController * createSnapbyViewController;
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLLocation *myLocation;
 
 @property (nonatomic) BOOL flashOn;
 @property (nonatomic, strong) ALAssetsLibrary *library;
@@ -96,7 +97,7 @@
 {
     if ([viewController isKindOfClass:[UIImagePickerController class]]) {
         return [self getOrInitMyProfileViewController];
-    } else if ([viewController isKindOfClass:[MapViewController class]]){
+    } else if ([viewController isKindOfClass:[ExploreViewController class]]){
         return [self getOrInitImagePickerController];
     } else {
         return nil;
@@ -125,9 +126,10 @@
     return self.imagePickerController;
 }
 
-- (MapViewController *) getOrInitMapViewController {
+- (ExploreViewController *) getOrInitMapViewController {
     if(!self.mapViewController){
         self.mapViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapViewController"];
+        self.mapViewController.exploreVCDelegate = self;
     }
     return self.mapViewController;
 }
@@ -279,6 +281,11 @@
     [self.locationManager stopUpdatingLocation];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    self.myLocation = [locations lastObject];
+}
+
+
 // Location Manager
 - (void)allocAndInitLocationManager
 {
@@ -286,6 +293,11 @@
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
     self.locationManager.distanceFilter = kDistanceBeforeUpdateLocation;
+}
+
+- (CLLocation *)getMyLocation
+{
+    return self.myLocation;
 }
 
 @end

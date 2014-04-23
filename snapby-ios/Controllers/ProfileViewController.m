@@ -7,7 +7,6 @@
 //
 
 
-
 #import "ProfileViewController.h"
 #import "ImageUtilities.h"
 #import "AFSnapbyAPIClient.h"
@@ -23,7 +22,7 @@
 
 #define PROFILE_IMAGE_SIZE 75
 
-@interface ProfileViewController () <MKMapViewDelegate>
+@interface ProfileViewController () <GMSMapViewDelegate>
 
 @property (strong, nonatomic) User *profileUser;
 
@@ -31,7 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *likedCount;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureView;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @property (weak, nonatomic) IBOutlet HackClipView *scrollViewContainer;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) NSArray *snapbies;
@@ -39,9 +38,10 @@
 @property (nonatomic) NSUInteger scrollViewHeight;
 @property (strong, nonatomic) NSMutableDictionary *displayedSnapbies;
 @property (weak, nonatomic) Snapby *previouslySelectedSnapby;
-@property (nonatomic) BOOL automaticScrolling;
+@property (nonatomic) NSInteger automaticScrolling;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (weak, nonatomic) IBOutlet UIView *userInfoContainer;
+@property (nonatomic) int currentSelectedZIndex;
 
 
 
@@ -55,7 +55,11 @@
     [super viewDidLoad];
     
     self.mapView.delegate = self;
-    self.mapView.showsUserLocation = YES;
+    self.mapView.myLocationEnabled = NO;
+    self.mapView.settings.scrollGestures = NO;
+    self.mapView.settings.zoomGestures = NO;
+    self.mapView.settings.tiltGestures = NO;
+    self.mapView.settings.rotateGestures = NO;
     
     self.profilePictureView.layer.cornerRadius = PROFILE_IMAGE_SIZE/2;
     self.profilePictureView.clipsToBounds = YES;
@@ -67,6 +71,11 @@
     self.scrollView.scrollsToTop = NO;
     self.scrollView.delegate = self;
     
+    self.currentSelectedZIndex = 0;
+    
+    //Equivalent of NO
+    self.automaticScrolling = -1;
+    
     [self refreshSnapbies];
 }
 
@@ -77,7 +86,7 @@
     [AFSnapbyAPIClient getSnapbies:[SessionUtilities getCurrentUser].identifier page:1 pageSize:100 andExecuteSuccess:^(NSArray *snapbies) {
         //TODO: handle case no snapby
         //TODO: stoploading
-        [self animatMaptOnFirstSnapby:[snapbies objectAtIndex:0]];
+        [self moveMapToFirstSnapby:[snapbies objectAtIndex:0]];
         
         self.snapbies = snapbies;
     } failure:^{
@@ -88,6 +97,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self getProfileInfo];
+    
+    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(self.userInfoContainer.frame.size.height, 0, self.scrollViewContainer.frame.size.height, 0);
+    self.mapView.padding = edgeInsets;
 }
 
 - (void)setSnapbies:(NSArray *)snapbies
@@ -111,47 +123,29 @@
         self.scrollViewHeight = CGRectGetHeight(self.scrollView.frame);
     }
     
-    
     self.scrollView.contentSize = CGSizeMake(self.scrollViewWidth * numberPages, self.scrollViewHeight);
     
-    // pages are created on demand
-    // load the visible page
-    // load the page on either side to avoid flashes when the user starts scrolling
-    //
-    
-    [self loadScrollViewWithPage:0];
-    [self loadScrollViewWithPage:1];
-    [self loadScrollViewWithPage:2];
-    [self loadScrollViewWithPage:3];
+    [self loadSnapbiesAndUpdateMarker];
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
+    NSUInteger snapbyId = [marker.title intValue];
     
-    MKPointAnnotation *annotation = (MKPointAnnotation *)view.annotation;
+    int i = 0;
+    NSUInteger length = [self.snapbies count];
     
-    if ([annotation respondsToSelector:@selector(snapby)]) {
-        Snapby *snapby = annotation.snapby;
-        
-        [self updateAnnotationPin:snapby selected:YES];
-        
-        if (self.previouslySelectedSnapby != nil && self.previouslySelectedSnapby.identifier != snapby.identifier) {
-            [self updateAnnotationPin:self.previouslySelectedSnapby selected:NO];
-        }
-        
-        self.previouslySelectedSnapby = snapby;
-        
-        int i = 0;
-        NSUInteger length = [self.snapbies count];
-        
-        for (i = 0; i < length; i = i + 1) {
-            if (((Snapby *)[self.snapbies objectAtIndex:i]).identifier == snapby.identifier) {
-                if (i != [self getScrollViewPage]) {
-                    [self gotoPage:i animated:YES];
-                }
+    for (i = 0; i < length; i = i + 1) {
+        if (((Snapby *)[self.snapbies objectAtIndex:i]).identifier == snapbyId) {
+            if (i != [self getScrollViewPage]) {
+                self.automaticScrolling = (NSInteger) i;
+                [self gotoPage:i animated:YES];
+                break;
             }
         }
     }
+    
+    return YES;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -166,67 +160,31 @@
 - (void)displaySnapbies:(NSArray *)snapbies
 {
     //Remove annotations that are not on screen anymore
-    for (NSString *key in self.displayedSnapbies) {
-        [self.mapView removeAnnotation:[self.displayedSnapbies objectForKey:key]];
-    }
+    [self.mapView clear];
     
     [self.displayedSnapbies removeAllObjects];
     
     for (Snapby *snapby in snapbies) {
         NSString *snapbyKey = [NSString stringWithFormat:@"%lu", (unsigned long)snapby.identifier];
         
-        CLLocationCoordinate2D annotationCoordinate;
-        annotationCoordinate.latitude = snapby.lat;
-        annotationCoordinate.longitude = snapby.lng;
+        CLLocationCoordinate2D markerCoordinate;
+        markerCoordinate.latitude = snapby.lat;
+        markerCoordinate.longitude = snapby.lng;
         
-        MKPointAnnotation *snapbyAnnotation = [[MKPointAnnotation alloc] init];
-        snapbyAnnotation.coordinate = annotationCoordinate;
-        
-        snapbyAnnotation.snapby = snapby;
-        [self.mapView addAnnotation:snapbyAnnotation];
-        
-        [self.displayedSnapbies setObject:snapbyAnnotation forKey:snapbyKey];
-    }
-}
+        GMSMarker *marker = [GMSMarker markerWithPosition:markerCoordinate];
+        marker.title = [NSString stringWithFormat:@"%lu", snapby.identifier];
+        marker.icon = [UIImage imageNamed:[GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:NO]];
 
-- (void)updateAnnotationPin:(Snapby *)snapby selected:(BOOL)selected
-{
-    MKPointAnnotation *pointAnnotation = [self.displayedSnapbies objectForKey:[NSString stringWithFormat:@"%lu", snapby.identifier]];
-    
-    if (pointAnnotation == nil) {
-        return;
+        marker.map = self.mapView;
+        
+        [self.displayedSnapbies setObject:marker forKey:snapbyKey];
     }
-    
-    MKAnnotationView *annotationView = [self.mapView viewForAnnotation:pointAnnotation];
-    
-    NSString *annotationPinImage = [GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:selected];
-    
-    annotationView.image = [UIImage imageNamed:annotationPinImage];
-    //TODO set proper offset
-    //    annotationView.centerOffset = CGPointMake(kSnapbyAnnotationOffsetX, kSnapbyAnnotationOffsetY);
 }
 
 - (NSMutableDictionary *)displayedSnapbies
 {
     if (!_displayedSnapbies) _displayedSnapbies = [[NSMutableDictionary alloc] init];
     return _displayedSnapbies;
-}
-
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
-{
-    for (MKAnnotationView *annView in annotationViews)
-    {
-        MKPointAnnotation *annotation = (MKPointAnnotation *)annView.annotation;
-        
-        if ([annotation respondsToSelector:@selector(snapby)]) {
-            [self updateAnnotationPin:annotation.snapby selected:NO];
-        }
-        
-        CGRect endFrame = annView.frame;
-        annView.frame = CGRectMake(endFrame.origin.x + endFrame.size.width/2, endFrame.origin.y + endFrame.size.height, 0, 0);
-        [UIView animateWithDuration:0.3
-                         animations:^{ annView.frame = endFrame; }];
-    }
 }
 
 //Scrollview related methods
@@ -259,10 +217,17 @@
 // at the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.automaticScrolling) {
+    if (self.automaticScrolling > -1 && self.automaticScrolling != [self getScrollViewPage]) {
         return;
     }
     
+    self.automaticScrolling = -1;
+    
+    [self loadSnapbiesAndUpdateMarker];
+}
+
+- (void)loadSnapbiesAndUpdateMarker
+{
     NSUInteger page = [self getScrollViewPage];
     
     Snapby *snapby = ((Snapby *)[self.snapbies objectAtIndex:page]);
@@ -271,11 +236,20 @@
     
     NSString *snapbyKey = [NSString stringWithFormat:@"%lu", snapby.identifier];
     
-    MKPointAnnotation *shoutAnnotation = [self.displayedSnapbies objectForKey:snapbyKey];
+    GMSMarker *marker = [self.displayedSnapbies objectForKey:snapbyKey];
     
-    if (shoutAnnotation) {
-        [self.mapView selectAnnotation:shoutAnnotation animated:NO];
+    marker.icon = [UIImage imageNamed:[GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:YES]];
+    marker.zIndex = self.currentSelectedZIndex + 1;
+    self.currentSelectedZIndex = self.currentSelectedZIndex + 1;
+    marker.map = self.mapView;
+    
+    if (self.previouslySelectedSnapby != nil && self.previouslySelectedSnapby.identifier != snapby.identifier) {
+        GMSMarker *oldMarker = [self.displayedSnapbies objectForKey:[NSString stringWithFormat:@"%lu", self.previouslySelectedSnapby.identifier]];
+        oldMarker.icon = [UIImage imageNamed:[GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:NO]];
+        oldMarker.map = self.mapView;
     }
+    
+    self.previouslySelectedSnapby = snapby;
     
     [self loadScrollViewWithPage:page - 3];
     [self loadScrollViewWithPage:page - 2];
@@ -284,15 +258,7 @@
     [self loadScrollViewWithPage:page + 1];
     [self loadScrollViewWithPage:page + 2];
     [self loadScrollViewWithPage:page + 3];
-}
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (self.automaticScrolling) {
-        self.automaticScrolling = NO;
-        
-        [self scrollViewDidScroll:scrollView];
-    }
 }
 
 - (NSUInteger)getScrollViewPage
@@ -304,21 +270,11 @@
 
 - (void)gotoPage:(NSUInteger)page animated:(BOOL)animated
 {
-    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
-    [self loadScrollViewWithPage:page - 3];
-    [self loadScrollViewWithPage:page - 2];
-    [self loadScrollViewWithPage:page - 1];
-    [self loadScrollViewWithPage:page];
-    [self loadScrollViewWithPage:page + 1];
-    [self loadScrollViewWithPage:page + 2];
-    [self loadScrollViewWithPage:page + 3];
-    
 	// update the scroll view to the appropriate page
     CGRect bounds = self.scrollView.bounds;
     bounds.origin.x = CGRectGetWidth(bounds) * page;
     bounds.origin.y = 0;
     
-    self.automaticScrolling = YES;
     [self.scrollView scrollRectToVisible:bounds animated:animated];
 }
 
@@ -333,38 +289,16 @@
     snapbyCoordinate.latitude = lat;
     snapbyCoordinate.longitude = lng;
     
-    [self.mapView setCenterCoordinate:snapbyCoordinate animated:YES];
-    
-//    MKMapRect currentMapRect = self.mapView.visibleMapRect;
-//    currentMapRect.origin = MKMapPointForCoordinate(snapbyCoordinate);
-//    
-////    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(self.userInfoContainer.frame.size.height, 0, self.scrollViewContainer.frame.size.height, 0);
-//    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-//    
-//    [self.mapView setVisibleMapRect:currentMapRect edgePadding:edgeInsets animated:YES];
+    [self.mapView animateToLocation:snapbyCoordinate];
 }
      
-- (void)animatMaptOnFirstSnapby:(Snapby *)snapby
+- (void)moveMapToFirstSnapby:(Snapby *)snapby
 {
     CLLocationCoordinate2D location;
     location.latitude = snapby.lat;
     location.longitude = snapby.lng;
     
-    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(self.userInfoContainer.frame.size.height, 0, self.scrollViewContainer.frame.size.height, 0);
-    
-    MKCoordinateRegion snapbyRegion = MKCoordinateRegionMakeWithDistance(location, kDistanceAtStartup, kDistanceAtStartup);
-    
-    [self.mapView setRegion:snapbyRegion animated:YES];
-    [self.mapView setVisibleMapRect:[LocationUtilities mKMapRectForCoordinateRegion:snapbyRegion] edgePadding:edgeInsets animated:NO];
-}
-
-
-// ----------------------------------------------------------
-// Navigation
-// ----------------------------------------------------------
-
-- (void)settingsButtonClicked {
-    [self performSegueWithIdentifier:@"settings push segue" sender:nil];
+    [self.mapView moveCamera:[GMSCameraUpdate setTarget:location zoom:kZoomAtStartup]];
 }
 
 

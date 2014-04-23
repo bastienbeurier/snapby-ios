@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MapKit/MapKit.h>
-#import "MapViewController.h"
+#import "ExploreViewController.h"
 
 @interface ImageUtilities : NSObject
 

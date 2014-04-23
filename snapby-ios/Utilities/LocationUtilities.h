@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface LocationUtilities : NSObject
 
-+ (NSArray *)getMapBounds:(MKMapView *)mapView;
++ (NSArray *)getMapBounds:(GMSMapView *)mapView;
 
 + (void)animateMap:(MKMapView *)mapView ToLatitude:(double)lat Longitude:(double)lng WithDistance:(NSUInteger)distance Animated:(BOOL)animated;
 

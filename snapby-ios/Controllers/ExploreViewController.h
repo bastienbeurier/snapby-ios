@@ -1,0 +1,27 @@
+//
+//  MapViewController.h
+//  snapby-ios
+//
+//  Created by Bastien Beurier on 7/22/13.
+//  Copyright (c) 2013 Snapby. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "Snapby.h"
+#import "SnapbyViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
+
+@protocol ExploreViewControllerDelegate;
+
+@interface ExploreViewController : UIViewController <UIScrollViewDelegate>
+
+@property (weak, nonatomic) id <ExploreViewControllerDelegate> exploreVCDelegate;
+
+
+@end
+
+@protocol ExploreViewControllerDelegate
+
+- (CLLocation *)getMyLocation;
+
+@end

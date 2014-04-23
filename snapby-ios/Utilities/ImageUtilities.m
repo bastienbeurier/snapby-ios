@@ -9,7 +9,7 @@
 #import "ImageUtilities.h"
 #import "Constants.h"
 #import <MapKit/MapKit.h>
-#import "MapViewController.h"
+#import "ExploreViewController.h"
 #import "SnapbyViewController.h"
 #import "UIImageView+AFNetworking.h"
 

@@ -26,6 +26,7 @@
 #import "SignupViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface NavigationAppDelegate()
 
@@ -59,6 +60,7 @@
         config.inProduction = NO;
     }
     
+    [GMSServices provideAPIKey:kGoogleMapKey];
     
     // Urban airship config
     [UAirship takeOff:config];

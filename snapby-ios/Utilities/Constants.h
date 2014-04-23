@@ -62,7 +62,8 @@ static const NSUInteger kMaxSnapbyDescriptionLength = 140;
 static const NSUInteger kSnapbyRadius = 300;
 static const NSUInteger kSnapbyImageHeight = 600;
 
-static const NSUInteger kDistanceAtStartup = 600;
+static const NSUInteger kDistanceAtStartup = 6000;
+static const NSUInteger kZoomAtStartup = 13;
 
 static const NSUInteger kDistanceBeforeUpdateLocation = 50;
 
@@ -80,4 +81,7 @@ static const double kSnapbyAnnotationOffsetY = 0;
 //Mixpanel token
 static NSString * const kProdMixPanelToken = @"781f8a3090780f2afbb8a260a58911c4";
 static NSString * const kDevMixPanelToken = @"293023eb15e4681ca1aa4c81d3a6ce19";
+
+//Google Map
+static NSString * const kGoogleMapKey = @"AIzaSyD4wbIDRx2zZ9CzzcvLcLkIieMpSPgvmJ8";
 

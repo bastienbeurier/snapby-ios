@@ -15,18 +15,12 @@
 
 @implementation LocationUtilities
 
-+ (NSArray *)getMapBounds:(MKMapView *)mapView
++ (NSArray *)getMapBounds:(GMSMapView *)mapView
 {
+    GMSVisibleRegion region = mapView.projection.visibleRegion;
     //First we need to calculate the corners of the map so we get the points
-    CGPoint nePoint = CGPointMake(mapView.bounds.origin.x + mapView.bounds.size.width, mapView.bounds.origin.y);
-    CGPoint swPoint = CGPointMake((mapView.bounds.origin.x), (mapView.bounds.origin.y + mapView.bounds.size.height));
-    
-    //Then transform those point into lat,lng values
-    CLLocationCoordinate2D neCoord;
-    neCoord = [mapView convertPoint:nePoint toCoordinateFromView:mapView];
-    
-    CLLocationCoordinate2D swCoord;
-    swCoord = [mapView convertPoint:swPoint toCoordinateFromView:mapView];
+    CLLocationCoordinate2D neCoord = region.farRight;
+    CLLocationCoordinate2D swCoord = region.nearLeft;
     
     return @[[NSNumber numberWithDouble:neCoord.latitude],
              [NSNumber numberWithDouble:neCoord.longitude],
