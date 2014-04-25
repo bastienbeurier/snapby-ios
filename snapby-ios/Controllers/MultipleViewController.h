@@ -17,6 +17,8 @@
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
-- (ExploreViewController *) getOrInitMapViewController;
+- (void)goHomeAfterRelaunch;
+
+- (ExploreViewController *) getOrInitExploreViewController;
 
 @end

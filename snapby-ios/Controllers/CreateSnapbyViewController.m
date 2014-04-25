@@ -45,8 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+
     self.isAnonymous = NO;
     self.blackListed = NO;
     
@@ -116,8 +115,8 @@
             
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
-        [self dismissViewControllerAnimated:NO completion:nil];
-        [self.createSnapbyVCDelegate onSnapbyCreated:snapby];
+        [self.createSnapbyVCDelegate onSnapbyCreated];
+        [self dismissViewControllerAnimated:YES completion:nil];
     };
     
     typedef void (^FailureBlock)(NSURLSessionDataTask *);
@@ -158,7 +157,7 @@
 // Custom button actions
 
 - (IBAction)quitButtonclicked:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (IBAction)refineLocationButtonClicked:(id)sender {

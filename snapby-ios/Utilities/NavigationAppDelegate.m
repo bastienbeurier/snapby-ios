@@ -135,7 +135,11 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    
+    if ([[navController visibleViewController] isKindOfClass:[MultipleViewController class]]) {
+        [((MultipleViewController *)[navController visibleViewController]) goHomeAfterRelaunch];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

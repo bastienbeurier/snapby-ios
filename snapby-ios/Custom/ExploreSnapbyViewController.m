@@ -33,7 +33,7 @@
 - (void)viewDidLoad
 {
     self.imageView.clipsToBounds = YES;
-    [self.imageView setImageWithURL:[self.snapby getSnapbyImageURL] placeholderImage:nil];
+    [self.imageView setImageWithURL:[self.snapby getSnapbyThumbURL] placeholderImage:nil];
 }
 
 @end

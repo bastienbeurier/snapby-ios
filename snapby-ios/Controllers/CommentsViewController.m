@@ -69,7 +69,7 @@
     NSUInteger buttonCorner = 5;
     self.addCommentButton.layer.cornerRadius = buttonCorner;
     [[self.addCommentButton layer] setBorderWidth:1.0f];
-    [[self.addCommentButton layer] setBorderColor:[ImageUtilities getSnapbyBlue].CGColor];
+    [[self.addCommentButton layer] setBorderColor:[ImageUtilities getSnapbyPink].CGColor];
     
     // observe keyboard show notifications to resize the text view appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self

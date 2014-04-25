@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -15,20 +15,54 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vbr-M5-sON">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VMi-Iz-KbH">
                     <rect key="frame" x="15" y="0.0" width="305" height="568"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <gestureRecognizers/>
-                </imageView>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="place_holder.png" translatesAutoresizingMaskIntoConstraints="NO" id="ody-7e-6CK">
+                            <rect key="frame" x="103" y="234" width="100" height="100"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="ORt-ba-aCQ"/>
+                                <constraint firstAttribute="width" constant="100" id="QNF-Lg-8M0"/>
+                            </constraints>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vbr-M5-sON">
+                            <rect key="frame" x="0.0" y="0.0" width="305" height="568"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <gestureRecognizers/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.98431372549999996" green="0.90588235289999997" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Vbr-M5-sON" firstAttribute="leading" secondItem="VMi-Iz-KbH" secondAttribute="leading" id="2fH-hJ-wAx"/>
+                        <constraint firstAttribute="centerX" secondItem="ody-7e-6CK" secondAttribute="centerX" id="3j5-Tn-y0b"/>
+                        <constraint firstAttribute="trailing" secondItem="Vbr-M5-sON" secondAttribute="trailing" id="Qvn-2g-syx"/>
+                        <constraint firstAttribute="bottom" secondItem="Vbr-M5-sON" secondAttribute="bottom" id="Sr8-CW-3wV"/>
+                        <constraint firstItem="Vbr-M5-sON" firstAttribute="top" secondItem="VMi-Iz-KbH" secondAttribute="top" id="UnV-Oh-j7Z"/>
+                        <constraint firstAttribute="centerY" secondItem="ody-7e-6CK" secondAttribute="centerY" id="ahV-GM-yKd"/>
+                    </constraints>
+                </view>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Vbr-M5-sON" secondAttribute="trailing" id="GG6-j1-gW8"/>
-                <constraint firstItem="Vbr-M5-sON" firstAttribute="top" secondItem="1" secondAttribute="top" id="KKR-CR-5Fs"/>
-                <constraint firstItem="Vbr-M5-sON" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="15" id="Vsq-Fd-dCL"/>
-                <constraint firstAttribute="bottom" secondItem="Vbr-M5-sON" secondAttribute="bottom" id="wd4-m4-j9W"/>
+                <constraint firstAttribute="trailing" secondItem="VMi-Iz-KbH" secondAttribute="trailing" id="40i-7f-K0i"/>
+                <constraint firstItem="VMi-Iz-KbH" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="15" id="NPg-z7-48u"/>
+                <constraint firstAttribute="bottom" secondItem="VMi-Iz-KbH" secondAttribute="bottom" id="VSz-3k-8mD"/>
+                <constraint firstItem="VMi-Iz-KbH" firstAttribute="top" secondItem="1" secondAttribute="top" id="vAl-EV-ZET"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
+        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GDX-Gk-pEe">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <constraints>
+                <constraint firstAttribute="width" constant="50" id="ZR6-O4-7w7"/>
+                <constraint firstAttribute="height" constant="50" id="epb-AQ-NCC"/>
+            </constraints>
+        </imageView>
     </objects>
+    <resources>
+        <image name="place_holder.png" width="60" height="47"/>
+    </resources>
 </document>

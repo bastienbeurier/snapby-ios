@@ -62,7 +62,6 @@ static const NSUInteger kMaxSnapbyDescriptionLength = 140;
 static const NSUInteger kSnapbyRadius = 300;
 static const NSUInteger kSnapbyImageHeight = 600;
 
-static const NSUInteger kDistanceAtStartup = 6000;
 static const NSUInteger kZoomAtStartup = 13;
 
 static const NSUInteger kDistanceBeforeUpdateLocation = 50;

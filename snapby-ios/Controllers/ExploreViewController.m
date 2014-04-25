@@ -30,6 +30,11 @@
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @property (nonatomic) int currentSelectedZIndex;
 @property (nonatomic) NSInteger automaticScrolling;
+@property (nonatomic) BOOL myLocationMarkerSet;
+@property (weak, nonatomic) IBOutlet UIView *snapbyDialog;
+@property (weak, nonatomic) IBOutlet UILabel *snapbyDialogLabel;
+@property (nonatomic) BOOL didInitializedExplore;
+@property (weak, nonatomic) IBOutlet UIImageView *refreshButton;
 
 @end
 
@@ -40,17 +45,19 @@
 {
     [super viewDidLoad];
     
-    //TODO: loading dialog if waiting for location
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    
+    // border radius
+    [self.snapbyDialog.layer setCornerRadius:25.0f];
+    [self.refreshButton.layer setCornerRadius:25.0f];
     
     self.mapView.delegate = self;
-    self.mapView.myLocationEnabled = YES;
+    self.mapView.myLocationEnabled = NO;
     self.mapView.settings.scrollGestures = NO;
     self.mapView.settings.zoomGestures = NO;
     self.mapView.settings.tiltGestures = NO;
     self.mapView.settings.rotateGestures = NO;
-    
-    //Status bar style
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
     self.automaticScrolling = NO;
     
@@ -65,33 +72,84 @@
     
     //Equivalent of NO
     self.automaticScrolling = -1;
+    
+    self.myLocationMarkerSet = NO;
+    
+    
+    
+    self.didInitializedExplore = NO;
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, self.scrollViewContainer.frame.size.height, 0);
-    self.mapView.padding = edgeInsets;
-    
-    [self moveMapToMyLocationAndLoadSnapbies];
+    if (!self.didInitializedExplore) {
+        self.didInitializedExplore = YES;
+        UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, self.scrollViewContainer.frame.size.height, 0);
+        self.mapView.padding = edgeInsets;
+        
+        [self moveMapToMyLocationAndLoadSnapbies];
+    }
 }
 
 - (void)refreshSnapbies
 {
-    //TODO Start loading
+    NSLog(@"REFRESHING SNAPBIES IN EXPLORE!!");
+    [self loadingSnapbiesUI];
+    
     [AFSnapbyAPIClient pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] AndExecuteSuccess:^(NSArray *snapbies) {
-        
-        //TODO Loading dialog
-        //TODO: handle case no snapby
-        
         self.snapbies = snapbies;
     } failure:^{
-        //TODO Stop loading dialog and display no connection
+        [self noConnectionUI];
     }];
+}
+
+- (void)loadingSnapbiesUI
+{
+    self.snapbyDialog.hidden = NO;
+    self.snapbyDialogLabel.text = @"Loading...";
+    self.scrollView.hidden = YES;
+}
+
+- (void)noSnapbiesUI
+{
+    self.snapbyDialog.hidden = NO;
+    self.snapbyDialogLabel.text = @"No snapby here...";
+    self.scrollView.hidden = YES;
+}
+
+- (void)noConnectionUI
+{
+    self.snapbyDialog.hidden = NO;
+    self.snapbyDialogLabel.text = @"No connection...";
+    self.scrollView.hidden = YES;
+}
+
+- (void)noLocationUI
+{
+    [self.mapView moveCamera:[GMSCameraUpdate setTarget:CLLocationCoordinate2DMake(50,0) zoom:0]];
+    self.snapbyDialog.hidden = NO;
+    self.snapbyDialogLabel.text = @"No location...";
+    self.scrollView.hidden = YES;
+}
+
+- (void)displaySnapbiesUI
+{
+    self.snapbyDialog.hidden = YES;
+    self.snapbyDialogLabel.text = @"";
+    self.scrollView.hidden = NO;
 }
 
 - (void)setSnapbies:(NSArray *)snapbies
 {
     _snapbies = snapbies;
+    
+    if ([snapbies count] == 0) {
+        [self noSnapbiesUI];
+        return;
+    }
+    
     [self displaySnapbies:snapbies];
     
     NSUInteger numberPages = self.snapbies.count;
@@ -99,10 +157,12 @@
     // view controllers are created lazily
     // in the meantime, load the array with placeholders which will be replaced on demand
     NSMutableArray *controllers = [[NSMutableArray alloc] init];
+    
     for (NSUInteger i = 0; i < numberPages; i++)
     {
-		[controllers addObject:[NSNull null]];
+        [controllers addObject:[NSNull null]];
     }
+    
     self.viewControllers = controllers;
     
     if (self.scrollViewWidth == 0 && self.scrollViewHeight == 0) {
@@ -112,11 +172,11 @@
     
     self.scrollView.contentSize = CGSizeMake(self.scrollViewWidth * numberPages, self.scrollViewHeight);
     
-    if ([snapbies count] > 0) {
-        [self loadSnapbiesAndUpdateMarker];
-    } else {
-        //TODO show now snapby view
-    }
+    [self gotoPage:0 animated:NO];
+    
+    [self loadSnapbiesAndUpdateMarker];
+    
+    [self displaySnapbiesUI];
 }
 
 - (void) moveMapToMyLocationAndLoadSnapbies
@@ -129,7 +189,16 @@
         
         [self.mapView moveCamera:[GMSCameraUpdate setTarget:location zoom:kZoomAtStartup]];
         
+        [self.mapView clear];
+        
+        GMSMarker *marker = [GMSMarker markerWithPosition:location];
+        marker.icon = [UIImage imageNamed:@"my_location_marker"];
+        marker.zIndex = 10000;
+        marker.map = self.mapView;
+        
         [self refreshSnapbies];
+    } else {
+        [self noLocationUI];
     }
 }
 
@@ -156,16 +225,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Snapby Push Segue"]) {
+    if ([segueName isEqualToString: @"Snapby Push Segue From Explore"]) {
         ((SnapbyViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
     }
 }
 
 - (void)displaySnapbies:(NSArray *)snapbies
 {
-    //Remove annotations that are not on screen anymore
-    [self.mapView clear];
-    
     [self.displayedSnapbies removeAllObjects];
     
     for (Snapby *snapby in snapbies) {
@@ -268,7 +334,7 @@
 {
     // switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = self.scrollViewWidth;
-    return floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    return MIN(floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1, self.snapbies.count - 1);
 }
 
 - (void)gotoPage:(NSUInteger)page animated:(BOOL)animated
@@ -283,7 +349,11 @@
 
 - (IBAction)onScrollViewClicked:(id)sender {
     Snapby *snapby = [self.snapbies objectAtIndex:[self getScrollViewPage]];
-    [self performSegueWithIdentifier:@"Snapby Push Segue" sender:snapby];
+    [self performSegueWithIdentifier:@"Snapby Push Segue From Explore" sender:snapby];
+}
+
+- (IBAction)refreshButtonClicked:(id)sender {
+    [self moveMapToMyLocationAndLoadSnapbies];
 }
 
 @end

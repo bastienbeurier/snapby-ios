@@ -17,7 +17,6 @@
 
 @interface WelcomeViewController ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *welcomeImageView;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButtonView;
 @property (weak, nonatomic) IBOutlet UIButton *signupButtonView;
 @property (weak, nonatomic) IBOutlet UILabel *facebookFirstLabel;
@@ -40,7 +39,6 @@
     if (screenRect.size.height == 568.0f) {
         filename = @"Default-568h.png";
     }
-    self.welcomeImageView.image = [UIImage imageNamed:filename];
     
     //Round corners
     NSUInteger buttonHeight = self.facebookButtonView.bounds.size.height;
@@ -58,9 +56,6 @@
 {
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
-    
-    //Status bar style
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [super viewWillAppear:animated];
 }

@@ -17,6 +17,8 @@
 @property (weak, nonatomic) User *currentUser;
 @property (nonatomic) NSInteger profileUserId;
 
+- (void)refreshSnapbies;
+
 // Only for myProfile in the multiple controller
 @property (weak, nonatomic) id <MyProfileViewControllerDelegate> myProfileViewControllerDelegate;
 

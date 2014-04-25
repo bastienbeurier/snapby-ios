@@ -49,7 +49,7 @@
     
    [self.pageViewController setViewControllers:@[[self getOrInitImagePickerController]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
-    [self getOrInitMapViewController];
+    [self getOrInitExploreViewController];
     [self getOrInitMyProfileViewController];
     
     //Hack to load the controllers
@@ -58,6 +58,7 @@
     
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
+    
     [self.pageViewController didMoveToParentViewController:self];
 }
 
@@ -74,6 +75,7 @@
     self.currentUser.lat = self.locationManager.location.coordinate.latitude;
     self.currentUser.lng = self.locationManager.location.coordinate.longitude;
     [self.locationManager stopUpdatingLocation];
+    
 }
 
          
@@ -85,7 +87,7 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitMapViewController];
+        return [self getOrInitExploreViewController];
     } else if ([viewController isKindOfClass:[ProfileViewController class]]){
         return [self getOrInitImagePickerController];
     } else {
@@ -109,6 +111,7 @@
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"Create from Multiple modal segue"]) {
         CreateSnapbyViewController * createSnapbyViewController = (CreateSnapbyViewController *) [segue destinationViewController];
+        createSnapbyViewController.createSnapbyVCDelegate = self;
         createSnapbyViewController.sentImage = (UIImage *) sender;
         createSnapbyViewController.snapbyLocation = self.locationManager.location;
     }
@@ -126,7 +129,7 @@
     return self.imagePickerController;
 }
 
-- (ExploreViewController *) getOrInitMapViewController {
+- (ExploreViewController *) getOrInitExploreViewController {
     if(!self.mapViewController){
         self.mapViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapViewController"];
         self.mapViewController.exploreVCDelegate = self;
@@ -186,15 +189,22 @@
     self.imagePickerController = imagePickerController;
 }
 
+- (void)goHomeAfterRelaunch
+{
+    NSArray *viewControllers = @[[self getOrInitImagePickerController]];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self reloadSnapbies];
+}
+
 // Custom button and actions
 - (IBAction)mapButtonClicked:(id)sender {
-    NSArray *viewControllers = @[[self getOrInitMapViewController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    NSArray *viewControllers = @[[self getOrInitExploreViewController]];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
 }
 
 - (IBAction)profileButtonClicked:(id)sender {
     NSArray *viewControllers = @[[self getOrInitMyProfileViewController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
 
 - (IBAction)takePictureButtonClicked:(id)sender {
@@ -268,9 +278,12 @@
 
 // CreateSnapbyDelegate protocole
 
-- (void)onSnapbyCreated:(Snapby *)snapby
+- (void)onSnapbyCreated
 {
-    //TODO show success toast
+    [self reloadSnapbies];
+    
+    NSArray *viewControllers = @[[self getOrInitExploreViewController]];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:nil];
 }
 - (void)startLocationUpdate
 {
@@ -298,6 +311,12 @@
 - (CLLocation *)getMyLocation
 {
     return self.myLocation;
+}
+
+- (void)reloadSnapbies
+{
+    [self.mapViewController moveMapToMyLocationAndLoadSnapbies];
+    [self.myProfileViewController refreshSnapbies];
 }
 
 @end

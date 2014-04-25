@@ -19,7 +19,7 @@
 
 + (void)addDropShadowToView:(UIView *)view;
 
-+ (UIColor *)getSnapbyBlue;
++ (UIColor *)getSnapbyPink;
 
 + (UIImage*)cropBiggestCenteredSquareImageFromImage:(UIImage*)image withSide:(CGFloat)side;
 

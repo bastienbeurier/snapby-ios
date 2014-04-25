@@ -207,9 +207,9 @@
     [view.layer setShadowOffset:CGSizeMake(kDropShadowX, kDropShadowY)];
 }
 
-+ (UIColor *)getSnapbyBlue
++ (UIColor *)getSnapbyPink
 {
-    return [UIColor colorWithRed:139/256.0 green:172/256.0 blue:224/256.0 alpha:1];
+    return [UIColor colorWithRed:243/256.0 green:146/256.0 blue:179/256.0 alpha:1];
 }
 
 + (UIColor *)getFacebookBlue
@@ -260,7 +260,7 @@
     
     //Create bar view
     UIView *customNavBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewController.view.frame.size.width, barHeight)];
-    customNavBar.backgroundColor = [ImageUtilities getSnapbyBlue];
+    customNavBar.backgroundColor = [ImageUtilities getSnapbyPink];
     [viewController.view addSubview:customNavBar];
     
     // Right Button

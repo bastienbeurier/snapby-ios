@@ -25,6 +25,6 @@
 
 @protocol CreateSnapbyViewControllerDelegate
 
-- (void)onSnapbyCreated:(Snapby *)snapby;
+- (void)onSnapbyCreated;
 
 @end

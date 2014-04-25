@@ -42,6 +42,9 @@
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (weak, nonatomic) IBOutlet UIView *userInfoContainer;
 @property (nonatomic) int currentSelectedZIndex;
+@property (weak, nonatomic) IBOutlet UIView *snapbyDialog;
+@property (weak, nonatomic) IBOutlet UILabel *snapbyDialogLabel;
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
 
 
@@ -53,6 +56,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // border radius
+    [self.snapbyDialog.layer setCornerRadius:25.0f];
+    [self.refreshButton.layer setCornerRadius:25.0f];
     
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = NO;
@@ -81,17 +88,53 @@
 
 - (void)refreshSnapbies
 {
-    //TODO Start loading
+    [self loadingSnapbiesUI];
     
     [AFSnapbyAPIClient getSnapbies:[SessionUtilities getCurrentUser].identifier page:1 pageSize:100 andExecuteSuccess:^(NSArray *snapbies) {
-        //TODO: handle case no snapby
-        //TODO: stoploading
-        [self moveMapToFirstSnapby:[snapbies objectAtIndex:0]];
+
+        if ([snapbies count] > 0) {
+            [self moveMapToFirstSnapby:[snapbies objectAtIndex:0]];
+        } else {
+            [self.mapView moveCamera:[GMSCameraUpdate setTarget:CLLocationCoordinate2DMake(50,0) zoom:0]];
+        }
         
         self.snapbies = snapbies;
     } failure:^{
-        //TODO Stop loading dialog and display no connection
+        [self noConnectionUI];
     }];
+}
+
+- (void)loadingSnapbiesUI
+{
+    self.snapbyDialog.hidden = NO;
+    self.snapbyDialogLabel.text = @"Loading...";
+    self.scrollView.hidden = YES;
+    self.refreshButton.hidden = YES;
+}
+
+- (void)noSnapbiesUI
+{
+    self.snapbyDialog.hidden = NO;
+    self.snapbyDialogLabel.text = @"No snapby yet...";
+    self.scrollView.hidden = YES;
+    self.refreshButton.hidden = NO;
+}
+
+- (void)noConnectionUI
+{
+    [self.mapView moveCamera:[GMSCameraUpdate setTarget:CLLocationCoordinate2DMake(50,0) zoom:0]];
+    self.snapbyDialog.hidden = NO;
+    self.snapbyDialogLabel.text = @"No connection...";
+    self.scrollView.hidden = YES;
+    self.refreshButton.hidden = NO;
+}
+
+- (void)displaySnapbiesUI
+{
+    self.snapbyDialog.hidden = YES;
+    self.snapbyDialogLabel.text = @"";
+    self.scrollView.hidden = NO;
+    self.refreshButton.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -105,16 +148,20 @@
 - (void)setSnapbies:(NSArray *)snapbies
 {
     _snapbies = snapbies;
+    
+    if ([snapbies count] == 0) {
+        [self noSnapbiesUI];
+        return;
+    }
+    
     [self displaySnapbies:snapbies];
     
     NSUInteger numberPages = self.snapbies.count;
     
-    // view controllers are created lazily
-    // in the meantime, load the array with placeholders which will be replaced on demand
     NSMutableArray *controllers = [[NSMutableArray alloc] init];
     for (NSUInteger i = 0; i < numberPages; i++)
     {
-		[controllers addObject:[NSNull null]];
+        [controllers addObject:[NSNull null]];
     }
     self.viewControllers = controllers;
     
@@ -125,7 +172,11 @@
     
     self.scrollView.contentSize = CGSizeMake(self.scrollViewWidth * numberPages, self.scrollViewHeight);
     
+    [self gotoPage:0 animated:NO];
+    
     [self loadSnapbiesAndUpdateMarker];
+    
+    [self displaySnapbiesUI];
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
@@ -151,7 +202,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Snapby Push Segue"]) {
+    if ([segueName isEqualToString: @"Snapby Push Segue From Profile"]) {
         ((SnapbyViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
     }
 }
@@ -265,7 +316,7 @@
 {
     // switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = self.scrollViewWidth;
-    return floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    return MIN(floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1, self.snapbies.count - 1);
 }
 
 - (void)gotoPage:(NSUInteger)page animated:(BOOL)animated
@@ -280,7 +331,7 @@
 
 - (IBAction)onScrollViewClicked:(id)sender {
     Snapby *snapby = [self.snapbies objectAtIndex:[self getScrollViewPage]];
-    [self performSegueWithIdentifier:@"Snapby Push Segue" sender:snapby];
+    [self performSegueWithIdentifier:@"Snapby Push Segue From Profile" sender:snapby];
 }
 
 - (void)animateMapToLat:(float)lat lng:(float)lng
@@ -323,10 +374,15 @@
     };
     
     void (^failureBlock)() = ^() {
-        //TODO handle profile did not load
+        [self noConnectionUI];
     };
     
     [AFSnapbyAPIClient getOtherUserInfo:self.profileUserId success:successBlock failure:failureBlock];
+}
+
+- (IBAction)refreshButtonClicked:(id)sender {
+    [self getProfileInfo];
+    [self refreshSnapbies];
 }
 
 @end

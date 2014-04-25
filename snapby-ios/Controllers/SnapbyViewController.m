@@ -32,6 +32,7 @@
 @interface SnapbyViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *snapbyImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *snapbyThumbView;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreSnapbyOptionsButton;
 @property (strong, nonatomic) UIActionSheet *flagActionSheet;
@@ -49,19 +50,14 @@
     [super viewDidLoad];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    //Status bar style
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
-    [super viewWillAppear:animated];
-}
-
 - (void)updateUI
 {
         
     //Fill with snapby info
     if (self.snapby) {
+        
+        //Preload thumb
+        [self.snapbyThumbView setImageWithURL:[self.snapby getSnapbyThumbURL]];
         // Get image
         [self.snapbyImageView setImageWithURL:[self.snapby getSnapbyImageURL] placeholderImage:nil];
         
@@ -169,8 +165,7 @@
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 - (IBAction)snapbyImageClicked:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

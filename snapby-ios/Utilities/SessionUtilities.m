@@ -32,7 +32,7 @@
 {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
-    User *user= [[User alloc] init];
+    User *user = [[User alloc] init];
     user.identifier = [[prefs objectForKey:USER_ID_PREF] integerValue];
     user.email = [prefs objectForKey:USER_EMAIL_PREF];
     user.username = [prefs objectForKey:USERNAME_PREF];
