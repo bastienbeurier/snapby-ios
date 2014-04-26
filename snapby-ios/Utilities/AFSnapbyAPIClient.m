@@ -153,7 +153,7 @@
 }
 
 // Flag
-+ (void)reportSnapby:(NSUInteger)snapbyId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock
++ (void)reportSnapby:(NSUInteger)snapbyId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
     
@@ -173,7 +173,7 @@
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (failureBlock) {
-            failureBlock(task);
+            failureBlock();
         }
     }];
 }

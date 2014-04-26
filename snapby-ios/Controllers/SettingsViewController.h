@@ -10,8 +10,10 @@
 #import "User.h"
 
 
-@interface SettingsViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface SettingsViewController : UITableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) User *currentUser;
+
+- (void)changeProfilePicture;
 
 @end

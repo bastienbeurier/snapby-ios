@@ -14,19 +14,21 @@
 #import "SessionUtilities.h"
 #import "AFSnapbyAPIClient.h"
 #import "UIImageView+AFNetworking.h"
-#include "MBProgressHUD.h"
+#import "MBProgressHUD.h"
+
+#define CHANGE_PROFILE_PIC 1
+#define CHANGE_USERNAME 2
+#define FEEDBACK 6
+#define RATE_ME 7
+#define LOG_OUT 9
 
 
 @interface SettingsViewController ()
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (strong, nonatomic) NSArray *distanceUnitPreferences;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *unitSegmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *snapbyVersionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *editTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *settingsTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *participateTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureView;
 
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
@@ -46,8 +48,7 @@
 {
     [super viewDidLoad];
     
-    //Nav Bar
-    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:nil title:@"Settings" sizeBig:YES inViewController:self];
+    [self.profilePictureView.layer setCornerRadius:25.0f];
     
     self.snapbyVersionLabel.text = [self.snapbyVersionLabel.text stringByAppendingFormat:@"\u2122 (v.%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     
@@ -59,21 +60,12 @@
     //Set username
     [self setInitialUsername];
     
-    //Disable scroll view if screen is big enough
-    if ([[UIScreen mainScreen] bounds].size.height == 568.0f) {
-        self.scrollView.scrollEnabled = NO;
-    }
-    
-    [ImageUtilities drawBottomBorderForView:self.editTitleLabel withColor:[UIColor grayColor]];
-    [ImageUtilities drawBottomBorderForView:self.settingsTitleLabel withColor:[UIColor grayColor]];
-    [ImageUtilities drawBottomBorderForView:self.participateTitleLabel withColor:[UIColor grayColor]];
-    
     [ImageUtilities setWithoutCachingImageView:self.profilePictureView withURL:[User getUserProfilePictureURLFromUserId:self.currentUser.identifier]];
 }
 
 - (void)setInitialUsername
 {
-    self.usernameTextField.text = [@"@" stringByAppendingString:self.currentUser.username];
+    self.usernameTextField.text = self.currentUser.username;
     self.usernameTextField.delegate = self;
 }
 
@@ -85,26 +77,6 @@
 - (IBAction)unitSegmentedControlValueChanged:(UISegmentedControl *)sender {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLong:self.unitSegmentedControl.selectedSegmentIndex] forKey:DISTANCE_UNIT_PREF];
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (IBAction)feedbackClicked:(id)sender {
-    NSString *email = [NSString stringWithFormat:@"mailto:info@snapbyhereandnow.com?subject=Feedback for Snapby on iOS (v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    
-    email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
-}
-
-- (IBAction)rateMeClicked:(id)sender {
-    if ([GeneralUtilities connected]) {
-        [GeneralUtilities redirectToAppStore];
-    } else {
-        [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
-    }
-}
-
-- (IBAction)logoutButtonClicked:(id)sender {
-    [SessionUtilities redirectToSignIn];
 }
 
 - (void)backButtonClicked
@@ -122,14 +94,7 @@
     BOOL error = NO;
     NSString *message;
     
-    NSString *newUsername = @"";
-    
-    if ([self.usernameTextField.text length] > 0 &&
-        [[self.usernameTextField.text substringToIndex:1] isEqualToString:@"@"]) {
-        newUsername = [self.usernameTextField.text substringFromIndex:1];
-    } else {
-        newUsername = self.usernameTextField.text;
-    }
+    NSString *newUsername = self.usernameTextField.text;
     
     if (![GeneralUtilities validUsername:newUsername]) {
         message = NSLocalizedStringFromTable (@"invalid_username_alert_text", @"Strings", @"comment");
@@ -173,15 +138,6 @@
     }
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacement
-{
-    if ([textField.text length] == 1 && [replacement length] == 0) {
-        return NO;
-    }
-    
-    return YES;
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
     [textField resignFirstResponder];
@@ -192,14 +148,6 @@
 // --------------------------
 // Profile picture change
 // --------------------------
-
-- (IBAction)addPhotoButtonClicked:(id)sender {
-    if (![GeneralUtilities connected]) {
-        [GeneralUtilities showMessage:nil withTitle: NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
-        return;
-    }
-    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-}
 
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
@@ -254,6 +202,44 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [super tableView:tableView
+                       cellForRowAtIndexPath:indexPath];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger row = [indexPath row];
+    
+    if (row == CHANGE_PROFILE_PIC) {
+        [self changeProfilePicture];
+    } else if (row == CHANGE_USERNAME) {
+        [self.usernameTextField becomeFirstResponder];
+    } else if (row == FEEDBACK) {
+        NSString *email = [NSString stringWithFormat:@"mailto:info@snapby.co?subject=Feedback for Snapby on iOS (v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+        email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+    } else if (row == RATE_ME) {
+        if ([GeneralUtilities connected]) {
+            [GeneralUtilities redirectToAppStore];
+        } else {
+            [GeneralUtilities showMessage:nil withTitle:NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment")];
+        }
+    } else if (row == LOG_OUT) {
+        [SessionUtilities redirectToSignIn];
+    }
+}
+
+- (void)changeProfilePicture
+{
+    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
 }
 
 @end

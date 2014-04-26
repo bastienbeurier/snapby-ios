@@ -12,8 +12,8 @@
 
 + (NSTimeInterval)getSnapbyAge:(NSString *)dateCreated;
 
-+ (NSArray *)ageToStrings:(NSTimeInterval)age;
++ (NSString *)ageToString:(NSTimeInterval)age;
 
-+ (NSArray *)ageToShortStrings:(NSTimeInterval)age;
++ (NSString *)ageToShortString:(NSTimeInterval)age;
 
 @end

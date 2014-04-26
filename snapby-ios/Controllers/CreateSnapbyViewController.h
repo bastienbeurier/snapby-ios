@@ -14,17 +14,17 @@
 
 @protocol CreateSnapbyViewControllerDelegate;
 
-@interface CreateSnapbyViewController : UIViewController <RefineSnapbyLocationViewControllerDelegate, UIActionSheetDelegate>
+@interface CreateSnapbyViewController : UIViewController <UIActionSheetDelegate>
 
 @property (weak, nonatomic) id <CreateSnapbyViewControllerDelegate> createSnapbyVCDelegate;
 
 @property (strong, nonatomic) IBOutlet UIImage *sentImage;
-@property (strong, nonatomic) CLLocation *snapbyLocation;
 
 @end
 
 @protocol CreateSnapbyViewControllerDelegate
 
 - (void)onSnapbyCreated;
+- (CLLocation *)getMyLocation;
 
 @end

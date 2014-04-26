@@ -11,6 +11,8 @@
 
 #define ONE_MINUTE 60
 #define ONE_HOUR (60 * ONE_MINUTE)
+#define ONE_DAY (24 * ONE_HOUR)
+#define ONE_WEEK (7 * ONE_DAY)
 
 @implementation TimeUtilities
 
@@ -23,47 +25,63 @@
     return -[snapbyDate timeIntervalSinceNow];
 }
 
-+ (NSArray *)ageToStrings:(NSTimeInterval)age
++ (NSString *)ageToString:(NSTimeInterval)age
 {
     if (age > 0) {
-        NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
-        if (hours > 1) {
-            NSArray *result = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%lu", (unsigned long)hours], NSLocalizedStringFromTable (@"hours", @"Strings", @"comment"), nil];
-            if (age > kSnapbyDuration) {
-                return [[NSArray alloc] initWithObjects:NSLocalizedStringFromTable (@"expired", @"Strings", @"comment"), nil, nil];
-            }
-            return result;
-        } else if (hours == 1) {
-            return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%lu", (unsigned long)hours], NSLocalizedStringFromTable (@"hour", @"Strings", @"comment"), nil];
-        } else {
-            NSUInteger minutes = ((NSUInteger)age) / ONE_MINUTE;
-            if (minutes > 1) {
-                return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%lu", (unsigned long)minutes], NSLocalizedStringFromTable (@"minutes", @"Strings", @"comment"), nil];
-            } else if (minutes == 1) {
-                return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%lu", (unsigned long)minutes], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
+        NSInteger weeks = age / ONE_WEEK;
+        NSInteger days = age / ONE_DAY;
+        NSInteger hours = age / ONE_HOUR;
+        NSInteger minutes = age / ONE_MINUTE;
+        
+        if (weeks >= 1) {
+            if (weeks > 1) {
+                return [[NSString stringWithFormat:@"%ld", weeks] stringByAppendingString:@" weeks"];
             } else {
-                return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
+                return [[NSString stringWithFormat:@"%ld", weeks] stringByAppendingString:@" week"];
+            }
+        } else if (days >= 1) {
+            if (days > 1) {
+                return [[NSString stringWithFormat:@"%ld", days] stringByAppendingString:@" days"];
+            } else {
+                return [[NSString stringWithFormat:@"%ld", days] stringByAppendingString:@" day"];
+            }
+        } else if (hours >= 1) {
+            if (hours > 1) {
+                return [[NSString stringWithFormat:@"%ld", hours] stringByAppendingString:@" hours"];
+            } else {
+                return [[NSString stringWithFormat:@"%ld", hours] stringByAppendingString:@" hour"];
+            }
+        } else {
+            if (minutes > 1) {
+                return [[NSString stringWithFormat:@"%ld", minutes] stringByAppendingString:@" minutes"];
+            } else {
+                return [[NSString stringWithFormat:@"%ld", minutes] stringByAppendingString:@" minute"];
             }
         }
-        
     } else {
-        return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], NSLocalizedStringFromTable (@"minute", @"Strings", @"comment"), nil];
+        return @"0 minute";
     }
 }
 
-+ (NSArray *)ageToShortStrings:(NSTimeInterval)age
++ (NSString *)ageToShortString:(NSTimeInterval)age
 {
     if (age > 0) {
-        NSUInteger hours = ((NSUInteger)age) / ONE_HOUR;
-        if (hours >= 1) {
-            return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%lu", (unsigned long)hours], @"h", nil];
-        } else {
-            NSUInteger minutes = ((NSUInteger)age) / ONE_MINUTE;
-            return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%lu", (unsigned long)minutes], @"min", nil];
-        }
+        NSInteger weeks = age / ONE_WEEK;
+        NSInteger days = age / ONE_DAY;
+        NSInteger hours = age / ONE_HOUR;
+        NSInteger minutes = age / ONE_MINUTE;
         
+        if (weeks >= 1) {
+            return [[NSString stringWithFormat:@"%ld", weeks] stringByAppendingString:@"w"];
+        } else if (days >= 1) {
+            return [[NSString stringWithFormat:@"%ld", days] stringByAppendingString:@"d"];
+        } else if (hours >= 1) {
+            return [[NSString stringWithFormat:@"%ld", hours] stringByAppendingString:@"h"];
+        } else {
+            return [[NSString stringWithFormat:@"%ld", minutes] stringByAppendingString:@"min"];
+        }
     } else {
-        return [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d", 0], @"min", nil];
+        return @"0min";
     }
 }
 

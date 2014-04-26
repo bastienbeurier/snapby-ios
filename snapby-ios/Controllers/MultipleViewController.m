@@ -12,12 +12,14 @@
 #import "GeneralUtilities.h"
 #import "LocationUtilities.h"
 #import "SessionUtilities.h"
+#import "SettingsViewController.h"
 
 @interface MultipleViewController ()
 
 @property (strong, nonatomic) ProfileViewController * myProfileViewController;
-@property (strong, nonatomic) ExploreViewController * mapViewController;
+@property (strong, nonatomic) ExploreViewController * exploreViewController;
 @property (strong, nonatomic) CreateSnapbyViewController * createSnapbyViewController;
+@property (strong, nonatomic) SettingsViewController * settingsViewController;
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -53,7 +55,7 @@
     [self getOrInitMyProfileViewController];
     
     //Hack to load the controllers
-    float dummy = self.mapViewController.view.frame.size.height + self.myProfileViewController.view.frame.size.height;
+    float dummy = self.exploreViewController.view.frame.size.height + self.myProfileViewController.view.frame.size.height;
     NSLog(@"Dummy %f", dummy);
     
     [self addChildViewController:_pageViewController];
@@ -90,6 +92,8 @@
         return [self getOrInitExploreViewController];
     } else if ([viewController isKindOfClass:[ProfileViewController class]]){
         return [self getOrInitImagePickerController];
+    } else if ([viewController isKindOfClass:[SettingsViewController class]]){
+        return [self getOrInitMyProfileViewController];
     } else {
         return nil;
     }
@@ -97,7 +101,9 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
+    if ([viewController isKindOfClass:[ProfileViewController class]]) {
+        return [self getOrInitSettingsViewController];
+    } else if ([viewController isKindOfClass:[UIImagePickerController class]]) {
         return [self getOrInitMyProfileViewController];
     } else if ([viewController isKindOfClass:[ExploreViewController class]]){
         return [self getOrInitImagePickerController];
@@ -113,7 +119,6 @@
         CreateSnapbyViewController * createSnapbyViewController = (CreateSnapbyViewController *) [segue destinationViewController];
         createSnapbyViewController.createSnapbyVCDelegate = self;
         createSnapbyViewController.sentImage = (UIImage *) sender;
-        createSnapbyViewController.snapbyLocation = self.locationManager.location;
     }
 }
 
@@ -130,21 +135,30 @@
 }
 
 - (ExploreViewController *) getOrInitExploreViewController {
-    if(!self.mapViewController){
-        self.mapViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapViewController"];
-        self.mapViewController.exploreVCDelegate = self;
+    if(!self.exploreViewController){
+        self.exploreViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MapViewController"];
+        self.exploreViewController.exploreVCDelegate = self;
     }
-    return self.mapViewController;
+    return self.exploreViewController;
 }
 
 - (ProfileViewController *) getOrInitMyProfileViewController {
     if(!self.myProfileViewController){
-        self.myProfileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyProfileViewController"];
-        self.myProfileViewController.myProfileViewControllerDelegate = self;
+        self.myProfileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        self.myProfileViewController.profileViewControllerDelegate = self;
         self.myProfileViewController.currentUser = self.currentUser;
         self.myProfileViewController.profileUserId = self.currentUser.identifier;
     }
     return self.myProfileViewController;
+}
+
+- (SettingsViewController *) getOrInitSettingsViewController {
+    if(!self.settingsViewController){
+        self.settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+        self.settingsViewController.currentUser = self.currentUser;
+    }
+    
+    return self.settingsViewController;
 }
 
 
@@ -208,11 +222,7 @@
 }
 
 - (IBAction)takePictureButtonClicked:(id)sender {
-    if ([LocationUtilities userLocationValid:self.locationManager.location]) {
-        [self.imagePickerController takePicture];
-    } else {
-        [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"no_location_for_snapby_message", @"Strings", @"comment") withTitle:NSLocalizedStringFromTable (@"no_location_for_snapby_title", @"Strings", @"comment")];
-    }
+    [self.imagePickerController takePicture];
 }
 
 - (IBAction)flipCameraButtonClicked:(id)sender {
@@ -315,8 +325,32 @@
 
 - (void)reloadSnapbies
 {
-    [self.mapViewController moveMapToMyLocationAndLoadSnapbies];
+    [self.exploreViewController moveMapToMyLocationAndLoadSnapbies];
     [self.myProfileViewController refreshSnapbies];
+}
+
+- (void)refreshProfileSnapbies
+{
+    [self.myProfileViewController refreshSnapbies];
+}
+
+- (void)refreshExploreSnapbies
+{
+    [self.exploreViewController moveMapToMyLocationAndLoadSnapbies];
+}
+
+- (void)showSettings
+{
+    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+}
+
+- (void)changeProfilePicture
+{
+    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self.settingsViewController changeProfilePicture];
+
 }
 
 @end

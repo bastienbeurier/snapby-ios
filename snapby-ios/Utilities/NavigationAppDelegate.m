@@ -68,12 +68,6 @@
     // Manage the network activity indicator
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-    // Notification received when app closed
-    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if(remoteNotif) {
-//        [self setRedirectionToNotificationSnapby:remoteNotif];
-    }
-    
     // Handle the case were the user is still signed in
     if ([SessionUtilities isSignedIn]) {
         
@@ -174,40 +168,19 @@
 
 - (void)application:(UIApplication *)application handlePushNotification:(NSDictionary *)notification
 {
-//    if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
-//        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-//        
-//        if ([[navController visibleViewController] isKindOfClass:[CommentsViewController class]] ||
-//            [[navController visibleViewController] isKindOfClass:[LikesViewController class]] ||
-//            [[navController visibleViewController] isKindOfClass:[SnapbyViewController class]] ||
-//            [[navController visibleViewController] isKindOfClass:[ProfileViewController class]] ||
-//            [[navController visibleViewController] isKindOfClass:[UsersListViewController class]] ||
-//            [[navController visibleViewController] isKindOfClass:[SettingsViewController class]]) {
-//            // Pop up all push controllers to come back to multiple
-//            [navController popToViewController:navController.childViewControllers[1] animated:NO];
-//        }
-//        
-//        if ([[navController visibleViewController] isKindOfClass:[MultipleViewController class]]) {
-//            MultipleViewController *multipleViewController = (MultipleViewController *) [navController visibleViewController];
-//            
-//            if ([multipleViewController.pageViewController.viewControllers[0] isKindOfClass:[ExploreViewController class]]) {
-//                ExploreViewController * exploreViewController = multipleViewController.pageViewController.viewControllers[0];
-//                NSDictionary *extra = [notification objectForKey:@"extra"];
-//                NSUInteger snapbyId = [[extra objectForKey:@"snapby_id"] integerValue];
-//
-//            } else {
-//                [self setRedirectionToNotificationSnapby:notification];
-//                NSArray *viewControllers = @[[multipleViewController getOrInitExploreViewController]];
-//                [multipleViewController.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-//            }
-//        } else if ([[navController visibleViewController] isKindOfClass:[SigninViewController class]] ||
-//                   [[navController visibleViewController] isKindOfClass:[SignupViewController class]] ||
-//                   [[navController visibleViewController] isKindOfClass:[WelcomeViewController class]] ||
-//                   [[navController visibleViewController] isKindOfClass:[ForgotPasswordViewController class]]) {
-//            
-//            [self setRedirectionToNotificationSnapby:notification];
-//        }
-//    }
+    if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        
+        if ([[navController visibleViewController] isKindOfClass:[MultipleViewController class]]) {
+            [((MultipleViewController *)[navController visibleViewController]) goHomeAfterRelaunch];
+        }
+        
+        if ([[navController visibleViewController] isKindOfClass:[CommentsViewController class]] ||
+            [[navController visibleViewController] isKindOfClass:[DisplayViewController class]]) {
+            // Pop up all push controllers to come back to multiple
+            [navController popToViewController:navController.childViewControllers[1] animated:NO];
+        }
+    }
 }
 
 

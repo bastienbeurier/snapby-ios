@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Snapby. All rights reserved.
 //
 
-#import "SnapbyViewController.h"
+#import "DisplayViewController.h"
 #import "TimeUtilities.h"
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
@@ -16,10 +16,12 @@
 #import "AFSnapbyAPIClient.h"
 #import "SessionUtilities.h"
 #import "ProfileViewController.h"
+#import "MBProgressHUD.h"
 
-#define MORE_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"report_snapby", @"Strings", @"comment")
-#define MORE_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"navigate_to_snapby", @"Strings", @"comment")
-#define MORE_ACTION_SHEET_OPTION_3 NSLocalizedStringFromTable (@"remove_snapby", @"Strings", @"comment")
+#define MORE_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"navigate_to_snapby", @"Strings", @"comment")
+#define MORE_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"share_snapby", @"Strings", @"comment")
+#define MORE_ACTION_SHEET_OPTION_3 NSLocalizedStringFromTable (@"report_snapby", @"Strings", @"comment")
+#define MORE_ACTION_SHEET_OPTION_4 NSLocalizedStringFromTable (@"remove_snapby", @"Strings", @"comment")
 
 #define FLAG_ACTION_SHEET_OPTION_1 NSLocalizedStringFromTable (@"abusive_content", @"Strings", @"comment")
 #define FLAG_ACTION_SHEET_OPTION_2 NSLocalizedStringFromTable (@"spam_content", @"Strings", @"comment")
@@ -29,19 +31,19 @@
 
 #define FLAG_ACTION_SHEET_CANCEL NSLocalizedStringFromTable (@"cancel", @"Strings", @"comment")
 
-@interface SnapbyViewController ()
+@interface DisplayViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *snapbyImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *snapbyThumbView;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
-@property (weak, nonatomic) IBOutlet UIButton *moreSnapbyOptionsButton;
 @property (strong, nonatomic) UIActionSheet *flagActionSheet;
 @property (strong, nonatomic) UIActionSheet *moreActionSheet;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *createdLabel;
 
 
 @end
 
-@implementation SnapbyViewController
+@implementation DisplayViewController
 
 - (void)viewDidLoad
 {
@@ -61,6 +63,12 @@
         // Get image
         [self.snapbyImageView setImageWithURL:[self.snapby getSnapbyImageURL] placeholderImage:nil];
         
+        self.usernameLabel.text = [NSString stringWithFormat:@"%@ (%lu)", self.snapby.username, self.snapby.userScore];
+        
+        NSString *snapbyAge = [TimeUtilities ageToString:[TimeUtilities getSnapbyAge:self.snapby.created]];
+        
+        self.createdLabel.text = [NSString stringWithFormat:@"Created %@ ago", snapbyAge];
+        
         self.snapbyImageView.clipsToBounds = YES;
         [self.snapbyImageView setHidden:NO];
     }
@@ -68,16 +76,16 @@
 
 - (IBAction)moreSnapbyOptionButtonPressed:(id)sender {
     
-    if([SessionUtilities currentUserIsAdmin] || self.snapby.userId == [SessionUtilities getCurrentUser].identifier) {
+    if(self.snapby.userId == [SessionUtilities getCurrentUser].identifier) {
         self.moreActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                            delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
                                              destructiveButtonTitle:nil
-                                                  otherButtonTitles:MORE_ACTION_SHEET_OPTION_1, MORE_ACTION_SHEET_OPTION_3, nil];
+                                                  otherButtonTitles:MORE_ACTION_SHEET_OPTION_1, MORE_ACTION_SHEET_OPTION_2, MORE_ACTION_SHEET_OPTION_3, MORE_ACTION_SHEET_OPTION_4, nil];
     } else {
         self.moreActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
                                                    destructiveButtonTitle:nil
-                                                        otherButtonTitles:MORE_ACTION_SHEET_OPTION_1, MORE_ACTION_SHEET_OPTION_2, nil];
+                                                        otherButtonTitles:MORE_ACTION_SHEET_OPTION_1, MORE_ACTION_SHEET_OPTION_2, MORE_ACTION_SHEET_OPTION_3, nil];
     }
     
     [self.moreActionSheet showInView:self.view];
@@ -93,13 +101,6 @@
     
     if (actionSheet == self.moreActionSheet) {
         if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_1]) {
-            self.flagActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
-                                                               delegate:self
-                                                      cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
-                                                 destructiveButtonTitle:nil
-                                                      otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
-            [self.flagActionSheet showInView:self.view];
-        } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_2]) {
             Class mapItemClass = [MKMapItem class];
             if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)]) {
                 // Create an MKMapItem to pass to the Maps app
@@ -111,18 +112,39 @@
                 // Pass the map item to the Maps app
                 [mapItem openInMapsWithLaunchOptions:nil];
             }
+        } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_2]) {
+            NSString *shareString = @"Hey, check out this snapby!\n";
+            
+            NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdSnapbyBaseURLString : kDevAFSnapbyAPIBaseURLString) stringByAppendingString:@"snapbies/"]stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)self.snapby.identifier]]];
+            
+            NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, nil];
+            
+            UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+            [activityViewController setValue:@"Sharing a snapby with you." forKey:@"subject"];
+            activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
+            [self presentViewController:activityViewController animated:YES completion:nil];
         } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_3]) {
-            [AFSnapbyAPIClient removeSnapby: self.snapby success:nil failure:nil];
-            [self.navigationController popViewControllerAnimated:YES];
+            self.flagActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
+                                                               delegate:self
+                                                      cancelButtonTitle:FLAG_ACTION_SHEET_CANCEL
+                                                 destructiveButtonTitle:nil
+                                                      otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
+            [self.flagActionSheet showInView:self.view];
+        } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_4]) {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            
+            [AFSnapbyAPIClient removeSnapby: self.snapby success:^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.displayVCDelegate refreshSnapbiesFromDisplay];
+                }];
+            } failure:^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"fail_delete_snapby", @"Strings", @"comment") withTitle:nil];
+            }];
         }
     } else if (actionSheet == self.flagActionSheet) {
-        typedef void (^FailureBlock)(NSURLSessionDataTask *);
-        FailureBlock failureBlock = ^(NSURLSessionDataTask *task) {
-            //In this case, 401 means that the auth token is no valid.
-            if ([SessionUtilities invalidTokenResponse:task]) {
-                [SessionUtilities redirectToSignIn];
-            }
-        };
         
         NSString *motive = nil;
         
@@ -144,26 +166,14 @@
                 break;
         }
         
-        [AFSnapbyAPIClient reportSnapby:self.snapby.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:failureBlock];
+        [AFSnapbyAPIClient reportSnapby:self.snapby.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:^{
+            [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"fail_report_snapby", @"Strings", @"comment") withTitle:nil];
+        }];
         
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
     }
 }
 
-// Share to FB, sms, email.. using UIActivityViewController
-- (IBAction)shareButtonPressed:(id)sender {
-    NSString *shareString = @"Hey, check this snapby before it's too late!\n";
-
-    NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdSnapbyBaseURLString : kDevAFSnapbyAPIBaseURLString) stringByAppendingString:@"snapbies/"]stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)self.snapby.identifier]]];
-    
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, nil];
-    
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-    [activityViewController setValue:@"Sharing a snapby with you." forKey:@"subject"];
-    activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
-    [self presentViewController:activityViewController animated:YES completion:nil];
-}
 - (IBAction)snapbyImageClicked:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

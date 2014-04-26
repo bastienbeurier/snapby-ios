@@ -32,7 +32,7 @@
          AndExecuteSuccess:(void(^)(Snapby *))successBlock
                    Failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
 
-+ (void)reportSnapby:(NSUInteger)snapbyId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)(NSURLSessionDataTask *task))failureBlock;
++ (void)reportSnapby:(NSUInteger)snapbyId withFlaggerId:(NSUInteger)flaggerId withMotive:(NSString *)motive AndExecute:(void(^)())successBlock Failure:(void(^)())failureBlock;
 
 + (void)removeSnapby: (Snapby *) snapby success:(void(^)())successBlock failure:(void(^)())failureBlock;
 

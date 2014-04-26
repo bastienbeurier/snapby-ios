@@ -73,13 +73,14 @@
 "email_not_in_database_message" = "Your email does not correspond to any existing user.";
 "comment_failed_message" = "Your comment could not be sent, please try again.";
 "like_failed_message" = "Your like could not be sent, please try again.";
-"report_snapby" = "Report this snapby";
+"report_snapby" = "Report";
+"share_snapby" = "Share";
 "navigate_to_snapby" = "Directions to snapby";
 "take_and_resize_picture_failed" = "Unexpected error while saving your picture. Please try again.";
 "anonymous_button_enabled" = "Anonymous mode enabled";
 "anonymous_button_disabled" = "Anonymous mode disabled";
 "missing_image"= "Image is missing";
-"remove_snapby"= "Delete this snapby";
+"remove_snapby"= "Delete";
 "follow"= "Follow";
 "unfollow"= "Unfollow";
 "find_friends"= "Find snapbyers";
@@ -89,6 +90,8 @@
 "suggested_friends" = "Snapbyers in my area";
 "relationship_error_title" = "Unexpected error";
 "fail_update_profile_pic_title" = "Your profile picture could not be updated";
+"fail_delete_snapby" = "We coundn't delete your snapby, please try again.";
+"fail_report_snapby" = "We coundn't report this snapby, please try again.";
 
 
  

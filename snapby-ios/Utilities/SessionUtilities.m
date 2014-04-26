@@ -115,9 +115,4 @@
     return task && [(NSHTTPURLResponse *) task.response statusCode] == 401;
 }
 
-+ (BOOL)currentUserIsAdmin
-{
-    return [SessionUtilities getCurrentUser].identifier < 3;
-}
-
 @end

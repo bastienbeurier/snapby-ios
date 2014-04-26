@@ -14,8 +14,16 @@
 
 @protocol SnapbyVCDelegate;
 
-@interface SnapbyViewController : UIViewController <UIActionSheetDelegate>
+@interface DisplayViewController : UIViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) Snapby *snapby;
+
+@property (weak, nonatomic) id <SnapbyVCDelegate> displayVCDelegate;
+
+@end
+
+@protocol SnapbyVCDelegate
+
+- (void)refreshSnapbiesFromDisplay;
 
 @end

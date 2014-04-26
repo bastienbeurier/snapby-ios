@@ -14,7 +14,6 @@
 #import "GeneralUtilities.h"
 #import "UIImageView+AFNetworking.h"
 #import "Constants.h"
-#import "SettingsViewController.h"
 #import "HackClipView.h"
 #import "MKPointAnnotation+SnapbyPointAnnotation.h"
 #import "ExploreSnapbyViewController.h"
@@ -102,6 +101,12 @@
     } failure:^{
         [self noConnectionUI];
     }];
+}
+
+- (void)refreshSnapbiesFromDisplay
+{
+    [self refreshSnapbies];
+    [self.profileViewControllerDelegate refreshExploreSnapbies];
 }
 
 - (void)loadingSnapbiesUI
@@ -203,7 +208,8 @@
 {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"Snapby Push Segue From Profile"]) {
-        ((SnapbyViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
+        ((DisplayViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
+        ((DisplayViewController *) [segue destinationViewController]).displayVCDelegate = self;
     }
 }
 
@@ -380,9 +386,17 @@
     [AFSnapbyAPIClient getOtherUserInfo:self.profileUserId success:successBlock failure:failureBlock];
 }
 
+- (IBAction)profilePictureClicked:(id)sender {
+    [self.profileViewControllerDelegate changeProfilePicture];
+}
+
 - (IBAction)refreshButtonClicked:(id)sender {
     [self getProfileInfo];
     [self refreshSnapbies];
+}
+
+- (IBAction)settingsButtonClicked:(id)sender {
+    [self.profileViewControllerDelegate showSettings];
 }
 
 @end

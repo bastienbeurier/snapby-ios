@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Snapby.h"
-#import "SnapbyViewController.h"
+#import "DisplayViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 
 @protocol ExploreViewControllerDelegate;
 
-@interface ExploreViewController : UIViewController <UIScrollViewDelegate>
+@interface ExploreViewController : UIViewController <UIScrollViewDelegate, SnapbyVCDelegate>
 
 @property (weak, nonatomic) id <ExploreViewControllerDelegate> exploreVCDelegate;
 
@@ -24,5 +24,6 @@
 @protocol ExploreViewControllerDelegate
 
 - (CLLocation *)getMyLocation;
+- (void)refreshProfileSnapbies;
 
 @end

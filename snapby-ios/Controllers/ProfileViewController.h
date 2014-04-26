@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "DisplayViewController.h"
 
 @protocol MyProfileViewControllerDelegate;
 
-@interface ProfileViewController : UIViewController <UIScrollViewDelegate>
+@interface ProfileViewController : UIViewController <UIScrollViewDelegate, SnapbyVCDelegate>
 
 @property (weak, nonatomic) User *currentUser;
 @property (nonatomic) NSInteger profileUserId;
@@ -20,7 +21,7 @@
 - (void)refreshSnapbies;
 
 // Only for myProfile in the multiple controller
-@property (weak, nonatomic) id <MyProfileViewControllerDelegate> myProfileViewControllerDelegate;
+@property (weak, nonatomic) id <MyProfileViewControllerDelegate> profileViewControllerDelegate;
 
 @end
 
@@ -28,5 +29,8 @@
 
 - (void)startLocationUpdate;
 - (void)stopLocationUpdate;
+- (void)refreshExploreSnapbies;
+- (void)showSettings;
+- (void)changeProfilePicture;
 
 @end

@@ -151,9 +151,9 @@
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",comment.commenterUsername];
         cell.descriptionLabel.text = comment.description;
         
-        NSArray *commentAgeStrings = [TimeUtilities ageToShortStrings:[TimeUtilities getSnapbyAge:comment.created]];
+        NSString *commentAge = [TimeUtilities ageToShortString:[TimeUtilities getSnapbyAge:comment.created]];
         
-        cell.stampLabel.text = [NSString stringWithFormat:@"%@%@", [commentAgeStrings firstObject], [commentAgeStrings objectAtIndex:1]];
+        cell.stampLabel.text = [NSString stringWithFormat:@"%@", commentAge];
         
         if (comment.lat !=0 && comment.lng !=0 ) {
             NSArray *distanceStrings = [LocationUtilities formattedDistanceLat1:comment.lat lng1:comment.lng lat2:self.snapby.lat lng2:self.snapby.lng];

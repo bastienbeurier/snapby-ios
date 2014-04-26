@@ -50,7 +50,7 @@
     
     // border radius
     [self.snapbyDialog.layer setCornerRadius:25.0f];
-    [self.refreshButton.layer setCornerRadius:25.0f];
+    [self.refreshButton.layer setCornerRadius:22.0f];
     
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = NO;
@@ -95,7 +95,6 @@
 
 - (void)refreshSnapbies
 {
-    NSLog(@"REFRESHING SNAPBIES IN EXPLORE!!");
     [self loadingSnapbiesUI];
     
     [AFSnapbyAPIClient pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] AndExecuteSuccess:^(NSArray *snapbies) {
@@ -103,6 +102,12 @@
     } failure:^{
         [self noConnectionUI];
     }];
+}
+
+- (void)refreshSnapbiesFromDisplay
+{
+    [self refreshSnapbies];
+    [self.exploreVCDelegate refreshProfileSnapbies];
 }
 
 - (void)loadingSnapbiesUI
@@ -226,7 +231,8 @@
 {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"Snapby Push Segue From Explore"]) {
-        ((SnapbyViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
+        ((DisplayViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
+        ((DisplayViewController *) [segue destinationViewController]).displayVCDelegate = self;
     }
 }
 

@@ -70,33 +70,18 @@
 }
 
 
-// RefineSnapby protocole
-- (void)updateCreateSnapbyLocation:(CLLocation *)snapbyLocation
-{
-    self.snapbyLocation = snapbyLocation;
-}
-
-
 - (IBAction)createSnapbyButtonClicked:(id)sender {
-    
-    if (![SessionUtilities isSignedIn]){
-        [SessionUtilities redirectToSignIn];
-        return;
-    }
-    
     [self.view endEditing:YES];
     
     // Check error
-    NSString *title = nil; NSString *message = nil;
+    NSString *title = nil;
+    NSString *message = nil;
     
     if (self.blackListed) {
         title = NSLocalizedStringFromTable (@"black_listed_alert_title", @"Strings", @"comment");
         message = NSLocalizedStringFromTable (@"black_listed_alert_text", @"Strings", @"comment");
     } else if (![GeneralUtilities connected]) {
         title = NSLocalizedStringFromTable (@"no_connection_error_title", @"Strings", @"comment");
-    } else if (![LocationUtilities userLocationValid:self.snapbyLocation]) {
-        title = NSLocalizedStringFromTable (@"no_location_for_snapby_title", @"Strings", @"comment");
-        message = NSLocalizedStringFromTable (@"no_location_for_snapby_message", @"Strings", @"comment");
     }
     
     if (title || message) {
@@ -109,6 +94,16 @@
 
 - (void)createSnapby
 {
+    CLLocation *myLocation = [self.createSnapbyVCDelegate getMyLocation];
+    
+    if (![LocationUtilities userLocationValid:myLocation]) {
+        NSString *title = NSLocalizedStringFromTable (@"no_location_for_snapby_title", @"Strings", @"comment");
+        NSString *message = NSLocalizedStringFromTable (@"no_location_for_snapby_message", @"Strings", @"comment");
+        
+        [GeneralUtilities showMessage:message withTitle:title];
+        return;
+    }
+    
     typedef void (^SuccessBlock)(Snapby *);
     SuccessBlock successBlock = ^(Snapby *snapby) {
         [TrackingUtilities trackCreateSnapby];
@@ -142,8 +137,8 @@
     
     NSString *encodedImage = [ImageUtilities encodeToBase64String:self.sentImage];
 
-    [AFSnapbyAPIClient createSnapbyWithLat:self.snapbyLocation.coordinate.latitude
-                                                   Lng:self.snapbyLocation.coordinate.longitude
+    [AFSnapbyAPIClient createSnapbyWithLat:myLocation.coordinate.latitude
+                                                   Lng:myLocation.coordinate.longitude
                                               Username:currentUser.username
                                            Description:@""
                                                  encodedImage:encodedImage
@@ -187,16 +182,7 @@
     [KeyboardUtilities pushDownTopView:self.containerView whenKeyboardWillhideNotification:notification];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Refine Snapby modal segue"]) {
-        ((RefineSnapbyLocationViewController *) [segue destinationViewController]).myLocation = self.snapbyLocation;
-        ((RefineSnapbyLocationViewController *) [segue destinationViewController]).refineSnapbyLocationVCDelegate = self;
-    }
-}
-
-- (void)displayToastWithMessage:(NSString *)message{
+- (void)displayToastWithMessage:(NSString *)message {
     MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:self.containerView animated:YES];
     // Configure for text only and offset down
     toast.mode = MBProgressHUDModeText;

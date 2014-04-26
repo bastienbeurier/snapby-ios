@@ -10,7 +10,7 @@
 #import "Constants.h"
 #import <MapKit/MapKit.h>
 #import "ExploreViewController.h"
-#import "SnapbyViewController.h"
+#import "DisplayViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 #define DISPLAY_SNAPBY_MAP_SIZE 100
