@@ -450,13 +450,11 @@
     
     self.previouslySelectedSnapby = snapby;
     
-    [self loadScrollViewWithPage:page - 3];
     [self loadScrollViewWithPage:page - 2];
     [self loadScrollViewWithPage:page - 1];
     [self loadScrollViewWithPage:page];
     [self loadScrollViewWithPage:page + 1];
     [self loadScrollViewWithPage:page + 2];
-    [self loadScrollViewWithPage:page + 3];
     
 }
 

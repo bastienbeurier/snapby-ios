@@ -57,6 +57,9 @@
 {
     [super viewDidLoad];
     
+    self.userName.text = @"";
+    self.statsLabel.text = @"";
+    
     // border radius
     [self.snapbyDialog.layer setCornerRadius:25.0f];
     [self.refreshButton.layer setCornerRadius:22.0f];
@@ -335,14 +338,11 @@
     
     self.previouslySelectedSnapby = snapby;
     
-    [self loadScrollViewWithPage:page - 3];
     [self loadScrollViewWithPage:page - 2];
     [self loadScrollViewWithPage:page - 1];
     [self loadScrollViewWithPage:page];
     [self loadScrollViewWithPage:page + 1];
     [self loadScrollViewWithPage:page + 2];
-    [self loadScrollViewWithPage:page + 3];
-
 }
 
 - (NSUInteger)getScrollViewPage
@@ -397,7 +397,7 @@
     SuccessBlock successBlock = ^(User * user, NSInteger nbFollowers, NSInteger nbFollowedUsers, BOOL isFollowedByCurrentUser)
     {
         self.profileUser = user;
-        self.statsLabel.text = [NSString stringWithFormat: @"%lu snapby - %lu liked", user.snapbyCount, user.likedSnapbies];
+        self.statsLabel.text = [NSString stringWithFormat: @"%lu snapby | %lu liked", user.snapbyCount, user.likedSnapbies];
         self.userName.text = user.username;
         
         // Get the profile picture (and avoid caching)

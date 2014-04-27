@@ -45,7 +45,12 @@
 
 - (void)viewDidLoad
 {
-    [self.profileImage.layer setCornerRadius:20.0f];
+    self.likeCount.text = @"";
+    self.commentCount.text = @"";
+    self.usernameLabel.text = @"";
+    self.timeStamp.text = @"";
+    
+    [self.profileImage.layer setCornerRadius:15.0f];
     
     [self outerGlow:self.usernameLabel];
     [self outerGlow:self.timeStamp];

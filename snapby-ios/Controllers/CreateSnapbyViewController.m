@@ -19,15 +19,21 @@
 #import "SessionUtilities.h"
 #import "TrackingUtilities.h"
 #import "KeyboardUtilities.h"
+#import "UIImage+FiltrrCompositions.h"
+#import "UIImage+Filtrr.h"
 
 @interface CreateSnapbyViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *anonymousButton;
 @property (strong, nonatomic) IBOutlet UIImageView *snapbyImageView;
 
+@property (strong, nonatomic) UIImage *originalImage;
+
 @property (nonatomic) BOOL blackListed;
 @property (nonatomic) BOOL isAnonymous;
 @property (nonatomic) BOOL flashOn;
+@property (nonatomic, strong) NSArray *effects;
+@property (nonatomic) NSUInteger currentEffect;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
@@ -45,12 +51,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    self.currentEffect = 0;
+    
     self.isAnonymous = NO;
     self.blackListed = NO;
     
     double rescalingRatio = self.view.frame.size.height / kCameraHeight;
-    [self.snapbyImageView setImage:[ImageUtilities cropWidthOfImage:self.sentImage by:(1-1/rescalingRatio)]];
+    
+    self.originalImage = [ImageUtilities cropWidthOfImage:self.sentImage by:(1-1/rescalingRatio)];
+    
+    [self.snapbyImageView setImage:self.originalImage];
     
     // observe keyboard show notifications to resize the text view appropriately
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -135,7 +146,17 @@
     
     User *currentUser = [SessionUtilities getCurrentUser];
     
-    NSString *encodedImage = [ImageUtilities encodeToBase64String:self.sentImage];
+    NSString *encodedImage;
+    
+    if (self.currentEffect == 1) {
+        encodedImage = [ImageUtilities encodeToBase64String:[self.sentImage e10]];
+    } else if (self.currentEffect == 2) {
+        encodedImage = [ImageUtilities encodeToBase64String:[self.sentImage e3]];
+    } else if (self.currentEffect == 3){
+        encodedImage = [ImageUtilities encodeToBase64String:[self.sentImage e4]];
+    } else {
+        encodedImage = [ImageUtilities encodeToBase64String:self.sentImage];
+    }
 
     [AFSnapbyAPIClient createSnapbyWithLat:myLocation.coordinate.latitude
                                                    Lng:myLocation.coordinate.longitude
@@ -194,6 +215,23 @@
 }
 
 
+- (IBAction)imageClicked:(id)sender {
+    UIImage *image = self.originalImage;
+    
+    if (self.currentEffect == 0) {
+        [self.snapbyImageView setImage:[image e10]];
+        self.currentEffect = 1;
+    } else if (self.currentEffect == 1) {
+        [self.snapbyImageView setImage:[image e3]];
+        self.currentEffect = 2;
+    } else if (self.currentEffect == 2) {
+        [self.snapbyImageView setImage:[image e4]];
+        self.currentEffect = 3;
+    } else {
+        [self.snapbyImageView setImage:self.originalImage];
+        self.currentEffect = 0;
+    }
+}
 
 
 

@@ -87,15 +87,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 snapbies - 154 liked" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="901-F0-2m6">
-                                        <rect key="frame" x="65" y="51" width="141" height="20"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 snapbies | 154 liked" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="901-F0-2m6">
+                                        <rect key="frame" x="70" y="51" width="205" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_place_holder.png" translatesAutoresizingMaskIntoConstraints="NO" id="cbI-3Q-gzj">
-                                        <rect key="frame" x="5" y="20" width="50" height="50"/>
+                                        <rect key="frame" x="10" y="20" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -106,8 +106,8 @@
                                             <outletCollection property="gestureRecognizers" destination="zn6-5F-RcS" appends="YES" id="L4q-fs-Zj6"/>
                                         </connections>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mO-zL-EFb">
-                                        <rect key="frame" x="65" y="20" width="205" height="33"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mO-zL-EFb">
+                                        <rect key="frame" x="70" y="20" width="200" height="33"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -131,9 +131,10 @@
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="cbI-3Q-gzj" firstAttribute="top" secondItem="8mO-zL-EFb" secondAttribute="top" id="1Ay-Am-D1T"/>
-                                    <constraint firstItem="cbI-3Q-gzj" firstAttribute="leading" secondItem="JfH-tx-Xgc" secondAttribute="leading" constant="5" id="D93-Ue-xyX"/>
+                                    <constraint firstItem="cbI-3Q-gzj" firstAttribute="leading" secondItem="JfH-tx-Xgc" secondAttribute="leading" constant="10" id="D93-Ue-xyX"/>
                                     <constraint firstItem="901-F0-2m6" firstAttribute="leading" secondItem="cbI-3Q-gzj" secondAttribute="trailing" constant="10" id="Gr3-B4-3iZ"/>
                                     <constraint firstItem="cbI-3Q-gzj" firstAttribute="top" secondItem="JfH-tx-Xgc" secondAttribute="top" constant="20" id="RoT-bl-aFK"/>
+                                    <constraint firstItem="Lqn-QO-eoS" firstAttribute="leading" secondItem="901-F0-2m6" secondAttribute="trailing" id="VLs-qk-TaQ"/>
                                     <constraint firstAttribute="height" constant="75" id="VuI-mT-uNJ"/>
                                     <constraint firstAttribute="trailing" secondItem="Lqn-QO-eoS" secondAttribute="trailing" constant="5" id="YON-5E-v9f"/>
                                     <constraint firstItem="8mO-zL-EFb" firstAttribute="leading" secondItem="cbI-3Q-gzj" secondAttribute="trailing" constant="10" id="ZgV-WC-Tgj"/>
@@ -545,6 +546,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="utd-QE-whj" appends="YES" id="Ewj-P5-NJp"/>
+                                </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Z6-u1-rMD">
                                 <rect key="frame" x="10" y="30" width="42" height="42"/>
@@ -645,6 +649,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pF-an-gi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="utd-QE-whj">
+                    <connections>
+                        <action selector="imageClicked:" destination="vn8-un-4WF" id="lbw-Bd-0xu"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="829" y="578"/>
         </scene>
