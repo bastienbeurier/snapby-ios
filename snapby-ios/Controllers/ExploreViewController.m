@@ -17,6 +17,8 @@
 #import "HackClipView.h"
 #import "AFSnapbyAPIClient.h"
 
+#define PER_PAGE 20
+
 @interface ExploreViewController () <GMSMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -35,6 +37,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *snapbyDialogLabel;
 @property (nonatomic) BOOL didInitializedExplore;
 @property (weak, nonatomic) IBOutlet UIImageView *refreshButton;
+@property (nonatomic) NSInteger page;
+@property (nonatomic) BOOL noMoreSnapbyToPull;
+@property (nonatomic) BOOL pullingMoreSnapbies;
 
 @end
 
@@ -79,7 +84,9 @@
     
     self.didInitializedExplore = NO;
     
-    
+    self.page = 1;
+    self.noMoreSnapbyToPull = NO;
+    self.pullingMoreSnapbies = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -97,7 +104,7 @@
 {
     [self loadingSnapbiesUI];
     
-    [AFSnapbyAPIClient pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] AndExecuteSuccess:^(NSArray *snapbies) {
+    [AFSnapbyAPIClient pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] page:1 pageSize:PER_PAGE AndExecuteSuccess:^(NSArray *snapbies, NSInteger page) {
         self.snapbies = snapbies;
     } failure:^{
         [self noConnectionUI];
@@ -112,9 +119,21 @@
 
 - (void)loadingSnapbiesUI
 {
+    for (UIView *view in self.scrollView.subviews)
+    {
+        if (![view isKindOfClass:[UIImageView class]])
+            [view removeFromSuperview];
+    }
+    
     self.snapbyDialog.hidden = NO;
     self.snapbyDialogLabel.text = @"Loading...";
     self.scrollView.hidden = YES;
+}
+
+- (void)loadingMoreSnapbiesUI
+{
+    self.snapbyDialog.hidden = NO;
+    self.snapbyDialogLabel.text = @"Loading...";
 }
 
 - (void)noSnapbiesUI
@@ -149,6 +168,13 @@
 - (void)setSnapbies:(NSArray *)snapbies
 {
     _snapbies = snapbies;
+    self.page = 1;
+    self.noMoreSnapbyToPull = NO;
+    self.pullingMoreSnapbies = NO;
+    
+    if ([snapbies count] < PER_PAGE) {
+        self.noMoreSnapbyToPull = YES;
+    }
     
     if ([snapbies count] == 0) {
         [self noSnapbiesUI];
@@ -184,8 +210,41 @@
     [self displaySnapbiesUI];
 }
 
+- (void)updateSnapbies:(NSArray *)newSnapbies
+{
+    if ([newSnapbies count] < PER_PAGE) {
+        self.noMoreSnapbyToPull = YES;
+    }
+    
+    if ([newSnapbies count] == 0) {
+        return;
+    }
+    
+    [self displayMoreSnapbies:newSnapbies];
+    
+    NSUInteger oldSnapbyCount = self.snapbies.count;
+    NSUInteger numberPages = oldSnapbyCount + newSnapbies.count;
+    
+    NSMutableArray *updatedSnapbies = [_snapbies mutableCopy];
+    [updatedSnapbies addObjectsFromArray:newSnapbies];
+    _snapbies = updatedSnapbies;
+    
+    for (NSUInteger i = oldSnapbyCount; i < numberPages; i++)
+    {
+        [self.viewControllers addObject:[NSNull null]];
+    }
+    
+    self.scrollView.contentSize = CGSizeMake(self.scrollViewWidth * numberPages, self.scrollViewHeight);
+ 
+    [self loadSnapbiesAndUpdateMarker];
+    
+    [self displaySnapbiesUI];
+}
+
 - (void) moveMapToMyLocationAndLoadSnapbies
 {
+    [self loadingSnapbiesUI];
+    
     CLLocation *myLocation = [self.exploreVCDelegate getMyLocation];
     if (myLocation != nil && myLocation.coordinate.latitude != 0 && myLocation.coordinate.longitude != 0) {
         CLLocationCoordinate2D location;
@@ -238,9 +297,28 @@
 
 - (void)displaySnapbies:(NSArray *)snapbies
 {
-    [self.displayedSnapbies removeAllObjects];
+    self.displayedSnapbies = [[NSMutableDictionary alloc] init];
     
     for (Snapby *snapby in snapbies) {
+        NSString *snapbyKey = [NSString stringWithFormat:@"%lu", (unsigned long)snapby.identifier];
+        
+        CLLocationCoordinate2D markerCoordinate;
+        markerCoordinate.latitude = snapby.lat;
+        markerCoordinate.longitude = snapby.lng;
+        
+        GMSMarker *marker = [GMSMarker markerWithPosition:markerCoordinate];
+        marker.title = [NSString stringWithFormat:@"%lu", snapby.identifier];
+        marker.icon = [UIImage imageNamed:[GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:NO]];
+        
+        marker.map = self.mapView;
+        
+        [self.displayedSnapbies setObject:marker forKey:snapbyKey];
+    }
+}
+
+- (void)displayMoreSnapbies:(NSArray *)newSnapbies
+{
+    for (Snapby *snapby in newSnapbies) {
         NSString *snapbyKey = [NSString stringWithFormat:@"%lu", (unsigned long)snapby.identifier];
         
         CLLocationCoordinate2D markerCoordinate;
@@ -301,6 +379,25 @@
     self.automaticScrolling = -1;
     
     [self loadSnapbiesAndUpdateMarker];
+    
+    NSLog(@"SCROLLED ON PAGED: %lu / %lu", [self getScrollViewPage], self.snapbies.count);
+    if ([self getScrollViewPage] == self.snapbies.count - 1 && !self.noMoreSnapbyToPull && !self.pullingMoreSnapbies) {
+        NSLog(@"LOADING MORE SNAPBIIES!!!!!!");
+        
+        self.pullingMoreSnapbies = YES;
+        [self loadingMoreSnapbiesUI];
+        
+        [AFSnapbyAPIClient pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] page:self.page + 1 pageSize:PER_PAGE AndExecuteSuccess:^(NSArray *snapbies, NSInteger page) {
+            
+            if (page == self.page + 1) {
+                self.pullingMoreSnapbies = NO;
+                self.page = self.page + 1;
+                [self updateSnapbies:snapbies];
+            }
+        } failure:^{
+            [self noConnectionUI];
+        }];
+    }
 }
 
 - (void)loadSnapbiesAndUpdateMarker

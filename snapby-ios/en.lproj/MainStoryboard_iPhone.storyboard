@@ -193,6 +193,38 @@
                                     <constraint firstAttribute="trailing" secondItem="8mO-zL-EFb" secondAttribute="trailing" constant="50" id="uPF-sG-YLu"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJi-gj-MSn">
+                                <rect key="frame" x="266" y="115" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="pgD-dC-fKJ"/>
+                                    <constraint firstAttribute="height" constant="44" id="soE-IB-9Hp"/>
+                                </constraints>
+                                <state key="normal" image="profile_zoom.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="zoomButtonClicked:" destination="4IJ-MA-4z3" eventType="touchUpInside" id="9WX-km-TyL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LqW-M7-eym">
+                                <rect key="frame" x="266" y="169" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="7F8-nd-rbO"/>
+                                    <constraint firstAttribute="width" constant="44" id="BoB-NQ-qZf"/>
+                                </constraints>
+                                <state key="normal" image="profile_dezoom.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dezoomButtonClicked:" destination="4IJ-MA-4z3" eventType="touchUpInside" id="nzr-CK-fTm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -203,15 +235,20 @@
                             <constraint firstItem="0Kk-Nx-Dpz" firstAttribute="top" secondItem="8wQ-6h-DLn" secondAttribute="top" id="8kl-h4-xPK"/>
                             <constraint firstItem="g5r-iC-3co" firstAttribute="top" secondItem="0Kk-Nx-Dpz" secondAttribute="bottom" id="9i8-Qz-xiU"/>
                             <constraint firstItem="0Kk-Nx-Dpz" firstAttribute="leading" secondItem="8wQ-6h-DLn" secondAttribute="leading" id="Gx4-WL-wnP"/>
+                            <constraint firstItem="LqW-M7-eym" firstAttribute="top" secondItem="bJi-gj-MSn" secondAttribute="bottom" constant="10" id="KxO-ux-PKf"/>
                             <constraint firstAttribute="trailing" secondItem="0Kk-Nx-Dpz" secondAttribute="trailing" id="PdO-i3-pD6"/>
                             <constraint firstAttribute="bottom" secondItem="Ys8-su-eoZ" secondAttribute="bottom" id="Vm6-xj-zZW"/>
                             <constraint firstAttribute="centerX" secondItem="9pR-9h-kyN" secondAttribute="centerX" id="bcI-87-c0H"/>
+                            <constraint firstAttribute="trailing" secondItem="LqW-M7-eym" secondAttribute="trailing" constant="10" id="fzH-r3-ybb"/>
                             <constraint firstAttribute="trailing" secondItem="Ys8-su-eoZ" secondAttribute="trailing" id="mg1-0s-EGO"/>
+                            <constraint firstItem="bJi-gj-MSn" firstAttribute="top" secondItem="JfH-tx-Xgc" secondAttribute="bottom" constant="10" id="st6-FS-evp"/>
+                            <constraint firstAttribute="trailing" secondItem="bJi-gj-MSn" secondAttribute="trailing" constant="10" id="wnB-RZ-3gf"/>
                             <constraint firstItem="Ys8-su-eoZ" firstAttribute="leading" secondItem="8wQ-6h-DLn" secondAttribute="leading" id="yde-f3-Xv5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rcn-MX-oC3"/>
                     <connections>
+                        <outlet property="dezoomButton" destination="LqW-M7-eym" id="vyv-gB-Uhi"/>
                         <outlet property="likedCount" destination="3PE-EP-yb4" id="mQ2-wA-9Lv"/>
                         <outlet property="mapView" destination="0Kk-Nx-Dpz" id="pfE-B4-G1m"/>
                         <outlet property="profilePictureView" destination="cbI-3Q-gzj" id="wVQ-Fg-2dZ"/>
@@ -223,6 +260,7 @@
                         <outlet property="snapbyDialogLabel" destination="PcE-tG-A8m" id="b2D-Jp-0Kg"/>
                         <outlet property="userInfoContainer" destination="JfH-tx-Xgc" id="AD8-LP-Nqa"/>
                         <outlet property="userName" destination="8mO-zL-EFb" id="apF-gl-tgC"/>
+                        <outlet property="zoomButton" destination="bJi-gj-MSn" id="7CF-I2-hoQ"/>
                         <segue destination="qtI-Lc-vOJ" kind="modal" identifier="Snapby Push Segue From Profile" id="t9b-fp-LGS"/>
                     </connections>
                 </viewController>
@@ -844,7 +882,7 @@
         <!--Comments View Controller-->
         <scene sceneID="fxJ-sn-Xyx">
             <objects>
-                <viewController id="XJN-rR-Aa3" customClass="CommentsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentsViewController" id="XJN-rR-Aa3" customClass="CommentsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0hr-Sz-0sh"/>
                         <viewControllerLayoutGuide type="bottom" id="Oi7-me-M1K"/>
@@ -1566,8 +1604,10 @@
         <image name="explore_refresh.png" width="50" height="50"/>
         <image name="password-icon.png" width="43" height="50"/>
         <image name="place_holder_big.png" width="200" height="156"/>
+        <image name="profile_dezoom.png" width="25" height="25"/>
         <image name="profile_place_holder.png" width="100" height="100"/>
         <image name="profile_settings.png" width="59" height="59"/>
+        <image name="profile_zoom.png" width="25" height="25"/>
         <image name="refresh-map-button.png" width="75" height="75"/>
         <image name="username-icon.png" width="44" height="50"/>
         <image name="welcome-image.png" width="200" height="157"/>
@@ -1579,6 +1619,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ibm-OD-prq"/>
-        <segue reference="70g-75-5Or"/>
+        <segue reference="t9b-fp-LGS"/>
     </inferredMetricsTieBreakers>
 </document>

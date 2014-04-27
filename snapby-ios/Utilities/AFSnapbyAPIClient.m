@@ -75,20 +75,23 @@
 // ------------------------------------------------
 
 // Retrieve and display snapbies on the map
-+ (void)pullSnapbiesInZone:(NSArray *)cornersCoordinates
-       AndExecuteSuccess:(void(^)(NSArray *snapbies))successBlock failure:(void (^)())failureBlock
++ (void)pullSnapbiesInZone:(NSArray *)cornersCoordinates page:(NSUInteger)page pageSize:(NSUInteger)pageSize
+       AndExecuteSuccess:(void(^)(NSArray *snapbies, NSInteger page))successBlock failure:(void (^)())failureBlock
 {
     NSDictionary *parameters = @{@"neLat": cornersCoordinates[0],
                                  @"neLng": cornersCoordinates[1],
                                  @"swLat": cornersCoordinates[2],
-                                 @"swLng": cornersCoordinates[3]};
+                                 @"swLng": cornersCoordinates[3],
+                                 @"page": [NSNumber numberWithLong:page],
+                                 @"page_size": [NSNumber numberWithLong:pageSize]};
     
     NSString *path = [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"bound_box_snapbies.json"];
     
     [[AFSnapbyAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSArray *rawSnapbies = [result valueForKeyPath:@"snapbies"];
-        successBlock([Snapby rawSnapbiesToInstances:rawSnapbies]);
+        NSInteger page = [[result valueForKeyPath:@"page"] integerValue];
+        successBlock([Snapby rawSnapbiesToInstances:rawSnapbies], page);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         failureBlock();

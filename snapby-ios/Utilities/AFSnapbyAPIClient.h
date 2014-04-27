@@ -19,8 +19,8 @@
 // Snapby
 // ------------------------------------------------
 
-+ (void)pullSnapbiesInZone:(NSArray *)cornersCoordinates
-              AndExecuteSuccess:(void(^)(NSArray *snapbies))sucessBlock failure:(void (^)())failureBlock;
++ (void)pullSnapbiesInZone:(NSArray *)cornersCoordinates page:(NSUInteger)page pageSize:(NSUInteger)pageSize
+              AndExecuteSuccess:(void(^)(NSArray *snapbies, NSInteger page))sucessBlock failure:(void (^)())failureBlock;
 
 + (void)createSnapbyWithLat:(double)lat
                        Lng:(double)lng

@@ -44,6 +44,8 @@
 @property (weak, nonatomic) IBOutlet UIView *snapbyDialog;
 @property (weak, nonatomic) IBOutlet UILabel *snapbyDialogLabel;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (weak, nonatomic) IBOutlet UIButton *zoomButton;
+@property (weak, nonatomic) IBOutlet UIButton *dezoomButton;
 
 
 
@@ -58,7 +60,9 @@
     
     // border radius
     [self.snapbyDialog.layer setCornerRadius:25.0f];
-    [self.refreshButton.layer setCornerRadius:25.0f];
+    [self.refreshButton.layer setCornerRadius:22.0f];
+    [self.zoomButton.layer setCornerRadius:22.0f];
+    [self.dezoomButton.layer setCornerRadius:22.0f];
     
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = NO;
@@ -397,6 +401,12 @@
 
 - (IBAction)settingsButtonClicked:(id)sender {
     [self.profileViewControllerDelegate showSettings];
+}
+- (IBAction)zoomButtonClicked:(id)sender {
+    [self.mapView animateWithCameraUpdate:[GMSCameraUpdate zoomIn]];
+}
+- (IBAction)dezoomButtonClicked:(id)sender {
+    [self.mapView animateWithCameraUpdate:[GMSCameraUpdate zoomOut]];
 }
 
 @end
