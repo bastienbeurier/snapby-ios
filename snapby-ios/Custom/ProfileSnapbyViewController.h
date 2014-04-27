@@ -9,19 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "Snapby.h"
 
-@protocol ExploreSnapbyVCDelegate;
+@protocol ProfileSnapbyVCDelegate;
 
-@interface ExploreSnapbyViewController : UIViewController
+@interface ProfileSnapbyViewController : UIViewController
 
 - (id)initWithSnapby:(Snapby *)snapby;
 - (void)snapbyDisplayed;
 - (void)snapbyDismissed;
 
-@property (weak, nonatomic) id <ExploreSnapbyVCDelegate> exploreSnapbyVCDelegate;
+@property (weak, nonatomic) id <ProfileSnapbyVCDelegate> profileSnapbyVCDelegate;
 
 @end
 
-@protocol ExploreSnapbyVCDelegate
+@protocol ProfileSnapbyVCDelegate
 
 - (void)moreButtonClicked:(Snapby *)snapby;
 

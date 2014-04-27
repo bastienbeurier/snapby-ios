@@ -6,37 +6,36 @@
 //  Copyright (c) 2014 Snapby. All rights reserved.
 //
 
-#import "ExploreSnapbyViewController.h"
+#import "ProfileSnapbyViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "Snapby.h"
 #import "User.h"
 #import "TimeUtilities.h"
 
-@interface ExploreSnapbyViewController ()
+@interface ProfileSnapbyViewController ()
 
 @property (nonatomic, strong) Snapby *snapby;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeStamp;
 @property (weak, nonatomic) IBOutlet UIView *infoContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *likeIcon;
 @property (weak, nonatomic) IBOutlet UILabel *likeCount;
-@property (weak, nonatomic) IBOutlet UIImageView *commentIcon;
 @property (weak, nonatomic) IBOutlet UILabel *commentCount;
 @property (weak, nonatomic) IBOutlet UIView *actionsContainer;
-@property (weak, nonatomic) IBOutlet UIImageView *moreIcon;
 
 
 
 @end
 
-@implementation ExploreSnapbyViewController
+@implementation ProfileSnapbyViewController
 
 - (id)initWithSnapby:(Snapby *)snapby
 {
-    if (self = [super initWithNibName:@"ExploreSnapby" bundle:nil])
+    if (self = [super initWithNibName:@"ProfileSnapby" bundle:nil])
     {
         self.snapby = snapby;
     }
@@ -45,15 +44,13 @@
 
 - (void)viewDidLoad
 {
-    [self.profileImage.layer setCornerRadius:20.0f];
+    [self.profileImage.layer setCornerRadius:17.5f];
     
     [self outerGlow:self.usernameLabel];
     [self outerGlow:self.timeStamp];
     [self outerGlow:self.likeCount];
     [self outerGlow:self.commentCount];
     [self outerGlow:self.likeIcon];
-    [self outerGlow:self.commentIcon];
-    [self outerGlow:self.moreIcon];
     
     self.imageView.clipsToBounds = YES;
     [self.imageView setImageWithURL:[self.snapby getSnapbyThumbURL] placeholderImage:nil];
@@ -62,7 +59,7 @@
         [self.profileImage setImageWithURL:[User getUserProfilePictureURLFromUserId:self.snapby.userId]];
         self.usernameLabel.text = [NSString stringWithFormat:@"%@ (%lu)", self.snapby.username, self.snapby.userScore];
     } else {
-        self.usernameLabel.text = @"Anonymous";
+        self.usernameLabel.text = self.snapby.username;
     }
     
     NSString *snapbyCreated = [TimeUtilities ageToShortString:[TimeUtilities getSnapbyAge:self.snapby.created]];
@@ -97,5 +94,15 @@
 {
     self.infoContainer.hidden = YES;
     self.actionsContainer.hidden = YES;
+}
+
+- (IBAction)likeButtonClicked:(id)sender {
+}
+
+- (IBAction)commentButtonClicked:(id)sender {
+}
+
+- (IBAction)moreButtonClicked:(id)sender {
+    [self.profileSnapbyVCDelegate moreButtonClicked:self.snapby];
 }
 @end

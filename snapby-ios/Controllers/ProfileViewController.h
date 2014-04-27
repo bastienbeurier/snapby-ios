@@ -10,10 +10,11 @@
 #import "User.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "DisplayViewController.h"
+#import "SettingsViewController.h"
 
 @protocol MyProfileViewControllerDelegate;
 
-@interface ProfileViewController : UIViewController <UIScrollViewDelegate, SnapbyVCDelegate>
+@interface ProfileViewController : UIViewController <UIScrollViewDelegate, SettingsVCDelegate>
 
 @property (weak, nonatomic) User *currentUser;
 @property (nonatomic) NSInteger profileUserId;

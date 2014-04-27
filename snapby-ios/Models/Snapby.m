@@ -34,6 +34,7 @@
     snapby.lat = [[rawSnapby objectForKey:SNAPBY_LAT] doubleValue];
     snapby.lng = [[rawSnapby objectForKey:SNAPBY_LNG] doubleValue];
     snapby.created = [rawSnapby objectForKey:SNAPBY_CREATED_AT];
+    snapby.lastActive = [rawSnapby objectForKey:LAST_ACTIVE];
     snapby.username = [rawSnapby objectForKey:SNAPBY_USERNAME];
     snapby.removed = [[rawSnapby objectForKey:SNAPBY_REMOVED] integerValue] == 1 ? YES : NO;
     snapby.anonymous = [[rawSnapby objectForKey:SNAPBY_ANONYMOUS] integerValue] == 1 ? YES : NO;
@@ -63,14 +64,14 @@
 {
     NSString *baseURL = PRODUCTION ? kProdSnapbyImageBaseURL : kDevSnapbyImageBaseURL;
     
-    return [NSURL URLWithString:[[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier] stringByAppendingString:@"--400"]];
+    return [NSURL URLWithString:[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier]];
 }
 
 - (NSURL *)getSnapbyThumbURL
 {
     NSString *baseURL = PRODUCTION ? kProdSnapbyThumbBaseURL : kDevSnapbyThumbBaseURL;
     
-    return [NSURL URLWithString:[[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier] stringByAppendingString:@"--400"]];
+    return [NSURL URLWithString:[baseURL stringByAppendingFormat:@"%lu",(unsigned long)self.identifier]];
 }
 
 @end

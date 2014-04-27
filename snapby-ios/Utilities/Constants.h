@@ -61,6 +61,7 @@ static const NSUInteger kMaxUsernameLength = 20;
 static const NSUInteger kMaxSnapbyDescriptionLength = 140;
 static const NSUInteger kSnapbyRadius = 300;
 static const NSUInteger kSnapbyImageHeight = 600;
+static const NSUInteger kSnapbyProfileImageHeight = 200;
 
 static const NSUInteger kZoomAtStartup = 13;
 

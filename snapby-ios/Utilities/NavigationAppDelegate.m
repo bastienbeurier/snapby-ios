@@ -175,8 +175,8 @@
             [((MultipleViewController *)[navController visibleViewController]) goHomeAfterRelaunch];
         }
         
-        if ([[navController visibleViewController] isKindOfClass:[CommentsViewController class]] ||
-            [[navController visibleViewController] isKindOfClass:[DisplayViewController class]]) {
+        //TODO COMMENT AND REFINE CASES
+        if ([[navController visibleViewController] isKindOfClass:[DisplayViewController class]]) {
             // Pop up all push controllers to come back to multiple
             [navController popToViewController:navController.childViewControllers[1] animated:NO];
         }

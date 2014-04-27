@@ -10,10 +10,11 @@
 #import "Snapby.h"
 #import "DisplayViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "ExploreSnapbyViewController.h"
 
 @protocol ExploreViewControllerDelegate;
 
-@interface ExploreViewController : UIViewController <UIScrollViewDelegate, SnapbyVCDelegate>
+@interface ExploreViewController : UIViewController <UIScrollViewDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate>
 
 @property (weak, nonatomic) id <ExploreViewControllerDelegate> exploreVCDelegate;
 

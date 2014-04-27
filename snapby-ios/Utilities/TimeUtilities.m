@@ -78,10 +78,10 @@
         } else if (hours >= 1) {
             return [[NSString stringWithFormat:@"%ld", hours] stringByAppendingString:@"h"];
         } else {
-            return [[NSString stringWithFormat:@"%ld", minutes] stringByAppendingString:@"min"];
+            return [[NSString stringWithFormat:@"%ld", minutes] stringByAppendingString:@"m"];
         }
     } else {
-        return @"0min";
+        return @"0m";
     }
 }
 

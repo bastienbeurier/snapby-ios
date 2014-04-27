@@ -92,8 +92,6 @@
         return [self getOrInitExploreViewController];
     } else if ([viewController isKindOfClass:[ProfileViewController class]]){
         return [self getOrInitImagePickerController];
-    } else if ([viewController isKindOfClass:[SettingsViewController class]]){
-        return [self getOrInitMyProfileViewController];
     } else {
         return nil;
     }
@@ -101,9 +99,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    if ([viewController isKindOfClass:[ProfileViewController class]]) {
-        return [self getOrInitSettingsViewController];
-    } else if ([viewController isKindOfClass:[UIImagePickerController class]]) {
+    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
         return [self getOrInitMyProfileViewController];
     } else if ([viewController isKindOfClass:[ExploreViewController class]]){
         return [self getOrInitImagePickerController];
@@ -150,15 +146,6 @@
         self.myProfileViewController.profileUserId = self.currentUser.identifier;
     }
     return self.myProfileViewController;
-}
-
-- (SettingsViewController *) getOrInitSettingsViewController {
-    if(!self.settingsViewController){
-        self.settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
-        self.settingsViewController.currentUser = self.currentUser;
-    }
-    
-    return self.settingsViewController;
 }
 
 
@@ -341,15 +328,15 @@
 
 - (void)showSettings
 {
-    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+//    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
+//    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
 
 - (void)changeProfilePicture
 {
-    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    [self.settingsViewController changeProfilePicture];
+//    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
+//    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+//    [self.settingsViewController changeProfilePicture];
 
 }
 

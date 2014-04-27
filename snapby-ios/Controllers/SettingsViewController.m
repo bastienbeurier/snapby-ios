@@ -33,6 +33,7 @@
 
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (strong, nonatomic) UIImage *squareImage;
+@property (nonatomic) BOOL editedProfile;
 
 @end
 
@@ -48,6 +49,8 @@
 {
     [super viewDidLoad];
     
+    self.currentUser = [SessionUtilities getCurrentUser];
+    
     [self.profilePictureView.layer setCornerRadius:25.0f];
     
     self.snapbyVersionLabel.text = [self.snapbyVersionLabel.text stringByAppendingFormat:@"\u2122 (v.%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
@@ -61,12 +64,27 @@
     [self setInitialUsername];
     
     [ImageUtilities setWithoutCachingImageView:self.profilePictureView withURL:[User getUserProfilePictureURLFromUserId:self.currentUser.identifier]];
+    
+    self.editedProfile = NO;
 }
 
 - (void)setInitialUsername
 {
     self.usernameTextField.text = self.currentUser.username;
     self.usernameTextField.delegate = self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    if (self.editedProfile) {
+        [self.settingsVCDelegate reloadSnapbiesFromSettings];
+    }
 }
 
 
@@ -108,6 +126,8 @@
         [self setInitialUsername];
         [GeneralUtilities showMessage:message withTitle:nil];
     } else {
+        self.editedProfile = YES;
+        
         typedef void (^SuccessBlock)(User *);
         SuccessBlock successBlock = ^(User *user) {
             [SessionUtilities updateCurrentUserInfoInPhone:user];
@@ -164,6 +184,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    self.editedProfile = YES;
     UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
     
     if (image) {
@@ -176,7 +197,7 @@
 - (void)resizeAndUpdateProfilePicture:(UIImage *)image
 {
     // Crop and rescale image
-    CGSize rescaleSize = {kSnapbyImageHeight, kSnapbyImageHeight};
+    CGSize rescaleSize = {kSnapbyProfileImageHeight, kSnapbyProfileImageHeight};
     self.squareImage = [ImageUtilities imageWithImage:[ImageUtilities cropBiggestCenteredSquareImageFromImage:image withSide:image.size.width] scaledToSize:rescaleSize];
     
     // encode profile pic;

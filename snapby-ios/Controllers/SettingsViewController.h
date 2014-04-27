@@ -9,11 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 
+@protocol SettingsVCDelegate;
 
 @interface SettingsViewController : UITableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) User *currentUser;
+@property (weak, nonatomic) id <SettingsVCDelegate> settingsVCDelegate;
 
 - (void)changeProfilePicture;
+
+@end
+
+@protocol SettingsVCDelegate
+
+- (void)reloadSnapbiesFromSettings;
 
 @end

@@ -8,22 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Snapby.h"
-#import <MapKit/MapKit.h>
-#import "CommentsViewController.h"
-#import "User.h"
 
-@protocol SnapbyVCDelegate;
-
-@interface DisplayViewController : UIViewController <UIActionSheetDelegate>
+@interface DisplayViewController : UIViewController
 
 @property (strong, nonatomic) Snapby *snapby;
-
-@property (weak, nonatomic) id <SnapbyVCDelegate> displayVCDelegate;
-
-@end
-
-@protocol SnapbyVCDelegate
-
-- (void)refreshSnapbiesFromDisplay;
 
 @end

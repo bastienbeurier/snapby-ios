@@ -18,16 +18,13 @@
 #import "MKPointAnnotation+SnapbyPointAnnotation.h"
 #import "ExploreSnapbyViewController.h"
 #import "LocationUtilities.h"
-
-#define PROFILE_IMAGE_SIZE 75
+#import "MBProgressHUD.h"
 
 @interface ProfileViewController () <GMSMapViewDelegate>
 
 @property (strong, nonatomic) User *profileUser;
 
-@property (weak, nonatomic) IBOutlet UILabel *snapbyCount;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
-@property (weak, nonatomic) IBOutlet UILabel *likedCount;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureView;
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @property (weak, nonatomic) IBOutlet HackClipView *scrollViewContainer;
@@ -46,6 +43,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UIButton *zoomButton;
 @property (weak, nonatomic) IBOutlet UIButton *dezoomButton;
+@property (nonatomic) NSUInteger lastPageScrolled;
+@property (weak, nonatomic) IBOutlet UILabel *statsLabel;
 
 
 
@@ -71,7 +70,7 @@
     self.mapView.settings.tiltGestures = NO;
     self.mapView.settings.rotateGestures = NO;
     
-    self.profilePictureView.layer.cornerRadius = PROFILE_IMAGE_SIZE/2;
+    self.profilePictureView.layer.cornerRadius = 50/2;
     self.profilePictureView.clipsToBounds = YES;
     
     // a page is the width of the scroll view
@@ -107,43 +106,48 @@
     }];
 }
 
-- (void)refreshSnapbiesFromDisplay
-{
-    [self refreshSnapbies];
-    [self.profileViewControllerDelegate refreshExploreSnapbies];
-}
-
 - (void)loadingSnapbiesUI
 {
-    self.snapbyDialog.hidden = NO;
-    self.snapbyDialogLabel.text = @"Loading...";
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.snapbyDialog.hidden = YES;
     self.scrollView.hidden = YES;
     self.refreshButton.hidden = YES;
+    self.zoomButton.hidden = YES;
+    self.dezoomButton.hidden = YES;
 }
 
 - (void)noSnapbiesUI
 {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     self.snapbyDialog.hidden = NO;
     self.snapbyDialogLabel.text = @"No snapby yet...";
     self.scrollView.hidden = YES;
     self.refreshButton.hidden = NO;
+    self.zoomButton.hidden = YES;
+    self.dezoomButton.hidden = YES;
 }
 
 - (void)noConnectionUI
 {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [self.mapView moveCamera:[GMSCameraUpdate setTarget:CLLocationCoordinate2DMake(50,0) zoom:0]];
     self.snapbyDialog.hidden = NO;
     self.snapbyDialogLabel.text = @"No connection...";
     self.scrollView.hidden = YES;
     self.refreshButton.hidden = NO;
+    self.zoomButton.hidden = YES;
+    self.dezoomButton.hidden = YES;
 }
 
 - (void)displaySnapbiesUI
 {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     self.snapbyDialog.hidden = YES;
     self.snapbyDialogLabel.text = @"";
     self.scrollView.hidden = NO;
     self.refreshButton.hidden = YES;
+    self.zoomButton.hidden = NO;
+    self.dezoomButton.hidden = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -185,6 +189,8 @@
     
     [self loadSnapbiesAndUpdateMarker];
     
+    [((ExploreSnapbyViewController *) [self.viewControllers objectAtIndex:0]) snapbyDisplayed];
+    
     [self displaySnapbiesUI];
 }
 
@@ -213,7 +219,10 @@
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"Snapby Push Segue From Profile"]) {
         ((DisplayViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
-        ((DisplayViewController *) [segue destinationViewController]).displayVCDelegate = self;
+    }
+    
+    if ([segueName isEqualToString: @"Settings Push Segue"]) {
+        ((SettingsViewController *) [segue destinationViewController]).settingsVCDelegate = self;
     }
 }
 
@@ -278,13 +287,27 @@
 // at the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.automaticScrolling > -1 && self.automaticScrolling != [self getScrollViewPage]) {
+    NSUInteger page = [self getScrollViewPage];
+    
+    if (page == self.lastPageScrolled || (self.automaticScrolling > -1 && self.automaticScrolling != [self getScrollViewPage])) {
         return;
     }
+    
+    self.lastPageScrolled = page;
     
     self.automaticScrolling = -1;
     
     [self loadSnapbiesAndUpdateMarker];
+    
+    //Show snapby info on the center snapby controller
+    [((ExploreSnapbyViewController *) [self.viewControllers objectAtIndex:page]) snapbyDisplayed];
+    
+    if (page > 0) {
+        [((ExploreSnapbyViewController *) [self.viewControllers objectAtIndex:page - 1]) snapbyDismissed];
+    }
+    if (page < [self.viewControllers count] - 1) {
+        [((ExploreSnapbyViewController *) [self.viewControllers objectAtIndex:page + 1]) snapbyDismissed];
+    }
 }
 
 - (void)loadSnapbiesAndUpdateMarker
@@ -374,8 +397,7 @@
     SuccessBlock successBlock = ^(User * user, NSInteger nbFollowers, NSInteger nbFollowedUsers, BOOL isFollowedByCurrentUser)
     {
         self.profileUser = user;
-        self.snapbyCount.text = [NSString stringWithFormat: @"%lu", user.snapbyCount];
-        self.likedCount.text = [NSString stringWithFormat: @"%lu", user.likedSnapbies];
+        self.statsLabel.text = [NSString stringWithFormat: @"%lu snapby - %lu liked", user.snapbyCount, user.likedSnapbies];
         self.userName.text = user.username;
         
         // Get the profile picture (and avoid caching)
@@ -400,7 +422,7 @@
 }
 
 - (IBAction)settingsButtonClicked:(id)sender {
-    [self.profileViewControllerDelegate showSettings];
+    [self performSegueWithIdentifier:@"Settings Push Segue" sender:nil];
 }
 - (IBAction)zoomButtonClicked:(id)sender {
     [self.mapView animateWithCameraUpdate:[GMSCameraUpdate zoomIn]];
@@ -409,4 +431,9 @@
     [self.mapView animateWithCameraUpdate:[GMSCameraUpdate zoomOut]];
 }
 
+- (void)reloadSnapbiesFromSettings
+{
+    [self refreshSnapbies];
+    [self.profileViewControllerDelegate refreshExploreSnapbies];
+}
 @end
