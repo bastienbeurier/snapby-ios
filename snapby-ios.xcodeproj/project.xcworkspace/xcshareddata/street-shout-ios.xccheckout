@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7ED023D9-0A78-4ACC-89DE-88AD886A45A8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>snapby-ios</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>495C8ACA-6ECB-45FC-AC30-1EF9B7D67313</key>
+		<string>ssh://github.com/bastienbeurier/snapby-ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>snapby-ios.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>495C8ACA-6ECB-45FC-AC30-1EF9B7D67313</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/bastienbeurier/snapby-ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>495C8ACA-6ECB-45FC-AC30-1EF9B7D67313</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>495C8ACA-6ECB-45FC-AC30-1EF9B7D67313</string>
+			<key>IDESourceControlWCCName</key>
+			<string>snapby-ios</string>
+		</dict>
+	</array>
+</dict>
+</plist>
