@@ -79,14 +79,12 @@
 {
     self.infoContainer.hidden = NO;
     self.actionsContainer.hidden = NO;
-    self.view.alpha = 1;
 }
 
 - (void)snapbyDismissed
 {
     self.infoContainer.hidden = YES;
     self.actionsContainer.hidden = YES;
-    self.view.alpha = 0.7;
 }
 
 - (IBAction)likeButtonClicked:(id)sender {

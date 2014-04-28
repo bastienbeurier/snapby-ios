@@ -80,6 +80,9 @@
     self.blackListed = [SessionUtilities getCurrentUser].isBlackListed;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 - (IBAction)createSnapbyButtonClicked:(id)sender {
     [self.view endEditing:YES];

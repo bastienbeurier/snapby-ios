@@ -30,6 +30,7 @@
 @property (nonatomic, strong) User* currentUser;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic) BOOL firstExplorePositionSet;
 
 @end
 
@@ -40,6 +41,11 @@
 {
     [super viewDidLoad];
     
+    //Handles status bar
+    self.edgesForExtendedLayout=UIRectEdgeNone;
+    self.extendedLayoutIncludesOpaqueBars=NO;
+    self.automaticallyAdjustsScrollViewInsets=NO;
+    
     // Get current user
     self.currentUser = [SessionUtilities getCurrentUser];
     
@@ -48,6 +54,8 @@
 
     NSUInteger scrollViewWidth = CGRectGetWidth(self.scrollView.frame);
     NSUInteger scrollViewHeight = CGRectGetHeight(self.scrollView.frame);
+    
+    self.scrollView.delegate = self;
     
     self.scrollView.contentSize = CGSizeMake(scrollViewWidth * 3, scrollViewHeight);
     
@@ -71,6 +79,8 @@
     [self.myProfileViewController didMoveToParentViewController:self];
     
     [self goToPage:1 animated:NO];
+    
+    self.firstExplorePositionSet = NO;
 }
 
 - (void)goToPage:(NSUInteger)page animated:(BOOL)animated
@@ -87,7 +97,11 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-    return YES;
+    if ([self getScrollViewPage] == 1) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -266,14 +280,7 @@
 {
     [self reloadSnapbies];
     
-    MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    // Configure for text only and offset down
-    toast.mode = MBProgressHUDModeText;
-    toast.labelText = @"Snapby successfully created!";
-    toast.opacity = 0.3f;
-    toast.margin =10.f;
-    toast.yOffset = -100.f;
-    [toast hide:YES afterDelay:1];
+    [self goToPage:0 animated:NO];
 }
 - (void)startLocationUpdate
 {
@@ -286,7 +293,11 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.myLocation = [locations lastObject];
-    [self.exploreViewController onLocationObtained];
+    
+    if (!self.firstExplorePositionSet) {
+        [self.exploreViewController onLocationObtained];
+        self.firstExplorePositionSet = YES;
+    }
 }
 
 
@@ -325,6 +336,11 @@
     // switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = CGRectGetWidth(self.scrollView.frame);
     return floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 @end
