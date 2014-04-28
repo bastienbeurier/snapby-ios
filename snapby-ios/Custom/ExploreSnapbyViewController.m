@@ -52,14 +52,6 @@
     
     [self.profileImage.layer setCornerRadius:15.0f];
     
-    [self outerGlow:self.usernameLabel];
-    [self outerGlow:self.timeStamp];
-    [self outerGlow:self.likeCount];
-    [self outerGlow:self.commentCount];
-    [self outerGlow:self.likeIcon];
-    [self outerGlow:self.commentIcon];
-    [self outerGlow:self.moreIcon];
-    
     self.imageView.clipsToBounds = YES;
     [self.imageView setImageWithURL:[self.snapby getSnapbyThumbURL] placeholderImage:nil];
     
@@ -83,24 +75,27 @@
     self.commentCount.text = [NSString stringWithFormat:@"%lu", self.snapby.commentCount];
 }
 
-- (void)outerGlow:(UIView *)view
-{
-    view.layer.shadowColor = [UIColor blackColor].CGColor;
-    view.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-    view.layer.shadowRadius = 1;
-    view.layer.shadowOpacity = 0.9;
-    view.layer.masksToBounds = NO;
-}
-
 - (void)snapbyDisplayed
 {
     self.infoContainer.hidden = NO;
     self.actionsContainer.hidden = NO;
+    self.view.alpha = 1;
 }
 
 - (void)snapbyDismissed
 {
     self.infoContainer.hidden = YES;
     self.actionsContainer.hidden = YES;
+    self.view.alpha = 0.7;
+}
+
+- (IBAction)likeButtonClicked:(id)sender {
+}
+
+- (IBAction)commentButtonClicked:(id)sender {
+}
+
+- (IBAction)moreButtonClicked:(id)sender {
+    [self.exploreSnapbyVCDelegate moreButtonClicked:self.snapby];
 }
 @end

@@ -11,10 +11,11 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "DisplayViewController.h"
 #import "SettingsViewController.h"
+#import "ExploreSnapbyViewController.h"
 
 @protocol MyProfileViewControllerDelegate;
 
-@interface ProfileViewController : UIViewController <UIScrollViewDelegate, SettingsVCDelegate>
+@interface ProfileViewController : UIViewController <UIScrollViewDelegate, SettingsVCDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate>
 
 @property (weak, nonatomic) User *currentUser;
 @property (nonatomic) NSInteger profileUserId;

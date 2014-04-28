@@ -7,7 +7,6 @@
 //
 
 #import "ExploreViewController.h"
-#import "MKPointAnnotation+SnapbyPointAnnotation.h"
 #import "LocationUtilities.h"
 #import "Constants.h"
 #import "GeneralUtilities.h"
@@ -67,6 +66,13 @@
 {
     [super viewDidLoad];
     
+    self.scrollView.clipsToBounds = NO;
+    
+    [self.scrollView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.scrollView.layer setShadowOpacity:0.8];
+    [self.scrollView.layer setShadowRadius:15.0];
+    [self.scrollView.layer setShadowOffset:CGSizeMake(0, 0)];
+    
     // border radius
     [self.snapbyDialog.layer setCornerRadius:25.0f];
     [self.refreshButton.layer setCornerRadius:22.0f];
@@ -94,8 +100,6 @@
     
     self.myLocationMarkerSet = NO;
     
-    
-    
     self.didInitializedExplore = NO;
     
     self.page = 1;
@@ -109,7 +113,6 @@
         self.didInitializedExplore = YES;
         UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, self.scrollViewContainer.frame.size.height, 0);
         self.mapView.padding = edgeInsets;
-        
         [self moveMapToMyLocationAndLoadSnapbies];
     }
 }
