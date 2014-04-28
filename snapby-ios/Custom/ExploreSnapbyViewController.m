@@ -11,6 +11,8 @@
 #import "Snapby.h"
 #import "User.h"
 #import "TimeUtilities.h"
+#import "ApiUtilities.h"
+#import "GeneralUtilities.h"
 
 @interface ExploreSnapbyViewController ()
 
@@ -27,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentCount;
 @property (weak, nonatomic) IBOutlet UIView *actionsContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *moreIcon;
+@property (nonatomic) BOOL liked;
 
 
 
@@ -73,6 +76,20 @@
     
     self.likeCount.text = [NSString stringWithFormat:@"%lu", self.snapby.likeCount];
     self.commentCount.text = [NSString stringWithFormat:@"%lu", self.snapby.commentCount];
+    
+    if ([self.exploreSnapbyVCDelegate snapbyHasBeenLiked:self.snapby.identifier] && [self.snapby likeCount] > 0) {
+        self.likeIcon.image = [UIImage imageNamed:@"snapby_liked"];
+        self.liked = YES;
+    } else {
+        self.likeIcon.image = [UIImage imageNamed:@"snapby_like"];
+        self.liked = NO;
+    }
+    
+    if ([self.exploreSnapbyVCDelegate snapbyHasBeenCommented:self.snapby.identifier] && [self.snapby commentCount] > 0) {
+        self.commentIcon.image = [UIImage imageNamed:@"snapby_commented"];
+    } else {
+        self.commentIcon.image = [UIImage imageNamed:@"snapby_comment"];
+    }
 }
 
 - (void)snapbyDisplayed
@@ -88,12 +105,66 @@
 }
 
 - (IBAction)likeButtonClicked:(id)sender {
+    
+    if (self.liked) {
+        [self updateUIOnUnlike];
+        
+        [self.exploreSnapbyVCDelegate onSnapbyUnliked:self.snapby.identifier];
+        
+        [ApiUtilities removeLike:self.snapby success:nil failure:^{
+            [self updateUIOnLike];
+            
+            [self.exploreSnapbyVCDelegate onSnapbyLiked:self.snapby.identifier];
+            
+            [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"unlike_failed_message", @"Strings", @"comment") withTitle:nil];
+        }];
+    } else {
+        [self updateUIOnLike];
+        
+        [self.exploreSnapbyVCDelegate onSnapbyLiked:self.snapby.identifier];
+        
+        [ApiUtilities createLikeforSnapby:self.snapby success:nil failure:^{
+            [self updateUIOnUnlike];
+            
+            [self.exploreSnapbyVCDelegate onSnapbyUnliked:self.snapby.identifier];
+            
+            [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"like_failed_message", @"Strings", @"comment") withTitle:nil];
+        }];
+    }
+}
+
+- (void)updateUIOnLike
+{
+    self.likeIcon.image = [UIImage imageNamed:@"snapby_liked"];
+    self.snapby.likeCount = self.snapby.likeCount + 1;
+    self.likeCount.text = [NSString stringWithFormat:@"%lu", self.snapby.likeCount];
+    self.liked = YES;
+}
+
+- (void)updateUIOnUnlike
+{
+    self.likeIcon.image = [UIImage imageNamed:@"snapby_like"];
+    self.snapby.likeCount = self.snapby.likeCount - 1;
+    self.likeCount.text = [NSString stringWithFormat:@"%lu", self.snapby.likeCount];
+    self.liked = NO;
 }
 
 - (IBAction)commentButtonClicked:(id)sender {
+    [self.exploreSnapbyVCDelegate commentButtonClicked:self.snapby];
 }
 
 - (IBAction)moreButtonClicked:(id)sender {
     [self.exploreSnapbyVCDelegate moreButtonClicked:self.snapby];
+}
+
+- (void)updateCommentCount:(NSUInteger)count
+{
+    self.snapby.commentCount = count;
+    self.commentCount.text = [NSString stringWithFormat:@"%lu", self.snapby.commentCount];
+}
+
+- (void)userDidComment
+{
+    self.commentIcon.image = [UIImage imageNamed:@"snapby_commented"];
 }
 @end

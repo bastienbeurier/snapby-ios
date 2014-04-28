@@ -15,7 +15,7 @@
 #import "Constants.h"
 #import "MultipleViewController.h"
 #import "Snapby.h"
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "Mixpanel.h"
 #import "TrackingUtilities.h"
 #import "SessionUtilities.h"
@@ -144,7 +144,7 @@
     [FBAppCall handleDidBecomeActive];
     
     // Check if API obsolete
-    [AFSnapbyAPIClient checkAPIVersion:kApiVersion IsObsolete:^{
+    [ApiUtilities checkAPIVersion:kApiVersion IsObsolete:^{
         [self createObsoleteAPIAlertView];
     }];
 }
@@ -321,7 +321,7 @@
     };
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [AFSnapbyAPIClient connectFacebookWithParameters:params success:successBlock failure:failureBlock];
+        [ApiUtilities connectFacebookWithParameters:params success:successBlock failure:failureBlock];
     });
 }
 

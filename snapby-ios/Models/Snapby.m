@@ -7,7 +7,7 @@
 //
 
 #import "Snapby.h"
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "Constants.h"
 
 #define SNAPBY_ID @"id"

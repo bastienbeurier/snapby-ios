@@ -6,27 +6,27 @@
 //  Copyright (c) 2013 Snapby. All rights reserved.
 //
 
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "GeneralUtilities.h"
 #import "Constants.h"
 #import "NavigationAppDelegate.h"
 #import "SessionUtilities.h"
 
-@implementation AFSnapbyAPIClient
+@implementation ApiUtilities
 
 // ---------------
 // Utilities
 // ---------------
 
-+ (AFSnapbyAPIClient *)sharedClient
++ (ApiUtilities *)sharedClient
 {
-    static AFSnapbyAPIClient *_sharedClient = nil;
+    static ApiUtilities *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (PRODUCTION) {
-            _sharedClient = [[AFSnapbyAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kProdAFSnapbyAPIBaseURLString]];
+            _sharedClient = [[ApiUtilities alloc] initWithBaseURL:[NSURL URLWithString:kProdAFSnapbyAPIBaseURLString]];
         } else {
-            _sharedClient = [[AFSnapbyAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kDevAFSnapbyAPIBaseURLString]];
+            _sharedClient = [[ApiUtilities alloc] initWithBaseURL:[NSURL URLWithString:kDevAFSnapbyAPIBaseURLString]];
         }
 
         NSOperationQueue *operationQueue = _sharedClient.operationQueue;
@@ -85,9 +85,9 @@
                                  @"page": [NSNumber numberWithLong:page],
                                  @"page_size": [NSNumber numberWithLong:pageSize]};
     
-    NSString *path = [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"bound_box_snapbies.json"];
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingString:@"bound_box_snapbies.json"];
     
-    [[AFSnapbyAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSArray *rawSnapbies = [result valueForKeyPath:@"snapbies"];
         NSInteger page = [[result valueForKeyPath:@"page"] integerValue];
@@ -103,10 +103,10 @@
 {    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
     
-    AFSnapbyAPIClient *manager = [AFSnapbyAPIClient sharedClient];
+    ApiUtilities *manager = [ApiUtilities sharedClient];
     
     // Enrich with token
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
@@ -118,7 +118,7 @@
     [parameters setObject:[NSNumber numberWithBool:isAnonymous] forKey:@"anonymous"];
     [parameters setObject:encodedImage forKey:@"avatar"];
     
-    NSString *path = [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"snapbies.json"];
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingString:@"snapbies.json"];
     
     [manager POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
@@ -134,17 +134,17 @@
 // Remove snapby
 + (void)removeSnapby: (Snapby *) snapby success:(void(^)())successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"snapbies/remove.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"snapbies/remove.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
     [parameters setObject:[NSNumber numberWithInteger:snapby.identifier] forKey:@"snapby_id"];
     
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         if(successBlock) {
             successBlock();
         }
@@ -160,7 +160,7 @@
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
     
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
@@ -168,9 +168,9 @@
     [parameters setObject:motive forKey:@"motive"];
     [parameters setObject:[NSNumber numberWithLong:flaggerId] forKey:@"flagger_id"];
     
-    NSString *path = [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"flags.json"];
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingString:@"flags.json"];
     
-    [[AFSnapbyAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         if (successBlock) {
             successBlock();
         }
@@ -197,13 +197,13 @@
     
     [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
     
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    NSString *path = [[AFSnapbyAPIClient getBasePath] stringByAppendingFormat:@"users/%lu.json", (unsigned long)[SessionUtilities getCurrentUser].identifier];
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingFormat:@"users/%lu.json", (unsigned long)[SessionUtilities getCurrentUser].identifier];
     
-    [[AFSnapbyAPIClient sharedClient] PUT:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] PUT:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         // Update user info in phone
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSDictionary *rawUser = [result valueForKeyPath:@"user"];
@@ -217,10 +217,10 @@
 // Check and redirect to App store API is obsolete
 + (void)checkAPIVersion:(NSString*)apiVersion IsObsolete:(void(^)())obsoleteBlock
 {
-    NSString *path = [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"obsolete_api.json"];
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingString:@"obsolete_api.json"];
     
     NSDictionary *parameters = @{@"api_version": apiVersion};
-    [[AFSnapbyAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         if ([[result valueForKeyPath:@"obsolete"] isEqualToString: @"true"]) {
@@ -234,14 +234,14 @@
 // Sign in
 + (void)signinWithEmail:(NSString *)email password:(NSString *)password success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSURLSessionDataTask *task))failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"users/sign_in.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"users/sign_in.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
     [parameters setObject:email forKey:@"email"];
     [parameters setObject:password forKey:@"password"];
     
-    [[AFSnapbyAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
         NSDictionary *rawUser = [result valueForKeyPath:@"user"];
@@ -262,7 +262,7 @@
 // Sign up
 + (void)signupWithEmail:(NSString *)email password:(NSString *)password username:(NSString *)username success:(void(^)(User *user, NSString *authToken))successBlock failure:(void(^)(NSDictionary *))failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"users.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"users.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
@@ -272,7 +272,7 @@
     
     [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
     
-    [[AFSnapbyAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
         
@@ -300,7 +300,7 @@
 // Sign in or up with Facebook
 + (void)connectFacebookWithParameters: (id) params success:(void(^)(User *user, NSString *authToken, BOOL isSignup))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"users/facebook_create_or_update.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"users/facebook_create_or_update.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
@@ -311,7 +311,7 @@
     
     [GeneralUtilities enrichParamsWithGeneralUserAndDeviceInfo:parameters];
     
-    [[AFSnapbyAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
@@ -332,13 +332,13 @@
 
 + (void)sendResetPasswordInstructionsToEmail: (NSString *) email success:(void(^)())successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"users/password.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"users/password.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:1];
     
     [parameters setObject:email forKey:@"email"];
     
-    [[AFSnapbyAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         successBlock();
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         failureBlock();
@@ -348,17 +348,17 @@
 // Change username
 + (void)updateUsername:(NSString *)username success:(void(^)(User *))successBlock failure:(void(^)(NSDictionary *errors))failureBlock
 {
-    NSString *path = [[AFSnapbyAPIClient getBasePath] stringByAppendingFormat:@"users/%lu.json", (unsigned long)[SessionUtilities getCurrentUser].identifier];
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingFormat:@"users/%lu.json", (unsigned long)[SessionUtilities getCurrentUser].identifier];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
     [parameters setObject:username forKey:@"username"];
     
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] PATCH:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *errors = [JSON valueForKeyPath:@"errors"];
         
@@ -382,17 +382,17 @@
 // Change profile pic
 + (void)updateProfilePicture:(NSString *)encodedImage success:(void(^)())successBlock failure:(void(^)())failureBlock
 {
-    NSString *path = [[AFSnapbyAPIClient getBasePath] stringByAppendingFormat:@"users/%lu.json", (unsigned long)[SessionUtilities getCurrentUser].identifier];
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingFormat:@"users/%lu.json", (unsigned long)[SessionUtilities getCurrentUser].identifier];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
     [parameters setObject:encodedImage forKey:@"avatar"];
     
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] PATCH:path parameters:parameters success:successBlock failure:failureBlock];
+    [[ApiUtilities sharedClient] PATCH:path parameters:parameters success:successBlock failure:failureBlock];
 }
 
 // ------------------------------------------------
@@ -401,18 +401,18 @@
 
 + (void)getCommentsForSnapby:(Snapby *)snapby success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"comments.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"comments.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
     [parameters setObject:[NSNumber numberWithLong:snapby.identifier] forKey:@"snapby_id"];
     
     // Enrich with token
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
@@ -426,7 +426,7 @@
 
 + (void)createComment:(NSString *)comment forSnapby:(Snapby *)snapby lat:(double)lat lng:(double)lng success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"comments.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"comments.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
@@ -440,11 +440,11 @@
     }
     
     // Enrich with token
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         
@@ -457,25 +457,20 @@
     }];
 }
 
-+ (void)createLikeforSnapby:(Snapby *)snapby lat:(double)lat lng:(double)lng success:(void(^)(NSUInteger))successBlock failure:(void(^)())failureBlock
++ (void)createLikeforSnapby:(Snapby *)snapby success:(void(^)(NSUInteger))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"likes.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"likes.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
     [parameters setObject:[NSNumber numberWithLong:snapby.identifier] forKey:@"snapby_id"];
     
-    if (lat != 0 && lng != 0) {
-        [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
-        [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
-    }
-    
     // Enrich with token
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         failureBlock();
@@ -484,17 +479,17 @@
 
 + (void)removeLike: (Snapby *) snapby success:(void(^)())successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:@"likes/delete.json"];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"likes/delete.json"];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
     [parameters setObject:[NSNumber numberWithInteger:snapby.identifier] forKey:@"snapby_id"];
     
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] DELETE:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] DELETE:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         if(successBlock) {
             successBlock();
         }
@@ -509,17 +504,17 @@
 // Get user info (for profile)
 + (void)getOtherUserInfo:(NSInteger) userId success:(void(^)(User *, NSInteger, NSInteger, BOOL))successBlock failure:(void(^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/get_user_info"]];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:[NSString stringWithFormat:@"users/get_user_info"]];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
     [parameters setObject:[NSNumber numberWithInteger:userId] forKey:@"user_id"];
     
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] POST:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSDictionary *rawUser = [result valueForKeyPath:@"user"];
@@ -537,7 +532,7 @@
 
 + (void)getSnapbies:(NSUInteger)userId page:(NSUInteger)page pageSize:(NSUInteger)pageSize andExecuteSuccess:(void(^)(NSArray *snapbies))successBlock failure:(void (^)())failureBlock
 {
-    NSString *path =  [[AFSnapbyAPIClient getBasePath] stringByAppendingString:[NSString stringWithFormat:@"snapbies.json"]];
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:[NSString stringWithFormat:@"snapbies.json"]];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:2];
     
@@ -545,16 +540,54 @@
     [parameters setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [parameters setObject:[NSNumber numberWithInteger:pageSize] forKey:@"page_size"];
     
-    if (![AFSnapbyAPIClient enrichParametersWithToken: parameters]) {
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
         return;
     }
     
-    [[AFSnapbyAPIClient sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+    [[ApiUtilities sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
         NSDictionary *result = [JSON valueForKeyPath:@"result"];
         NSArray *rawSnapbies = [result valueForKeyPath:@"snapbies"];
         successBlock([Snapby rawSnapbiesToInstances:rawSnapbies]);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        failureBlock();
+    }];
+}
+
++ (void)getMyLikesAndCommentsSuccess:(void(^)(NSMutableSet *likes, NSMutableSet *comments))successBlock failure:(void(^)())failureBlock
+{
+    NSString *path =  [[ApiUtilities getBasePath] stringByAppendingString:@"users/my_likes_and_comments.json"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    // Enrich with token
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    [[ApiUtilities sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSArray *rawLikes = [result valueForKeyPath:@"likes"];
+        
+        NSMutableSet *likes = [[NSMutableSet alloc] init];
+        
+        for (int i = 0; i < [rawLikes count]; i = i+1) {
+            NSString *snapbyId = [rawLikes objectAtIndex:i];
+            [likes addObject:[NSNumber numberWithLong:[snapbyId integerValue]]];
+        }
+        
+        NSArray *rawComments = [result valueForKeyPath:@"comments"];
+        
+        NSMutableSet *comments = [[NSMutableSet alloc] init];
+        
+        for (int i = 0; i < [rawComments count]; i = i+1) {
+            NSString *snapbyId = [rawComments objectAtIndex:i];
+            [comments addObject:[NSNumber numberWithLong:[snapbyId integerValue]]];
+        }
+        
+        successBlock(likes, comments);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         failureBlock();
     }];
 }

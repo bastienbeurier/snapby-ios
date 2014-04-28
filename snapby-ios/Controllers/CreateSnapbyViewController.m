@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "Constants.h"
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "LocationUtilities.h"
 #import "GeneralUtilities.h"
 #import "MBProgressHUD.h"
@@ -161,7 +161,7 @@
         encodedImage = [ImageUtilities encodeToBase64String:self.sentImage];
     }
 
-    [AFSnapbyAPIClient createSnapbyWithLat:myLocation.coordinate.latitude
+    [ApiUtilities createSnapbyWithLat:myLocation.coordinate.latitude
                                                    Lng:myLocation.coordinate.longitude
                                               Username:currentUser.username
                                            Description:@""

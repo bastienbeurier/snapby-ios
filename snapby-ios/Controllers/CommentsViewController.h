@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) NSArray *comments;
 @property (nonatomic, strong) Snapby *snapby;
-@property (nonatomic, strong) MKUserLocation *userLocation;
+@property (nonatomic, strong) CLLocation *userLocation;
 @property (weak, nonatomic) id <CommentsVCDelegate> commentsVCdelegate;
 @property (weak, nonatomic) User *currentUser;
 
@@ -27,5 +27,6 @@
 @protocol CommentsVCDelegate
 
 - (void)updateCommentCount:(NSInteger)count;
+- (void)userDidComment:(NSUInteger)snapbyId;
 
 @end

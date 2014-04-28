@@ -9,7 +9,7 @@
 
 #import "ProfileViewController.h"
 #import "ImageUtilities.h"
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "SessionUtilities.h"
 #import "GeneralUtilities.h"
 #import "UIImageView+AFNetworking.h"
@@ -116,7 +116,7 @@
 {
     [self loadingSnapbiesUI];
     
-    [AFSnapbyAPIClient getSnapbies:[SessionUtilities getCurrentUser].identifier page:1 pageSize:100 andExecuteSuccess:^(NSArray *snapbies) {
+    [ApiUtilities getSnapbies:[SessionUtilities getCurrentUser].identifier page:1 pageSize:100 andExecuteSuccess:^(NSArray *snapbies) {
 
         if ([snapbies count] > 0) {
             [self moveMapToFirstSnapby:[snapbies objectAtIndex:0]];
@@ -249,6 +249,13 @@
     
     if ([segueName isEqualToString: @"Settings Push Segue"]) {
         ((SettingsViewController *) [segue destinationViewController]).settingsVCDelegate = self;
+    }
+    
+    
+    if ([segueName isEqualToString: @"Comment Push Segue From Profile"]) {
+        ((CommentsViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
+        ((CommentsViewController *) [segue destinationViewController]).userLocation = [self.profileViewControllerDelegate getMyLocation];
+        ((CommentsViewController *) [segue destinationViewController]).commentsVCdelegate = self;
     }
 }
 
@@ -433,7 +440,7 @@
         [self noConnectionUI];
     };
     
-    [AFSnapbyAPIClient getOtherUserInfo:self.profileUserId success:successBlock failure:failureBlock];
+    [ApiUtilities getOtherUserInfo:self.profileUserId success:successBlock failure:failureBlock];
 }
 
 - (IBAction)profilePictureClicked:(id)sender {
@@ -457,8 +464,7 @@
 
 - (void)reloadSnapbiesFromSettings
 {
-    [self refreshSnapbies];
-    [self.profileViewControllerDelegate refreshExploreSnapbies];
+    [self.profileViewControllerDelegate reloadSnapbies];
 }
 
 - (void)moreButtonClicked:(Snapby *)snapby
@@ -523,7 +529,7 @@
         } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_4]) {
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             
-            [AFSnapbyAPIClient removeSnapby: snapby success:^{
+            [ApiUtilities removeSnapby: snapby success:^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [self refreshSnapbies];
             } failure:^{
@@ -553,11 +559,50 @@
                 break;
         }
         
-        [AFSnapbyAPIClient reportSnapby:snapby.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:^{
+        [ApiUtilities reportSnapby:snapby.identifier withFlaggerId:[SessionUtilities getCurrentUser].identifier withMotive:motive AndExecute:nil Failure:^{
             [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"fail_report_snapby", @"Strings", @"comment") withTitle:nil];
         }];
         
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"flag_thanks_alert", @"Strings", @"comment") withTitle:nil];
     }
 }
+
+- (BOOL)snapbyHasBeenLiked:(NSUInteger)snapbyId
+{
+    return [[self.profileViewControllerDelegate myLikes] containsObject:[NSNumber numberWithLong:snapbyId]];
+}
+
+- (void)onSnapbyLiked:(NSUInteger)snapbyId
+{
+    [[self.profileViewControllerDelegate myLikes] addObject:[NSNumber numberWithLong:snapbyId]];
+}
+
+- (void)onSnapbyUnliked:(NSUInteger)snapbyId
+{
+    [[self.profileViewControllerDelegate myLikes] removeObject:[NSNumber numberWithLong:snapbyId]];
+}
+
+- (BOOL)snapbyHasBeenCommented:(NSUInteger)snapbyId
+{
+    return [[self.profileViewControllerDelegate myComments] containsObject:[NSNumber numberWithLong:snapbyId]];
+}
+
+- (void)commentButtonClicked:(Snapby *)snapby
+{
+    [self performSegueWithIdentifier:@"Comment Push Segue From Profile" sender:snapby];
+}
+
+- (void)updateCommentCount:(NSInteger)count
+{
+    ExploreSnapbyViewController *vc = [self.viewControllers objectAtIndex:[self getScrollViewPage]];
+    [vc updateCommentCount:count];
+}
+
+- (void)userDidComment:(NSUInteger)snapbyId
+{
+    ExploreSnapbyViewController *vc = [self.viewControllers objectAtIndex:[self getScrollViewPage]];
+    [vc userDidComment];
+    [[self.profileViewControllerDelegate myComments] addObject:[NSNumber numberWithLong:snapbyId]];
+}
+
 @end

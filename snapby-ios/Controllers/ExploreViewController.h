@@ -11,10 +11,11 @@
 #import "DisplayViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "ExploreSnapbyViewController.h"
+#import "CommentsViewController.h"
 
 @protocol ExploreViewControllerDelegate;
 
-@interface ExploreViewController : UIViewController <UIScrollViewDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate>
+@interface ExploreViewController : UIViewController <CommentsVCDelegate, UIScrollViewDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate>
 
 @property (weak, nonatomic) id <ExploreViewControllerDelegate> exploreVCDelegate;
 
@@ -26,6 +27,8 @@
 @protocol ExploreViewControllerDelegate
 
 - (CLLocation *)getMyLocation;
-- (void)refreshProfileSnapbies;
+
+@property (strong, nonatomic) NSMutableSet *myLikes;
+@property (strong, nonatomic) NSMutableSet *myComments;
 
 @end

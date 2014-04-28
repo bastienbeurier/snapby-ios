@@ -8,7 +8,7 @@
 
 #import "ForgotPasswordViewController.h"
 #import "GeneralUtilities.h"
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "MBProgressHUD.h"
 #import "ImageUtilities.h"
 
@@ -92,7 +92,7 @@
         };
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [AFSnapbyAPIClient sendResetPasswordInstructionsToEmail: self.emailTextView.text success:successBlock failure:failureBlock];
+        [ApiUtilities sendResetPasswordInstructionsToEmail: self.emailTextView.text success:successBlock failure:failureBlock];
     }
     
 }

@@ -12,10 +12,11 @@
 #import "DisplayViewController.h"
 #import "SettingsViewController.h"
 #import "ExploreSnapbyViewController.h"
+#import "CommentsViewController.h"
 
 @protocol MyProfileViewControllerDelegate;
 
-@interface ProfileViewController : UIViewController <UIScrollViewDelegate, SettingsVCDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate>
+@interface ProfileViewController : UIViewController <CommentsVCDelegate, UIScrollViewDelegate, SettingsVCDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate>
 
 @property (weak, nonatomic) User *currentUser;
 @property (nonatomic) NSInteger profileUserId;
@@ -29,8 +30,10 @@
 
 @protocol MyProfileViewControllerDelegate
 
-- (void)startLocationUpdate;
-- (void)stopLocationUpdate;
-- (void)refreshExploreSnapbies;
+- (void)reloadSnapbies;
+- (CLLocation *)getMyLocation;
+
+@property (strong, nonatomic) NSMutableSet *myLikes;
+@property (strong, nonatomic) NSMutableSet *myComments;
 
 @end

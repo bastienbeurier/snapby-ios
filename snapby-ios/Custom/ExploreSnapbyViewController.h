@@ -16,6 +16,8 @@
 - (id)initWithSnapby:(Snapby *)snapby;
 - (void)snapbyDisplayed;
 - (void)snapbyDismissed;
+- (void)updateCommentCount:(NSUInteger)count;
+- (void)userDidComment;
 
 @property (weak, nonatomic) id <ExploreSnapbyVCDelegate> exploreSnapbyVCDelegate;
 
@@ -24,6 +26,11 @@
 @protocol ExploreSnapbyVCDelegate
 
 - (void)moreButtonClicked:(Snapby *)snapby;
+- (BOOL)snapbyHasBeenLiked:(NSUInteger)snapbyId;
+- (void)onSnapbyLiked:(NSUInteger)snapbyId;
+- (void)onSnapbyUnliked:(NSUInteger)snapbyId;
+- (BOOL)snapbyHasBeenCommented:(NSUInteger)snapbyId;
+- (void)commentButtonClicked:(Snapby *)snapby;
 
 @end
 

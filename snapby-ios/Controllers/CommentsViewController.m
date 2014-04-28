@@ -9,7 +9,7 @@
 #import "CommentsViewController.h"
 #import "Comment.h"
 #import "ImageUtilities.h"
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "TimeUtilities.h"
 #import "LocationUtilities.h"
 #import "GeneralUtilities.h"
@@ -17,6 +17,7 @@
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
 #import "ProfileViewController.h"
+#import "SessionUtilities.h"
 
 #define NO_COMMENT_TAG @"No comment"
 #define LOADING_TAG @"Loading"
@@ -29,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *addCommentTextField;
 @property (weak, nonatomic) IBOutlet UIButton *addCommentButton;
 @property (weak, nonatomic) IBOutlet UIView *addCommentContainerView;
+@property (nonatomic) BOOL userDidComment;
 
 @end
 
@@ -41,8 +43,12 @@
     
     self.addCommentTextField.delegate = self;
     
-    //Nav Bar
-    [ImageUtilities drawCustomNavBarWithLeftItem:@"back" rightItem:nil title:@"Comments" sizeBig:YES inViewController:self];
+    
+    // Add a top.
+    CALayer *topBorder = [CALayer layer];
+    topBorder.frame = CGRectMake(0.0f, 0.0f, self.addCommentContainerView.frame.size.width, 0.5f);
+    topBorder.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.addCommentContainerView.layer addSublayer:topBorder];
     
     if (!self.activityView) {
         self.activityView= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -57,7 +63,7 @@
     
     self.comments = @[LOADING_TAG];
     
-    [AFSnapbyAPIClient getCommentsForSnapby:self.snapby success:^(NSArray *comments) {
+    [ApiUtilities getCommentsForSnapby:self.snapby success:^(NSArray *comments) {
         [self.activityView stopAnimating];
         self.comments = comments;
     } failure: ^{
@@ -82,6 +88,20 @@
                                                object:nil];
     
     [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    [self.commentsVCdelegate updateCommentCount:[self.comments count]];
+    if (self.userDidComment) {
+        [self.commentsVCdelegate userDidComment:self.snapby.identifier];
+    }
 }
 
 - (void)setComments:(NSArray *)comments
@@ -148,22 +168,34 @@
         
         cell.commentsTableViewCellDelegate = self;
         cell.commenterId = comment.commenterId;
-        cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",comment.commenterUsername];
         cell.descriptionLabel.text = comment.description;
         
-        NSString *commentAge = [TimeUtilities ageToShortString:[TimeUtilities getSnapbyAge:comment.created]];
-        
-        cell.stampLabel.text = [NSString stringWithFormat:@"%@", commentAge];
-        
-        if (comment.lat !=0 && comment.lng !=0 ) {
-            NSArray *distanceStrings = [LocationUtilities formattedDistanceLat1:comment.lat lng1:comment.lng lat2:self.snapby.lat lng2:self.snapby.lng];
-            cell.stampLabel.text = [NSString stringWithFormat:@" %@ | %@%@", cell.stampLabel.text, [distanceStrings firstObject], [distanceStrings objectAtIndex:1]];
+        if (comment.commenterId == self.snapby.userId) {
+            if (self.snapby.anonymous) {
+                cell.usernameLabel.text = @"Anonymous";
+            } else {
+                cell.usernameLabel.text = [NSString stringWithFormat:@"%@ (%lu)",comment.commenterUsername, comment.commenterScore];
+                [cell.profilePictureView setImageWithURL:[User getUserProfilePictureURLFromUserId:comment.commenterId] placeholderImage:nil];
+            }
+            
+            [cell.usernameLabel setTextColor:[ImageUtilities getSnapbyPink]];
+        } else {
+            cell.usernameLabel.text = [NSString stringWithFormat:@"%@ (%lu)",comment.commenterUsername, comment.commenterScore];
+            [cell.profilePictureView setImageWithURL:[User getUserProfilePictureURLFromUserId:comment.commenterId] placeholderImage:nil];
         }
         
         // Picture
-        [cell.profilePictureView setImageWithURL:[User getUserProfilePictureURLFromUserId:comment.commenterId] placeholderImage:nil];
         cell.profilePictureView.clipsToBounds = YES;
         cell.profilePictureView.layer.cornerRadius = kCellProfilePictureSize/2;
+        
+        NSString *commentAge = [TimeUtilities ageToShortString:[TimeUtilities getSnapbyAge:comment.created]];
+        
+        cell.stampLabel.text = [NSString stringWithFormat:@"%@ ago", commentAge];
+        
+        if (comment.lat !=0 && comment.lng !=0 ) {
+            NSArray *distanceStrings = [LocationUtilities formattedDistanceLat1:comment.lat lng1:comment.lng lat2:self.snapby.lat lng2:self.snapby.lng];
+            cell.stampLabel.text = [NSString stringWithFormat:@" %@ | %@%@ away", cell.stampLabel.text, [distanceStrings firstObject], [distanceStrings objectAtIndex:1]];
+        }
         
         //separator
         if (indexPath.row != 0) {
@@ -195,6 +227,7 @@
         Comment *comment = (Comment *)self.comments[indexPath.row];
         
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@",comment.commenterUsername];
+        
         cell.descriptionLabel.text = comment.description;
         
         cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
@@ -245,16 +278,17 @@
     double lat = 0;
     double lng = 0;
     
-    if ([LocationUtilities userLocationValid:self.userLocation.location]) {
+    if ([LocationUtilities userLocationValid:self.userLocation]) {
         lat = self.userLocation.coordinate.latitude;
         lng = self.userLocation.coordinate.longitude;
     }
     
-    [AFSnapbyAPIClient createComment:commentDescription forSnapby:self.snapby lat:lat lng:lng success:^(NSArray *comments) {
+    [ApiUtilities createComment:commentDescription forSnapby:self.snapby lat:lat lng:lng success:^(NSArray *comments) {
         self.addCommentTextField.text = @"";
         self.comments = comments;
         ((UIButton *)sender).enabled = YES;
         self.addCommentTextField.enabled = YES;
+        self.userDidComment = YES;
     }failure:^{
         [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"comment_failed_message", @"Strings", @"comment") withTitle:nil];
         ((UIButton *)sender).enabled = YES;

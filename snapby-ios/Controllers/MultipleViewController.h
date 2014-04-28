@@ -16,6 +16,8 @@
 @interface MultipleViewController : UIViewController <UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MyProfileViewControllerDelegate, CreateSnapbyViewControllerDelegate, ExploreViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (nonatomic, strong) NSMutableSet *myLikes;
+@property (nonatomic, strong) NSMutableSet *myComments;
 
 - (void)goHomeAfterRelaunch;
 

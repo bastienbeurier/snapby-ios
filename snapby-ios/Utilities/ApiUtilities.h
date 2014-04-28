@@ -11,9 +11,9 @@
 #import "User.h"
 #import "Comment.h"
 
-@interface AFSnapbyAPIClient : AFHTTPSessionManager
+@interface ApiUtilities : AFHTTPSessionManager
 
-+ (AFSnapbyAPIClient *)sharedClient;
++ (ApiUtilities *)sharedClient;
 
 // ------------------------------------------------
 // Snapby
@@ -68,13 +68,15 @@
 
 + (void)getCommentsForSnapby:(Snapby *)snapby success:(void(^)(NSArray *))successBlock failure:(void(^)())failureBlock;
 
-+ (void)createLikeforSnapby:(Snapby *)snapby lat:(double)lat lng:(double)lng success:(void(^)(NSUInteger))successBlock failure:(void(^)())failureBlock;
++ (void)createLikeforSnapby:(Snapby *)snapby success:(void(^)(NSUInteger))successBlock failure:(void(^)())failureBlock;
 
-+ (void)removeLike: (Snapby *) snapby success:(void(^)())successBlock failure:(void(^)())failureBlock;
++ (void)removeLike:(Snapby *)snapby success:(void(^)())successBlock failure:(void(^)())failureBlock;
+
++ (void)getMyLikesAndCommentsSuccess:(void(^)(NSMutableSet *likes, NSMutableSet *comments))successBlock failure:(void(^)())failureBlock;
 
 + (void)getSnapbies:(NSUInteger)userId page:(NSUInteger)page pageSize:(NSUInteger)pageSize andExecuteSuccess:(void(^)(NSArray *snapbies))successBlock failure:(void (^)())failureBlock;
 
-//GetMyLikes, getLocalSnapbiesCount
+//getLocalSnapbiesCount
 
 
 @end

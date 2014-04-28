@@ -9,7 +9,7 @@
 #import "SigninViewController.h"
 #import "GeneralUtilities.h"
 #import "MBProgressHUD.h"
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "User.h"
 #import "SessionUtilities.h"
 #import <QuartzCore/QuartzCore.h>
@@ -129,7 +129,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [AFSnapbyAPIClient signinWithEmail:self.emailTextView.text
+        [ApiUtilities signinWithEmail:self.emailTextView.text
                                        password:self.passwordTextView.text
                                         success:(void(^)(User *user, NSString *auth_token))successBlock
                                         failure:(void(^)(NSURLSessionDataTask *task))failureBlock];

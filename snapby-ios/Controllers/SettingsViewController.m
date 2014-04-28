@@ -12,7 +12,7 @@
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
 #import "SessionUtilities.h"
-#import "AFSnapbyAPIClient.h"
+#import "ApiUtilities.h"
 #import "UIImageView+AFNetworking.h"
 #import "MBProgressHUD.h"
 
@@ -154,7 +154,7 @@
             });
         };
         
-        [AFSnapbyAPIClient updateUsername:newUsername success:successBlock failure:failureBlock];
+        [ApiUtilities updateUsername:newUsername success:successBlock failure:failureBlock];
     }
 }
 
@@ -214,7 +214,7 @@
     };
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [AFSnapbyAPIClient updateProfilePicture:encodedImage success:successBlock failure:failureBlock];
+    [ApiUtilities updateProfilePicture:encodedImage success:successBlock failure:failureBlock];
     
     [self dismissViewControllerAnimated:YES completion:NULL];
     self.imagePickerController = nil;

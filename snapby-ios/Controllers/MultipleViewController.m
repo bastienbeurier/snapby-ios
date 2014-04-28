@@ -14,6 +14,7 @@
 #import "SessionUtilities.h"
 #import "SettingsViewController.h"
 #import "MBProgressHUD.h"
+#import "ApiUtilities.h"
 
 @interface MultipleViewController ()
 
@@ -81,6 +82,32 @@
     [self goToPage:1 animated:NO];
     
     self.firstExplorePositionSet = NO;
+    
+    [self getMyLikesAndComments];
+}
+
+- (void)getMyLikesAndComments
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *likesPrefKey = [NSString stringWithFormat:@"%@ %lu", MY_LIKES_PREF, self.currentUser.identifier];
+    NSString *commentsPrefKey = [NSString stringWithFormat:@"%@ %lu", MY_COMMENTS_PREF, self.currentUser.identifier];
+    
+    NSArray *likesArray = [[userDefaults objectForKey:likesPrefKey] mutableCopy];
+    self.myLikes = [NSMutableSet setWithArray:likesArray];
+    
+    NSArray *commentsArray = [[userDefaults objectForKey:commentsPrefKey] mutableCopy];
+    self.myComments = [NSMutableSet setWithArray:commentsArray];
+    
+    [ApiUtilities getMyLikesAndCommentsSuccess:^(NSMutableSet *likes, NSMutableSet *comments) {
+        self.myLikes = likes;
+        self.myComments = comments;
+        
+        NSArray *likesArray = [self.myLikes allObjects];
+        [userDefaults setObject:likesArray forKey:likesPrefKey];
+        
+        NSArray *commentsArray = [self.myComments allObjects];
+        [userDefaults setObject:commentsArray forKey:commentsPrefKey];
+    } failure:nil];
 }
 
 - (void)goToPage:(NSUInteger)page animated:(BOOL)animated
@@ -197,6 +224,7 @@
     }
     
     [self reloadSnapbies];
+    [self getMyLikesAndComments];
 }
 
 - (IBAction)takePictureButtonClicked:(id)sender {
@@ -319,16 +347,6 @@
 {
     [self.exploreViewController moveMapToMyLocationAndLoadSnapbies];
     [self.myProfileViewController refreshSnapbies];
-}
-
-- (void)refreshProfileSnapbies
-{
-    [self.myProfileViewController refreshSnapbies];
-}
-
-- (void)refreshExploreSnapbies
-{
-    [self.exploreViewController moveMapToMyLocationAndLoadSnapbies];
 }
 
 - (NSUInteger)getScrollViewPage

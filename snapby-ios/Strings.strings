@@ -72,7 +72,8 @@
 "Try_again_message" = "Please try again.";
 "email_not_in_database_message" = "Your email does not correspond to any existing user.";
 "comment_failed_message" = "Your comment could not be sent, please try again.";
-"like_failed_message" = "Your like could not be sent, please try again.";
+"like_failed_message" = "We couldn't save your like, please try again.";
+"unlike_failed_message" = "We couldn't unlike this snapby, please try again.";
 "report_snapby" = "Report";
 "share_snapby" = "Share";
 "navigate_to_snapby" = "Go there!";

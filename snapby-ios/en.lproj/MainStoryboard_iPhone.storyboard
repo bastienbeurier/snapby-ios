@@ -212,6 +212,7 @@
                         <outlet property="zoomButton" destination="bJi-gj-MSn" id="7CF-I2-hoQ"/>
                         <segue destination="qtI-Lc-vOJ" kind="modal" identifier="Snapby Push Segue From Profile" modalTransitionStyle="crossDissolve" id="t9b-fp-LGS"/>
                         <segue destination="mUL-sa-6UG" kind="push" identifier="Settings Push Segue" id="oiQ-ez-4YX"/>
+                        <segue destination="XJN-rR-Aa3" kind="push" identifier="Comment Push Segue From Profile" id="nUu-Nv-y5y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C3X-zY-dfi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -709,7 +710,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kSY-zJ-pcU">
-                                <rect key="frame" x="0.0" y="80" width="320" height="488"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -766,7 +767,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                                         <state key="normal" title="Send">
-                                            <color key="titleColor" red="0.54384768449999998" green="0.67525305840000005" blue="0.87976323339999996" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" red="0.95294117649999999" green="0.57254901960000004" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -796,7 +797,7 @@
                             <constraint firstItem="Oi7-me-M1K" firstAttribute="top" secondItem="1if-Br-ABU" secondAttribute="bottom" id="V1S-9n-2ag"/>
                             <constraint firstAttribute="trailing" secondItem="1if-Br-ABU" secondAttribute="trailing" id="g4O-pX-jQd"/>
                             <constraint firstItem="1if-Br-ABU" firstAttribute="leading" secondItem="LoJ-aw-IUq" secondAttribute="leading" id="tal-VC-Wen"/>
-                            <constraint firstItem="kSY-zJ-pcU" firstAttribute="top" secondItem="LoJ-aw-IUq" secondAttribute="top" constant="80" id="x03-xU-fve"/>
+                            <constraint firstItem="kSY-zJ-pcU" firstAttribute="top" secondItem="LoJ-aw-IUq" secondAttribute="top" id="x03-xU-fve"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="I2M-I6-3EU"/>
@@ -809,7 +810,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k09-04-Mo8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2048" y="411"/>
+            <point key="canvasLocation" x="677" y="2165"/>
         </scene>
         <!--Explore View Controller-->
         <scene sceneID="P85-2B-qT4">
@@ -911,6 +912,7 @@
                         <outlet property="snapbyDialog" destination="KeW-ZJ-BQZ" id="Ec5-Ab-O1i"/>
                         <outlet property="snapbyDialogLabel" destination="iw3-1v-MPW" id="2nl-qa-Q63"/>
                         <segue destination="qtI-Lc-vOJ" kind="modal" identifier="Snapby Push Segue From Explore" modalTransitionStyle="crossDissolve" id="70g-75-5Or"/>
+                        <segue destination="XJN-rR-Aa3" kind="push" identifier="Comment Push Segue From Explore" id="eEQ-uZ-e9Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDN-fj-Qjo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1446,6 +1448,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ibm-OD-prq"/>
+        <segue reference="eEQ-uZ-e9Q"/>
         <segue reference="t9b-fp-LGS"/>
     </inferredMetricsTieBreakers>
 </document>
