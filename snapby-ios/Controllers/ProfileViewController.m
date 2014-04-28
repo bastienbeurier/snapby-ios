@@ -437,7 +437,7 @@
 }
 
 - (IBAction)profilePictureClicked:(id)sender {
-    [self.profileViewControllerDelegate changeProfilePicture];
+    //TODO launch settings
 }
 
 - (IBAction)refreshButtonClicked:(id)sender {

@@ -14,21 +14,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbb-qi-Scv">
-                    <rect key="frame" x="10" y="10" width="50" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="AQd-Gj-ff0"/>
-                        <constraint firstAttribute="height" constant="50" id="dlE-LI-LZq"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                    <state key="normal" image="map_button.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="mapButtonClicked:" destination="-1" eventType="touchUpInside" id="cJD-XI-FCW"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqA-BL-jh3">
                     <rect key="frame" x="110" y="468" width="100" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -74,43 +59,23 @@
                         <action selector="flashButtonClicked:" destination="-1" eventType="touchUpInside" id="ceY-pM-mui"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jKj-Af-43j">
-                    <rect key="frame" x="260" y="10" width="50" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="LO8-mK-fKI"/>
-                        <constraint firstAttribute="width" constant="50" id="wYu-c7-Qa9"/>
-                    </constraints>
-                    <state key="normal" image="camera-profile-button.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="profileButtonClicked:" destination="-1" eventType="touchUpInside" id="Gcs-1T-xQd"/>
-                    </connections>
-                </button>
             </subviews>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="Agt-9O-iUE" firstAttribute="top" secondItem="d8O-u5-t0u" secondAttribute="top" id="IVg-7E-zWa"/>
                 <constraint firstItem="zqA-BL-jh3" firstAttribute="centerX" secondItem="c2G-Xt-y7K" secondAttribute="centerX" id="LS2-sb-KnC"/>
-                <constraint firstItem="dbb-qi-Scv" firstAttribute="top" secondItem="c2G-Xt-y7K" secondAttribute="top" constant="10" id="Mzv-jY-IeL"/>
                 <constraint firstItem="d8O-u5-t0u" firstAttribute="centerY" secondItem="zqA-BL-jh3" secondAttribute="centerY" id="TNE-UE-uO8"/>
-                <constraint firstItem="jKj-Af-43j" firstAttribute="top" secondItem="c2G-Xt-y7K" secondAttribute="top" constant="10" id="bYr-pk-xIq"/>
                 <constraint firstItem="d8O-u5-t0u" firstAttribute="bottom" secondItem="Agt-9O-iUE" secondAttribute="bottom" id="cOh-1s-Ddc"/>
                 <constraint firstAttribute="trailing" secondItem="d8O-u5-t0u" secondAttribute="trailing" constant="30" id="fZv-2C-VTn"/>
-                <constraint firstAttribute="trailing" secondItem="jKj-Af-43j" secondAttribute="trailing" constant="10" id="hTh-g0-5rD"/>
                 <constraint firstItem="Agt-9O-iUE" firstAttribute="leading" secondItem="c2G-Xt-y7K" secondAttribute="leading" constant="30" id="lPh-3n-UGY"/>
                 <constraint firstAttribute="bottom" secondItem="zqA-BL-jh3" secondAttribute="bottom" id="tWl-hL-mOR"/>
-                <constraint firstItem="dbb-qi-Scv" firstAttribute="leading" secondItem="c2G-Xt-y7K" secondAttribute="leading" constant="10" id="xIA-eu-Rkv"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
     <resources>
         <image name="camera-flip-button.png" width="50" height="37"/>
-        <image name="camera-profile-button.png" width="50" height="50"/>
         <image name="camera_capture.png" width="100" height="100"/>
         <image name="flash_off.png" width="100" height="62"/>
-        <image name="map_button.png" width="50" height="50"/>
     </resources>
 </document>

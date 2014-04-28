@@ -19,6 +19,7 @@
 @property (weak, nonatomic) id <ExploreViewControllerDelegate> exploreVCDelegate;
 
 - (void) moveMapToMyLocationAndLoadSnapbies;
+- (void) onLocationObtained;
 
 @end
 

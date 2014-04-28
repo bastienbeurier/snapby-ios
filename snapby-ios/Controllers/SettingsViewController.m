@@ -51,7 +51,7 @@
     
     self.currentUser = [SessionUtilities getCurrentUser];
     
-    [self.profilePictureView.layer setCornerRadius:25.0f];
+    [self.profilePictureView.layer setCornerRadius:20.0f];
     
     self.snapbyVersionLabel.text = [self.snapbyVersionLabel.text stringByAppendingFormat:@"\u2122 (v.%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     

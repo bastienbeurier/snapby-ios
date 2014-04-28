@@ -13,7 +13,7 @@
 #import "CreateSnapbyViewController.h"
 #import "ExploreViewController.h"
 
-@interface MultipleViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MyProfileViewControllerDelegate, CreateSnapbyViewControllerDelegate, ExploreViewControllerDelegate, CLLocationManagerDelegate>
+@interface MultipleViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, MyProfileViewControllerDelegate, CreateSnapbyViewControllerDelegate, ExploreViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 

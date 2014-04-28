@@ -13,13 +13,12 @@
 #import "LocationUtilities.h"
 #import "SessionUtilities.h"
 #import "SettingsViewController.h"
+#import "MBProgressHUD.h"
 
 @interface MultipleViewController ()
 
 @property (strong, nonatomic) ProfileViewController * myProfileViewController;
 @property (strong, nonatomic) ExploreViewController * exploreViewController;
-@property (strong, nonatomic) CreateSnapbyViewController * createSnapbyViewController;
-@property (strong, nonatomic) SettingsViewController * settingsViewController;
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -29,6 +28,8 @@
 @property (nonatomic, strong) ALAssetsLibrary *library;
 
 @property (nonatomic, strong) User* currentUser;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -44,26 +45,50 @@
     
     // Alloc location manager
     [self allocAndInitLocationManager];
+
+    NSUInteger scrollViewWidth = CGRectGetWidth(self.scrollView.frame);
+    NSUInteger scrollViewHeight = CGRectGetHeight(self.scrollView.frame);
     
-    // Create page view controller
-    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SnapbyPageViewController"];
-    self.pageViewController.dataSource = self;
+    self.scrollView.contentSize = CGSizeMake(scrollViewWidth * 3, scrollViewHeight);
     
-   [self.pageViewController setViewControllers:@[[self getOrInitImagePickerController]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
+    [self getOrInitImagePickerController];
     [self getOrInitExploreViewController];
     [self getOrInitMyProfileViewController];
     
-    //Hack to load the controllers
-    float dummy = self.exploreViewController.view.frame.size.height + self.myProfileViewController.view.frame.size.height;
-    NSLog(@"Dummy %f", dummy);
+    self.exploreViewController.view.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight);
+    [self addChildViewController:self.exploreViewController];
+    [self.scrollView addSubview:self.exploreViewController.view];
+    [self.exploreViewController didMoveToParentViewController:self];
     
-    [self addChildViewController:_pageViewController];
-    [self.view addSubview:_pageViewController.view];
+    self.imagePickerController.view.frame = CGRectMake((scrollViewWidth) * 1, 0, scrollViewWidth, scrollViewHeight);
+    [self addChildViewController:self.imagePickerController];
+    [self.scrollView addSubview:self.imagePickerController.view];
+    [self.imagePickerController didMoveToParentViewController:self];
     
-    [self.pageViewController didMoveToParentViewController:self];
+    self.myProfileViewController.view.frame = CGRectMake((scrollViewWidth) * 2, 0, scrollViewWidth, scrollViewHeight);
+    [self addChildViewController:self.myProfileViewController];
+    [self.scrollView addSubview:self.myProfileViewController.view];
+    [self.myProfileViewController didMoveToParentViewController:self];
+    
+    [self goToPage:1 animated:NO];
 }
 
+- (void)goToPage:(NSUInteger)page animated:(BOOL)animated
+{
+    if (page > 2) {
+        return;
+    }
+    
+    CGRect bounds = self.scrollView.bounds;
+    bounds.origin.x = CGRectGetWidth(bounds) * page;
+    bounds.origin.y = 0;
+    
+    [self.scrollView scrollRectToVisible:bounds animated:animated];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -79,45 +104,6 @@
     [self.locationManager stopUpdatingLocation];
     
 }
-
-         
-// ----------------------
-// Controller transitions
-// ----------------------
-
-// UIPageViewControllerDataSource protocole
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitExploreViewController];
-    } else if ([viewController isKindOfClass:[ProfileViewController class]]){
-        return [self getOrInitImagePickerController];
-    } else {
-        return nil;
-    }
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[UIImagePickerController class]]) {
-        return [self getOrInitMyProfileViewController];
-    } else if ([viewController isKindOfClass:[ExploreViewController class]]){
-        return [self getOrInitImagePickerController];
-    } else {
-        return nil;
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Create from Multiple modal segue"]) {
-        CreateSnapbyViewController * createSnapbyViewController = (CreateSnapbyViewController *) [segue destinationViewController];
-        createSnapbyViewController.createSnapbyVCDelegate = self;
-        createSnapbyViewController.sentImage = (UIImage *) sender;
-    }
-}
-
 
 // ---------------------------
 // Controller initializations
@@ -192,20 +178,11 @@
 
 - (void)goHomeAfterRelaunch
 {
-    NSArray *viewControllers = @[[self getOrInitImagePickerController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    if ([self getScrollViewPage] != 1) {
+        [self goToPage:1 animated:NO];
+    }
+    
     [self reloadSnapbies];
-}
-
-// Custom button and actions
-- (IBAction)mapButtonClicked:(id)sender {
-    NSArray *viewControllers = @[[self getOrInitExploreViewController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-}
-
-- (IBAction)profileButtonClicked:(id)sender {
-    NSArray *viewControllers = @[[self getOrInitMyProfileViewController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
 
 - (IBAction)takePictureButtonClicked:(id)sender {
@@ -272,6 +249,16 @@
                                    }];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"Create from Multiple modal segue"]) {
+        CreateSnapbyViewController * createSnapbyViewController = (CreateSnapbyViewController *) [segue destinationViewController];
+        createSnapbyViewController.createSnapbyVCDelegate = self;
+        createSnapbyViewController.sentImage = (UIImage *) sender;
+    }
+}
+
 
 // CreateSnapbyDelegate protocole
 
@@ -279,8 +266,14 @@
 {
     [self reloadSnapbies];
     
-    NSArray *viewControllers = @[[self getOrInitExploreViewController]];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:nil];
+    MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    // Configure for text only and offset down
+    toast.mode = MBProgressHUDModeText;
+    toast.labelText = @"Snapby successfully created!";
+    toast.opacity = 0.3f;
+    toast.margin =10.f;
+    toast.yOffset = -100.f;
+    [toast hide:YES afterDelay:1];
 }
 - (void)startLocationUpdate
 {
@@ -293,6 +286,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.myLocation = [locations lastObject];
+    [self.exploreViewController onLocationObtained];
 }
 
 
@@ -326,18 +320,11 @@
     [self.exploreViewController moveMapToMyLocationAndLoadSnapbies];
 }
 
-- (void)showSettings
+- (NSUInteger)getScrollViewPage
 {
-//    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
-//    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-}
-
-- (void)changeProfilePicture
-{
-//    NSArray *viewControllers = @[[self getOrInitSettingsViewController]];
-//    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-//    [self.settingsViewController changeProfilePicture];
-
+    // switch the indicator when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = CGRectGetWidth(self.scrollView.frame);
+    return floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
 }
 
 @end

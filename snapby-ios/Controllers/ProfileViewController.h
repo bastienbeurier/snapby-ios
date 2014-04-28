@@ -32,7 +32,5 @@
 - (void)startLocationUpdate;
 - (void)stopLocationUpdate;
 - (void)refreshExploreSnapbies;
-- (void)showSettings;
-- (void)changeProfilePicture;
 
 @end

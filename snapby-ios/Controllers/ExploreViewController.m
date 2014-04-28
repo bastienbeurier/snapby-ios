@@ -105,16 +105,16 @@
     self.page = 1;
     self.noMoreSnapbyToPull = NO;
     self.pullingMoreSnapbies = NO;
+    
+    [self noLocationUI];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)onLocationObtained
 {
-    if (!self.didInitializedExplore) {
-        self.didInitializedExplore = YES;
-        UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, self.scrollViewContainer.frame.size.height, 0);
-        self.mapView.padding = edgeInsets;
-        [self moveMapToMyLocationAndLoadSnapbies];
-    }
+    self.didInitializedExplore = YES;
+    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, self.scrollViewContainer.frame.size.height, 0);
+    self.mapView.padding = edgeInsets;
+    [self moveMapToMyLocationAndLoadSnapbies];
 }
 
 - (void)refreshSnapbies

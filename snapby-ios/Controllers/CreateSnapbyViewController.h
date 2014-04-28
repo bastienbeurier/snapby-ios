@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "RefineSnapbyLocationViewController.h"
 #import "Snapby.h"
 
 

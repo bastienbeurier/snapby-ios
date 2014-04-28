@@ -176,10 +176,6 @@
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
-- (IBAction)refineLocationButtonClicked:(id)sender {
-    [self performSegueWithIdentifier:@"Refine Snapby modal segue" sender:nil];
-}
-
 - (IBAction)anonymousButtonClicked:(id)sender {
     if (self.isAnonymous) {
         self.isAnonymous = NO;
