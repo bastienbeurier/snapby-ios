@@ -116,7 +116,7 @@
 {
     [self loadingSnapbiesUI];
     
-    [ApiUtilities getSnapbies:[SessionUtilities getCurrentUser].identifier page:1 pageSize:100 andExecuteSuccess:^(NSArray *snapbies) {
+    [ApiUtilities getSnapbies:[SessionUtilities getCurrentUser].identifier page:1 pageSize:20 andExecuteSuccess:^(NSArray *snapbies) {
 
         if ([snapbies count] > 0) {
             [self moveMapToFirstSnapby:[snapbies objectAtIndex:0]];
@@ -135,7 +135,6 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.snapbyDialog.hidden = YES;
     self.scrollView.hidden = YES;
-    self.refreshButton.hidden = YES;
     self.zoomButton.hidden = YES;
     self.dezoomButton.hidden = YES;
 }
@@ -146,7 +145,6 @@
     self.snapbyDialog.hidden = NO;
     self.snapbyDialogLabel.text = @"No snapby yet...";
     self.scrollView.hidden = YES;
-    self.refreshButton.hidden = NO;
     self.zoomButton.hidden = YES;
     self.dezoomButton.hidden = YES;
 }
@@ -158,7 +156,6 @@
     self.snapbyDialog.hidden = NO;
     self.snapbyDialogLabel.text = @"No connection...";
     self.scrollView.hidden = YES;
-    self.refreshButton.hidden = NO;
     self.zoomButton.hidden = YES;
     self.dezoomButton.hidden = YES;
 }
@@ -169,7 +166,6 @@
     self.snapbyDialog.hidden = YES;
     self.snapbyDialogLabel.text = @"";
     self.scrollView.hidden = NO;
-    self.refreshButton.hidden = YES;
     self.zoomButton.hidden = NO;
     self.dezoomButton.hidden = NO;
 }
@@ -249,6 +245,13 @@
     
     if ([segueName isEqualToString: @"Settings Push Segue"]) {
         ((SettingsViewController *) [segue destinationViewController]).settingsVCDelegate = self;
+        
+        if ([(NSString *)sender isEqualToString:@"Change Picture"]) {
+            ((SettingsViewController *) [segue destinationViewController]).changeProfilePicRequest = YES;
+        } else {
+            ((SettingsViewController *) [segue destinationViewController]).changeProfilePicRequest = NO;
+        }
+        
     }
     
     
@@ -444,7 +447,7 @@
 }
 
 - (IBAction)profilePictureClicked:(id)sender {
-    //TODO launch settings
+    [self performSegueWithIdentifier:@"Settings Push Segue" sender:@"Change Picture"];
 }
 
 - (IBAction)refreshButtonClicked:(id)sender {
@@ -486,7 +489,9 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    Snapby *snapby = [self.snapbies objectAtIndex:[self getScrollViewPage]];
+    
+    NSUInteger page = [self getScrollViewPage];
+    Snapby *snapby = [self.snapbies objectAtIndex:page];
     
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     
@@ -508,17 +513,8 @@
                 [mapItem openInMapsWithLaunchOptions:nil];
             }
         } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_2]) {
-            NSString *shareString = @"Hey, check out this snapby!\n";
-            
-            NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdSnapbyBaseURLString : kDevAFSnapbyAPIBaseURLString) stringByAppendingString:@"snapbies/"]stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)snapby.identifier]]];
-            
-            NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, nil];
-            
-            UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-            [activityViewController setValue:@"Sharing a snapby with you." forKey:@"subject"];
-            activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
-            [self presentViewController:activityViewController animated:YES completion:nil];
+           UIImage *image = ((ExploreSnapbyViewController * )[self.viewControllers objectAtIndex:page]).imageView.image;
+            [self presentViewController:[GeneralUtilities getShareViewController:image] animated:YES completion:nil];
         } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_3]) {
             self.flagActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTable (@"flag_action_sheet_title", @"Strings", @"comment")
                                                                delegate:self
@@ -572,17 +568,19 @@
     return [[self.profileViewControllerDelegate myLikes] containsObject:[NSNumber numberWithLong:snapbyId]];
 }
 
-- (void)onSnapbyLiked:(NSUInteger)snapbyId
+- (void)onSnapbyLiked:(Snapby *)snapby
 {
-    [[self.profileViewControllerDelegate myLikes] addObject:[NSNumber numberWithLong:snapbyId]];
+    [[self.profileViewControllerDelegate myLikes] addObject:[NSNumber numberWithLong:snapby.identifier]];
+    [self.profileViewControllerDelegate snapby:snapby likedOrUnlike:YES onController:@"Profile"];
 }
 
-- (void)onSnapbyUnliked:(NSUInteger)snapbyId
+- (void)onSnapbyUnliked:(Snapby *)snapby
 {
-    [[self.profileViewControllerDelegate myLikes] removeObject:[NSNumber numberWithLong:snapbyId]];
+    [[self.profileViewControllerDelegate myLikes] removeObject:[NSNumber numberWithLong:snapby.identifier]];
+    [self.profileViewControllerDelegate snapby:snapby likedOrUnlike:NO onController:@"Profile"];
 }
 
-- (BOOL)snapbyHasBeenCommented:(NSUInteger)snapbyId
+- (BOOL)isSnapbyCommented:(NSUInteger)snapbyId
 {
     return [[self.profileViewControllerDelegate myComments] containsObject:[NSNumber numberWithLong:snapbyId]];
 }
@@ -598,11 +596,48 @@
     [vc updateCommentCount:count];
 }
 
-- (void)userDidComment:(NSUInteger)snapbyId
+- (void)userDidComment:(Snapby *)snapby count:(NSUInteger)count
 {
     ExploreSnapbyViewController *vc = [self.viewControllers objectAtIndex:[self getScrollViewPage]];
     [vc userDidComment];
-    [[self.profileViewControllerDelegate myComments] addObject:[NSNumber numberWithLong:snapbyId]];
+    [[self.profileViewControllerDelegate myComments] addObject:[NSNumber numberWithLong:snapby.identifier]];
+    [self.profileViewControllerDelegate snapbyCommented:snapby count:count onController:@"Profile"];
+}
+
+- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked
+{
+    NSUInteger count = [self.snapbies count];
+    
+    for (int i = 0; i < count; i = i + 1) {
+        Snapby *snapby = [self.snapbies objectAtIndex:i];
+        if (snapby.identifier == likedSnapby.identifier) {
+            if (((NSNull *)[self.viewControllers objectAtIndex:i]) == [NSNull null]) {
+                return;
+            }
+            
+            if (liked) {
+                [(ExploreSnapbyViewController *)[self.viewControllers objectAtIndex:i] snapbyLikedOnOtherController];
+            } else {
+                [(ExploreSnapbyViewController *)[self.viewControllers objectAtIndex:i] snapbyUnlikedOnOtherController];
+            }
+        }
+    }
+}
+
+- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount
+{
+    NSUInteger count = [self.snapbies count];
+    
+    for (int i = 0; i < count; i = i + 1) {
+        Snapby *snapby = [self.snapbies objectAtIndex:i];
+        if (snapby.identifier == commentedSnapby.identifier) {
+            if (((NSNull *)[self.viewControllers objectAtIndex:i]) == [NSNull null]) {
+                return;
+            }
+            
+            [(ExploreSnapbyViewController *)[self.viewControllers objectAtIndex:i] snapbyCommentedOnOtherController:commentCount];
+        }
+    }
 }
 
 @end

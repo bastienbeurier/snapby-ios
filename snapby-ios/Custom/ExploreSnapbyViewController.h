@@ -18,6 +18,12 @@
 - (void)snapbyDismissed;
 - (void)updateCommentCount:(NSUInteger)count;
 - (void)userDidComment;
+- (void)snapbyCommentedOnOtherController:(NSUInteger)commentCount;
+- (void)snapbyLikedOnOtherController;
+- (void)snapbyUnlikedOnOtherController;
+
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (weak, nonatomic) id <ExploreSnapbyVCDelegate> exploreSnapbyVCDelegate;
 
@@ -27,9 +33,9 @@
 
 - (void)moreButtonClicked:(Snapby *)snapby;
 - (BOOL)snapbyHasBeenLiked:(NSUInteger)snapbyId;
-- (void)onSnapbyLiked:(NSUInteger)snapbyId;
-- (void)onSnapbyUnliked:(NSUInteger)snapbyId;
-- (BOOL)snapbyHasBeenCommented:(NSUInteger)snapbyId;
+- (void)onSnapbyLiked:(Snapby *)snapby;
+- (void)onSnapbyUnliked:(Snapby *)snapby;
+- (BOOL)isSnapbyCommented:(NSUInteger)snapbyId;
 - (void)commentButtonClicked:(Snapby *)snapby;
 
 @end

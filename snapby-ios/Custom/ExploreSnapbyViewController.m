@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) Snapby *snapby;
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeStamp;
@@ -56,10 +56,10 @@
     [self.profileImage.layer setCornerRadius:15.0f];
     
     self.imageView.clipsToBounds = YES;
-    [self.imageView setImageWithURL:[self.snapby getSnapbyThumbURL] placeholderImage:nil];
+//    [self.imageView setImageWithURL:[self.snapby getSnapbyThumbURL] placeholderImage:nil];
     
     if (!self.snapby.anonymous) {
-        [self.profileImage setImageWithURL:[User getUserProfilePictureURLFromUserId:self.snapby.userId]];
+//        [self.profileImage setImageWithURL:[User getUserProfilePictureURLFromUserId:self.snapby.userId]];
         self.usernameLabel.text = [NSString stringWithFormat:@"%@ (%lu)", self.snapby.username, self.snapby.userScore];
     } else {
         self.usernameLabel.text = @"Anonymous";
@@ -85,7 +85,7 @@
         self.liked = NO;
     }
     
-    if ([self.exploreSnapbyVCDelegate snapbyHasBeenCommented:self.snapby.identifier] && [self.snapby commentCount] > 0) {
+    if ([self.exploreSnapbyVCDelegate isSnapbyCommented:self.snapby.identifier] && [self.snapby commentCount] > 0) {
         self.commentIcon.image = [UIImage imageNamed:@"snapby_commented"];
     } else {
         self.commentIcon.image = [UIImage imageNamed:@"snapby_comment"];
@@ -109,24 +109,24 @@
     if (self.liked) {
         [self updateUIOnUnlike];
         
-        [self.exploreSnapbyVCDelegate onSnapbyUnliked:self.snapby.identifier];
+        [self.exploreSnapbyVCDelegate onSnapbyUnliked:self.snapby];
         
         [ApiUtilities removeLike:self.snapby success:nil failure:^{
             [self updateUIOnLike];
             
-            [self.exploreSnapbyVCDelegate onSnapbyLiked:self.snapby.identifier];
+            [self.exploreSnapbyVCDelegate onSnapbyLiked:self.snapby];
             
             [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"unlike_failed_message", @"Strings", @"comment") withTitle:nil];
         }];
     } else {
         [self updateUIOnLike];
         
-        [self.exploreSnapbyVCDelegate onSnapbyLiked:self.snapby.identifier];
+        [self.exploreSnapbyVCDelegate onSnapbyLiked:self.snapby];
         
         [ApiUtilities createLikeforSnapby:self.snapby success:nil failure:^{
             [self updateUIOnUnlike];
             
-            [self.exploreSnapbyVCDelegate onSnapbyUnliked:self.snapby.identifier];
+            [self.exploreSnapbyVCDelegate onSnapbyUnliked:self.snapby];
             
             [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"like_failed_message", @"Strings", @"comment") withTitle:nil];
         }];
@@ -166,5 +166,22 @@
 - (void)userDidComment
 {
     self.commentIcon.image = [UIImage imageNamed:@"snapby_commented"];
+}
+
+- (void)snapbyCommentedOnOtherController:(NSUInteger)commentCount
+{
+    [self userDidComment];
+    self.snapby.commentCount = commentCount;
+    self.commentCount.text = [NSString stringWithFormat:@"%lu", self.snapby.commentCount];
+}
+
+- (void)snapbyLikedOnOtherController
+{
+    [self updateUIOnLike];
+}
+
+- (void)snapbyUnlikedOnOtherController
+{
+    [self updateUIOnUnlike];
 }
 @end

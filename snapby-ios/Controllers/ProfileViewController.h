@@ -20,7 +20,8 @@
 
 @property (weak, nonatomic) User *currentUser;
 @property (nonatomic) NSInteger profileUserId;
-
+- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked;
+- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount;
 - (void)refreshSnapbies;
 
 // Only for myProfile in the multiple controller
@@ -32,6 +33,8 @@
 
 - (void)reloadSnapbies;
 - (CLLocation *)getMyLocation;
+- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked onController:(NSString *)controller;
+- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount onController:(NSString *)controller;
 
 @property (strong, nonatomic) NSMutableSet *myLikes;
 @property (strong, nonatomic) NSMutableSet *myComments;

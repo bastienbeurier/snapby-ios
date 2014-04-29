@@ -100,7 +100,7 @@
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     [self.commentsVCdelegate updateCommentCount:[self.comments count]];
     if (self.userDidComment) {
-        [self.commentsVCdelegate userDidComment:self.snapby.identifier];
+        [self.commentsVCdelegate userDidComment:self.snapby count:[self.comments count]];
     }
 }
 
@@ -127,17 +127,6 @@
         //We don't know the comment count (loading or server error)
         return -1;
     }
-}
-
-- (void)backButtonClicked
-{
-    NSInteger commentCount = [self commentCount];
-    
-    if (commentCount > -1) {
-        [self.commentsVCdelegate updateCommentCount:commentCount];
-    }
-    
-    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

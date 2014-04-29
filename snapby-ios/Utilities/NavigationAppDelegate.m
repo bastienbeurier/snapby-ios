@@ -27,6 +27,10 @@
 #import "ForgotPasswordViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "UVConfig.h"
+#import "UserVoice.h"
+#import "SessionUtilities.h"
+#import "ImageUtilities.h"
 
 @interface NavigationAppDelegate()
 
@@ -59,6 +63,21 @@
         [Mixpanel sharedInstanceWithToken:kDevMixPanelToken];
         config.inProduction = NO;
     }
+    
+    //UserVoice
+    // Set this up once when your application launches
+    UVConfig *configUV = [UVConfig configWithSite:@"snapby.uservoice.com"];
+    configUV.showKnowledgeBase = NO;
+    configUV.forumId = 250217;
+    
+    if ([SessionUtilities isSignedIn]) {
+        User* user = [SessionUtilities getCurrentUser];
+        
+        [configUV identifyUserWithEmail:user.email name:user.username guid:[NSString stringWithFormat:@"%lu",user.identifier]];
+    }
+    //
+    [UserVoice initialize:configUV];
+    [UVStyleSheet instance].tintColor = [ImageUtilities getSnapbyPink];
     
     [GMSServices provideAPIKey:kGoogleMapKey];
     

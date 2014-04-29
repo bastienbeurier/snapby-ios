@@ -21,14 +21,18 @@
 
 - (void) moveMapToMyLocationAndLoadSnapbies;
 - (void) onLocationObtained;
+- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked;
+- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount;
 
 @end
 
 @protocol ExploreViewControllerDelegate
 
-- (CLLocation *)getMyLocation;
-
 @property (strong, nonatomic) NSMutableSet *myLikes;
 @property (strong, nonatomic) NSMutableSet *myComments;
+
+- (CLLocation *)getMyLocation;
+- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked onController:(NSString *)controller;
+- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount onController:(NSString *)controller;
 
 @end

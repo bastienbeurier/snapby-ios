@@ -38,4 +38,6 @@
 
 + (void)showMessage:(NSString *)text withTitle:(NSString *)title;
 
++ (UIActivityViewController *)getShareViewController:(UIImage *)image;
+
 @end

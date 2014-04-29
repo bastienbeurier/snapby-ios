@@ -587,8 +587,9 @@
         
         successBlock(likes, comments);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        failureBlock();
+        if (failureBlock) {
+            failureBlock();
+        }
     }];
 }
 

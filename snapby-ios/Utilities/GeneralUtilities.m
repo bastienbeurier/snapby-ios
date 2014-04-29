@@ -167,4 +167,22 @@
                       otherButtonTitles:nil] show];
 }
 
++ (UIActivityViewController *)getShareViewController:(UIImage *)image
+{
+    NSString *shareString = @"Hey, check out this snapby! Discover other local pictures by downloading the Snapby app.";
+    
+    //            NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdSnapbyBaseURLString : kDevAFSnapbyAPIBaseURLString) stringByAppendingString:@"snapbies/"]stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)snapby.identifier]]];
+    
+    NSURL *shareUrl = [NSURL URLWithString:PRODUCTION? kProdSnapbyBaseURLString : kDevAFSnapbyAPIBaseURLString];
+    
+    NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, image, nil];
+    
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    [activityViewController setValue:@"Sharing a snapby with you." forKey:@"subject"];
+    activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
+    
+    return activityViewController;
+}
+
 @end

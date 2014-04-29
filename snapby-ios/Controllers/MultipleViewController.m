@@ -42,6 +42,8 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.tintColor = [ImageUtilities getSnapbyPink];
+    
     //Handles status bar
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars=NO;
@@ -133,6 +135,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"VIEW WILL APPEAR CALLED IN MULTIPLE");
     // Start user location
     [self.locationManager startUpdatingLocation];
 }
@@ -359,6 +362,23 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked onController:(NSString *)controller
+{
+    if ([controller isEqualToString:@"Explore"]) {
+        [self.myProfileViewController snapby:likedSnapby likedOrUnlike:liked];
+    } else {
+        [self.exploreViewController snapby:likedSnapby likedOrUnlike:liked];
+    }
+}
+- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount onController:(NSString *)controller
+{
+    if ([controller isEqualToString:@"Explore"]) {
+        [self.myProfileViewController snapbyCommented:commentedSnapby count:commentCount];
+    } else {
+        [self.exploreViewController snapbyCommented:commentedSnapby count:commentCount];
+    }
 }
 
 @end

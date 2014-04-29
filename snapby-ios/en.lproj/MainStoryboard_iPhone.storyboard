@@ -22,6 +22,22 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgf-Tg-uCp">
+                                <rect key="frame" x="10" y="85" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="DA6-pR-qc3"/>
+                                    <constraint firstAttribute="height" constant="44" id="iOn-4X-NxE"/>
+                                </constraints>
+                                <state key="normal" image="explore_refresh.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="refreshButtonClicked:" destination="4IJ-MA-4z3" eventType="touchUpInside" id="9es-fm-fFK"/>
+                                    <action selector="refreshButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="q2v-5P-VVl"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ys8-su-eoZ" customClass="HackClipView">
                                 <rect key="frame" x="0.0" y="290" width="320" height="278"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -37,28 +53,10 @@
                                             <outletCollection property="gestureRecognizers" destination="Lka-OU-uiP" appends="YES" id="JgU-hj-eb6"/>
                                         </connections>
                                     </scrollView>
-                                    <button hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgf-Tg-uCp">
-                                        <rect key="frame" x="266" y="224" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="44" id="DA6-pR-qc3"/>
-                                            <constraint firstAttribute="height" constant="44" id="iOn-4X-NxE"/>
-                                        </constraints>
-                                        <state key="normal" image="explore_refresh.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="refreshButtonClicked:" destination="4IJ-MA-4z3" eventType="touchUpInside" id="9es-fm-fFK"/>
-                                            <action selector="refreshButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="q2v-5P-VVl"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="278" id="2eP-Aq-VNs"/>
-                                    <constraint firstAttribute="trailing" secondItem="zgf-Tg-uCp" secondAttribute="trailing" constant="10" id="7cB-m0-V74"/>
                                     <constraint firstItem="pfi-4S-UTO" firstAttribute="leading" secondItem="Ys8-su-eoZ" secondAttribute="leading" constant="52" id="JQ2-l5-mPm"/>
-                                    <constraint firstAttribute="bottom" secondItem="zgf-Tg-uCp" secondAttribute="bottom" constant="10" id="kFK-FV-Qrx"/>
                                     <constraint firstAttribute="bottom" secondItem="pfi-4S-UTO" secondAttribute="bottom" constant="10" id="t1g-FF-QI9"/>
                                     <constraint firstAttribute="trailing" secondItem="pfi-4S-UTO" secondAttribute="trailing" constant="66" id="wXS-lA-egu"/>
                                 </constraints>
@@ -185,8 +183,10 @@
                             <constraint firstItem="0Kk-Nx-Dpz" firstAttribute="top" secondItem="8wQ-6h-DLn" secondAttribute="top" id="8kl-h4-xPK"/>
                             <constraint firstItem="g5r-iC-3co" firstAttribute="top" secondItem="0Kk-Nx-Dpz" secondAttribute="bottom" id="9i8-Qz-xiU"/>
                             <constraint firstItem="0Kk-Nx-Dpz" firstAttribute="leading" secondItem="8wQ-6h-DLn" secondAttribute="leading" id="Gx4-WL-wnP"/>
+                            <constraint firstItem="zgf-Tg-uCp" firstAttribute="leading" secondItem="8wQ-6h-DLn" secondAttribute="leading" constant="10" id="KTC-gU-UiL"/>
                             <constraint firstItem="LqW-M7-eym" firstAttribute="top" secondItem="bJi-gj-MSn" secondAttribute="bottom" constant="10" id="KxO-ux-PKf"/>
                             <constraint firstAttribute="trailing" secondItem="0Kk-Nx-Dpz" secondAttribute="trailing" id="PdO-i3-pD6"/>
+                            <constraint firstItem="zgf-Tg-uCp" firstAttribute="top" secondItem="JfH-tx-Xgc" secondAttribute="bottom" constant="10" id="Ra0-Lt-P04"/>
                             <constraint firstAttribute="bottom" secondItem="Ys8-su-eoZ" secondAttribute="bottom" id="Vm6-xj-zZW"/>
                             <constraint firstAttribute="centerX" secondItem="9pR-9h-kyN" secondAttribute="centerX" id="bcI-87-c0H"/>
                             <constraint firstAttribute="trailing" secondItem="LqW-M7-eym" secondAttribute="trailing" constant="10" id="fzH-r3-ybb"/>
@@ -430,7 +430,7 @@
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="lql-4c-O5F">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="lql-4c-O5F">
                                         <rect key="frame" x="0.0" y="282" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lql-4c-O5F" id="RUX-u3-w68">
@@ -1447,8 +1447,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ibm-OD-prq"/>
-        <segue reference="eEQ-uZ-e9Q"/>
         <segue reference="t9b-fp-LGS"/>
+        <segue reference="nUu-Nv-y5y"/>
+        <segue reference="ibm-OD-prq"/>
     </inferredMetricsTieBreakers>
 </document>

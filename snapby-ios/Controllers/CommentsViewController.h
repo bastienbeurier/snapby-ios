@@ -27,6 +27,6 @@
 @protocol CommentsVCDelegate
 
 - (void)updateCommentCount:(NSInteger)count;
-- (void)userDidComment:(NSUInteger)snapbyId;
+- (void)userDidComment:(Snapby *)snapby count:(NSUInteger)count;
 
 @end

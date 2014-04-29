@@ -15,8 +15,7 @@
 
 @property (weak, nonatomic) User *currentUser;
 @property (weak, nonatomic) id <SettingsVCDelegate> settingsVCDelegate;
-
-- (void)changeProfilePicture;
+@property (nonatomic) BOOL changeProfilePicRequest;
 
 @end
 
