@@ -56,10 +56,10 @@
     [self.profileImage.layer setCornerRadius:15.0f];
     
     self.imageView.clipsToBounds = YES;
-//    [self.imageView setImageWithURL:[self.snapby getSnapbyThumbURL] placeholderImage:nil];
+    [self.imageView setImageWithURL:[self.snapby getSnapbyThumbURL] placeholderImage:nil];
     
     if (!self.snapby.anonymous) {
-//        [self.profileImage setImageWithURL:[User getUserProfilePictureURLFromUserId:self.snapby.userId]];
+        [self.profileImage setImageWithURL:[User getUserProfilePictureURLFromUserId:self.snapby.userId]];
         self.usernameLabel.text = [NSString stringWithFormat:@"%@ (%lu)", self.snapby.username, self.snapby.userScore];
     } else {
         self.usernameLabel.text = @"Anonymous";
