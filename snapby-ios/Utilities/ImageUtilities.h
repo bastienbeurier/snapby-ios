@@ -43,5 +43,7 @@
 
 + (void)setWithoutCachingImageView:(UIImageView *)imageView withURL:(NSURL *)url;
 
++ (void)outerGlow:(UIView *)view;
+
 
 @end

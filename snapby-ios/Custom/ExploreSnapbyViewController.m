@@ -13,6 +13,8 @@
 #import "TimeUtilities.h"
 #import "ApiUtilities.h"
 #import "GeneralUtilities.h"
+#import "ImageUtilities.h"
+#import "MBProgressHUD.h"
 
 @interface ExploreSnapbyViewController ()
 
@@ -53,10 +55,34 @@
     self.usernameLabel.text = @"";
     self.timeStamp.text = @"";
     
-    [self.profileImage.layer setCornerRadius:15.0f];
+    [ImageUtilities outerGlow:self.usernameLabel];
+    [ImageUtilities outerGlow:self.timeStamp];
+    [ImageUtilities outerGlow:self.likeCount];
+    [ImageUtilities outerGlow:self.commentCount];
+    [ImageUtilities outerGlow:self.likeIcon];
+    [ImageUtilities outerGlow:self.commentIcon];
+    [ImageUtilities outerGlow:self.moreIcon];
+    
+    [self.profileImage.layer setCornerRadius:20.0f];
     
     self.imageView.clipsToBounds = YES;
-    [self.imageView setImageWithURL:[self.snapby getSnapbyThumbURL] placeholderImage:nil];
+    
+
+//    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.snapby getSnapbyImageURL]];
+    
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    
+//    [self.imageView setImageWithURLRequest:imageRequest
+//                      placeholderImage:nil
+//                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+//        //TODO:Ask to refresh
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//     }];
+    
+    [self.imageView setImageWithURL:[self.snapby getSnapbyImageURL] placeholderImage:nil];
+
     
     if (!self.snapby.anonymous) {
         [self.profileImage setImageWithURL:[User getUserProfilePictureURLFromUserId:self.snapby.userId]];
@@ -69,9 +95,9 @@
     NSString *snapbyActive = [TimeUtilities ageToShortString:[TimeUtilities getSnapbyAge:self.snapby.lastActive]];
     
     if (self.snapby.commentCount == 0 && self.snapby.likeCount == 0) {
-        self.timeStamp.text = [NSString stringWithFormat:@"%@", snapbyCreated];
+        self.timeStamp.text = [NSString stringWithFormat:@"created: %@", snapbyCreated];
     } else {
-        self.timeStamp.text = [NSString stringWithFormat:@"%@ (active: %@)", snapbyCreated, snapbyActive];
+        self.timeStamp.text = [NSString stringWithFormat:@"created: %@ - active: %@", snapbyCreated, snapbyActive];
     }
     
     self.likeCount.text = [NSString stringWithFormat:@"%lu", self.snapby.likeCount];
@@ -90,7 +116,18 @@
     } else {
         self.commentIcon.image = [UIImage imageNamed:@"snapby_comment"];
     }
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.actionsContainer.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.5] CGColor], nil];
+    [self.actionsContainer.layer insertSublayer:gradient atIndex:0];
+    
+    gradient = [CAGradientLayer layer];
+    gradient.frame = self.infoContainer.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.5] CGColor], (id)[[UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0] CGColor], nil];
+    [self.infoContainer.layer insertSublayer:gradient atIndex:0];
 }
+
 
 - (void)snapbyDisplayed
 {

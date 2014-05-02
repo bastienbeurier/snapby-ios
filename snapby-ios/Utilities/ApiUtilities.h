@@ -36,6 +36,8 @@
 
 + (void)removeSnapby: (Snapby *) snapby success:(void(^)())successBlock failure:(void(^)())failureBlock;
 
++ (void)pullLocalSnapbiesWithLat:(double)lat Lng:(double)lng page:(NSUInteger)page pageSize:(NSUInteger)pageSize
+               AndExecuteSuccess:(void(^)(NSArray *snapbies, NSInteger page))successBlock failure:(void (^)())failureBlock;
 
 // ------------------------------------------------
 // User

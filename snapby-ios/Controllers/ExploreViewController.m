@@ -34,28 +34,26 @@
 
 @interface ExploreViewController () <GMSMapViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
-@property (nonatomic) NSUInteger scrollViewWidth;
-@property (nonatomic) NSUInteger scrollViewHeight;
-@property (weak, nonatomic) IBOutlet HackClipView *scrollViewContainer;
 @property (nonatomic, strong) NSArray *snapbies;
-@property (strong, nonatomic) NSMutableDictionary *displayedSnapbies;
-@property (weak, nonatomic) Snapby *previouslySelectedSnapby;
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
-@property (nonatomic) int currentSelectedZIndex;
-@property (nonatomic) NSInteger automaticScrolling;
-@property (nonatomic) BOOL myLocationMarkerSet;
-@property (weak, nonatomic) IBOutlet UIView *snapbyDialog;
-@property (weak, nonatomic) IBOutlet UILabel *snapbyDialogLabel;
 @property (nonatomic) BOOL didInitializedExplore;
-@property (weak, nonatomic) IBOutlet UIImageView *refreshButton;
 @property (nonatomic) NSInteger page;
 @property (nonatomic) BOOL noMoreSnapbyToPull;
 @property (nonatomic) BOOL pullingMoreSnapbies;
 @property (nonatomic) NSUInteger lastPageScrolled;
 @property (strong, nonatomic) UIActionSheet *flagActionSheet;
 @property (strong, nonatomic) UIActionSheet *moreActionSheet;
+@property (strong, nonatomic) GMSMarker *snapbyMarker;
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLLocation *myLocation;
+@property (nonatomic, strong) User* currentUser;
+@property(nonatomic) BOOL firstExplorePositionSet;
+@property (nonatomic, strong) NSMutableSet *myLikes;
+@property (nonatomic, strong) NSMutableSet *myComments;
 
 @end
 
@@ -66,16 +64,9 @@
 {
     [super viewDidLoad];
     
-    self.scrollView.clipsToBounds = NO;
+    self.navigationController.navigationBar.tintColor = [ImageUtilities getSnapbyPink];
     
-    [self.scrollView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.scrollView.layer setShadowOpacity:0.8];
-    [self.scrollView.layer setShadowRadius:15.0];
-    [self.scrollView.layer setShadowOffset:CGSizeMake(0, 0)];
-    
-    // border radius
-    [self.snapbyDialog.layer setCornerRadius:25.0f];
-    [self.refreshButton.layer setCornerRadius:22.0f];
+    [ImageUtilities outerGlow:self.cameraButton];
     
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = NO;
@@ -84,8 +75,6 @@
     self.mapView.settings.tiltGestures = NO;
     self.mapView.settings.rotateGestures = NO;
     
-    self.automaticScrolling = NO;
-    
     // a page is the width of the scroll view
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -93,27 +82,27 @@
     self.scrollView.scrollsToTop = NO;
     self.scrollView.delegate = self;
     
-    self.currentSelectedZIndex = 0;
-    
-    //Equivalent of NO
-    self.automaticScrolling = -1;
-    
-    self.myLocationMarkerSet = NO;
-    
     self.didInitializedExplore = NO;
     
     self.page = 1;
     self.noMoreSnapbyToPull = NO;
     self.pullingMoreSnapbies = NO;
     
-    [self noLocationUI];
+    self.firstExplorePositionSet = NO;
+    
+    self.currentUser = [SessionUtilities getCurrentUser];
+    
+    [self allocAndInitLocationManager];
+    
+    [self getMyLikesAndComments];
+}
+
+- (UIStatusBarStyle) preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)onLocationObtained
 {
-    self.didInitializedExplore = YES;
-    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, self.scrollViewContainer.frame.size.height, 0);
-    self.mapView.padding = edgeInsets;
     [self moveMapToMyLocationAndLoadSnapbies];
 }
 
@@ -121,7 +110,9 @@
 {
     [self loadingSnapbiesUI];
     
-    [ApiUtilities pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] page:1 pageSize:PER_PAGE AndExecuteSuccess:^(NSArray *snapbies, NSInteger page) {
+    CLLocation *myLocation = self.myLocation;
+    
+    [ApiUtilities pullLocalSnapbiesWithLat:myLocation.coordinate.latitude Lng:myLocation.coordinate.longitude page:1 pageSize:PER_PAGE AndExecuteSuccess:^(NSArray *snapbies, NSInteger page) {
         self.snapbies = snapbies;
     } failure:^{
         [self noConnectionUI];
@@ -130,54 +121,32 @@
 
 - (void)loadingSnapbiesUI
 {
-    for (UIView *view in self.scrollView.subviews)
-    {
-        if (![view isKindOfClass:[UIImageView class]])
-            [view removeFromSuperview];
-    }
-    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.snapbyDialog.hidden = YES;
-    self.scrollView.hidden = YES;
 }
 
 - (void)loadingMoreSnapbiesUI
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.snapbyDialog.hidden = YES;
 }
 
 - (void)noSnapbiesUI
 {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    self.snapbyDialog.hidden = NO;
-    self.snapbyDialogLabel.text = @"No snapby here...";
-    self.scrollView.hidden = YES;
+
 }
 
 - (void)noConnectionUI
 {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    self.snapbyDialog.hidden = NO;
-    self.snapbyDialogLabel.text = @"No connection...";
-    self.scrollView.hidden = YES;
+
 }
 
 - (void)noLocationUI
 {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [self.mapView moveCamera:[GMSCameraUpdate setTarget:CLLocationCoordinate2DMake(50,0) zoom:0]];
-    self.snapbyDialog.hidden = NO;
-    self.snapbyDialogLabel.text = @"No location...";
-    self.scrollView.hidden = YES;
+
 }
 
 - (void)displaySnapbiesUI
 {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    self.snapbyDialog.hidden = YES;
-    self.snapbyDialogLabel.text = @"";
-    self.scrollView.hidden = NO;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
 }
 
 - (void)setSnapbies:(NSArray *)snapbies
@@ -195,9 +164,7 @@
         [self noSnapbiesUI];
         return;
     }
-    
-    [self displaySnapbies:snapbies];
-    
+
     NSUInteger numberPages = self.snapbies.count;
     
     // view controllers are created lazily
@@ -211,56 +178,16 @@
     
     self.viewControllers = controllers;
     
-    if (self.scrollViewWidth == 0 && self.scrollViewHeight == 0) {
-        self.scrollViewWidth = CGRectGetWidth(self.scrollView.frame);
-        self.scrollViewHeight = CGRectGetHeight(self.scrollView.frame);
-    }
-    
-    self.scrollView.contentSize = CGSizeMake(self.scrollViewWidth * numberPages, self.scrollViewHeight);
-    
-    [self gotoPage:0 animated:NO];
-    
-    [self loadSnapbiesAndUpdateMarker];
-    
-    [((ExploreSnapbyViewController *) [self.viewControllers objectAtIndex:0]) snapbyDisplayed];
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height * numberPages);
     
     [self displaySnapbiesUI];
-}
-
-- (void)updateSnapbies:(NSArray *)newSnapbies
-{
-    if ([newSnapbies count] < PER_PAGE) {
-        self.noMoreSnapbyToPull = YES;
-    }
     
-    if ([newSnapbies count] == 0) {
-        return;
-    }
-    
-    [self displayMoreSnapbies:newSnapbies];
-    
-    NSUInteger oldSnapbyCount = self.snapbies.count;
-    NSUInteger numberPages = oldSnapbyCount + newSnapbies.count;
-    
-    NSMutableArray *updatedSnapbies = [_snapbies mutableCopy];
-    [updatedSnapbies addObjectsFromArray:newSnapbies];
-    _snapbies = updatedSnapbies;
-    
-    for (NSUInteger i = oldSnapbyCount; i < numberPages; i++)
-    {
-        [self.viewControllers addObject:[NSNull null]];
-    }
-    
-    self.scrollView.contentSize = CGSizeMake(self.scrollViewWidth * numberPages, self.scrollViewHeight);
- 
     [self loadSnapbiesAndUpdateMarker];
 }
 
 - (void) moveMapToMyLocationAndLoadSnapbies
 {
-    [self loadingSnapbiesUI];
-    
-    CLLocation *myLocation = [self.exploreVCDelegate getMyLocation];
+    CLLocation *myLocation = self.myLocation;
     if (myLocation != nil && myLocation.coordinate.latitude != 0 && myLocation.coordinate.longitude != 0) {
         CLLocationCoordinate2D location;
         location.latitude = myLocation.coordinate.latitude;
@@ -268,12 +195,9 @@
         
         [self.mapView moveCamera:[GMSCameraUpdate setTarget:location zoom:kZoomAtStartup]];
         
-        [self.mapView clear];
-        
-        GMSMarker *marker = [GMSMarker markerWithPosition:location];
-        marker.icon = [UIImage imageNamed:@"my_location_marker"];
-        marker.zIndex = 10000;
-        marker.map = self.mapView;
+        GMSMarker *myLocationMarker = [GMSMarker markerWithPosition:location];
+        myLocationMarker.icon = [UIImage imageNamed:@"my_location_marker"];
+        myLocationMarker.map = self.mapView;
         
         [self refreshSnapbies];
     } else {
@@ -281,86 +205,20 @@
     }
 }
 
-- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
-{
-    NSUInteger snapbyId = [marker.title intValue];
-    
-    int i = 0;
-    NSUInteger length = [self.snapbies count];
-    
-    for (i = 0; i < length; i = i + 1) {
-        if (((Snapby *)[self.snapbies objectAtIndex:i]).identifier == snapbyId) {
-            if (i != [self getScrollViewPage]) {
-                self.automaticScrolling = (NSInteger) i;
-                [self gotoPage:i animated:YES];
-                break;
-            }
-        }
-    }
-    
-    return YES;
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Snapby Push Segue From Explore"]) {
-        ((DisplayViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
-    }
     
     if ([segueName isEqualToString: @"Comment Push Segue From Explore"]) {
         ((CommentsViewController *) [segue destinationViewController]).snapby = (Snapby *)sender;
-        ((CommentsViewController *) [segue destinationViewController]).userLocation = [self.exploreVCDelegate getMyLocation];
+        ((CommentsViewController *) [segue destinationViewController]).userLocation = self.myLocation;
         ((CommentsViewController *) [segue destinationViewController]).commentsVCdelegate = self;
     }
-}
-
-- (void)displaySnapbies:(NSArray *)snapbies
-{
-    self.displayedSnapbies = [[NSMutableDictionary alloc] init];
     
-    for (Snapby *snapby in snapbies) {
-        NSString *snapbyKey = [NSString stringWithFormat:@"%lu", (unsigned long)snapby.identifier];
-        
-        CLLocationCoordinate2D markerCoordinate;
-        markerCoordinate.latitude = snapby.lat;
-        markerCoordinate.longitude = snapby.lng;
-        
-        GMSMarker *marker = [GMSMarker markerWithPosition:markerCoordinate];
-        marker.title = [NSString stringWithFormat:@"%lu", snapby.identifier];
-        marker.icon = [UIImage imageNamed:[GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:NO]];
-        
-        marker.map = self.mapView;
-        
-        [self.displayedSnapbies setObject:marker forKey:snapbyKey];
+    if ([segueName isEqualToString: @"Camera Push Segue"]) {
+        ((CameraViewController *) [segue destinationViewController]).cameraVCDelegate = self;
     }
 }
-
-- (void)displayMoreSnapbies:(NSArray *)newSnapbies
-{
-    for (Snapby *snapby in newSnapbies) {
-        NSString *snapbyKey = [NSString stringWithFormat:@"%lu", (unsigned long)snapby.identifier];
-        
-        CLLocationCoordinate2D markerCoordinate;
-        markerCoordinate.latitude = snapby.lat;
-        markerCoordinate.longitude = snapby.lng;
-        
-        GMSMarker *marker = [GMSMarker markerWithPosition:markerCoordinate];
-        marker.title = [NSString stringWithFormat:@"%lu", snapby.identifier];
-        marker.icon = [UIImage imageNamed:[GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:NO]];
-        
-        marker.map = self.mapView;
-        
-        [self.displayedSnapbies setObject:marker forKey:snapbyKey];
-    }
-}
-
-- (NSMutableDictionary *)displayedSnapbies
-{
-    if (!_displayedSnapbies) _displayedSnapbies = [[NSMutableDictionary alloc] init];
-    return _displayedSnapbies;
-}
-
 
 //Scrollview related methods
 
@@ -382,7 +240,7 @@
     // add the controller's view to the scroll view
     if (controller.view.superview == nil)
     {
-        controller.view.frame = CGRectMake((self.scrollViewWidth) * page, 0, self.scrollViewWidth, self.scrollViewHeight);
+        controller.view.frame = CGRectMake(0, self.scrollView.frame.size.height * page, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
         
         [self addChildViewController:controller];
         [self.scrollView addSubview:controller.view];
@@ -396,44 +254,13 @@
     NSUInteger page = [self getScrollViewPage];
     
     //Skip if method already called for this page or if scrolling automatically (when user clicks on marker)
-    if (page == self.lastPageScrolled || (self.automaticScrolling > -1 && self.automaticScrolling != [self getScrollViewPage])) {
+    if (page == self.lastPageScrolled) {
         return;
     }
     
     self.lastPageScrolled = page;
     
-    self.automaticScrolling = -1;
-    
     [self loadSnapbiesAndUpdateMarker];
-    
-    //Show snapby info on the center snapby controller
-    [((ExploreSnapbyViewController *) [self.viewControllers objectAtIndex:page]) snapbyDisplayed];
-    
-    if (page > 0) {
-        [((ExploreSnapbyViewController *) [self.viewControllers objectAtIndex:page - 1]) snapbyDismissed];
-    }
-    if (page < [self.viewControllers count] - 1) {
-        [((ExploreSnapbyViewController *) [self.viewControllers objectAtIndex:page + 1]) snapbyDismissed];
-    }
-    
-    //Pull more snapbies if it's the last snapby
-    if (page == self.snapbies.count - 1 && !self.noMoreSnapbyToPull && !self.pullingMoreSnapbies) {
-        
-        self.pullingMoreSnapbies = YES;
-        [self loadingMoreSnapbiesUI];
-        
-        [ApiUtilities pullSnapbiesInZone:[LocationUtilities getMapBounds:self.mapView] page:self.page + 1 pageSize:PER_PAGE AndExecuteSuccess:^(NSArray *snapbies, NSInteger page) {
-            
-            if (page == self.page + 1) {
-                self.pullingMoreSnapbies = NO;
-                self.page = self.page + 1;
-                [self updateSnapbies:snapbies];
-                [self displaySnapbiesUI];
-            }
-        } failure:^{
-            [self noConnectionUI];
-        }];
-    }
 }
 
 - (void)loadSnapbiesAndUpdateMarker
@@ -442,22 +269,19 @@
     
     Snapby *snapby = ((Snapby *)[self.snapbies objectAtIndex:page]);
     
-    NSString *snapbyKey = [NSString stringWithFormat:@"%lu", snapby.identifier];
+    CLLocationCoordinate2D snapbyLocation;
     
-    GMSMarker *marker = [self.displayedSnapbies objectForKey:snapbyKey];
+    snapbyLocation.latitude = snapby.lat;
+    snapbyLocation.longitude = snapby.lng;
     
-    marker.icon = [UIImage imageNamed:[GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:YES]];
-    marker.zIndex = self.currentSelectedZIndex + 1;
-    self.currentSelectedZIndex = self.currentSelectedZIndex + 1;
-    marker.map = self.mapView;
-    
-    if (self.previouslySelectedSnapby != nil && self.previouslySelectedSnapby.identifier != snapby.identifier) {
-        GMSMarker *oldMarker = [self.displayedSnapbies objectForKey:[NSString stringWithFormat:@"%lu", self.previouslySelectedSnapby.identifier]];
-        oldMarker.icon = [UIImage imageNamed:[GeneralUtilities getAnnotationPinImageForSnapby:(Snapby *)snapby selected:NO]];
-        oldMarker.map = self.mapView;
+    if (!self.snapbyMarker) {
+        self.snapbyMarker = [GMSMarker markerWithPosition:snapbyLocation];
+        self.snapbyMarker.icon = [UIImage imageNamed:@"snapby-marker"];
+    } else {
+        self.snapbyMarker.position = snapbyLocation;
     }
     
-    self.previouslySelectedSnapby = snapby;
+    self.snapbyMarker.map = self.mapView;
     
     [self loadScrollViewWithPage:page - 2];
     [self loadScrollViewWithPage:page - 1];
@@ -470,28 +294,12 @@
 - (NSUInteger)getScrollViewPage
 {
     // switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = self.scrollViewWidth;
-    return MIN(floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1, self.snapbies.count - 1);
-}
-
-- (void)gotoPage:(NSUInteger)page animated:(BOOL)animated
-{
-	// update the scroll view to the appropriate page
-    CGRect bounds = self.scrollView.bounds;
-    bounds.origin.x = CGRectGetWidth(bounds) * page;
-    bounds.origin.y = 0;
-    
-    [self.scrollView scrollRectToVisible:bounds animated:animated];
+    CGFloat pageHeight = self.scrollView.frame.size.height;
+    return MIN(floor((self.scrollView.contentOffset.y - pageHeight / 2) / pageHeight) + 1, self.snapbies.count - 1);
 }
 
 - (IBAction)onScrollViewClicked:(id)sender {
-    Snapby *snapby = [self.snapbies objectAtIndex:[self getScrollViewPage]];
-    [self performSegueWithIdentifier:@"Snapby Push Segue From Explore" sender:snapby];
-}
-
-- (IBAction)refreshButtonClicked:(id)sender {
-    [self moveMapToMyLocationAndLoadSnapbies];
-}
+    }
 
 - (void)moreButtonClicked:(Snapby *)snapby
 {
@@ -587,24 +395,22 @@
 
 - (BOOL)snapbyHasBeenLiked:(NSUInteger)snapbyId
 {
-    return [[self.exploreVCDelegate myLikes] containsObject:[NSNumber numberWithLong:snapbyId]];
+    return [self.myLikes containsObject:[NSNumber numberWithLong:snapbyId]];
 }
 
 - (void)onSnapbyLiked:(Snapby *)snapby
 {
-    [[self.exploreVCDelegate myLikes] addObject:[NSNumber numberWithLong:snapby.identifier]];
-    [self.exploreVCDelegate snapby:snapby likedOrUnlike:YES onController:@"Explore"];
+    [self.myLikes addObject:[NSNumber numberWithLong:snapby.identifier]];
 }
 
 - (void)onSnapbyUnliked:(Snapby *)snapby
 {
-    [[self.exploreVCDelegate myLikes] removeObject:[NSNumber numberWithLong:snapby.identifier]];
-    [self.exploreVCDelegate snapby:snapby likedOrUnlike:NO onController:@"Explore"];
+    [self.myLikes removeObject:[NSNumber numberWithLong:snapby.identifier]];
 }
 
 - (BOOL)isSnapbyCommented:(NSUInteger)snapbyId
 {
-    return [[self.exploreVCDelegate myComments] containsObject:[NSNumber numberWithLong:snapbyId]];
+    return [self.myComments containsObject:[NSNumber numberWithLong:snapbyId]];
 }
 
 - (void)commentButtonClicked:(Snapby *)snapby
@@ -622,44 +428,116 @@
 {
     ExploreSnapbyViewController *vc = [self.viewControllers objectAtIndex:[self getScrollViewPage]];
     [vc userDidComment];
-    [[self.exploreVCDelegate myComments] addObject:[NSNumber numberWithLong:snapby.identifier]];
-    [self.exploreVCDelegate snapbyCommented:snapby count:count onController:@"Explore"];
+    [self.myComments addObject:[NSNumber numberWithLong:snapby.identifier]];
 }
 
-- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSUInteger count = [self.snapbies count];
+//    self.scrollView.alpha = 1;
+    [UIView animateWithDuration:0.4 animations:^(void) {
+        self.scrollView.alpha = 1;
+    }];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.scrollView.layer removeAllAnimations];
+    self.scrollView.alpha = 0.1;
+}
+
+
+- (void)getMyLikesAndComments
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *likesPrefKey = [NSString stringWithFormat:@"%@ %lu", MY_LIKES_PREF, self.currentUser.identifier];
+    NSString *commentsPrefKey = [NSString stringWithFormat:@"%@ %lu", MY_COMMENTS_PREF, self.currentUser.identifier];
     
-    for (int i = 0; i < count; i = i + 1) {
-        Snapby *snapby = [self.snapbies objectAtIndex:i];
-        if (snapby.identifier == likedSnapby.identifier) {
-            if (((NSNull *)[self.viewControllers objectAtIndex:i]) == [NSNull null]) {
-                return;
-            }
-            
-            if (liked) {
-                [(ExploreSnapbyViewController *)[self.viewControllers objectAtIndex:i] snapbyLikedOnOtherController];
-            } else {
-                [(ExploreSnapbyViewController *)[self.viewControllers objectAtIndex:i] snapbyUnlikedOnOtherController];
-            }
-        }
+    NSArray *likesArray = [[userDefaults objectForKey:likesPrefKey] mutableCopy];
+    self.myLikes = [NSMutableSet setWithArray:likesArray];
+    
+    NSArray *commentsArray = [[userDefaults objectForKey:commentsPrefKey] mutableCopy];
+    self.myComments = [NSMutableSet setWithArray:commentsArray];
+    
+    [ApiUtilities getMyLikesAndCommentsSuccess:^(NSMutableSet *likes, NSMutableSet *comments) {
+        self.myLikes = likes;
+        self.myComments = comments;
+        
+        NSArray *likesArray = [self.myLikes allObjects];
+        [userDefaults setObject:likesArray forKey:likesPrefKey];
+        
+        NSArray *commentsArray = [self.myComments allObjects];
+        [userDefaults setObject:commentsArray forKey:commentsPrefKey];
+    } failure:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // Start user location
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // Update and stop user location
+    self.currentUser.lat = self.locationManager.location.coordinate.latitude;
+    self.currentUser.lng = self.locationManager.location.coordinate.longitude;
+    [self.locationManager stopUpdatingLocation];
+    
+}
+
+- (void)startLocationUpdate
+{
+    [self.locationManager startUpdatingLocation];
+}
+- (void)stopLocationUpdate
+{
+    [self.locationManager stopUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    self.myLocation = [locations lastObject];
+    
+    if (!self.firstExplorePositionSet) {
+        [self onLocationObtained];
+        self.firstExplorePositionSet = YES;
     }
 }
 
-- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount
+
+// Location Manager
+- (void)allocAndInitLocationManager
 {
-    NSUInteger count = [self.snapbies count];
-    
-    for (int i = 0; i < count; i = i + 1) {
-        Snapby *snapby = [self.snapbies objectAtIndex:i];
-        if (snapby.identifier == commentedSnapby.identifier) {
-            if (((NSNull *)[self.viewControllers objectAtIndex:i]) == [NSNull null]) {
-                return;
-            }
-            
-            [(ExploreSnapbyViewController *)[self.viewControllers objectAtIndex:i] snapbyCommentedOnOtherController:commentCount];
-        }
-    }
+    self.locationManager = [CLLocationManager new];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    self.locationManager.distanceFilter = kDistanceBeforeUpdateLocation;
 }
+
+- (IBAction)cameraButtonClicked:(id)sender {
+    [self performSegueWithIdentifier:@"Camera Push Segue" sender:nil];
+}
+
+- (CLLocation *)getMyLocation
+{
+    return self.myLocation;
+}
+
+- (void)onSnapbyCreated
+{
+    [self gotoPage:0 animated:NO];
+    [self moveMapToMyLocationAndLoadSnapbies];
+}
+
+- (void)gotoPage:(NSUInteger)page animated:(BOOL)animated
+{
+    // update the scroll view to the appropriate page
+    CGRect bounds = self.scrollView.bounds;
+    bounds.origin.x = 0;
+    bounds.origin.y = CGRectGetHeight(bounds) * page;
+
+    [self.scrollView scrollRectToVisible:bounds animated:animated];
+}
+
+
 
 @end

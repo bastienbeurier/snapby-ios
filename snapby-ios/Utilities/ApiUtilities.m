@@ -593,6 +593,35 @@
     }];
 }
 
++ (void)pullLocalSnapbiesWithLat:(double)lat Lng:(double)lng page:(NSUInteger)page pageSize:(NSUInteger)pageSize
+         AndExecuteSuccess:(void(^)(NSArray *snapbies, NSInteger page))successBlock failure:(void (^)())failureBlock
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    [parameters setObject:[NSNumber numberWithDouble:lat] forKey:@"lat"];
+    [parameters setObject:[NSNumber numberWithDouble:lng] forKey:@"lng"];
+    [parameters setObject:[NSNumber numberWithLong:page] forKey:@"page"];
+    [parameters setObject:[NSNumber numberWithLong:pageSize] forKey:@"page_size"];
+    
+    if (![ApiUtilities enrichParametersWithToken: parameters]) {
+        return;
+    }
+    
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingString:@"local_snapbies.json"];
+    
+    [[ApiUtilities sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSArray *rawSnapbies = [result valueForKeyPath:@"snapbies"];
+        NSInteger page = [[result valueForKeyPath:@"page"] integerValue];
+        successBlock([Snapby rawSnapbiesToInstances:rawSnapbies], page);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failureBlock) {
+            failureBlock();
+        }
+    }];
+}
+
 
 
 @end

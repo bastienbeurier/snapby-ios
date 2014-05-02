@@ -12,27 +12,8 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "ExploreSnapbyViewController.h"
 #import "CommentsViewController.h"
+#import "CameraViewController.h"
 
-@protocol ExploreViewControllerDelegate;
-
-@interface ExploreViewController : UIViewController <CommentsVCDelegate, UIScrollViewDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate>
-
-@property (weak, nonatomic) id <ExploreViewControllerDelegate> exploreVCDelegate;
-
-- (void) moveMapToMyLocationAndLoadSnapbies;
-- (void) onLocationObtained;
-- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked;
-- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount;
-
-@end
-
-@protocol ExploreViewControllerDelegate
-
-@property (strong, nonatomic) NSMutableSet *myLikes;
-@property (strong, nonatomic) NSMutableSet *myComments;
-
-- (CLLocation *)getMyLocation;
-- (void)snapby:(Snapby *)likedSnapby likedOrUnlike:(BOOL)liked onController:(NSString *)controller;
-- (void)snapbyCommented:(Snapby *)commentedSnapby count:(NSUInteger)commentCount onController:(NSString *)controller;
+@interface ExploreViewController : UIViewController <CommentsVCDelegate, UIScrollViewDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate, CLLocationManagerDelegate, CameraViewControllerDelegate>
 
 @end

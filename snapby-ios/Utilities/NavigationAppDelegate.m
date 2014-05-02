@@ -13,7 +13,6 @@
 #import "UAPush.h"
 #import "TestFlight.h"
 #import "Constants.h"
-#import "MultipleViewController.h"
 #import "Snapby.h"
 #import "ApiUtilities.h"
 #import "Mixpanel.h"
@@ -148,11 +147,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    
-    if ([[navController visibleViewController] isKindOfClass:[MultipleViewController class]]) {
-        [((MultipleViewController *)[navController visibleViewController]) goHomeAfterRelaunch];
-    }
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -187,19 +182,7 @@
 
 - (void)application:(UIApplication *)application handlePushNotification:(NSDictionary *)notification
 {
-    if (application.applicationState != UIApplicationStateActive && [notification objectForKey:@"extra"]) {
-        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-        
-        if ([[navController visibleViewController] isKindOfClass:[MultipleViewController class]]) {
-            [((MultipleViewController *)[navController visibleViewController]) goHomeAfterRelaunch];
-        }
-        
-        //TODO COMMENT AND REFINE CASES
-        if ([[navController visibleViewController] isKindOfClass:[DisplayViewController class]]) {
-            // Pop up all push controllers to come back to multiple
-            [navController popToViewController:navController.childViewControllers[1] animated:NO];
-        }
-    }
+    
 }
 
 

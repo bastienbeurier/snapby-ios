@@ -16,7 +16,6 @@
 #import "KeyboardUtilities.h"
 #import "Constants.h"
 #import "UIImageView+AFNetworking.h"
-#import "ProfileViewController.h"
 #import "SessionUtilities.h"
 
 #define NO_COMMENT_TAG @"No comment"
@@ -301,9 +300,9 @@
 {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"Profile from Comments push segue"]) {
-        ProfileViewController * usersListViewController = (ProfileViewController *) [segue destinationViewController];
-        usersListViewController.currentUser = self.currentUser;
-        usersListViewController.profileUserId = [(NSNumber *) sender intValue];
+//        ProfileViewController * usersListViewController = (ProfileViewController *) [segue destinationViewController];
+//        usersListViewController.currentUser = self.currentUser;
+//        usersListViewController.profileUserId = [(NSNumber *) sender intValue];
     }
 }
 

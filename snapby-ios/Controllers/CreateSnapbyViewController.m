@@ -24,7 +24,6 @@
 
 @interface CreateSnapbyViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *anonymousButton;
 @property (strong, nonatomic) IBOutlet UIImageView *snapbyImageView;
 
 @property (strong, nonatomic) UIImage *originalImage;
@@ -34,10 +33,6 @@
 @property (nonatomic) BOOL flashOn;
 @property (nonatomic, strong) NSArray *effects;
 @property (nonatomic) NSUInteger currentEffect;
-
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-
-
 
 @end
 
@@ -124,6 +119,11 @@
             
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+        
+        if (self.createSnapbyVCDelegate) {
+            NSLog(@"CREATE SNAPBY DELEGATE IS NIL");
+        }
+        
         [self.createSnapbyVCDelegate onSnapbyCreated];
         [self dismissViewControllerAnimated:YES completion:nil];
     };
@@ -177,40 +177,6 @@
 
 - (IBAction)quitButtonclicked:(id)sender {
     [self dismissViewControllerAnimated:NO completion:nil];
-}
-
-- (IBAction)anonymousButtonClicked:(id)sender {
-    if (self.isAnonymous) {
-        self.isAnonymous = NO;
-        [self.anonymousButton setImage:[UIImage imageNamed:@"create_anonymous_button.png"] forState:UIControlStateNormal];
-        [self displayToastWithMessage:NSLocalizedStringFromTable (@"anonymous_button_disabled", @"Strings", @"comment")];
-    } else {
-        self.isAnonymous = YES;
-        [self.anonymousButton setImage:[UIImage imageNamed:@"create_anonymous_button_pressed.png"] forState:UIControlStateNormal];
-        [self displayToastWithMessage:NSLocalizedStringFromTable (@"anonymous_button_enabled", @"Strings", @"comment")];
-    }
-}
-
-
-// Utilities
-
-- (void)keyboardWillShow:(NSNotification *)notification {
-    [KeyboardUtilities pushUpTopView:self.containerView whenKeyboardWillShowNotification:notification];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    [KeyboardUtilities pushDownTopView:self.containerView whenKeyboardWillhideNotification:notification];
-}
-
-- (void)displayToastWithMessage:(NSString *)message {
-    MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:self.containerView animated:YES];
-    // Configure for text only and offset down
-    toast.mode = MBProgressHUDModeText;
-    toast.labelText = message;
-    toast.opacity = 0.3f;
-    toast.margin =10.f;
-    toast.yOffset = -100.f;
-    [toast hide:YES afterDelay:1];
 }
 
 
