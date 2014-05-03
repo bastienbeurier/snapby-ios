@@ -174,7 +174,7 @@
         
         // Picture
         cell.profilePictureView.clipsToBounds = YES;
-        cell.profilePictureView.layer.cornerRadius = kCellProfilePictureSize/2;
+        cell.profilePictureView.layer.cornerRadius = 50/2;
         
         NSString *commentAge = [TimeUtilities ageToShortString:[TimeUtilities getSnapbyAge:comment.created]];
         
@@ -184,7 +184,6 @@
             NSArray *distanceStrings = [LocationUtilities formattedDistanceLat1:comment.lat lng1:comment.lng lat2:self.snapby.lat lng2:self.snapby.lng];
             cell.stampLabel.text = [NSString stringWithFormat:@" %@ | %@%@ away", cell.stampLabel.text, [distanceStrings firstObject], [distanceStrings objectAtIndex:1]];
         }
-        
         //separator
         if (indexPath.row != 0) {
             UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 0.3)];

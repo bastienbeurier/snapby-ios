@@ -47,6 +47,7 @@
 @property (strong, nonatomic) UIActionSheet *flagActionSheet;
 @property (strong, nonatomic) UIActionSheet *moreActionSheet;
 @property (strong, nonatomic) GMSMarker *snapbyMarker;
+@property (strong, nonatomic) GMSMarker *myLocationMarker;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation *myLocation;
@@ -165,14 +166,27 @@
         return;
     }
 
+    //Remove existing controllers
+    if (self.viewControllers) {
+        NSUInteger count = [self.viewControllers count];
+        
+        for (NSUInteger i = 0; i < count; i++) {
+            ExploreSnapbyViewController *viewController = [self.viewControllers objectAtIndex:i];
+            if ((NSNull *)viewController != [NSNull null]) {
+                [viewController removeFromParentViewController];
+                [viewController.view removeFromSuperview];
+                viewController = (ExploreSnapbyViewController *)[NSNull null];
+            }
+        }
+    }
+    
     NSUInteger numberPages = self.snapbies.count;
     
     // view controllers are created lazily
     // in the meantime, load the array with placeholders which will be replaced on demand
     NSMutableArray *controllers = [[NSMutableArray alloc] init];
     
-    for (NSUInteger i = 0; i < numberPages; i++)
-    {
+    for (NSUInteger i = 0; i < numberPages; i++) {
         [controllers addObject:[NSNull null]];
     }
     
@@ -195,9 +209,13 @@
         
         [self.mapView moveCamera:[GMSCameraUpdate setTarget:location zoom:kZoomAtStartup]];
         
-        GMSMarker *myLocationMarker = [GMSMarker markerWithPosition:location];
-        myLocationMarker.icon = [UIImage imageNamed:@"my_location_marker"];
-        myLocationMarker.map = self.mapView;
+        if (!self.myLocationMarker) {
+            self.myLocationMarker = [GMSMarker markerWithPosition:location];
+            self.myLocationMarker.icon = [UIImage imageNamed:@"my_location_marker"];
+            self.myLocationMarker.map = self.mapView;
+        } else {
+            self.myLocationMarker.position = location;
+        }
         
         [self refreshSnapbies];
     } else {
@@ -220,33 +238,7 @@
     }
 }
 
-//Scrollview related methods
 
-- (void)loadScrollViewWithPage:(NSUInteger)page
-{
-    if (page >= self.snapbies.count) {
-        return;
-    }
-    
-    // replace the placeholder if necessary
-    ExploreSnapbyViewController *controller = [self.viewControllers objectAtIndex:page];
-    if ((NSNull *)controller == [NSNull null])
-    {
-        controller = [[ExploreSnapbyViewController alloc] initWithSnapby:[self.snapbies objectAtIndex:page]];
-        controller.exploreSnapbyVCDelegate = self;
-        [self.viewControllers replaceObjectAtIndex:page withObject:controller];
-    }
-    
-    // add the controller's view to the scroll view
-    if (controller.view.superview == nil)
-    {
-        controller.view.frame = CGRectMake(0, self.scrollView.frame.size.height * page, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
-        
-        [self addChildViewController:controller];
-        [self.scrollView addSubview:controller.view];
-        [controller didMoveToParentViewController:self];
-    }
-}
 
 // at the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -265,7 +257,7 @@
 
 - (void)loadSnapbiesAndUpdateMarker
 {
-    NSUInteger page = [self getScrollViewPage];
+    NSInteger page = [self getScrollViewPage];
     
     Snapby *snapby = ((Snapby *)[self.snapbies objectAtIndex:page]);
     
@@ -283,12 +275,60 @@
     
     self.snapbyMarker.map = self.mapView;
     
-    [self loadScrollViewWithPage:page - 2];
-    [self loadScrollViewWithPage:page - 1];
-    [self loadScrollViewWithPage:page];
-    [self loadScrollViewWithPage:page + 1];
-    [self loadScrollViewWithPage:page + 2];
+    NSUInteger count = [self.viewControllers count];
     
+    for (int i = 0; i < count; i = i + 1) {
+        if (i >= MAX(page - 2, 0) && i <= page + 2) {
+            [self loadScrollViewWithPage:i];
+        } else {
+            [self unloadScrollViewWithPage:i];
+        }
+    }
+}
+
+//Scrollview related methods
+
+- (void)loadScrollViewWithPage:(NSUInteger)page
+{
+    if (page >= self.snapbies.count) {
+        return;
+    }
+    
+    // replace the placeholder if necessary
+    ExploreSnapbyViewController *controller = [self.viewControllers objectAtIndex:page];
+    if ((NSNull *)controller == [NSNull null])
+    {
+        controller = [[ExploreSnapbyViewController alloc] initWithSnapby:[self.snapbies objectAtIndex:page]];
+        controller.exploreSnapbyVCDelegate = self;
+        [self.viewControllers replaceObjectAtIndex:page withObject:controller];
+    }
+    
+    // add the controller's view to the scroll view
+    if (controller.view.superview == nil) {
+        NSLog(@"LOADING %lu", page);
+        controller.view.frame = CGRectMake(0, self.scrollView.frame.size.height * page, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+        
+        [self addChildViewController:controller];
+        [self.scrollView addSubview:controller.view];
+        [controller didMoveToParentViewController:self];
+    }
+}
+
+- (void)unloadScrollViewWithPage:(NSUInteger)page
+{
+    if (page >= self.snapbies.count) {
+        return;
+    }
+    
+    // replace the placeholder if necessary
+    ExploreSnapbyViewController *controller = [self.viewControllers objectAtIndex:page];
+    
+    if ((NSNull *)controller != [NSNull null]) {
+        NSLog(@"UNLOADING A VIEW CONTROLLER %lu", page);
+        [[self.viewControllers objectAtIndex:page] removeFromParentViewController];
+        [((ExploreSnapbyViewController *)[self.viewControllers objectAtIndex:page]).view removeFromSuperview];
+        [self.viewControllers replaceObjectAtIndex:page withObject:[NSNull null]];
+    }
 }
 
 - (NSUInteger)getScrollViewPage
@@ -299,7 +339,9 @@
 }
 
 - (IBAction)onScrollViewClicked:(id)sender {
-    }
+    //TODO Do something!
+    
+}
 
 - (void)moreButtonClicked:(Snapby *)snapby
 {

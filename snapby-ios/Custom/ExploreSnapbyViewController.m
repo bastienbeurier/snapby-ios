@@ -68,21 +68,18 @@
     self.imageView.clipsToBounds = YES;
     
 
-//    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.snapby getSnapbyImageURL]];
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.snapby getSnapbyImageURL]];
     
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    
-//    [self.imageView setImageWithURLRequest:imageRequest
-//                      placeholderImage:nil
-//                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-//        //TODO:Ask to refresh
-//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//     }];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    [self.imageView setImageWithURL:[self.snapby getSnapbyImageURL] placeholderImage:nil];
-
+    [self.imageView setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        self.imageView.image = image;
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        //TODO:Ask to refresh
+        NSLog(@"IMAGE RESPONSE IS NEGATIVE");
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+     }];
     
     if (!self.snapby.anonymous) {
         [self.profileImage setImageWithURL:[User getUserProfilePictureURLFromUserId:self.snapby.userId]];
