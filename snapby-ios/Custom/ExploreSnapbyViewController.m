@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIView *actionsContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *moreIcon;
 @property (nonatomic) BOOL liked;
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
 
 @end
 
@@ -68,15 +69,14 @@
 
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.snapby getSnapbyImageURL]];
     
-    //TODO: replace HUD
+    [self showLoadingIndicator];
     
     [self.imageView setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         self.imageView.image = image;
-        //TODO: replace HUD
+        [self hideLoadingIndicator];
      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         //TODO:Ask to refresh
-        NSLog(@"IMAGE RESPONSE IS NEGATIVE");
-        //TODO: replace HUD
+        [self hideLoadingIndicator];
      }];
     
     if (!self.snapby.anonymous) {
@@ -121,6 +121,23 @@
     gradient.frame = self.infoContainer.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0.5] CGColor], (id)[[UIColor colorWithRed:0/256.0 green:0/256.0 blue:0/256.0 alpha:0] CGColor], nil];
     [self.infoContainer.layer insertSublayer:gradient atIndex:0];
+}
+
+- (void)showLoadingIndicator
+{
+    if (!self.activityView) {
+        self.activityView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        self.activityView.center=self.view.center;
+    }
+    
+    [self.activityView startAnimating];
+    [self.view addSubview:self.activityView];
+}
+
+- (void)hideLoadingIndicator
+{
+    [self.activityView stopAnimating];
+    [self.activityView removeFromSuperview];
 }
 
 - (void)setFullscreenMode:(BOOL)fullscreenMode

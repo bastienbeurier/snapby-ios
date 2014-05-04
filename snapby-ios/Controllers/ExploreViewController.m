@@ -37,7 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
-@property (nonatomic, strong) NSArray *snapbies;
+@property (nonatomic, strong) NSMutableArray *snapbies;
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @property (nonatomic) BOOL didInitializedExplore;
 @property (nonatomic) NSInteger page;
@@ -54,6 +54,7 @@
 @property(nonatomic) BOOL firstExplorePositionSet;
 @property (nonatomic, strong) NSMutableSet *myLikes;
 @property (nonatomic, strong) NSMutableSet *myComments;
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
 
 @end
 
@@ -162,7 +163,7 @@
     CLLocation *myLocation = self.myLocation;
     
     [ApiUtilities pullLocalSnapbiesWithLat:myLocation.coordinate.latitude Lng:myLocation.coordinate.longitude page:1 pageSize:PER_PAGE AndExecuteSuccess:^(NSArray *snapbies, NSInteger page) {
-        self.snapbies = snapbies;
+        self.snapbies = [snapbies mutableCopy];
     } failure:^{
         [self noConnectionUI];
     }];
@@ -199,10 +200,10 @@
     }
 }
 
-- (void)setSnapbies:(NSArray *)snapbies
+- (void)setSnapbies:(NSMutableArray *)snapbies
 {
     _snapbies = snapbies;
-    self.page = 1;
+    
     self.noMoreSnapbyToPull = NO;
     self.pullingMoreSnapbies = NO;
     
@@ -248,7 +249,7 @@
     [self loadSnapbiesAndUpdateMarker];
 }
 
-- (void) moveMapToMyLocationAndLoadSnapbies
+- (void)moveMapToMyLocationAndLoadSnapbies
 {
     CLLocation *myLocation = self.myLocation;
     if (myLocation != nil && myLocation.coordinate.latitude != 0 && myLocation.coordinate.longitude != 0) {
@@ -279,8 +280,10 @@
 
 - (void)reloadFeed
 {
+    self.page = 1;
     [self moveMapToMyLocationAndLoadSnapbies];
     [self gotoPage:0 animated:NO];
+    [self endFullscreenMode];
 }
 
 // ------------------------------------------------
@@ -343,13 +346,16 @@
                                                       otherButtonTitles:FLAG_ACTION_SHEET_OPTION_1, FLAG_ACTION_SHEET_OPTION_2, FLAG_ACTION_SHEET_OPTION_3, FLAG_ACTION_SHEET_OPTION_4, FLAG_ACTION_SHEET_OPTION_5, nil];
             [self.flagActionSheet showInView:[UIApplication sharedApplication].keyWindow];
         } else if ([buttonTitle isEqualToString:MORE_ACTION_SHEET_OPTION_4]) {
-            //TODO replace HUD
+            [self showLoadingIndicator];
             
             [ApiUtilities removeSnapby: snapby success:^{
-                //TODO replace HUD
-                [self refreshSnapbies];
+                [self hideLoadingIndicator];
+                [self.snapbies removeObjectAtIndex:[self getScrollViewPage]];
+                
+                //call the setter
+                self.snapbies = self.snapbies;
             } failure:^{
-                //TODO replace HUD
+                [self hideLoadingIndicator];
                 [GeneralUtilities showMessage:NSLocalizedStringFromTable (@"fail_delete_snapby", @"Strings", @"comment") withTitle:nil];
             }];
         }
@@ -399,6 +405,28 @@
     self.lastPageScrolled = page;
     
     [self loadSnapbiesAndUpdateMarker];
+    
+    //Pull more snapbies if it's the last snapby
+    if (page >= self.snapbies.count - 5 && !self.noMoreSnapbyToPull && !self.pullingMoreSnapbies) {
+        
+        self.pullingMoreSnapbies = YES;
+        
+        CLLocation *myLocation = self.myLocation;
+        
+        [ApiUtilities pullLocalSnapbiesWithLat:myLocation.coordinate.latitude Lng:myLocation.coordinate.longitude page:self.page + 1 pageSize:PER_PAGE AndExecuteSuccess:^(NSArray *snapbies, NSInteger page) {
+            self.pullingMoreSnapbies = NO;
+            
+            if (page == self.page + 1) {
+                self.page = self.page + 1;
+                
+                self.snapbies = [[self.snapbies arrayByAddingObjectsFromArray:snapbies] mutableCopy];
+                
+                [self setSnapbies:self.snapbies];
+            }
+        } failure:^{
+            self.pullingMoreSnapbies = NO;
+        }];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -438,25 +466,9 @@
 
 - (IBAction)onScrollViewClicked:(id)sender {
     if (self.fullscreenModeInExplore) {
-        self.fullscreenModeInExplore = NO;
-        self.cameraButton.hidden = NO;
-        self.statusBarContainer.hidden = NO;
-        
-        for (ExploreSnapbyViewController *controller in self.viewControllers) {
-            if ((NSNull *)controller != [NSNull null]) {
-                controller.fullscreenMode = NO;
-            }
-        }
+        [self endFullscreenMode];
     } else {
-        self.fullscreenModeInExplore = YES;
-        self.cameraButton.hidden = YES;
-        self.statusBarContainer.hidden = YES;
-        
-        for (ExploreSnapbyViewController *controller in self.viewControllers) {
-            if ((NSNull *)controller != [NSNull null]) {
-                controller.fullscreenMode = YES;
-            }
-        }
+        [self fullscreenMode];
     }
     
     [self setNeedsStatusBarAppearanceUpdate];
@@ -618,14 +630,27 @@
 // UI related methods
 // ------------------------------------------------
 
-- (void)loadingSnapbiesUI
+
+- (void)showLoadingIndicator
 {
-//TODO: replace HUD
+    if (!self.activityView) {
+        self.activityView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        self.activityView.center=self.view.center;
+    }
+    
+    [self.activityView startAnimating];
+    [self.view addSubview:self.activityView];
 }
 
-- (void)loadingMoreSnapbiesUI
+- (void)hideLoadingIndicator
 {
-//TODO: replace HUD
+    [self.activityView stopAnimating];
+    [self.activityView removeFromSuperview];
+}
+
+- (void)loadingSnapbiesUI
+{
+    [self showLoadingIndicator];
 }
 
 - (void)noSnapbiesUI
@@ -645,7 +670,37 @@
 
 - (void)displaySnapbiesUI
 {
-    //TODO replace HUD
+    [self hideLoadingIndicator];
+}
+
+- (void)fullscreenMode
+{
+    self.fullscreenModeInExplore = YES;
+    self.cameraButton.hidden = YES;
+    self.statusBarContainer.hidden = YES;
+    
+    for (ExploreSnapbyViewController *controller in self.viewControllers) {
+        if ((NSNull *)controller != [NSNull null]) {
+            controller.fullscreenMode = YES;
+        }
+    }
+    
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (void)endFullscreenMode
+{
+    self.fullscreenModeInExplore = NO;
+    self.cameraButton.hidden = NO;
+    self.statusBarContainer.hidden = NO;
+    
+    for (ExploreSnapbyViewController *controller in self.viewControllers) {
+        if ((NSNull *)controller != [NSNull null]) {
+            controller.fullscreenMode = NO;
+        }
+    }
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 @end
