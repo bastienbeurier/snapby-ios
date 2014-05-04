@@ -16,4 +16,8 @@
 
 @interface ExploreViewController : UIViewController <CommentsVCDelegate, UIScrollViewDelegate, UIActionSheetDelegate, ExploreSnapbyVCDelegate, CLLocationManagerDelegate, CameraViewControllerDelegate>
 
+@property (nonatomic) BOOL fullscreenModeInExplore;
+
+- (void)reloadFeed;
+
 @end

@@ -14,7 +14,6 @@
 #import "ApiUtilities.h"
 #import "GeneralUtilities.h"
 #import "ImageUtilities.h"
-#import "MBProgressHUD.h"
 
 @interface ExploreSnapbyViewController ()
 
@@ -33,8 +32,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *moreIcon;
 @property (nonatomic) BOOL liked;
 
-
-
 @end
 
 @implementation ExploreSnapbyViewController
@@ -50,6 +47,8 @@
 
 - (void)viewDidLoad
 {
+    self.fullscreenMode = self.exploreSnapbyVCDelegate.fullscreenModeInExplore;
+    
     self.likeCount.text = @"";
     self.commentCount.text = @"";
     self.usernameLabel.text = @"";
@@ -66,19 +65,18 @@
     [self.profileImage.layer setCornerRadius:20.0f];
     
     self.imageView.clipsToBounds = YES;
-    
 
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.snapby getSnapbyImageURL]];
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //TODO: replace HUD
     
     [self.imageView setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         self.imageView.image = image;
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        //TODO: replace HUD
      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         //TODO:Ask to refresh
         NSLog(@"IMAGE RESPONSE IS NEGATIVE");
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        //TODO: replace HUD
      }];
     
     if (!self.snapby.anonymous) {
@@ -125,6 +123,18 @@
     [self.infoContainer.layer insertSublayer:gradient atIndex:0];
 }
 
+- (void)setFullscreenMode:(BOOL)fullscreenMode
+{
+    if (fullscreenMode) {
+        _fullscreenMode = YES;
+        self.infoContainer.hidden = YES;
+        self.actionsContainer.hidden = YES;
+    } else {
+        _fullscreenMode = NO;
+        self.infoContainer.hidden = NO;
+        self.actionsContainer.hidden = NO;
+    }
+}
 
 - (void)snapbyDisplayed
 {

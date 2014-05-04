@@ -13,6 +13,8 @@
 
 @interface ExploreSnapbyViewController : UIViewController
 
+@property (nonatomic) BOOL fullscreenMode;
+
 - (id)initWithSnapby:(Snapby *)snapby;
 - (void)snapbyDisplayed;
 - (void)snapbyDismissed;
@@ -30,6 +32,8 @@
 @end
 
 @protocol ExploreSnapbyVCDelegate
+
+@property (nonatomic) BOOL fullscreenModeInExplore;
 
 - (void)moreButtonClicked:(Snapby *)snapby;
 - (BOOL)snapbyHasBeenLiked:(NSUInteger)snapbyId;

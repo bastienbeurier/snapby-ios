@@ -97,7 +97,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
-    [self.commentsVCdelegate updateCommentCount:[self.comments count]];
+    [self.commentsVCdelegate updateCommentCount:[self commentCount]];
     if (self.userDidComment) {
         [self.commentsVCdelegate userDidComment:self.snapby count:[self.comments count]];
     }
@@ -124,7 +124,7 @@
         return [self.comments count];
     } else {
         //We don't know the comment count (loading or server error)
-        return -1;
+        return 0;
     }
 }
 
@@ -292,17 +292,12 @@
 
 - (void)moveToProfileOfUser:(NSInteger)userId
 {
-    [self performSegueWithIdentifier:@"Profile from Comments push segue" sender:[NSNumber numberWithLong:userId]];
+    //TODO show profile
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"Profile from Comments push segue"]) {
-//        ProfileViewController * usersListViewController = (ProfileViewController *) [segue destinationViewController];
-//        usersListViewController.currentUser = self.currentUser;
-//        usersListViewController.profileUserId = [(NSNumber *) sender intValue];
-    }
+
 }
 
 @end

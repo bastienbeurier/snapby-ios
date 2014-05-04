@@ -567,6 +567,7 @@
                         <outlet property="cameraButton" destination="t0E-90-YJo" id="yG8-ge-p3O"/>
                         <outlet property="mapView" destination="SuS-Lt-KO3" id="OeV-7P-Bse"/>
                         <outlet property="scrollView" destination="pG4-jQ-1BS" id="6UJ-3m-vT0"/>
+                        <outlet property="statusBarContainer" destination="YCb-EA-VJp" id="q7j-4l-9vw"/>
                         <segue destination="XJN-rR-Aa3" kind="push" identifier="Comment Push Segue From Explore" id="eEQ-uZ-e9Q"/>
                         <segue destination="zzS-SS-WfS" kind="modal" identifier="Camera Push Segue" animates="NO" id="VXj-w7-3jd"/>
                     </connections>

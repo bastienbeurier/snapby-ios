@@ -147,7 +147,15 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    
+    if ([[navController visibleViewController] isKindOfClass:[ExploreViewController class]]) {
+        [((ExploreViewController *)[navController visibleViewController]) reloadFeed];
+    } else {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        [userDefaults setObject:@"Refresh" forKey:REFRESH_AFTER_STARTUP];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
