@@ -55,6 +55,9 @@
 @property (nonatomic, strong) NSMutableSet *myLikes;
 @property (nonatomic, strong) NSMutableSet *myComments;
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessage;
+@property (weak, nonatomic) IBOutlet UIButton *noSnapbyButton;
 
 @end
 
@@ -173,6 +176,10 @@
 {
     NSInteger page = [self getScrollViewPage];
     
+    if (page > [self.snapbies count] - 1) {
+        return;
+    }
+    
     Snapby *snapby = ((Snapby *)[self.snapbies objectAtIndex:page]);
     
     CLLocationCoordinate2D snapbyLocation;
@@ -242,7 +249,11 @@
     
     self.viewControllers = controllers;
     
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height * numberPages);
+    if (self.noMoreSnapbyToPull) {
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height * (numberPages + 1));
+    } else {
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height * numberPages);
+    }
     
     [self displaySnapbiesUI];
     
@@ -404,6 +415,15 @@
     
     self.lastPageScrolled = page;
     
+    NSLog(@"VIEW CONTROLLER COUNT %lu, CURRENT PAGE %lu", [self.viewControllers count], page);
+    
+    if (page > [self.viewControllers count] - 1) {
+        [self noMoreSnapbiesUI];
+        return;
+    } else {
+        [self endNoMoreSnapbiesUI];
+    }
+    
     [self loadSnapbiesAndUpdateMarker];
     
     //Pull more snapbies if it's the last snapby
@@ -461,7 +481,7 @@
 {
     // switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageHeight = self.scrollView.frame.size.height;
-    return MIN(floor((self.scrollView.contentOffset.y - pageHeight / 2) / pageHeight) + 1, self.snapbies.count - 1);
+    return floor((self.scrollView.contentOffset.y - pageHeight / 2) / pageHeight) + 1;
 }
 
 - (IBAction)onScrollViewClicked:(id)sender {
@@ -591,14 +611,23 @@
 
 - (void)updateCommentCount:(NSInteger)count
 {
-    ExploreSnapbyViewController *vc = [self.viewControllers objectAtIndex:[self getScrollViewPage]];
-    [vc updateCommentCount:count];
+    NSUInteger page = [self getScrollViewPage];
+    
+    if (page < [self.viewControllers count]) {
+        ExploreSnapbyViewController *vc = [self.viewControllers objectAtIndex:page];
+        [vc updateCommentCount:count];
+    }
 }
 
 - (void)userDidComment:(Snapby *)snapby count:(NSUInteger)count
 {
-    ExploreSnapbyViewController *vc = [self.viewControllers objectAtIndex:[self getScrollViewPage]];
-    [vc userDidComment];
+    NSUInteger page = [self getScrollViewPage];
+    
+    if (page < [self.viewControllers count]) {
+        ExploreSnapbyViewController *vc = [self.viewControllers objectAtIndex:page];
+        [vc userDidComment];
+    }
+    
     [self.myComments addObject:[NSNumber numberWithLong:snapby.identifier]];
 }
 
@@ -651,26 +680,62 @@
 - (void)loadingSnapbiesUI
 {
     [self showLoadingIndicator];
+    self.refreshButton.hidden = YES;
+    self.errorMessage.hidden = YES;
+    self.noSnapbyButton.hidden = YES;
 }
 
 - (void)noSnapbiesUI
 {
-    
+    [self hideLoadingIndicator];
+    self.noSnapbyButton.hidden = NO;
+    self.refreshButton.hidden = YES;
+    self.errorMessage.text = @"Nothing around here. Be the first to snapby!";
+    self.errorMessage.hidden = NO;
 }
+
+- (void)noMoreSnapbiesUI
+{
+    [self hideLoadingIndicator];
+    self.noSnapbyButton.hidden = NO;
+    self.refreshButton.hidden = YES;
+    self.errorMessage.text = @"That's all! Be the next to snapby around here.";
+    self.errorMessage.hidden = NO;
+}
+
+- (void)endNoMoreSnapbiesUI
+{
+    [self hideLoadingIndicator];
+    self.noSnapbyButton.hidden = YES;
+    self.refreshButton.hidden = YES;
+    self.errorMessage.hidden = YES;
+}
+
 
 - (void)noConnectionUI
 {
-    
+    [self hideLoadingIndicator];
+    self.refreshButton.hidden = NO;
+    self.noSnapbyButton.hidden = YES;
+    self.errorMessage.text = @"No connection. Please refresh.";
+    self.errorMessage.hidden = NO;
 }
 
 - (void)noLocationUI
 {
-    
+    [self hideLoadingIndicator];
+    self.refreshButton.hidden = NO;
+    self.noSnapbyButton.hidden = YES;
+    self.errorMessage.text = @"Waiting for your location.";
+    self.errorMessage.hidden = NO;
 }
 
 - (void)displaySnapbiesUI
 {
     [self hideLoadingIndicator];
+    self.refreshButton.hidden = YES;
+    self.errorMessage.hidden = YES;
+    self.noSnapbyButton.hidden = YES;
 }
 
 - (void)fullscreenMode
@@ -701,6 +766,14 @@
     }
     
     [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (IBAction)refreshButtonClicked:(id)sender {
+    [self moveMapToMyLocationAndLoadSnapbies];
+}
+
+- (IBAction)noSnapbyButtonClicked:(id)sender {
+    [self performSegueWithIdentifier:@"Camera Push Segue" sender:nil];
 }
 
 @end

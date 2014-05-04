@@ -19,8 +19,6 @@
 
 @property (nonatomic, strong) Snapby *snapby;
 
-
-@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeStamp;
 @property (weak, nonatomic) IBOutlet UIView *infoContainer;
@@ -32,6 +30,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *moreIcon;
 @property (nonatomic) BOOL liked;
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessage;
 
 @end
 
@@ -63,24 +63,11 @@
     [ImageUtilities outerGlow:self.commentIcon];
     [ImageUtilities outerGlow:self.moreIcon];
     
-    [self.profileImage.layer setCornerRadius:20.0f];
-    
     self.imageView.clipsToBounds = YES;
 
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.snapby getSnapbyImageURL]];
-    
-    [self showLoadingIndicator];
-    
-    [self.imageView setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        self.imageView.image = image;
-        [self hideLoadingIndicator];
-     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        //TODO:Ask to refresh
-        [self hideLoadingIndicator];
-     }];
+    [self loadImage];
     
     if (!self.snapby.anonymous) {
-        [self.profileImage setImageWithURL:[User getUserProfilePictureURLFromUserId:self.snapby.userId]];
         self.usernameLabel.text = [NSString stringWithFormat:@"%@ (%lu)", self.snapby.username, self.snapby.userScore];
     } else {
         self.usernameLabel.text = @"Anonymous";
@@ -244,5 +231,29 @@
 - (void)snapbyUnlikedOnOtherController
 {
     [self updateUIOnUnlike];
+}
+
+- (IBAction)refershButtonClicked:(id)sender {
+    [self loadImage];
+}
+
+- (void)loadImage
+{
+    self.refreshButton.hidden = YES;
+    self.errorMessage.hidden = YES;
+    
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.snapby getSnapbyImageURL]];
+    
+    [self showLoadingIndicator];
+    
+    [self.imageView setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        self.imageView.image = image;
+        [self hideLoadingIndicator];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        self.refreshButton.hidden = NO;
+        self.errorMessage.text = @"Couldn't load image. Please refresh.";
+        self.errorMessage.hidden = NO;
+        [self hideLoadingIndicator];
+    }];
 }
 @end

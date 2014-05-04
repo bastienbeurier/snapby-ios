@@ -543,11 +543,52 @@
                                     <action selector="cameraButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="ywv-DQ-r2f"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Error message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gie-rd-PZz">
+                                <rect key="frame" x="0.0" y="223" width="320" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTr-eC-lgF">
+                                <rect key="frame" x="130" y="254" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="TIX-Iq-anO"/>
+                                    <constraint firstAttribute="width" constant="60" id="g4L-UA-kYv"/>
+                                </constraints>
+                                <state key="normal" image="explore_refresh.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="refreshButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="b7a-Fv-OU9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JBd-7x-oBY">
+                                <rect key="frame" x="130" y="254" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="AfW-Ec-51h"/>
+                                    <constraint firstAttribute="height" constant="60" id="XPD-Bh-O7Z"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="explore_camera2.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="noSnapbyButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="qp4-ne-LJe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="HTr-eC-lgF" secondAttribute="centerY" id="6WF-yK-OJI"/>
+                            <constraint firstAttribute="centerY" secondItem="JBd-7x-oBY" secondAttribute="centerY" id="AGb-Sm-DJB"/>
                             <constraint firstItem="19H-bp-LSd" firstAttribute="top" secondItem="SuS-Lt-KO3" secondAttribute="bottom" id="FwS-0O-cWD"/>
+                            <constraint firstAttribute="centerX" secondItem="Gie-rd-PZz" secondAttribute="centerX" id="Kdk-O8-8Zj"/>
+                            <constraint firstAttribute="centerY" secondItem="Gie-rd-PZz" secondAttribute="centerY" constant="50" id="Lyv-tn-Jfu"/>
                             <constraint firstItem="SuS-Lt-KO3" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="Nmw-1s-5zH"/>
+                            <constraint firstAttribute="centerX" secondItem="HTr-eC-lgF" secondAttribute="centerX" id="UMA-VL-Qz3"/>
+                            <constraint firstAttribute="trailing" secondItem="Gie-rd-PZz" secondAttribute="trailing" id="cPr-R6-jpH"/>
                             <constraint firstItem="YCb-EA-VJp" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" id="ceg-CB-O9f"/>
                             <constraint firstAttribute="trailing" secondItem="SuS-Lt-KO3" secondAttribute="trailing" id="ePd-zg-0TO"/>
                             <constraint firstItem="pG4-jQ-1BS" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" id="hCZ-Nd-PRn"/>
@@ -558,6 +599,8 @@
                             <constraint firstAttribute="trailing" secondItem="t0E-90-YJo" secondAttribute="trailing" id="uAE-Gb-me6"/>
                             <constraint firstItem="t0E-90-YJo" firstAttribute="top" secondItem="8SG-cq-0CT" secondAttribute="bottom" id="vDi-KG-CUd"/>
                             <constraint firstItem="19H-bp-LSd" firstAttribute="top" secondItem="pG4-jQ-1BS" secondAttribute="bottom" id="wCJ-mc-Emd"/>
+                            <constraint firstItem="Gie-rd-PZz" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="wUx-xJ-Mlb"/>
+                            <constraint firstAttribute="centerX" secondItem="JBd-7x-oBY" secondAttribute="centerX" id="wtu-Hp-489"/>
                             <constraint firstAttribute="trailing" secondItem="YCb-EA-VJp" secondAttribute="trailing" id="zcD-F7-U2J"/>
                         </constraints>
                     </view>
@@ -565,7 +608,10 @@
                     <navigationItem key="navigationItem" id="Aym-ep-qYo"/>
                     <connections>
                         <outlet property="cameraButton" destination="t0E-90-YJo" id="yG8-ge-p3O"/>
+                        <outlet property="errorMessage" destination="Gie-rd-PZz" id="vDg-LS-6Y3"/>
                         <outlet property="mapView" destination="SuS-Lt-KO3" id="OeV-7P-Bse"/>
+                        <outlet property="noSnapbyButton" destination="JBd-7x-oBY" id="7N4-xy-pBQ"/>
+                        <outlet property="refreshButton" destination="HTr-eC-lgF" id="nla-8C-8Lc"/>
                         <outlet property="scrollView" destination="pG4-jQ-1BS" id="6UJ-3m-vT0"/>
                         <outlet property="statusBarContainer" destination="YCb-EA-VJp" id="q7j-4l-9vw"/>
                         <segue destination="XJN-rR-Aa3" kind="push" identifier="Comment Push Segue From Explore" id="eEQ-uZ-e9Q"/>
@@ -1066,6 +1112,8 @@
         <image name="create_send_button.png" width="49" height="50"/>
         <image name="email-icon.png" width="50" height="36"/>
         <image name="explore_camera.png" width="49" height="49"/>
+        <image name="explore_camera2.png" width="99" height="99"/>
+        <image name="explore_refresh.png" width="99" height="99"/>
         <image name="password-icon.png" width="43" height="50"/>
         <image name="profile_place_holder.png" width="100" height="100"/>
         <image name="username-icon.png" width="44" height="50"/>
