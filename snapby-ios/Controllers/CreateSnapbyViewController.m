@@ -33,6 +33,8 @@
 @property (nonatomic) BOOL flashOn;
 @property (nonatomic, strong) NSArray *effects;
 @property (nonatomic) NSUInteger currentEffect;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
 @end
 
@@ -46,6 +48,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [ImageUtilities outerGlow:self.cancelButton];
+    [ImageUtilities outerGlow:self.sendButton];
     
     self.currentEffect = 0;
     

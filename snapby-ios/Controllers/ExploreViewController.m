@@ -214,7 +214,7 @@
     self.noMoreSnapbyToPull = NO;
     self.pullingMoreSnapbies = NO;
     
-    if ([snapbies count] < PER_PAGE) {
+    if ([snapbies count] < PER_PAGE * self.page) {
         self.noMoreSnapbyToPull = YES;
     }
     

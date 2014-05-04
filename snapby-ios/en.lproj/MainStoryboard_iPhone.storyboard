@@ -331,7 +331,7 @@
                                     <constraint firstAttribute="height" constant="42" id="hI1-Kn-iMt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Button" image="create_send_button.png">
+                                <state key="normal" title="Button" image="create_send.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -346,7 +346,7 @@
                                     <constraint firstAttribute="height" constant="42" id="CIU-0X-zb5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" image="camera-quit-button.png">
+                                <state key="normal" image="create_cancel.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -368,6 +368,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="erD-k1-NAf"/>
                     <connections>
+                        <outlet property="cancelButton" destination="4Z6-u1-rMD" id="Za0-qW-Vlk"/>
+                        <outlet property="sendButton" destination="6xV-1q-hLK" id="tm8-aG-gBV"/>
                         <outlet property="snapbyImageView" destination="S4w-al-2Mc" id="fIl-PL-sZK"/>
                     </connections>
                 </viewController>
@@ -543,8 +545,8 @@
                                     <action selector="cameraButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="ywv-DQ-r2f"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Error message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gie-rd-PZz">
-                                <rect key="frame" x="0.0" y="223" width="320" height="21"/>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gie-rd-PZz">
+                                <rect key="frame" x="0.0" y="224" width="320" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1108,8 +1110,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="camera-quit-button.png" width="50" height="50"/>
-        <image name="create_send_button.png" width="49" height="50"/>
+        <image name="create_cancel.png" width="99" height="99"/>
+        <image name="create_send.png" width="99" height="99"/>
         <image name="email-icon.png" width="50" height="36"/>
         <image name="explore_camera.png" width="49" height="49"/>
         <image name="explore_camera2.png" width="99" height="99"/>

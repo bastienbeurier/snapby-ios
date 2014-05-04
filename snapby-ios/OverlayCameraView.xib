@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraViewController">
             <connections>
+                <outlet property="cancelButton" destination="nur-n1-Rg2" id="Q74-Mr-RZB"/>
                 <outlet property="flashButton" destination="Agt-9O-iUE" id="9xw-Rk-hDN"/>
             </connections>
         </placeholder>
@@ -69,7 +70,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="42" id="vdM-jn-KYM"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" image="camera-quit-button.png">
+                    <state key="normal" image="create_cancel.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -94,8 +95,8 @@
     </objects>
     <resources>
         <image name="camera-flip-button.png" width="50" height="37"/>
-        <image name="camera-quit-button.png" width="50" height="50"/>
         <image name="camera_capture.png" width="100" height="100"/>
+        <image name="create_cancel.png" width="99" height="99"/>
         <image name="flash_off.png" width="100" height="62"/>
     </resources>
 </document>

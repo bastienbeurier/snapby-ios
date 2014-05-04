@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL flashOn;
 @property (nonatomic, strong) ALAssetsLibrary *library;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @end
 
@@ -26,6 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [ImageUtilities outerGlow:self.cancelButton];
    
     [self getOrInitImagePickerController];
     
