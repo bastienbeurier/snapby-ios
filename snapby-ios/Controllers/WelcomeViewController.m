@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *signupSecondLabel;
 @property (weak, nonatomic) IBOutlet UIButton *signinButton;
 @property (weak, nonatomic) IBOutlet UILabel *signinLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 
 @end
 
@@ -32,6 +33,15 @@
 
 - (void)viewDidLoad
 {
+    //Set background image
+    NSString *filename = @"Default.png";
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    if (screenRect.size.height == 568.0f) {
+        filename = @"Default-568h.png";
+    }
+    
+    self.backgroundImage.image = [UIImage imageNamed:filename];
+    
     //Round corners
     self.facebookButtonView.layer.cornerRadius = 5.0f;
     self.signupButtonView.layer.cornerRadius = 5.0f;
