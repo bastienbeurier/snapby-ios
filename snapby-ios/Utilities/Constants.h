@@ -86,5 +86,5 @@ static NSString * const kProdMixPanelToken = @"781f8a3090780f2afbb8a260a58911c4"
 static NSString * const kDevMixPanelToken = @"293023eb15e4681ca1aa4c81d3a6ce19";
 
 //Google Map
-static NSString * const kGoogleMapKey = @"AIzaSyD4wbIDRx2zZ9CzzcvLcLkIieMpSPgvmJ8";
+static NSString * const kGoogleMapKey = @"AIzaSyD-YPkRNo3xOx_CA1WughbS_G-WcabsogE";
 

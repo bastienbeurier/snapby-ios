@@ -32,24 +32,9 @@
 
 - (void)viewDidLoad
 {
-    
-    //Set background image
-    NSString *filename = @"Default.png";
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if (screenRect.size.height == 568.0f) {
-        filename = @"Default-568h.png";
-    }
-    
     //Round corners
-    NSUInteger buttonHeight = self.facebookButtonView.bounds.size.height;
-    self.facebookButtonView.layer.cornerRadius = buttonHeight/2;
-    self.signupButtonView.layer.cornerRadius = buttonHeight/2;
-    
-    //Set button borders
-    [[self.signupButtonView layer] setBorderWidth:2.0f];
-    [[self.signupButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
-    [[self.facebookButtonView layer] setBorderWidth:2.0f];
-    [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
+    self.facebookButtonView.layer.cornerRadius = 5.0f;
+    self.signupButtonView.layer.cornerRadius = 5.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -60,19 +45,7 @@
     [super viewWillAppear:animated];
 }
 
-
-- (IBAction)facebookButtonStartedClicking:(id)sender {
-    self.facebookFirstLabel.textColor = [UIColor grayColor];
-    self.facebookSecondLabel.textColor = [UIColor grayColor];
-    [[self.facebookButtonView layer] setBorderColor:[UIColor grayColor].CGColor];
-}
-
 - (IBAction)facebookButtonClicked:(id)sender {
-    
-    self.facebookFirstLabel.textColor = [UIColor whiteColor];
-    self.facebookSecondLabel.textColor = [UIColor whiteColor];
-    [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
-    
     // Prevent double clicking
     UIButton *facebookButton = (UIButton *) sender;
     facebookButton.enabled = NO;
@@ -113,31 +86,8 @@
     [self setButtonsAndLabelsAlphaTo:1];
 }
 
-- (IBAction)facebookButtonCancelledClicking:(id)sender {
-    self.facebookFirstLabel.textColor = [UIColor whiteColor];
-    self.facebookSecondLabel.textColor = [UIColor whiteColor];
-    [[self.facebookButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
-}
-
-
-- (IBAction)signupButtonStartedClicking:(id)sender {
-    self.signupFirstLabel.textColor = [UIColor grayColor];
-    self.signupSecondLabel.textColor = [UIColor grayColor];
-    [[self.signupButtonView layer] setBorderColor:[UIColor grayColor].CGColor];
-}
-
-
 - (IBAction)signupButtonClicked:(id)sender {
-    self.signupFirstLabel.textColor = [UIColor whiteColor];
-    self.signupSecondLabel.textColor = [UIColor whiteColor];
-    [[self.signupButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
     [self performSegueWithIdentifier:@"Signup Push Segue" sender:nil];
-}
-
-- (IBAction)signupButtonCancelledClicking:(id)sender {
-    self.signupFirstLabel.textColor = [UIColor whiteColor];
-    self.signupSecondLabel.textColor = [UIColor whiteColor];
-    [[self.signupButtonView layer] setBorderColor:[UIColor whiteColor].CGColor];
 }
 
 

@@ -260,21 +260,15 @@
     
     //Create bar view
     UIView *customNavBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewController.view.frame.size.width, barHeight)];
-    customNavBar.backgroundColor = [ImageUtilities getSnapbyPink];
+    customNavBar.backgroundColor =  [UIColor groupTableViewBackgroundColor];
     [viewController.view addSubview:customNavBar];
     
     // Right Button
     CGRect rightRect = CGRectMake(viewController.view.frame.size.width - buttonSize - buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
     if ([rightItem isEqualToString:@"ok"]) {
-        [ImageUtilities addButtonWithImage:@"ok-item-button.png"
+        [ImageUtilities addButtonWithImage:@"bar-ok.png"
                                     target:viewController
                                   selector:@selector(okButtonClicked)
-                                      rect:rightRect
-                                  toNavBar:customNavBar];
-    } else if ([rightItem isEqualToString:@"settings"]) {
-        [ImageUtilities addButtonWithImage:@"settingsButton.png"
-                                    target:viewController
-                                  selector:@selector(settingsButtonClicked)
                                       rect:rightRect
                                   toNavBar:customNavBar];
     }
@@ -282,7 +276,7 @@
     // Left Button
     CGRect leftRect = CGRectMake(buttonSideMargin, buttonTopMargin, buttonSize, buttonSize);
     if ([leftItem isEqualToString:@"back"]) {
-        [ImageUtilities addButtonWithImage:@"back-item-button.png"
+        [ImageUtilities addButtonWithImage:@"bar-back.png"
                                     target:viewController
                                   selector:@selector(backButtonClicked)
                                       rect:leftRect
@@ -299,7 +293,7 @@
         label.text = text;
         label.font = customFont;
         label.numberOfLines = 1;
-        label.textColor = [UIColor whiteColor];
+        label.textColor = [UIColor darkTextColor];
         
         [customNavBar addSubview:label];
     }
