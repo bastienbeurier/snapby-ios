@@ -811,10 +811,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7lt-qk-zfF">
-                                <rect key="frame" x="-6" y="0.0" width="326" height="568"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7J6-P2-9nP">
+                                <rect key="frame" x="0.0" y="110" width="320" height="308"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="110"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="xty-tQ-ume">
+                                <rect key="frame" x="133" y="381" width="55" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                                <color key="pageIndicatorTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="currentPageIndicatorTintColor" red="0.95294117649999999" green="0.57254901960000004" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jd-Fd-kDT">
                                 <rect key="frame" x="20" y="478" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -915,14 +922,24 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snapby-label.png" translatesAutoresizingMaskIntoConstraints="NO" id="dML-jy-nd3">
+                                <rect key="frame" x="85" y="30" width="150" height="80"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="TbL-Ob-5PO"/>
+                                    <constraint firstAttribute="width" constant="150" id="nDl-eg-dnK"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="7lt-qk-zfF" secondAttribute="trailing" id="2XD-Qn-pDv"/>
+                            <constraint firstAttribute="trailing" secondItem="7J6-P2-9nP" secondAttribute="trailing" id="0VH-PG-aNH"/>
+                            <constraint firstItem="hGa-Kz-pwK" firstAttribute="top" secondItem="7J6-P2-9nP" secondAttribute="bottom" id="0c8-k2-HLz"/>
                             <constraint firstItem="SN1-6u-Np7" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" constant="41" id="3fL-5W-kZw"/>
                             <constraint firstItem="7Jd-Fd-kDT" firstAttribute="top" secondItem="7Ns-Wx-Cog" secondAttribute="bottom" constant="23" id="6CB-tP-m7J"/>
                             <constraint firstAttribute="trailing" secondItem="7Ns-Wx-Cog" secondAttribute="trailing" constant="71" id="7LI-NH-J0T"/>
                             <constraint firstAttribute="trailing" secondItem="SN1-6u-Np7" secondAttribute="trailing" constant="80" id="9oF-DH-HdZ"/>
+                            <constraint firstItem="dML-jy-nd3" firstAttribute="top" secondItem="jad-Vk-a6M" secondAttribute="bottom" constant="10" id="AfD-50-Wa2"/>
                             <constraint firstItem="miH-iR-RP7" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" constant="125" id="E2i-bs-51b"/>
                             <constraint firstItem="1yf-nc-Za2" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" constant="184" id="JBS-bn-a08"/>
                             <constraint firstItem="1yf-nc-Za2" firstAttribute="centerY" secondItem="7Jd-Fd-kDT" secondAttribute="centerY" id="LGc-V6-RMU"/>
@@ -931,32 +948,35 @@
                             <constraint firstItem="miH-iR-RP7" firstAttribute="top" secondItem="7Jd-Fd-kDT" secondAttribute="bottom" constant="-5" id="YwF-54-Y4f"/>
                             <constraint firstItem="iqF-lG-j5w" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" constant="66" id="aQU-mk-GRt"/>
                             <constraint firstItem="7Jd-Fd-kDT" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" constant="20" id="b5R-wy-p9T"/>
+                            <constraint firstAttribute="centerX" secondItem="dML-jy-nd3" secondAttribute="centerX" id="eQ8-ni-TcP"/>
                             <constraint firstAttribute="trailing" secondItem="hGa-Kz-pwK" secondAttribute="trailing" constant="20" id="eUl-kM-X1v"/>
                             <constraint firstAttribute="trailing" secondItem="7Jd-Fd-kDT" secondAttribute="trailing" constant="20" id="gSx-fQ-HFp"/>
                             <constraint firstItem="7Jd-Fd-kDT" firstAttribute="top" secondItem="hGa-Kz-pwK" secondAttribute="bottom" constant="10" id="joe-bO-sTC"/>
                             <constraint firstItem="7Jd-Fd-kDT" firstAttribute="top" secondItem="iqF-lG-j5w" secondAttribute="bottom" constant="23" id="jqC-Rb-4Ya"/>
-                            <constraint firstItem="uCa-5A-rHl" firstAttribute="top" secondItem="7lt-qk-zfF" secondAttribute="bottom" id="l15-KH-1f1"/>
-                            <constraint firstItem="7lt-qk-zfF" firstAttribute="top" secondItem="fN9-HP-bq2" secondAttribute="top" id="lYa-x7-iiW"/>
                             <constraint firstItem="fiU-id-dF6" firstAttribute="centerY" secondItem="7Jd-Fd-kDT" secondAttribute="centerY" id="m9r-NY-tOa"/>
                             <constraint firstAttribute="trailing" secondItem="miH-iR-RP7" secondAttribute="trailing" constant="-46" id="n0p-Yc-oTM"/>
                             <constraint firstItem="fiU-id-dF6" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" constant="84" id="nKf-4M-2fT"/>
+                            <constraint firstItem="7J6-P2-9nP" firstAttribute="top" secondItem="dML-jy-nd3" secondAttribute="bottom" id="qNW-gT-l1G"/>
                             <constraint firstItem="miH-iR-RP7" firstAttribute="centerY" secondItem="SN1-6u-Np7" secondAttribute="centerY" id="qfB-kH-FQ6"/>
                             <constraint firstItem="uCa-5A-rHl" firstAttribute="top" secondItem="miH-iR-RP7" secondAttribute="bottom" constant="-5" id="r43-xI-PEf"/>
-                            <constraint firstItem="7lt-qk-zfF" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" id="tWh-bo-Qux"/>
+                            <constraint firstItem="7J6-P2-9nP" firstAttribute="leading" secondItem="fN9-HP-bq2" secondAttribute="leading" id="vLK-qi-0YE"/>
+                            <constraint firstAttribute="centerX" secondItem="xty-tQ-ume" secondAttribute="centerX" id="vNC-0q-9AE"/>
+                            <constraint firstItem="xty-tQ-ume" firstAttribute="bottom" secondItem="7J6-P2-9nP" secondAttribute="bottom" id="wRm-sH-DXv"/>
                             <constraint firstAttribute="trailing" secondItem="fiU-id-dF6" secondAttribute="trailing" constant="125" id="wv1-0Z-MFe"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KUj-zH-6x5"/>
                     <connections>
-                        <outlet property="backgroundImage" destination="7lt-qk-zfF" id="dLW-Bt-j3W"/>
                         <outlet property="facebookButtonView" destination="hGa-Kz-pwK" id="E2W-bs-6za"/>
                         <outlet property="facebookFirstLabel" destination="iqF-lG-j5w" id="KE8-PX-7HD"/>
                         <outlet property="facebookSecondLabel" destination="7Ns-Wx-Cog" id="Zth-S4-dpb"/>
+                        <outlet property="pageControl" destination="xty-tQ-ume" id="fWG-Ye-FOx"/>
                         <outlet property="signinButton" destination="miH-iR-RP7" id="MfZ-jz-PkF"/>
                         <outlet property="signinLabel" destination="SN1-6u-Np7" id="Lsk-eO-YUR"/>
                         <outlet property="signupButtonView" destination="7Jd-Fd-kDT" id="gqC-BW-4WR"/>
                         <outlet property="signupFirstLabel" destination="fiU-id-dF6" id="SlG-XK-9dQ"/>
                         <outlet property="signupSecondLabel" destination="1yf-nc-Za2" id="xIq-Kf-ykv"/>
+                        <outlet property="tutorialScrollView" destination="7J6-P2-9nP" id="SRc-hv-ljH"/>
                         <segue destination="vDb-ke-i4Z" kind="push" identifier="Signup Push Segue" id="A40-3P-OSY"/>
                         <segue destination="rza-Wx-gpU" kind="push" identifier="Signin Push Segue" id="Q4V-zu-SF7"/>
                         <segue destination="d4j-A5-G8j" kind="push" identifier="Multiple From Welcome Push Segue" id="Gba-gT-Acc"/>
@@ -1114,6 +1134,7 @@
         <image name="explore_refresh.png" width="99" height="99"/>
         <image name="password-icon.png" width="43" height="50"/>
         <image name="profile_place_holder.png" width="100" height="100"/>
+        <image name="snapby-label.png" width="219" height="100"/>
         <image name="username-icon.png" width="44" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

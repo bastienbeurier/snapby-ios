@@ -169,7 +169,7 @@
 
 + (UIActivityViewController *)getShareViewController:(UIImage *)image
 {
-    NSString *shareString = @"Hey, check out this snapby! Discover other local pictures by downloading the Snapby app.";
+    NSString *shareString = @"Download Snapby";
     
     //            NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdSnapbyBaseURLString : kDevAFSnapbyAPIBaseURLString) stringByAppendingString:@"snapbies/"]stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)snapby.identifier]]];
     

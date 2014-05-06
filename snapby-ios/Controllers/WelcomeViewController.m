@@ -13,6 +13,7 @@
 #import "NavigationAppDelegate.h"
 #import "GeneralUtilities.h"
 #import "MBProgressHUD.h"
+#import "TutorialViewController.h"
 
 
 @interface WelcomeViewController ()
@@ -25,7 +26,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *signupSecondLabel;
 @property (weak, nonatomic) IBOutlet UIButton *signinButton;
 @property (weak, nonatomic) IBOutlet UILabel *signinLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+@property (weak, nonatomic) IBOutlet UIScrollView *tutorialScrollView;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @end
 
@@ -33,14 +35,8 @@
 
 - (void)viewDidLoad
 {
-    //Set background image
-    NSString *filename = @"Default.png";
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if (screenRect.size.height == 568.0f) {
-        filename = @"Default-568h.png";
-    }
     
-    self.backgroundImage.image = [UIImage imageNamed:filename];
+//    self.backgroundImage.image = [UIImage imageNamed:filename];
     
     //Round corners
     self.facebookButtonView.layer.cornerRadius = 5.0f;
@@ -52,7 +48,58 @@
     //Nav bar
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
+    NSUInteger h = self.tutorialScrollView.frame.size.height;
+    NSUInteger w = self.tutorialScrollView.frame.size.width;
+    
+    self.tutorialScrollView.contentSize = CGSizeMake(w * 4, h);
+    self.tutorialScrollView.delegate = self;
+    
+    TutorialViewController *firstPage = [[TutorialViewController alloc] initWithPage:0];
+    
+    TutorialViewController *secondPage = [[TutorialViewController alloc] initWithPage:1];
+    
+    TutorialViewController *thirdPage = [[TutorialViewController alloc] initWithPage:2];
+    
+    TutorialViewController *fourthPage = [[TutorialViewController alloc] initWithPage:3];
+    
+    firstPage.view.frame = CGRectMake(0, 0, w, h);
+    secondPage.view.frame = CGRectMake(w, 0, w, h);
+    thirdPage.view.frame = CGRectMake(2 * w, 0, w, h);
+    fourthPage.view.frame = CGRectMake(3 * w, 0, w, h);
+    
+    [self addChildViewController:firstPage];
+    [self.tutorialScrollView addSubview:firstPage.view];
+    [firstPage didMoveToParentViewController:self];
+    
+    [self addChildViewController:secondPage];
+    [self.tutorialScrollView addSubview:secondPage.view];
+    [secondPage didMoveToParentViewController:self];
+    
+    [self addChildViewController:thirdPage];
+    [self.tutorialScrollView addSubview:thirdPage.view];
+    [thirdPage didMoveToParentViewController:self];
+    
+    [self addChildViewController:fourthPage];
+    [self.tutorialScrollView addSubview:fourthPage.view];
+    [fourthPage didMoveToParentViewController:self];
+    
+    [self.tutorialScrollView setContentOffset: CGPointMake(self.tutorialScrollView.contentOffset.x, 0)];
+    
     [super viewWillAppear:animated];
+}
+
+//Hack to prevent vertical scrolling
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView
+{
+    [self.tutorialScrollView setContentOffset: CGPointMake(self.tutorialScrollView.contentOffset.x, 0)];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // switch the indicator when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = CGRectGetWidth(self.tutorialScrollView.frame);
+    NSUInteger page = floor((self.tutorialScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    self.pageControl.currentPage = page;
 }
 
 - (IBAction)facebookButtonClicked:(id)sender {
