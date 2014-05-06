@@ -35,6 +35,7 @@
 @property (nonatomic) NSUInteger currentEffect;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet UIView *tutorialView;
 
 @end
 
@@ -72,7 +73,22 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if (![userDefaults objectForKey:APPLYING_SNAPBY_FILTER_TUTO_PREF]) {
+        self.tutorialView.hidden = NO;
+    } else {
+        self.tutorialView.hidden = YES;
+    }
+    
+    [userDefaults setObject:@"dummy" forKey:APPLYING_SNAPBY_FILTER_TUTO_PREF];
 }
+
+- (IBAction)tutorialViewClicked:(id)sender {
+    self.tutorialView.hidden = YES;
+}
+
 
 - (void)viewDidAppear:(BOOL)animated {
     

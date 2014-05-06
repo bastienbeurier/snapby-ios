@@ -353,6 +353,29 @@
                                     <action selector="quitButtonclicked:" destination="vn8-un-4WF" eventType="touchUpInside" id="cLK-me-MUE"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XNe-sW-7Wt">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on your picture to apply filters!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lrd-hV-cYL">
+                                        <rect key="frame" x="0.0" y="274" width="320" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="Lrd-hV-cYL" secondAttribute="centerY" id="1h3-fE-8gj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Lrd-hV-cYL" secondAttribute="trailing" id="GlC-0i-2QS"/>
+                                    <constraint firstItem="Lrd-hV-cYL" firstAttribute="leading" secondItem="XNe-sW-7Wt" secondAttribute="leading" id="iqN-9d-1fD"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="5Vc-gY-YBP" appends="YES" id="U9a-b4-Ndi"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -364,6 +387,10 @@
                             <constraint firstItem="S4w-al-2Mc" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" id="YdL-Co-xcX"/>
                             <constraint firstItem="6Xi-lT-oCm" firstAttribute="top" secondItem="S4w-al-2Mc" secondAttribute="bottom" id="jYN-Ac-GYI"/>
                             <constraint firstAttribute="trailing" secondItem="S4w-al-2Mc" secondAttribute="trailing" id="lLZ-rK-JZp"/>
+                            <constraint firstItem="6Xi-lT-oCm" firstAttribute="top" secondItem="XNe-sW-7Wt" secondAttribute="bottom" id="u4L-eL-5AG"/>
+                            <constraint firstItem="XNe-sW-7Wt" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" id="xgt-6y-0QD"/>
+                            <constraint firstItem="XNe-sW-7Wt" firstAttribute="top" secondItem="hPd-hm-le7" secondAttribute="top" id="yfD-Lz-71t"/>
+                            <constraint firstAttribute="trailing" secondItem="XNe-sW-7Wt" secondAttribute="trailing" id="ykJ-07-TcZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="erD-k1-NAf"/>
@@ -371,12 +398,18 @@
                         <outlet property="cancelButton" destination="4Z6-u1-rMD" id="Za0-qW-Vlk"/>
                         <outlet property="sendButton" destination="6xV-1q-hLK" id="tm8-aG-gBV"/>
                         <outlet property="snapbyImageView" destination="S4w-al-2Mc" id="fIl-PL-sZK"/>
+                        <outlet property="tutorialView" destination="XNe-sW-7Wt" id="iOr-f2-vFK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pF-an-gi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="utd-QE-whj">
                     <connections>
                         <action selector="imageClicked:" destination="vn8-un-4WF" id="lbw-Bd-0xu"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="5Vc-gY-YBP">
+                    <connections>
+                        <action selector="tutorialViewClicked:" destination="vn8-un-4WF" id="4li-Oh-TfG"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

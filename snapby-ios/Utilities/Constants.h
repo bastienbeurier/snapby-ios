@@ -26,6 +26,7 @@
 #define MY_LIKES_PREF @"My likes pref"
 #define MY_COMMENTS_PREF @"My comments pref"
 #define REFRESH_AFTER_STARTUP @"Refresh after startup pref"
+#define APPLYING_SNAPBY_FILTER_TUTO_PREF @"Show tutorial for apllying filters pref"
 
 #define FOLLOWERS_LIST NSLocalizedStringFromTable (@"followers", @"Strings", @"comment")
 #define FOLLOWING_LIST NSLocalizedStringFromTable (@"following", @"Strings", @"comment")
