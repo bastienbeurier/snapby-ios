@@ -315,14 +315,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4w-al-2Mc">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rpb-iY-2c9" customClass="GPUImageView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="utd-QE-whj" appends="YES" id="Ewj-P5-NJp"/>
+                                    <outletCollection property="gestureRecognizers" destination="utd-QE-whj" appends="YES" id="IfM-oB-RrR"/>
                                 </connections>
-                            </imageView>
+                            </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xV-1q-hLK">
                                 <rect key="frame" x="268" y="30" width="42" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -380,13 +380,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="6xV-1q-hLK" secondAttribute="trailing" constant="10" id="0am-yr-eXh"/>
+                            <constraint firstAttribute="trailing" secondItem="Rpb-iY-2c9" secondAttribute="trailing" id="9Jf-pV-v1O"/>
                             <constraint firstItem="4Z6-u1-rMD" firstAttribute="top" secondItem="M7t-Cj-xNa" secondAttribute="bottom" constant="10" id="9Wf-Qz-n4E"/>
                             <constraint firstItem="6xV-1q-hLK" firstAttribute="top" secondItem="M7t-Cj-xNa" secondAttribute="bottom" constant="10" id="HzB-n9-kTh"/>
                             <constraint firstItem="4Z6-u1-rMD" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" constant="10" id="JOG-oi-XVc"/>
-                            <constraint firstItem="S4w-al-2Mc" firstAttribute="top" secondItem="hPd-hm-le7" secondAttribute="top" id="YVL-qS-yFl"/>
-                            <constraint firstItem="S4w-al-2Mc" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" id="YdL-Co-xcX"/>
-                            <constraint firstItem="6Xi-lT-oCm" firstAttribute="top" secondItem="S4w-al-2Mc" secondAttribute="bottom" id="jYN-Ac-GYI"/>
-                            <constraint firstAttribute="trailing" secondItem="S4w-al-2Mc" secondAttribute="trailing" id="lLZ-rK-JZp"/>
+                            <constraint firstItem="6Xi-lT-oCm" firstAttribute="top" secondItem="Rpb-iY-2c9" secondAttribute="bottom" id="Rsh-Hl-gfW"/>
+                            <constraint firstItem="Rpb-iY-2c9" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" id="cW3-ez-sFx"/>
+                            <constraint firstItem="Rpb-iY-2c9" firstAttribute="top" secondItem="hPd-hm-le7" secondAttribute="top" id="qkc-Ql-6XQ"/>
                             <constraint firstItem="6Xi-lT-oCm" firstAttribute="top" secondItem="XNe-sW-7Wt" secondAttribute="bottom" id="u4L-eL-5AG"/>
                             <constraint firstItem="XNe-sW-7Wt" firstAttribute="leading" secondItem="hPd-hm-le7" secondAttribute="leading" id="xgt-6y-0QD"/>
                             <constraint firstItem="XNe-sW-7Wt" firstAttribute="top" secondItem="hPd-hm-le7" secondAttribute="top" id="yfD-Lz-71t"/>
@@ -397,7 +397,7 @@
                     <connections>
                         <outlet property="cancelButton" destination="4Z6-u1-rMD" id="Za0-qW-Vlk"/>
                         <outlet property="sendButton" destination="6xV-1q-hLK" id="tm8-aG-gBV"/>
-                        <outlet property="snapbyImageView" destination="S4w-al-2Mc" id="fIl-PL-sZK"/>
+                        <outlet property="snapbyImageView" destination="Rpb-iY-2c9" id="JdF-x2-fI0"/>
                         <outlet property="tutorialView" destination="XNe-sW-7Wt" id="iOr-f2-vFK"/>
                     </connections>
                 </viewController>

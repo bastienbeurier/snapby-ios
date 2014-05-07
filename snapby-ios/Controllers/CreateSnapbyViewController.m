@@ -21,10 +21,11 @@
 #import "KeyboardUtilities.h"
 #import "UIImage+FiltrrCompositions.h"
 #import "UIImage+Filtrr.h"
+#import "GPUImage.h"
 
 @interface CreateSnapbyViewController ()
 
-@property (strong, nonatomic) IBOutlet UIImageView *snapbyImageView;
+@property (weak, nonatomic) IBOutlet GPUImageView *snapbyImageView;
 
 @property (strong, nonatomic) UIImage *originalImage;
 
@@ -36,6 +37,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UIView *tutorialView;
+
+@property (strong, nonatomic) GPUImageBrightnessFilter *brightnessFilter;
+@property (strong, nonatomic) GPUImageContrastFilter *contrastFilter;
+@property (strong, nonatomic) GPUImageRGBFilter *rgbFilter;
+@property (strong, nonatomic) GPUImagePicture *gpuImagePicture;
+@property (strong, nonatomic) GPUImageColorInvertFilter *invertFilter;
 
 @end
 
@@ -62,17 +69,9 @@
     
     self.originalImage = [ImageUtilities cropWidthOfImage:self.sentImage by:(1-1/rescalingRatio)];
     
-    [self.snapbyImageView setImage:self.originalImage];
-    
-    // observe keyboard show notifications to resize the text view appropriately
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
+    GPUImagePicture *gpuImage = [[GPUImagePicture alloc] initWithImage:self.originalImage];
+    [gpuImage addTarget:self.snapbyImageView];
+    [gpuImage processImage];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -203,22 +202,22 @@
 
 - (IBAction)imageClicked:(id)sender {
     UIImage *image = self.originalImage;
+
+    [self firstFilter:image];
     
-    if (self.currentEffect == 0) {
-        [self.snapbyImageView setImage:[image e10]];
-        self.currentEffect = 1;
-    } else if (self.currentEffect == 1) {
-        [self.snapbyImageView setImage:[image e3]];
-        self.currentEffect = 2;
-    } else if (self.currentEffect == 2) {
-        [self.snapbyImageView setImage:[image e4]];
-        self.currentEffect = 3;
-    } else {
-        [self.snapbyImageView setImage:self.originalImage];
-        self.currentEffect = 0;
-    }
 }
 
-
+- (void)firstFilter:(UIImage *)image
+{
+    self.brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
+    self.contrastFilter = [[GPUImageContrastFilter alloc] init];
+    self.rgbFilter = [[GPUImageRGBFilter alloc] init];
+    self.invertFilter = [[GPUImageColorInvertFilter alloc] init];
+    
+    self.gpuImagePicture = [[GPUImagePicture alloc] initWithImage:image];
+    [self.gpuImagePicture addTarget:self.invertFilter];
+    [self.invertFilter addTarget:self.snapbyImageView];
+    [self.gpuImagePicture processImage];
+}
 
 @end
