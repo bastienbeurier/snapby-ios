@@ -748,6 +748,7 @@
 {
     self.fullscreenModeInExplore = YES;
     self.cameraButton.hidden = YES;
+    self.settingsButton.hidden = YES;
     self.statusBarContainer.hidden = YES;
     
     for (ExploreSnapbyViewController *controller in self.viewControllers) {
@@ -763,6 +764,7 @@
 {
     self.fullscreenModeInExplore = NO;
     self.cameraButton.hidden = NO;
+    self.settingsButton.hidden = NO;
     self.statusBarContainer.hidden = NO;
     
     for (ExploreSnapbyViewController *controller in self.viewControllers) {
