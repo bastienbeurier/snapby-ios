@@ -301,7 +301,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vdK-Ot-g5K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1347" y="898"/>
+            <point key="canvasLocation" x="832" y="-632"/>
         </scene>
         <!--Create Snapby View Controller-->
         <scene sceneID="ZHD-Ls-YaW">
@@ -564,6 +564,20 @@
                                     <constraint firstAttribute="height" constant="20" id="lUE-DW-1Jh"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIB-zT-Y7m">
+                                <rect key="frame" x="0.0" y="20" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="aj2-nX-2YR"/>
+                                    <constraint firstAttribute="height" constant="50" id="pTf-Zl-jMW"/>
+                                </constraints>
+                                <state key="normal" image="explore-settings.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="settingsButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="Aqr-48-DKZ"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0E-90-YJo">
                                 <rect key="frame" x="270" y="20" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -616,6 +630,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="BIB-zT-Y7m" firstAttribute="top" secondItem="8SG-cq-0CT" secondAttribute="bottom" id="4Et-Po-xJ0"/>
                             <constraint firstAttribute="centerY" secondItem="HTr-eC-lgF" secondAttribute="centerY" id="6WF-yK-OJI"/>
                             <constraint firstAttribute="centerY" secondItem="JBd-7x-oBY" secondAttribute="centerY" id="AGb-Sm-DJB"/>
                             <constraint firstItem="19H-bp-LSd" firstAttribute="top" secondItem="SuS-Lt-KO3" secondAttribute="bottom" id="FwS-0O-cWD"/>
@@ -636,6 +651,7 @@
                             <constraint firstItem="19H-bp-LSd" firstAttribute="top" secondItem="pG4-jQ-1BS" secondAttribute="bottom" id="wCJ-mc-Emd"/>
                             <constraint firstItem="Gie-rd-PZz" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="wUx-xJ-Mlb"/>
                             <constraint firstAttribute="centerX" secondItem="JBd-7x-oBY" secondAttribute="centerX" id="wtu-Hp-489"/>
+                            <constraint firstItem="BIB-zT-Y7m" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="xz9-t0-tWV"/>
                             <constraint firstAttribute="trailing" secondItem="YCb-EA-VJp" secondAttribute="trailing" id="zcD-F7-U2J"/>
                         </constraints>
                     </view>
@@ -648,9 +664,11 @@
                         <outlet property="noSnapbyButton" destination="JBd-7x-oBY" id="7N4-xy-pBQ"/>
                         <outlet property="refreshButton" destination="HTr-eC-lgF" id="nla-8C-8Lc"/>
                         <outlet property="scrollView" destination="pG4-jQ-1BS" id="6UJ-3m-vT0"/>
+                        <outlet property="settingsButton" destination="BIB-zT-Y7m" id="Gcp-RS-53f"/>
                         <outlet property="statusBarContainer" destination="YCb-EA-VJp" id="q7j-4l-9vw"/>
                         <segue destination="XJN-rR-Aa3" kind="push" identifier="Comment Push Segue From Explore" id="eEQ-uZ-e9Q"/>
                         <segue destination="zzS-SS-WfS" kind="modal" identifier="Camera Push Segue" animates="NO" id="VXj-w7-3jd"/>
+                        <segue destination="mUL-sa-6UG" kind="push" identifier="Settings Push Segue" id="EEN-N5-g0e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDN-fj-Qjo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -871,7 +889,7 @@
                                     <action selector="signupButtonClicked:" destination="PlT-GB-KMl" eventType="touchUpInside" id="McU-Rt-dFm"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGa-Kz-pwK">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGa-Kz-pwK">
                                 <rect key="frame" x="20" y="418" width="280" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.23137254900000001" green="0.34901960780000002" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -931,7 +949,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect with" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqF-lG-j5w">
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect with" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqF-lG-j5w">
                                 <rect key="frame" x="66" y="431" width="102" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -943,7 +961,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ns-Wx-Cog">
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ns-Wx-Cog">
                                 <rect key="frame" x="171" y="431" width="78" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1162,6 +1180,7 @@
         <image name="create_cancel.png" width="99" height="99"/>
         <image name="create_send.png" width="99" height="99"/>
         <image name="email-icon.png" width="50" height="36"/>
+        <image name="explore-settings.png" width="99" height="99"/>
         <image name="explore_camera.png" width="49" height="49"/>
         <image name="explore_camera2.png" width="99" height="99"/>
         <image name="explore_refresh.png" width="99" height="99"/>

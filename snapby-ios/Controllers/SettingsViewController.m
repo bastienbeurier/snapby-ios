@@ -249,11 +249,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     } else if (row == CHANGE_USERNAME) {
         [self.usernameTextField becomeFirstResponder];
     } else if (row == FEEDBACK) {
-        // Call this wherever you want to launch UserVoice
         [UserVoice presentUserVoiceInterfaceForParentViewController:self];
-//        NSString *email = [NSString stringWithFormat:@"mailto:info@snapby.co?subject=Feedback for Snapby on iOS (v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-//        email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
     } else if (row == RATE_ME) {
         if ([GeneralUtilities connected]) {
             [GeneralUtilities redirectToAppStore];

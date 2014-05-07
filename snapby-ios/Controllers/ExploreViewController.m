@@ -58,6 +58,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UILabel *errorMessage;
 @property (weak, nonatomic) IBOutlet UIButton *noSnapbyButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 
 @end
 
@@ -85,6 +86,7 @@
     self.navigationController.navigationBar.tintColor = [ImageUtilities getSnapbyPink];
     
     [ImageUtilities outerGlow:self.cameraButton];
+    [ImageUtilities outerGlow:self.settingsButton];
     
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = NO;
@@ -300,6 +302,10 @@
 // ------------------------------------------------
 // Snapby actions
 // ------------------------------------------------
+
+- (IBAction)settingsButtonClicked:(id)sender {
+    [self performSegueWithIdentifier:@"Settings Push Segue" sender:nil];
+}
 
 - (IBAction)cameraButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"Camera Push Segue" sender:nil];
