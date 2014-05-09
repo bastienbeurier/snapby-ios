@@ -59,6 +59,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *errorMessage;
 @property (weak, nonatomic) IBOutlet UIButton *noSnapbyButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+@property (weak, nonatomic) IBOutlet UIView *tutorialView;
 
 @end
 
@@ -80,6 +81,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if (![userDefaults objectForKey:EXPLORE_TUTO_PREF]) {
+        self.tutorialView.hidden = NO;
+    } else {
+        self.tutorialView.hidden = YES;
+    }
+    
+    [userDefaults setObject:@"dummy" forKey:EXPLORE_TUTO_PREF];
     
     self.fullscreenModeInExplore = NO;
     
@@ -782,6 +793,9 @@
 
 - (IBAction)noSnapbyButtonClicked:(id)sender {
     [self performSegueWithIdentifier:@"Camera Push Segue" sender:nil];
+}
+- (IBAction)toturialViewClicked:(id)sender {
+    self.tutorialView.hidden = YES;
 }
 
 @end

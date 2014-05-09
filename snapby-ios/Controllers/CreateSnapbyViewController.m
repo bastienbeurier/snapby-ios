@@ -19,8 +19,6 @@
 #import "SessionUtilities.h"
 #import "TrackingUtilities.h"
 #import "KeyboardUtilities.h"
-#import "UIImage+FiltrrCompositions.h"
-#import "UIImage+Filtrr.h"
 #import "GPUImage.h"
 
 @interface CreateSnapbyViewController ()
@@ -47,9 +45,6 @@
 
 @property (nonatomic) NSUInteger filterIndex;
 
-@property (nonatomic) NSUInteger currentEffect;
-
-
 @end
 
 @implementation CreateSnapbyViewController
@@ -64,7 +59,6 @@
     [super viewDidLoad];
     
     self.filterIndex = 0;
-    self.currentEffect = 0;
     
     [ImageUtilities outerGlow:self.cancelButton];
     [ImageUtilities outerGlow:self.sendButton];
@@ -174,23 +168,15 @@
     
     NSString *encodedImage;
     
-    if (self.currentEffect == 1) {
-        encodedImage = [ImageUtilities encodeToBase64String:[self.sentImage e10]];
-    } else if (self.currentEffect == 2) {
-        encodedImage = [ImageUtilities encodeToBase64String:[self.sentImage e3]];
-    } else if (self.currentEffect == 3){
-        encodedImage = [ImageUtilities encodeToBase64String:[self.sentImage e4]];
-    } else {
+    if (self.filterIndex == 0) {
         encodedImage = [ImageUtilities encodeToBase64String:self.sentImage];
+    } else if (self.filterIndex == 1) {
+        encodedImage = [ImageUtilities encodeToBase64String:[self vintageFilter:self.sentImage]];
+    } else if (self.filterIndex == 2) {
+        encodedImage = [ImageUtilities encodeToBase64String:[self washedOutFilter:self.sentImage]];
+    } else if (self.filterIndex == 3) {
+        encodedImage = [ImageUtilities encodeToBase64String:[self blackAndWhiteFilter:self.sentImage]];
     }
-
-    
-//    if (self.filterIndex == 0) {
-//        encodedImage =[ImageUtilities encodeToBase64String:self.originalImage];
-//    } else {
-//        encodedImage =[ImageUtilities encodeToBase64String:self.modifiedImage];
-//    }
-//    
 
     [ApiUtilities createSnapbyWithLat:myLocation.coordinate.latitude
                                                    Lng:myLocation.coordinate.longitude
@@ -212,44 +198,28 @@
 
 
 - (IBAction)imageClicked:(id)sender {
-//    self.modifiedImage = [self washedOutFilter:self.originalImage];
-//    
-//    self.snapbyImageView.image = self.modifiedImage;
+    [self washedOutFilter:self.originalImage];
     
     UIImage *image = self.originalImage;
     
-    if (self.currentEffect == 0) {
+    if (self.filterIndex == 0) {
         [self displayToast:@"Vintage"];
-        [self.snapbyImageView setImage:[image e10]];
-        self.currentEffect = 1;
-    } else if (self.currentEffect == 1) {
+        image = [self vintageFilter:image];
+        self.filterIndex = self.filterIndex + 1;
+    } else if (self.filterIndex == 1) {
         [self displayToast:@"Washed Out"];
-        [self.snapbyImageView setImage:[image e3]];
-        self.currentEffect = 2;
-    } else if (self.currentEffect == 2) {
+        image = [self washedOutFilter:image];
+        self.filterIndex = self.filterIndex + 1;
+    } else if (self.filterIndex == 2) {
         [self displayToast:@"Black & White"];
-        [self.snapbyImageView setImage:[image e4]];
-        self.currentEffect = 3;
-    } else {
+        image = [self blackAndWhiteFilter:image];
+        self.filterIndex = self.filterIndex + 1;
+    } else if (self.filterIndex == 3) {
         [self displayToast:@"No Filter"];
-        [self.snapbyImageView setImage:self.originalImage];
-        self.currentEffect = 0;
+        self.filterIndex = 0;
     }
-
     
-//    if (self.filterIndex == 0) {
-//        [self vintageFilter:image];
-//        self.filterIndex = self.filterIndex + 1;
-//    } else if (self.filterIndex == 1) {
-//        [self washedOutFilter:image];
-//        self.filterIndex = self.filterIndex + 1;
-//    } else if (self.filterIndex == 2) {
-//        [self blackAndWhiteFilter:image];
-//        self.filterIndex = self.filterIndex + 1;
-//    } else if (self.filterIndex == 3) {
-//        [self noFilter:image];
-//        self.filterIndex = 0;
-//    }
+    self.snapbyImageView.image = image;
 }
 
 - (void)setUpFilters
@@ -261,7 +231,7 @@
     self.grayFilter = [[GPUImageGrayscaleFilter alloc] init];
 }
 
-- (void)vintageFilter:(UIImage *)image
+- (UIImage *)vintageFilter:(UIImage *)image
 {
     // 0 - 1
     [self.sepiaFilter setIntensity:1.0];
@@ -272,13 +242,9 @@
     // - 4 - 4
     [self.exposureFilter setExposure:0.2];
     
-    self.gpuImagePicture = [[GPUImagePicture alloc] initWithImage:image];
-    
-    [self.gpuImagePicture addTarget:self.sepiaFilter];
-    [self.sepiaFilter addTarget:self.contrastFilter];
-    [self.contrastFilter addTarget:self.exposureFilter];
-    [self.exposureFilter addTarget:self.snapbyImageView];
-    [self.gpuImagePicture processImage];
+    image = [self.sepiaFilter imageByFilteringImage:image];
+    image = [self.contrastFilter imageByFilteringImage:image];
+    return [self.exposureFilter imageByFilteringImage:image];
 }
 
 - (UIImage *)washedOutFilter:(UIImage *)image
@@ -292,34 +258,15 @@
     
     // - 4 - 4
     [self.exposureFilter setExposure:0.2];
-    
-    self.gpuImagePicture = [[GPUImagePicture alloc] initWithImage:image];
-    [self.gpuImagePicture addTarget:self.levelsFilter];
-    [self.levelsFilter addTarget:self.contrastFilter];
-    [self.contrastFilter addTarget:self.exposureFilter];
-    
-    
-//    [self.exposureFilter prepareForImageCapture];
-    [self.gpuImagePicture processImage];
-    return [self.exposureFilter imageFromCurrentlyProcessedOutput];
+
+    image = [self.levelsFilter imageByFilteringImage:image];
+    image = [self.contrastFilter imageByFilteringImage:image];
+    return [self.exposureFilter imageByFilteringImage:image];
 }
 
-- (void)blackAndWhiteFilter:(UIImage *)image
+- (UIImage *)blackAndWhiteFilter:(UIImage *)image
 {
-    //0 - 2
-    GPUImageGrayscaleFilter *grayFilter = [[GPUImageGrayscaleFilter alloc] init];
-    
-    self.gpuImagePicture = [[GPUImagePicture alloc] initWithImage:image];
-    [self.gpuImagePicture addTarget:grayFilter];
-    [grayFilter addTarget:self.snapbyImageView];
-    [self.gpuImagePicture processImage];
-}
-
-- (void)noFilter:(UIImage *)image
-{
-    self.gpuImagePicture = [[GPUImagePicture alloc] initWithImage:image];
-    [self.gpuImagePicture addTarget:self.snapbyImageView];
-    [self.gpuImagePicture processImage];
+    return [self.grayFilter imageByFilteringImage:image];
 }
 
 - (void)displayToast:(NSString *)string

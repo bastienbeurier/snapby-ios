@@ -72,6 +72,8 @@
     NSArray* nibViews = [[NSBundle mainBundle] loadNibNamed:@"OverlayCameraView" owner:self options:nil];
     UIView* myView = [ nibViews objectAtIndex: 0];
     
+    myView.frame = self.view.frame;
+    
     imagePickerController.cameraOverlayView = myView;
     
     // Transform camera to get full screen

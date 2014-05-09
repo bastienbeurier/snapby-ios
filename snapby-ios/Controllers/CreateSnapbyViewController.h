@@ -10,14 +10,13 @@
 #import <MapKit/MapKit.h>
 #import "Snapby.h"
 
-
 @protocol CreateSnapbyViewControllerDelegate;
 
 @interface CreateSnapbyViewController : UIViewController <UIActionSheetDelegate>
 
 @property (weak, nonatomic) id <CreateSnapbyViewControllerDelegate> createSnapbyVCDelegate;
 
-@property (strong, nonatomic) IBOutlet UIImage *sentImage;
+@property (strong, nonatomic) UIImage *sentImage;
 
 @end
 

@@ -358,19 +358,29 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on your picture to apply filters!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lrd-hV-cYL">
-                                        <rect key="frame" x="0.0" y="274" width="320" height="20"/>
+                                        <rect key="frame" x="0.0" y="273" width="320" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial-single-tap.png" translatesAutoresizingMaskIntoConstraints="NO" id="faF-FL-1P5">
+                                        <rect key="frame" x="100" y="153" width="120" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="Ap5-rx-Ff3"/>
+                                            <constraint firstAttribute="width" constant="120" id="b5W-MP-Umm"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
+                                    <constraint firstItem="Lrd-hV-cYL" firstAttribute="top" secondItem="faF-FL-1P5" secondAttribute="bottom" id="0fj-rL-gif"/>
                                     <constraint firstAttribute="centerY" secondItem="Lrd-hV-cYL" secondAttribute="centerY" id="1h3-fE-8gj"/>
                                     <constraint firstAttribute="trailing" secondItem="Lrd-hV-cYL" secondAttribute="trailing" id="GlC-0i-2QS"/>
                                     <constraint firstItem="Lrd-hV-cYL" firstAttribute="leading" secondItem="XNe-sW-7Wt" secondAttribute="leading" id="iqN-9d-1fD"/>
+                                    <constraint firstAttribute="centerX" secondItem="faF-FL-1P5" secondAttribute="centerX" id="vK9-6U-fKl"/>
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="5Vc-gY-YBP" appends="YES" id="U9a-b4-Ndi"/>
@@ -627,14 +637,52 @@
                                     <action selector="noSnapbyButtonClicked:" destination="d4j-A5-G8j" eventType="touchUpInside" id="qp4-ne-LJe"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JKB-Oc-k9i">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Scroll to explore snapbys and their location on the map." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SdX-3l-dkL">
+                                        <rect key="frame" x="0.0" y="254" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="DVE-2g-3jU"/>
+                                        </constraints>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="19"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial-swipe-down.png" translatesAutoresizingMaskIntoConstraints="NO" id="okK-cE-rBb">
+                                        <rect key="frame" x="100" y="134" width="120" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="862-gv-OOe"/>
+                                            <constraint firstAttribute="height" constant="120" id="keC-Wy-BhT"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="SdX-3l-dkL" secondAttribute="trailing" id="031-Kz-6Ss"/>
+                                    <constraint firstAttribute="centerX" secondItem="okK-cE-rBb" secondAttribute="centerX" id="OMW-3D-cmg"/>
+                                    <constraint firstItem="SdX-3l-dkL" firstAttribute="top" secondItem="okK-cE-rBb" secondAttribute="bottom" id="hXN-P1-duu"/>
+                                    <constraint firstAttribute="centerY" secondItem="SdX-3l-dkL" secondAttribute="centerY" id="sdj-PR-DEp"/>
+                                    <constraint firstItem="SdX-3l-dkL" firstAttribute="leading" secondItem="JKB-Oc-k9i" secondAttribute="leading" id="xRD-mN-EAX"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="bTz-Xr-kbM" appends="YES" id="z8e-N0-cU2"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="BIB-zT-Y7m" firstAttribute="top" secondItem="8SG-cq-0CT" secondAttribute="bottom" id="4Et-Po-xJ0"/>
                             <constraint firstAttribute="centerY" secondItem="HTr-eC-lgF" secondAttribute="centerY" id="6WF-yK-OJI"/>
                             <constraint firstAttribute="centerY" secondItem="JBd-7x-oBY" secondAttribute="centerY" id="AGb-Sm-DJB"/>
+                            <constraint firstItem="19H-bp-LSd" firstAttribute="top" secondItem="JKB-Oc-k9i" secondAttribute="bottom" id="AUf-GM-6UL"/>
                             <constraint firstItem="19H-bp-LSd" firstAttribute="top" secondItem="SuS-Lt-KO3" secondAttribute="bottom" id="FwS-0O-cWD"/>
                             <constraint firstAttribute="centerX" secondItem="Gie-rd-PZz" secondAttribute="centerX" id="Kdk-O8-8Zj"/>
+                            <constraint firstItem="JKB-Oc-k9i" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" id="LYq-ZB-YJs"/>
                             <constraint firstAttribute="centerY" secondItem="Gie-rd-PZz" secondAttribute="centerY" constant="50" id="Lyv-tn-Jfu"/>
                             <constraint firstItem="SuS-Lt-KO3" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="Nmw-1s-5zH"/>
                             <constraint firstAttribute="centerX" secondItem="HTr-eC-lgF" secondAttribute="centerX" id="UMA-VL-Qz3"/>
@@ -642,8 +690,10 @@
                             <constraint firstItem="YCb-EA-VJp" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" id="ceg-CB-O9f"/>
                             <constraint firstAttribute="trailing" secondItem="SuS-Lt-KO3" secondAttribute="trailing" id="ePd-zg-0TO"/>
                             <constraint firstItem="pG4-jQ-1BS" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" id="hCZ-Nd-PRn"/>
+                            <constraint firstItem="JKB-Oc-k9i" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="heR-PL-c0B"/>
                             <constraint firstItem="pG4-jQ-1BS" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="ilB-DB-oYO"/>
                             <constraint firstItem="SuS-Lt-KO3" firstAttribute="top" secondItem="01B-3P-WJq" secondAttribute="top" id="khD-sY-cH2"/>
+                            <constraint firstAttribute="trailing" secondItem="JKB-Oc-k9i" secondAttribute="trailing" id="lvO-of-9fr"/>
                             <constraint firstItem="YCb-EA-VJp" firstAttribute="leading" secondItem="01B-3P-WJq" secondAttribute="leading" id="okE-FJ-qxJ"/>
                             <constraint firstAttribute="trailing" secondItem="pG4-jQ-1BS" secondAttribute="trailing" id="tPZ-u9-StK"/>
                             <constraint firstAttribute="trailing" secondItem="t0E-90-YJo" secondAttribute="trailing" id="uAE-Gb-me6"/>
@@ -666,6 +716,7 @@
                         <outlet property="scrollView" destination="pG4-jQ-1BS" id="6UJ-3m-vT0"/>
                         <outlet property="settingsButton" destination="BIB-zT-Y7m" id="Gcp-RS-53f"/>
                         <outlet property="statusBarContainer" destination="YCb-EA-VJp" id="q7j-4l-9vw"/>
+                        <outlet property="tutorialView" destination="JKB-Oc-k9i" id="lTe-C4-XFE"/>
                         <segue destination="XJN-rR-Aa3" kind="push" identifier="Comment Push Segue From Explore" id="eEQ-uZ-e9Q"/>
                         <segue destination="zzS-SS-WfS" kind="modal" identifier="Camera Push Segue" animates="NO" id="VXj-w7-3jd"/>
                         <segue destination="mUL-sa-6UG" kind="push" identifier="Settings Push Segue" id="EEN-N5-g0e"/>
@@ -675,6 +726,11 @@
                 <tapGestureRecognizer id="fCX-4o-PVR">
                     <connections>
                         <action selector="onScrollViewClicked:" destination="d4j-A5-G8j" id="CId-y4-cWs"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="bTz-Xr-kbM">
+                    <connections>
+                        <action selector="toturialViewClicked:" destination="d4j-A5-G8j" id="UG1-fE-bFS"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -1187,6 +1243,8 @@
         <image name="password-icon.png" width="43" height="50"/>
         <image name="profile_place_holder.png" width="100" height="100"/>
         <image name="snapby-label.png" width="219" height="100"/>
+        <image name="tutorial-single-tap.png" width="256" height="256"/>
+        <image name="tutorial-swipe-down.png" width="256" height="256"/>
         <image name="username-icon.png" width="44" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
