@@ -97,7 +97,7 @@
 
 + (void)redirectToAppStore
 {
-    NSString *reviewURL = [NSString stringWithFormat:@"http://itunes.apple.com/app/id%ld?mt=8",APP_ID];
+    NSString *reviewURL = [NSString stringWithFormat:@"http://itunes.apple.com/app/id891201506?mt=8",APP_ID];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
 };
 
@@ -170,8 +170,6 @@
 + (UIActivityViewController *)getShareViewController:(UIImage *)image
 {
     NSString *shareString = @"Download Snapby";
-    
-    //            NSURL *shareUrl = [NSURL URLWithString:[[(PRODUCTION? kProdSnapbyBaseURLString : kDevAFSnapbyAPIBaseURLString) stringByAppendingString:@"snapbies/"]stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)snapby.identifier]]];
     
     NSURL *shareUrl = [NSURL URLWithString:PRODUCTION? kProdSnapbyBaseURLString : kDevAFSnapbyAPIBaseURLString];
     

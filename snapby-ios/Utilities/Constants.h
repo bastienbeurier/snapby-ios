@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 // iTunesConnect (must be consistent with the one in Facebook Developper) 
-#define APP_ID 807530715943166
+#define APP_ID 868385195
 
 #define UA_DEVICE_TOKEN_PROD_PREF @"UA Device Token Production"
 #define UA_DEVICE_TOKEN_DEV_PREF @"UA Device Token Development"
